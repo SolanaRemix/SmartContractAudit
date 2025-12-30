@@ -1,0 +1,32 @@
+{
+  "email": {
+    "enabled": false,
+    "recipients": ["admin@example.com"],
+    "severity": ["critical", "high"]
+  },
+  "slack": {
+    "enabled": false,
+    "webhook": "https://hooks.slack.com/services/YOUR/WEBHOOK/URL",
+    "channel": "#security-alerts",
+    "username": "Audit Bot",
+    "iconEmoji": ":shield:",
+    "severity": ["critical", "high", "medium"]
+  },
+  "telegram": {
+    "enabled": false,
+    "botToken": "YOUR_BOT_TOKEN",
+    "chatId": "YOUR_CHAT_ID",
+    "severity": ["critical"]
+  },
+  "discord": {
+    "enabled": false,
+    "webhook": "https://discord.com/api/webhooks/YOUR/WEBHOOK",
+    "severity": ["critical", "high"]
+  },
+  "webhook": {
+    "enabled": false,
+    "url": "https://your-api.com/webhook",
+    "method": "POST",
+    "severity": ["critical", "high", "medium", "low"]
+  }
+}

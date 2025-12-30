@@ -1,0 +1,47 @@
+{
+  "antivirus": {
+    "enabled": true,
+    "threshold": 70,
+    "patterns": [
+      "reentrancy",
+      "overflow",
+      "underflow",
+      "delegatecall",
+      "selfdestruct",
+      "tx-origin",
+      "unchecked-send"
+    ],
+    "bytecodeAnalysis": true,
+    "sourceAnalysis": true,
+    "timeout": 60000
+  },
+  "spam": {
+    "enabled": true,
+    "threshold": 80,
+    "checkAirdrop": true,
+    "checkSimilarity": true,
+    "minContractAge": 86400
+  },
+  "honeypot": {
+    "enabled": true,
+    "simulateTransfer": true,
+    "maxBuyTax": 10,
+    "maxSellTax": 10,
+    "simulationAmount": "0.1"
+  },
+  "tracer": {
+    "enabled": true,
+    "maxDepth": 5,
+    "minAmount": "0.01",
+    "includeTokens": true,
+    "includeNFTs": false,
+    "timeout": 120000
+  },
+  "deepScan": {
+    "enabled": true,
+    "maxTransactions": 10000,
+    "analyzePatterns": true,
+    "generateGraph": true,
+    "identifyClusters": true
+  }
+}
