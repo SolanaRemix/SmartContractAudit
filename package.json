@@ -1,0 +1,42 @@
+{
+  "name": "smart-contract-audit",
+  "version": "1.0.0",
+  "description": "Professional multi-chain smart contract auditing, monitoring, and automated repair system",
+  "main": "auditor/index.js",
+  "scripts": {
+    "start": "node script/scan.js",
+    "scan": "node script/scan.js",
+    "notify": "node script/notify.js",
+    "repair": "node script/repair.js",
+    "test": "echo \"Tests not yet implemented\"",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "smart-contract",
+    "audit",
+    "security",
+    "blockchain",
+    "ethereum",
+    "solana",
+    "antivirus",
+    "honeypot",
+    "spam-detection"
+  ],
+  "author": "SmartContractAudit Team",
+  "license": "MIT",
+  "dependencies": {
+    "ethers": "^5.7.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.50.0",
+    "prettier": "^3.0.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SolanaRemix/SmartContractAudit.git"
+  }
+}
