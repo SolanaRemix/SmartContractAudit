@@ -1,0 +1,47 @@
+{
+  "name": "smartbrain-agent-b",
+  "version": "1.0.0",
+  "description": "SmartBrain Agent B - Fixer & Optimizer BOT",
+  "type": "heal",
+  "config": {
+    "dryRun": true,
+    "autoFix": true,
+    "portRange": {
+      "start": 3000,
+      "end": 3010,
+      "additional": [4000, 8080]
+    },
+    "healingStrategies": {
+      "portCleanup": {
+        "enabled": true,
+        "gracefulShutdown": true,
+        "timeout": 5000
+      },
+      "dependencySync": {
+        "enabled": true,
+        "packageManager": "pnpm",
+        "lockfileStrategy": "frozen"
+      },
+      "buildOptimization": {
+        "enabled": true,
+        "parallel": true,
+        "cache": true
+      }
+    }
+  },
+  "triggers": {
+    "events": ["workflow_dispatch", "schedule"],
+    "schedule": "0 */6 * * *",
+    "branches": ["main", "develop"]
+  },
+  "safeguards": {
+    "maxPortKills": 10,
+    "requireConfirmation": false,
+    "backupBeforeHeal": true
+  },
+  "notifications": {
+    "slack": false,
+    "email": false,
+    "github": true
+  }
+}

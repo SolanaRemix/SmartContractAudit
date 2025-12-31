@@ -1,0 +1,53 @@
+{
+  "name": "smartbrain-agent-a",
+  "version": "1.0.0",
+  "description": "SmartBrain Agent A - Code Auditor BOT",
+  "type": "audit",
+  "config": {
+    "dryRun": true,
+    "autoFix": false,
+    "scanPatterns": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.js",
+      "**/*.jsx",
+      "**/*.sol",
+      "**/*.rs"
+    ],
+    "excludePatterns": [
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      ".next/**",
+      "coverage/**"
+    ],
+    "rules": {
+      "typescript": {
+        "strictNullChecks": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true
+      },
+      "solidity": {
+        "version": "^0.8.0",
+        "reentrancyGuard": true,
+        "zeroAddressCheck": true
+      }
+    }
+  },
+  "triggers": {
+    "events": ["push", "pull_request"],
+    "branches": ["main", "develop", "gitantivirus-node"],
+    "paths": ["contracts/**", "src/**", "packages/**"]
+  },
+  "notifications": {
+    "slack": false,
+    "email": false,
+    "github": true
+  },
+  "reporting": {
+    "format": "markdown",
+    "outputPath": "AUDIT-REPORT.md",
+    "includeMetrics": true
+  }
+}
