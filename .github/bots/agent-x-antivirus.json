@@ -1,0 +1,79 @@
+{
+  "name": "smartbrain-agent-x",
+  "version": "1.0.0",
+  "description": "SmartBrain Agent X - Antivirus & Security Scanner BOT",
+  "type": "security",
+  "config": {
+    "dryRun": true,
+    "autoQuarantine": false,
+    "scanDepth": "deep",
+    "suspiciousPatterns": {
+      "commands": [
+        "rm -rf /",
+        "curl.*sh",
+        "wget.*sh",
+        "eval`\\(",
+        "exec\\(",
+        "system\\(",
+        "__import__"
+      ],
+      "secretPatterns": [
+        "api[_-]?key",
+        "access[_-]?token",
+        "secret[_-]?key",
+        "private[_-]?key",
+        "password",
+        "bearer",
+        "authorization"
+      ],
+      "malwareSignatures": [
+        "base64.*eval",
+        "fromCharCode",
+        "unescape.*eval",
+        "document.write.*script"
+      ]
+    },
+    "fileTypes": {
+      "code": ["js", "jsx", "ts", "tsx", "py", "rb", "php", "java", "go", "rs"],
+      "config": ["json", "yml", "yaml", "toml", "env"],
+      "scripts": ["sh", "bash", "ps1", "zsh"],
+      "contracts": ["sol"],
+      "archives": ["zip", "tar", "gz", "tgz", "bz2", "apk"]
+    },
+    "quarantine": {
+      "enabled": true,
+      "path": ".quarantine",
+      "createReport": true,
+      "notifyOnFindings": true
+    }
+  },
+  "triggers": {
+    "events": ["push", "pull_request", "schedule"],
+    "schedule": "0 2 * * *",
+    "branches": ["main", "develop", "gitantivirus-node"]
+  },
+  "severity": {
+    "critical": {
+      "action": "block",
+      "notify": true
+    },
+    "high": {
+      "action": "warn",
+      "notify": true
+    },
+    "medium": {
+      "action": "log",
+      "notify": false
+    },
+    "low": {
+      "action": "log",
+      "notify": false
+    }
+  },
+  "reporting": {
+    "format": "json",
+    "outputPath": ".quarantine/scan-report.json",
+    "includeHashes": true,
+    "includePaths": true
+  }
+}
