@@ -1,0 +1,77 @@
+name: GitAntivirus Node Bot (Scheduled)
+
+# ⚠️ This is a TEMPLATE workflow file for reference
+# Place this file in .github/workflows/ directory to enable scheduled bot runs
+# File location: .github/workflows/node-bot.yml (rename when deploying)
+
+on:
+  schedule:
+    # Run weekly on Mondays at 3 AM UTC
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run in dry-run mode'
+        required: false
+        default: 'true'
+      allowlist_orgs:
+        description: 'Allowlist organizations (comma-separated)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+env:
+  DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
+  BOT_PINGS_ENABLED: 'false'
+  ALLOWLIST_ORGS: ${{ github.event.inputs.allowlist_orgs || '' }}
+
+jobs:
+  node-bot-scan:
+    name: 🤖 Node Bot Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          
+      - name: 📚 Install bot dependencies
+        run: |
+          cd node/bot
+          pnpm install
+          
+      - name: 🤖 Run Node Bot
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd node/bot
+          node index.js
+          
+      - name: 📤 Upload scan results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: node-bot-scan-results
+          path: node/logs/summary.json
+          retention-days: 30
+          
+      - name: 📊 Display summary
+        if: always()
+        run: |
+          if [ -f "node/logs/summary.json" ]; then
+            echo "## 📊 Scan Summary"
+            cat node/logs/summary.json | jq .stats
+          fi

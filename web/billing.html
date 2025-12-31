@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitAntivirus - Billing & Orders</title>
+    <meta name="description" content="GitAntivirus billing and order management">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .pricing-card {
+            transition: all 0.3s ease;
+        }
+        .pricing-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                    </svg>
+                    <div>
+                        <h1 class="text-2xl font-bold">GitAntivirus</h1>
+                        <p class="text-sm text-gray-200">Billing & Orders</p>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="index.html" class="hover:text-gray-200">Dashboard</a>
+                    <a href="#pricing" class="hover:text-gray-200">Pricing</a>
+                    <a href="#orders" class="hover:text-gray-200">Orders</a>
+                    <a href="billing.html" class="hover:text-gray-200 font-semibold">Billing</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Info Banner -->
+        <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-8 rounded-r">
+            <div class="flex items-center">
+                <svg class="w-6 h-6 text-yellow-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <div>
+                    <p class="text-yellow-800 font-semibold">Demo Mode - Placeholder Integration</p>
+                    <p class="text-yellow-700 text-sm">This is a scaffold for Stripe Checkout integration. No actual payments are processed.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing Plans -->
+        <div id="pricing" class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Choose Your Plan</h2>
+                <p class="text-gray-600">Select the security package that fits your needs</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Free Plan -->
+                <div class="pricing-card bg-white rounded-lg shadow-md p-6 border-2 border-gray-200">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Open Source</h3>
+                        <div class="text-4xl font-bold text-gray-900 mb-2">$0</div>
+                        <p class="text-gray-600">Forever free</p>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Basic security scans
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            SmartBrain orchestrator
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Community support
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            GitHub Actions integration
+                        </li>
+                    </ul>
+                    <button onclick="selectPlan('free')" class="w-full bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
+                        Get Started
+                    </button>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="pricing-card bg-white rounded-lg shadow-xl p-6 border-4 border-blue-500 relative">
+                    <div class="absolute top-0 right-0 bg-blue-500 text-white px-3 py-1 text-sm font-semibold rounded-bl-lg rounded-tr-lg">
+                        POPULAR
+                    </div>
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Professional</h3>
+                        <div class="text-4xl font-bold text-blue-600 mb-2">$99</div>
+                        <p class="text-gray-600">per month</p>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Everything in Free
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Advanced vulnerability detection
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Automated PR creation
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Priority support
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Custom integrations
+                        </li>
+                    </ul>
+                    <button onclick="selectPlan('pro')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
+                        Subscribe Now
+                    </button>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="pricing-card bg-white rounded-lg shadow-md p-6 border-2 border-gray-200">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Enterprise</h3>
+                        <div class="text-4xl font-bold text-purple-600 mb-2">Custom</div>
+                        <p class="text-gray-600">Contact us</p>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Everything in Pro
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Unlimited repositories
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Dedicated support team
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Custom SLA
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            On-premise deployment
+                        </li>
+                    </ul>
+                    <button onclick="selectPlan('enterprise')" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order History -->
+        <div id="orders" class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Order History</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plan</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#ORD-001</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Open Source</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$0.00</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2025-12-31</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-gray-500 text-sm mt-4 text-center">Currently on Free plan</p>
+        </div>
+
+        <!-- Payment Integration Info -->
+        <div class="bg-blue-50 rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">💳 Payment Integration</h3>
+            <div class="space-y-3 text-gray-700">
+                <p><strong>This is a placeholder for Stripe Checkout integration.</strong></p>
+                <p>In production, this page would:</p>
+                <ul class="list-disc list-inside space-y-1 ml-4">
+                    <li>Initialize Stripe.js with your publishable key</li>
+                    <li>Create a Checkout Session via backend API</li>
+                    <li>Redirect to Stripe's hosted checkout page</li>
+                    <li>Handle success/cancel callbacks</li>
+                    <li>Update subscription status in database</li>
+                </ul>
+                <div class="mt-4 bg-white rounded p-4 border border-blue-200">
+                    <p class="text-sm font-mono text-gray-600">
+                        <strong>Example Integration:</strong><br>
+                        // Backend endpoint: /api/create-checkout-session<br>
+                        // Stripe API: stripe.checkout.sessions.create()<br>
+                        // Success URL: /billing?success=true<br>
+                        // Cancel URL: /billing?canceled=true
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12 py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm">🤖 GitAntivirus Billing v1.0.0</p>
+            <p class="text-xs text-gray-400 mt-2">Secure payments powered by Stripe (when integrated)</p>
+            <div class="mt-4 space-x-4">
+                <a href="index.html" class="text-gray-400 hover:text-white text-sm">Dashboard</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm">Terms</a>
+                <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Placeholder for Stripe integration
+        function selectPlan(plan) {
+            console.log('Selected plan:', plan);
+            
+            if (plan === 'free') {
+                alert('✅ Free plan is already active!\n\nYou have full access to:\n- SmartBrain orchestrator\n- Basic security scans\n- GitHub Actions integration\n- Community support');
+                return;
+            }
+            
+            if (plan === 'enterprise') {
+                alert('📧 Contact us at: sales@gitantivirus.com\n\nOur team will help you with:\n- Custom pricing\n- Enterprise features\n- Dedicated support\n- On-premise deployment');
+                return;
+            }
+            
+            // For Pro plan - would trigger Stripe Checkout
+            alert('💳 Stripe Checkout Integration\n\nIn production, this would:\n\n1. Create a Checkout Session via API\n2. Redirect to Stripe hosted page\n3. Process payment securely\n4. Activate Pro features\n\nAPI Endpoint: /api/create-checkout-session\nPlan: ' + plan.toUpperCase());
+            
+            // Example Stripe integration (commented out):
+            /*
+            fetch('/api/create-checkout-session', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ plan: plan })
+            })
+            .then(res => res.json())
+            .then(data => {
+                const stripe = Stripe('pk_test_YOUR_PUBLISHABLE_KEY');
+                return stripe.redirectToCheckout({ sessionId: data.sessionId });
+            })
+            .catch(err => console.error('Error:', err));
+            */
+        }
+
+        // Check for payment status in URL (success/cancel)
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success')) {
+            alert('✅ Payment successful!\n\nYour Pro subscription is now active.\nThank you for supporting GitAntivirus!');
+        } else if (urlParams.get('canceled')) {
+            alert('❌ Payment canceled\n\nNo charges were made.\nYou can try again anytime.');
+        }
+    </script>
+</body>
+</html>
