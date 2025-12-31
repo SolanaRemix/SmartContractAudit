@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartContractAudit - CuberAi Dashboard</title>
+    <meta name="description" content="SmartContractAudit control panel - Monitor your smart contract security scans and deployments">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="text-4xl">🧠</div>
+                    <div>
+                        <h1 class="text-2xl font-bold">SmartContractAudit</h1>
+                        <p class="text-sm opacity-90">CuberAi GitAntivirus Dashboard</p>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="index.html" class="hover:underline font-semibold">Dashboard</a>
+                    <a href="billing.html" class="hover:underline">Billing</a>
+                    <a href="https://github.com/SolanaRemix/SmartContractAudit" class="hover:underline" target="_blank">GitHub</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Status Banner -->
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+            <div class="flex items-center">
+                <span class="text-xl mr-2">✅</span>
+                <div>
+                    <strong>System Status: Operational</strong>
+                    <p class="text-sm">All services running. Last scan: <span id="last-scan">Loading...</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Stat Card 1 -->
+            <div class="bg-white rounded-lg shadow-md p-6 card-hover transition-all duration-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Scans Today</p>
+                        <p class="text-3xl font-bold text-gray-800" id="scans-today">0</p>
+                    </div>
+                    <div class="text-4xl">🔍</div>
+                </div>
+            </div>
+
+            <!-- Stat Card 2 -->
+            <div class="bg-white rounded-lg shadow-md p-6 card-hover transition-all duration-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Security Issues</p>
+                        <p class="text-3xl font-bold text-green-600" id="issues-found">0</p>
+                    </div>
+                    <div class="text-4xl">🔐</div>
+                </div>
+            </div>
+
+            <!-- Stat Card 3 -->
+            <div class="bg-white rounded-lg shadow-md p-6 card-hover transition-all duration-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Deployments</p>
+                        <p class="text-3xl font-bold text-blue-600" id="deployments">0</p>
+                    </div>
+                    <div class="text-4xl">🚀</div>
+                </div>
+            </div>
+
+            <!-- Stat Card 4 -->
+            <div class="bg-white rounded-lg shadow-md p-6 card-hover transition-all duration-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Health Score</p>
+                        <p class="text-3xl font-bold text-purple-600" id="health-score">100%</p>
+                    </div>
+                    <div class="text-4xl">💚</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Recent Scans -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <span class="mr-2">🔍</span> Recent Scans
+                </h2>
+                <div id="recent-scans" class="space-y-3">
+                    <p class="text-gray-500 text-sm">No scans available. Run a scan to see results here.</p>
+                </div>
+            </div>
+
+            <!-- Recent Audits -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <span class="mr-2">🔐</span> Recent Audits
+                </h2>
+                <div id="recent-audits" class="space-y-3">
+                    <p class="text-gray-500 text-sm">No audits available. Run an audit to see results here.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <span class="mr-2">⚡</span> Quick Actions
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button onclick="alert('Run: ./scripts/master.sh scan')" class="bg-blue-500 text-white px-4 py-3 rounded-lg hover:bg-blue-600 transition-colors">
+                    🔍 Run Scan
+                </button>
+                <button onclick="alert('Run: ./scripts/master.sh audit')" class="bg-purple-500 text-white px-4 py-3 rounded-lg hover:bg-purple-600 transition-colors">
+                    🔐 Run Audit
+                </button>
+                <button onclick="alert('Run: ./scripts/master.sh health')" class="bg-green-500 text-white px-4 py-3 rounded-lg hover:bg-green-600 transition-colors">
+                    💚 Health Check
+                </button>
+                <button onclick="alert('Run: ./scripts/master.sh orchestrate')" class="bg-orange-500 text-white px-4 py-3 rounded-lg hover:bg-orange-600 transition-colors">
+                    🎯 Orchestrate
+                </button>
+            </div>
+        </div>
+
+        <!-- Configuration -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <span class="mr-2">⚙️</span> Configuration
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">DRY_RUN Mode</label>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="dry-run" class="mr-2" checked disabled>
+                        <span class="text-sm text-gray-600">Enabled (Safe mode)</span>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Bot Pings</label>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="bot-pings" class="mr-2" disabled>
+                        <span class="text-sm text-gray-600">Disabled (Opt-in required)</span>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Max PRs per Run</label>
+                    <input type="number" value="3" class="border rounded px-3 py-2 w-full" disabled>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Allowlist Orgs</label>
+                    <input type="text" placeholder="org1,org2,org3" class="border rounded px-3 py-2 w-full" disabled>
+                </div>
+            </div>
+            <p class="text-sm text-gray-500 mt-4">
+                ℹ️ Configuration is managed via <code class="bg-gray-100 px-2 py-1 rounded">config/repair.json</code> and environment variables.
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-4">
+                <span class="text-4xl">🧠</span>
+            </div>
+            <p class="text-lg mb-2">SmartContractAudit - CuberAi GitAntivirus</p>
+            <p class="text-sm text-gray-400 mb-4">Securing smart contracts with automated scanning and auditing</p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="https://github.com/SolanaRemix/SmartContractAudit" class="hover:text-blue-400" target="_blank">GitHub</a>
+                <a href="billing.html" class="hover:text-blue-400">Billing</a>
+                <a href="#" class="hover:text-blue-400">Documentation</a>
+                <a href="#" class="hover:text-blue-400">Support</a>
+            </div>
+            <p class="text-xs text-gray-500 mt-4">
+                © 2024 SmartContractAudit. Open Source under MIT License.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Placeholder data - replace with actual API calls
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current time for last scan
+            document.getElementById('last-scan').textContent = new Date().toLocaleString();
+            
+            // Placeholder stats
+            document.getElementById('scans-today').textContent = '5';
+            document.getElementById('issues-found').textContent = '0';
+            document.getElementById('deployments').textContent = '2';
+            document.getElementById('health-score').textContent = '100%';
+            
+            // Load recent scans (placeholder)
+            const recentScans = document.getElementById('recent-scans');
+            recentScans.innerHTML = `
+                <div class="border-l-4 border-blue-500 pl-3 py-2">
+                    <p class="text-sm font-medium">Workspace scan completed</p>
+                    <p class="text-xs text-gray-500">2 minutes ago • 15 contracts found</p>
+                </div>
+                <div class="border-l-4 border-green-500 pl-3 py-2">
+                    <p class="text-sm font-medium">Security audit passed</p>
+                    <p class="text-xs text-gray-500">1 hour ago • No issues found</p>
+                </div>
+            `;
+            
+            // Load recent audits (placeholder)
+            const recentAudits = document.getElementById('recent-audits');
+            recentAudits.innerHTML = `
+                <div class="border-l-4 border-green-500 pl-3 py-2">
+                    <p class="text-sm font-medium">Dependencies audit clean</p>
+                    <p class="text-xs text-gray-500">30 minutes ago • All packages secure</p>
+                </div>
+                <div class="border-l-4 border-purple-500 pl-3 py-2">
+                    <p class="text-sm font-medium">Health check passed</p>
+                    <p class="text-xs text-gray-500">2 hours ago • All systems operational</p>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

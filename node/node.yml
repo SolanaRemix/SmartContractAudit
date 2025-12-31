@@ -1,0 +1,122 @@
+# Node Bot Scheduled Workflow Template
+# 
+# This is a TEMPLATE file, not an active workflow
+# Place in .github/workflows/ to activate
+# 
+# Note: This file is located in node/ to avoid accidentally activating it
+
+name: Node Bot - Smart Contract Scanner
+
+on:
+  schedule:
+    # Run weekly on Monday at 9 AM UTC (adjust as needed)
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run in dry-run mode'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      bot_pings_enabled:
+        description: 'Enable bot pings'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
+  BOT_PINGS_ENABLED: ${{ github.event.inputs.bot_pings_enabled || 'false' }}
+
+jobs:
+  run-bot:
+    name: 🤖 Run Smart Contract Scanner Bot
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📦 Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: 📥 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: 📚 Install bot dependencies
+        working-directory: node/bot
+        run: pnpm install
+      
+      - name: 🤖 Run bot in dry-run mode
+        if: env.DRY_RUN == 'true'
+        working-directory: node/bot
+        env:
+          DRY_RUN: 'true'
+          BOT_PINGS_ENABLED: ${{ env.BOT_PINGS_ENABLED }}
+          ALLOWLIST_ORGS: ${{ vars.ALLOWLIST_ORGS || '' }}
+          MAX_PRS_PER_RUN: ${{ vars.MAX_PRS_PER_RUN || '3' }}
+        run: |
+          echo "Running bot in dry-run mode (safe)..."
+          node index.js
+      
+      - name: 🚀 Run bot in live mode
+        if: env.DRY_RUN == 'false'
+        working-directory: node/bot
+        env:
+          DRY_RUN: 'false'
+          BOT_PINGS_ENABLED: ${{ env.BOT_PINGS_ENABLED }}
+          GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+          ALLOWLIST_ORGS: ${{ vars.ALLOWLIST_ORGS || '' }}
+          MAX_PRS_PER_RUN: ${{ vars.MAX_PRS_PER_RUN || '3' }}
+        run: |
+          echo "Running bot in live mode..."
+          node index.js
+      
+      - name: 📊 Upload bot logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bot-logs-${{ github.run_id }}
+          path: node/logs/
+          retention-days: 30
+      
+      - name: 📝 Summary
+        if: always()
+        run: |
+          echo "## 🤖 Bot Run Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Configuration:**" >> $GITHUB_STEP_SUMMARY
+          echo "- DRY_RUN: \`${{ env.DRY_RUN }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- BOT_PINGS_ENABLED: \`${{ env.BOT_PINGS_ENABLED }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f "node/logs/summary.json" ]; then
+            echo "**Summary:**" >> $GITHUB_STEP_SUMMARY
+            cat node/logs/summary.json >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Logs uploaded as artifact: bot-logs-${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+
+# To activate this workflow:
+# 1. Copy to .github/workflows/node-bot.yml
+# 2. Set secrets:
+#    - BOT_GITHUB_TOKEN (optional, for write operations)
+# 3. Set variables (optional):
+#    - ALLOWLIST_ORGS (comma-separated list)
+#    - MAX_PRS_PER_RUN (default: 3)
+# 4. Adjust schedule cron expression as needed
