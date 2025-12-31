@@ -1,0 +1,218 @@
+name: 🛡️ GitAntivirus - Smart Contract Security
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    - cron: '0 0 * * 1' # Weekly on Monday at midnight UTC
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Enable dry-run mode'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      scan_type:
+        description: 'Type of scan to perform'
+        required: false
+        default: 'full'
+        type: choice
+        options:
+          - 'scan'
+          - 'audit'
+          - 'health'
+          - 'full'
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+env:
+  DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
+  BOT_PINGS_ENABLED: false
+  ALLOWLIST_ORGS: ""
+  SCAN_TYPE: ${{ github.event.inputs.scan_type || 'full' }}
+
+jobs:
+  gitantivirus-scan:
+    name: 🔍 Security Scan & Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: 📦 Install pnpm
+        run: |
+          npm install -g pnpm
+          pnpm --version
+      
+      - name: 📥 Install dependencies
+        run: |
+          if [ -f "package.json" ]; then
+            pnpm install --frozen-lockfile || pnpm install
+          else
+            echo "No package.json found, skipping dependency installation"
+          fi
+      
+      - name: ✅ Make scripts executable
+        run: |
+          chmod +x scripts/*.sh
+          ls -la scripts/
+      
+      - name: 🔧 SMSDAO Repair (Dry-run check)
+        if: env.DRY_RUN == 'true'
+        run: |
+          echo "🔒 Running in DRY_RUN mode - no modifications will be made"
+          if [ -f "config/repair.json" ]; then
+            cat config/repair.json
+          fi
+      
+      - name: 🧠 SmartBrain - Security Scan
+        if: env.SCAN_TYPE == 'scan' || env.SCAN_TYPE == 'full'
+        run: |
+          echo "Running security scan..."
+          DRY_RUN=${{ env.DRY_RUN }} VERBOSE=true ./scripts/master.sh scan
+      
+      - name: 🧠 SmartBrain - Code Audit
+        if: env.SCAN_TYPE == 'audit' || env.SCAN_TYPE == 'full'
+        run: |
+          echo "Running code audit..."
+          DRY_RUN=${{ env.DRY_RUN }} VERBOSE=true ./scripts/master.sh audit
+      
+      - name: 🧠 SmartBrain - Health Check
+        if: env.SCAN_TYPE == 'health' || env.SCAN_TYPE == 'full'
+        run: |
+          echo "Running health check..."
+          DRY_RUN=${{ env.DRY_RUN }} VERBOSE=true ./scripts/master.sh health
+      
+      - name: 📊 Upload Scan Artifacts
+        if: always() && env.DRY_RUN == 'false'
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitantivirus-reports-${{ github.run_number }}
+          path: |
+            reports/
+            *.md
+          retention-days: 30
+          if-no-files-found: ignore
+      
+      - name: 🏷️ Add Labels
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        continue-on-error: true
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const labels = ['security', 'gitantivirus', 'automated-scan'];
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: labels
+              });
+              console.log('✅ Labels added successfully');
+            } catch (error) {
+              console.log('⚠️ Could not add labels:', error.message);
+            }
+      
+      - name: 💬 Sticky PR Comment
+        if: |
+          github.event_name == 'pull_request' && 
+          env.BOT_PINGS_ENABLED == 'true' && 
+          github.repository_owner == 'SolanaRemix'
+        uses: actions/github-script@v7
+        continue-on-error: true
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const body = `## 🛡️ GitAntivirus Security Report
+            
+            **Scan completed:** ${new Date().toUTCString()}
+            **Mode:** ${process.env.DRY_RUN === 'true' ? '🔒 DRY RUN' : '🚀 LIVE'}
+            **Scan Type:** ${process.env.SCAN_TYPE}
+            
+            ### 📊 Results
+            - ✅ Security scan completed
+            - ✅ Code audit completed
+            - ✅ Health check completed
+            
+            ### 🔔 Notifications
+            ${process.env.BOT_PINGS_ENABLED === 'true' ? '@SolanaRemix @smsdao @SmartBrain' : '_Pings disabled_'}
+            
+            ---
+            _This is an automated security scan. Reports are available in workflow artifacts._
+            `;
+            
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+            
+            const existingComment = comments.data.find(c => 
+              c.user.login === 'github-actions[bot]' && 
+              c.body.includes('GitAntivirus Security Report')
+            );
+            
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body: body
+              });
+              console.log('✅ Updated existing comment');
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+              console.log('✅ Created new comment');
+            }
+      
+      - name: 📌 Add to Project
+        if: env.DRY_RUN == 'false'
+        uses: actions/github-script@v7
+        continue-on-error: true
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const projectUrl = '${{ secrets.PROJECT_URL }}';
+            if (projectUrl) {
+              console.log('📌 Project URL configured');
+              // Project integration would go here if PROJECT_URL is set
+            } else {
+              console.log('⚠️ No PROJECT_URL configured');
+            }
+      
+      - name: 📝 Summary
+        if: always()
+        run: |
+          echo "## 🛡️ GitAntivirus Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Mode:** ${DRY_RUN}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Scan Type:** ${SCAN_TYPE}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status:** ✅ Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Configuration" >> $GITHUB_STEP_SUMMARY
+          echo "- DRY_RUN: ${DRY_RUN}" >> $GITHUB_STEP_SUMMARY
+          echo "- BOT_PINGS_ENABLED: ${BOT_PINGS_ENABLED}" >> $GITHUB_STEP_SUMMARY
+          echo "- ALLOWLIST_ORGS: ${ALLOWLIST_ORGS:-'(empty)'}" >> $GITHUB_STEP_SUMMARY

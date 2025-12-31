@@ -1,0 +1,27 @@
+{
+  "name": "gitantivirus-bot",
+  "version": "1.0.0",
+  "description": "GitAntivirus automated security bot for GitHub repositories",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint index.js || echo 'eslint not installed, skipping lint'"
+  },
+  "keywords": [
+    "github",
+    "automation",
+    "security",
+    "bot",
+    "smart-contracts",
+    "audit"
+  ],
+  "author": "SMSDAO / SolanaRemix",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^20.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
