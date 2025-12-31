@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing - SmartContractAudit</title>
+    <meta name="description" content="SmartContractAudit billing and subscription plans">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .price-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="text-4xl">🧠</div>
+                    <div>
+                        <h1 class="text-2xl font-bold">SmartContractAudit</h1>
+                        <p class="text-sm opacity-90">Billing & Plans</p>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="index.html" class="hover:underline">Dashboard</a>
+                    <a href="billing.html" class="hover:underline font-semibold">Billing</a>
+                    <a href="https://github.com/SolanaRemix/SmartContractAudit" class="hover:underline" target="_blank">GitHub</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <!-- Pricing Header -->
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Choose Your Plan</h2>
+            <p class="text-xl text-gray-600">Automated smart contract security for everyone</p>
+            <p class="text-sm text-gray-500 mt-2">
+                ✨ Open source core features are free forever • Premium plans add advanced capabilities
+            </p>
+        </div>
+
+        <!-- Pricing Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <!-- Free Plan -->
+            <div class="bg-white rounded-lg shadow-lg p-8 price-card transition-all duration-300">
+                <div class="text-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Open Source</h3>
+                    <div class="text-5xl font-bold text-gray-900 mb-2">$0</div>
+                    <p class="text-gray-500">Forever free</p>
+                </div>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span class="text-gray-700">SmartBrain orchestrator</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span class="text-gray-700">GitAntivirus workflow</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span class="text-gray-700">Unlimited scans</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span class="text-gray-700">Security audits</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span class="text-gray-700">Health monitoring</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span class="text-gray-700">Community support</span>
+                    </li>
+                </ul>
+                <a href="https://github.com/SolanaRemix/SmartContractAudit" target="_blank" class="block w-full bg-gray-200 text-gray-800 text-center font-semibold py-3 rounded-lg hover:bg-gray-300 transition-colors">
+                    Get Started
+                </a>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg shadow-lg p-8 price-card transition-all duration-300 text-white relative">
+                <div class="absolute top-4 right-4 bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-full">
+                    POPULAR
+                </div>
+                <div class="text-center mb-6">
+                    <h3 class="text-2xl font-bold mb-2">Pro</h3>
+                    <div class="text-5xl font-bold mb-2">$99</div>
+                    <p class="opacity-90">per month</p>
+                </div>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-start">
+                        <span class="mr-2">✓</span>
+                        <span>Everything in Open Source</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2">✓</span>
+                        <span>Advanced bot automation</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2">✓</span>
+                        <span>Custom deployment pipelines</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2">✓</span>
+                        <span>Priority support</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2">✓</span>
+                        <span>Advanced analytics</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="mr-2">✓</span>
+                        <span>SLA guarantees</span>
+                    </li>
+                </ul>
+                <button onclick="openCheckout('pro')" class="block w-full bg-white text-purple-600 text-center font-semibold py-3 rounded-lg hover:bg-gray-100 transition-colors">
+                    Subscribe to Pro
+                </button>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div class="bg-white rounded-lg shadow-lg p-8 price-card transition-all duration-300">
+                <div class="text-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
+                    <div class="text-5xl font-bold text-gray-900 mb-2">Custom</div>
+                    <p class="text-gray-500">Contact us</p>
+                </div>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span class="text-gray-700">Everything in Pro</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span class="text-gray-700">Dedicated infrastructure</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span class="text-gray-700">Custom integrations</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span class="text-gray-700">24/7 support</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span class="text-gray-700">Training & onboarding</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span class="text-gray-700">Custom SLAs</span>
+                    </li>
+                </ul>
+                <button onclick="alert('Contact: enterprise@smartcontractaudit.example')" class="block w-full bg-gray-800 text-white text-center font-semibold py-3 rounded-lg hover:bg-gray-700 transition-colors">
+                    Contact Sales
+                </button>
+            </div>
+        </div>
+
+        <!-- Payment Info -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-12">
+            <div class="flex items-start">
+                <span class="text-3xl mr-4">💳</span>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Secure Payment Processing</h3>
+                    <p class="text-gray-700 mb-4">
+                        Payments are processed securely through Stripe. We never store your payment information.
+                    </p>
+                    <div class="flex space-x-4 text-sm text-gray-600">
+                        <span>✓ PCI DSS Compliant</span>
+                        <span>✓ SSL Encrypted</span>
+                        <span>✓ Cancel Anytime</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+            <div class="space-y-4">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-900 mb-2">Is the open source version really free?</h3>
+                    <p class="text-gray-700">Yes! All core features including SmartBrain orchestrator, GitAntivirus workflow, and security scanning are free and open source forever.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-900 mb-2">What payment methods do you accept?</h3>
+                    <p class="text-gray-700">We accept all major credit cards (Visa, MasterCard, American Express) and other payment methods through Stripe.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-900 mb-2">Can I cancel my subscription anytime?</h3>
+                    <p class="text-gray-700">Yes, you can cancel your subscription at any time. You'll continue to have access until the end of your billing period.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="font-bold text-gray-900 mb-2">Do you offer refunds?</h3>
+                    <p class="text-gray-700">We offer a 14-day money-back guarantee for new Pro subscriptions. Contact support for refund requests.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stripe Checkout Form (Hidden) -->
+        <div id="checkout-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Subscribe to <span id="plan-name">Pro</span></h3>
+                <p class="text-gray-600 mb-6">
+                    ⚠️ This is a placeholder checkout form. In production, this would integrate with Stripe Checkout API.
+                </p>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" placeholder="your@email.com" class="w-full border rounded px-3 py-2">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Card Information</label>
+                    <div class="border rounded px-3 py-2 text-gray-400">
+                        [Stripe Card Element would go here]
+                    </div>
+                </div>
+                <div class="flex space-x-4">
+                    <button onclick="closeCheckout()" class="flex-1 bg-gray-200 text-gray-800 font-semibold py-2 rounded hover:bg-gray-300 transition-colors">
+                        Cancel
+                    </button>
+                    <button onclick="submitCheckout()" class="flex-1 bg-purple-600 text-white font-semibold py-2 rounded hover:bg-purple-700 transition-colors">
+                        Subscribe
+                    </button>
+                </div>
+                <p class="text-xs text-gray-500 mt-4 text-center">
+                    By subscribing, you agree to our Terms of Service and Privacy Policy.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-4">
+                <span class="text-4xl">🧠</span>
+            </div>
+            <p class="text-lg mb-2">SmartContractAudit - CuberAi GitAntivirus</p>
+            <p class="text-sm text-gray-400 mb-4">Securing smart contracts with automated scanning and auditing</p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="https://github.com/SolanaRemix/SmartContractAudit" class="hover:text-blue-400" target="_blank">GitHub</a>
+                <a href="index.html" class="hover:text-blue-400">Dashboard</a>
+                <a href="#" class="hover:text-blue-400">Documentation</a>
+                <a href="#" class="hover:text-blue-400">Support</a>
+            </div>
+            <p class="text-xs text-gray-500 mt-4">
+                © 2024 SmartContractAudit. Open Source under MIT License.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function openCheckout(plan) {
+            document.getElementById('plan-name').textContent = plan.charAt(0).toUpperCase() + plan.slice(1);
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        function submitCheckout() {
+            alert('⚠️ Placeholder: In production, this would redirect to Stripe Checkout.\n\nStripe integration requires:\n1. Stripe publishable key\n2. Stripe secret key (server-side)\n3. Webhook endpoints\n4. Product/price IDs\n\nNo actual payment processing occurs in this demo.');
+            closeCheckout();
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeCheckout();
+            }
+        });
+    </script>
+</body>
+</html>

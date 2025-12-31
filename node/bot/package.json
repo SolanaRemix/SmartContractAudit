@@ -1,0 +1,25 @@
+{
+  "name": "smartcontract-audit-bot",
+  "version": "1.0.0",
+  "description": "GitHub bot for smart contract security scanning with dry-run defaults",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "echo 'Lint not configured yet'"
+  },
+  "keywords": [
+    "github",
+    "bot",
+    "security",
+    "smart-contracts",
+    "automation"
+  ],
+  "author": "SmartContractAudit",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^20.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
