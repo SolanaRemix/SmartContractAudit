@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing - SmartContractAudit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-2xl font-bold text-blue-600">
+                    <i class="fas fa-shield-alt"></i> SmartContractAudit
+                </a>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600">Dashboard</a>
+                    <a href="#pricing" class="text-gray-700 hover:text-blue-600">Pricing</a>
+                    <a href="https://github.com/SolanaRemix/SmartContractAudit" class="text-gray-700 hover:text-blue-600">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl font-bold mb-4">Sponsorship & Billing</h1>
+            <p class="text-xl text-blue-100">Support open-source security and get premium features</p>
+        </div>
+    </section>
+
+    <!-- Pricing Tiers -->
+    <section id="pricing" class="py-16">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">Choose Your Tier</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Bronze -->
+                <div class="bg-white rounded-lg shadow-lg p-8 border-2 border-gray-200">
+                    <div class="text-4xl mb-4 text-center">🥉</div>
+                    <h3 class="text-2xl font-bold text-center mb-4">Bronze</h3>
+                    <div class="text-center mb-6">
+                        <div class="text-4xl font-bold">$100</div>
+                        <div class="text-gray-500">/month</div>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Name in README</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Sponsor badge</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Community access</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Sponsor updates</span>
+                        </li>
+                    </ul>
+                    <a href="#stripe" class="block w-full bg-gray-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-gray-700 transition">
+                        Select Bronze
+                    </a>
+                </div>
+
+                <!-- Silver -->
+                <div class="bg-white rounded-lg shadow-lg p-8 border-2 border-gray-300">
+                    <div class="text-4xl mb-4 text-center">🥈</div>
+                    <h3 class="text-2xl font-bold text-center mb-4">Silver</h3>
+                    <div class="text-center mb-6">
+                        <div class="text-4xl font-bold">$500</div>
+                        <div class="text-gray-500">/month</div>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>All Bronze benefits</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Small logo in README</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Priority support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Roadmap preview</span>
+                        </li>
+                    </ul>
+                    <a href="#stripe" class="block w-full bg-gray-500 text-white text-center py-3 rounded-lg font-semibold hover:bg-gray-600 transition">
+                        Select Silver
+                    </a>
+                </div>
+
+                <!-- Gold (Popular) -->
+                <div class="bg-white rounded-lg shadow-xl p-8 border-4 border-yellow-500 transform scale-105 relative">
+                    <div class="absolute top-0 right-0 bg-yellow-500 text-white px-4 py-1 rounded-bl-lg rounded-tr-lg text-sm font-bold">
+                        POPULAR
+                    </div>
+                    <div class="text-4xl mb-4 text-center">🥇</div>
+                    <h3 class="text-2xl font-bold text-center mb-4">Gold</h3>
+                    <div class="text-center mb-6">
+                        <div class="text-4xl font-bold">$2,000</div>
+                        <div class="text-gray-500">/month</div>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>All Silver benefits</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Medium logo placement</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Dedicated support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>3 feature requests/year</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Co-marketing</span>
+                        </li>
+                    </ul>
+                    <a href="#stripe" class="block w-full bg-yellow-500 text-white text-center py-3 rounded-lg font-semibold hover:bg-yellow-600 transition">
+                        Select Gold
+                    </a>
+                </div>
+
+                <!-- Platinum -->
+                <div class="bg-white rounded-lg shadow-lg p-8 border-2 border-purple-500">
+                    <div class="text-4xl mb-4 text-center">💎</div>
+                    <h3 class="text-2xl font-bold text-center mb-4">Platinum</h3>
+                    <div class="text-center mb-6">
+                        <div class="text-4xl font-bold">$50k+</div>
+                        <div class="text-gray-500">/year</div>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>All Gold benefits</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Large logo homepage</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Weekly liaison</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Custom SLA</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Private security alerts</span>
+                        </li>
+                    </ul>
+                    <a href="mailto:funding@cuberai.example" class="block w-full bg-purple-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-purple-700 transition">
+                        Contact Sales
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <p class="text-gray-600">All tiers support open-source development. No control over project decisions. See <a href="https://github.com/SolanaRemix/SmartContractAudit/blob/main/GOVERNANCE.md" class="text-blue-600 hover:underline">GOVERNANCE.md</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Methods -->
+    <section id="stripe" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">Payment Methods</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <!-- Stripe -->
+                <div class="bg-gray-50 rounded-lg p-8 mb-8">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-credit-card text-4xl text-blue-600 mr-4"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold">Stripe Checkout</h3>
+                            <p class="text-gray-600">Credit card, debit card, or bank transfer</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded p-6 border-2 border-blue-200">
+                        <h4 class="font-semibold mb-3">How to Pay with Stripe:</h4>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                            <li>Click "Sponsor" button on our <a href="https://github.com/sponsors/SolanaRemix" class="text-blue-600 hover:underline">GitHub Sponsors</a> page</li>
+                            <li>Select your desired tier</li>
+                            <li>Complete payment through Stripe Checkout</li>
+                            <li>Automatic recognition within 24 hours</li>
+                        </ol>
+                        <div class="mt-6">
+                            <a href="https://github.com/sponsors/SolanaRemix" class="bg-blue-600 text-white px-6 py-3 rounded-lg inline-block hover:bg-blue-700 transition">
+                                <i class="fab fa-github"></i> Sponsor on GitHub
+                            </a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-4">
+                            <i class="fas fa-lock"></i> Secure payment processing by Stripe. No credit card info stored on our servers.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Cash App -->
+                <div class="bg-gray-50 rounded-lg p-8 mb-8">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-dollar-sign text-4xl text-green-600 mr-4"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold">Cash App</h3>
+                            <p class="text-gray-600">Direct payment via Cash App</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded p-6 border-2 border-green-200">
+                        <h4 class="font-semibold mb-3">How to Pay with Cash App:</h4>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                            <li>Send payment to <strong>$SmartContractAudit</strong> (placeholder)</li>
+                            <li>Include your GitHub username in the note</li>
+                            <li>Email receipt to <a href="mailto:funding@cuberai.example" class="text-blue-600 hover:underline">funding@cuberai.example</a></li>
+                            <li>We'll confirm and add you to sponsors list</li>
+                        </ol>
+                        <div class="mt-6 p-4 bg-yellow-50 rounded border border-yellow-200">
+                            <p class="text-sm text-yellow-800">
+                                <i class="fas fa-info-circle"></i> <strong>Note:</strong> Cash App payments are manual. Please allow 2-3 business days for processing and recognition.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cryptocurrency -->
+                <div class="bg-gray-50 rounded-lg p-8 mb-8">
+                    <div class="flex items-center mb-4">
+                        <i class="fab fa-bitcoin text-4xl text-orange-500 mr-4"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold">Cryptocurrency</h3>
+                            <p class="text-gray-600">Bitcoin, Ethereum, Solana, USDC, USDT</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded p-6 border-2 border-orange-200">
+                        <h4 class="font-semibold mb-3">Crypto Payments:</h4>
+                        <p class="text-gray-700 mb-4">Contact us for wallet addresses:</p>
+                        <ul class="space-y-2 text-gray-700 mb-4">
+                            <li><i class="fab fa-bitcoin text-orange-500"></i> Bitcoin (BTC)</li>
+                            <li><i class="fab fa-ethereum text-blue-500"></i> Ethereum (ETH)</li>
+                            <li><i class="fas fa-coins text-purple-500"></i> Solana (SOL)</li>
+                            <li><i class="fas fa-dollar-sign text-green-500"></i> USDC / USDT</li>
+                        </ul>
+                        <div class="mt-6">
+                            <a href="mailto:funding@cuberai.example?subject=Crypto%20Payment%20Request" class="bg-orange-600 text-white px-6 py-3 rounded-lg inline-block hover:bg-orange-700 transition">
+                                Request Wallet Address
+                            </a>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-4">
+                            <i class="fas fa-shield-alt"></i> Always verify wallet addresses directly with us before sending.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Bank Transfer / Invoice -->
+                <div class="bg-gray-50 rounded-lg p-8">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-file-invoice-dollar text-4xl text-purple-600 mr-4"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold">Bank Transfer / Invoice</h3>
+                            <p class="text-gray-600">For Platinum sponsors and enterprise</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded p-6 border-2 border-purple-200">
+                        <h4 class="font-semibold mb-3">Payment via Invoice:</h4>
+                        <p class="text-gray-700 mb-4">
+                            For Platinum tier or custom sponsorships, we can provide invoices and accept bank transfers.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 mb-4">
+                            <li>Net 30 payment terms available</li>
+                            <li>Annual invoicing options</li>
+                            <li>PO numbers accepted</li>
+                            <li>Multiple currency support</li>
+                        </ul>
+                        <div class="mt-6">
+                            <a href="mailto:funding@cuberai.example?subject=Invoice%20Request" class="bg-purple-600 text-white px-6 py-3 rounded-lg inline-block hover:bg-purple-700 transition">
+                                Request Invoice
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+            
+            <div class="max-w-3xl mx-auto space-y-6">
+                <div class="bg-white rounded-lg p-6 shadow">
+                    <h3 class="font-bold text-lg mb-2">Can I cancel anytime?</h3>
+                    <p class="text-gray-700">Yes! Monthly subscriptions can be canceled with 30 days notice. Annual subscriptions are non-refundable but won't auto-renew if canceled.</p>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 shadow">
+                    <h3 class="font-bold text-lg mb-2">Do sponsors control the project?</h3>
+                    <p class="text-gray-700">No. All sponsors are appreciated but have no control over project decisions. See our <a href="https://github.com/SolanaRemix/SmartContractAudit/blob/main/GOVERNANCE.md" class="text-blue-600 hover:underline">GOVERNANCE.md</a> for details.</p>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 shadow">
+                    <h3 class="font-bold text-lg mb-2">Do you provide invoices?</h3>
+                    <p class="text-gray-700">Yes! GitHub Sponsors provides automatic invoices. For direct payments, we'll send invoices upon request.</p>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 shadow">
+                    <h3 class="font-bold text-lg mb-2">What if I can't afford sponsorship?</h3>
+                    <p class="text-gray-700">No problem! Contributing code, documentation, or community support is equally valued. The tools are free and open source for everyone.</p>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 shadow">
+                    <h3 class="font-bold text-lg mb-2">How are funds used?</h3>
+                    <p class="text-gray-700">50% development, 25% infrastructure, 15% community, 10% operations. Full transparency in our governance documents.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="mb-4">Questions about billing or sponsorship?</p>
+            <p class="text-gray-400">
+                Email: <a href="mailto:funding@cuberai.example" class="text-blue-400 hover:underline">funding@cuberai.example</a>
+            </p>
+            <p class="mt-6 text-sm text-gray-400">
+                &copy; 2026 SmartContractAudit. Apache-2.0 License.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Security note: No actual payment keys included
+        // Real Stripe integration would happen server-side
+        console.log('Billing page loaded - placeholder interface');
+        console.log('No actual payment keys or secrets included (as required)');
+    </script>
+</body>
+</html>
