@@ -1,0 +1,78 @@
+{
+  "airdrop_name": "SmartContractAudit DAO - Initial Allocation",
+  "version": "1.0",
+  "snapshot_date": "2026-01-01T00:00:00Z",
+  "total_allocation": "10000000",
+  "token_symbol": "SCAUDIT",
+  "token_decimals": 18,
+  "allocations": [
+    {
+      "address": "0x1234567890123456789012345678901234567890",
+      "amount": "1000000",
+      "github_username": "contributor1",
+      "reason": "Core development and security contributions",
+      "score_breakdown": {
+        "code": 500,
+        "reviews": 200,
+        "security": 300,
+        "community": 100
+      }
+    },
+    {
+      "address": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd",
+      "amount": "750000",
+      "github_username": "contributor2",
+      "reason": "Major features and documentation",
+      "score_breakdown": {
+        "code": 600,
+        "reviews": 150,
+        "security": 0,
+        "community": 200
+      }
+    },
+    {
+      "address": "0x9876543210987654321098765432109876543210",
+      "amount": "500000",
+      "github_username": "security_researcher",
+      "reason": "Critical vulnerability discovery and security audits",
+      "score_breakdown": {
+        "code": 100,
+        "reviews": 50,
+        "security": 400,
+        "community": 50
+      }
+    },
+    {
+      "address": "0x1111111111111111111111111111111111111111",
+      "amount": "300000",
+      "github_username": "community_leader",
+      "reason": "Community building and support",
+      "score_breakdown": {
+        "code": 50,
+        "reviews": 100,
+        "security": 0,
+        "community": 350
+      }
+    },
+    {
+      "address": "0x2222222222222222222222222222222222222222",
+      "amount": "250000",
+      "github_username": "early_contributor",
+      "reason": "Early contributor bonus and consistent participation",
+      "score_breakdown": {
+        "code": 200,
+        "reviews": 75,
+        "security": 50,
+        "community": 125
+      }
+    }
+  ],
+  "metadata": {
+    "total_recipients": 5,
+    "total_allocated": "2800000",
+    "total_reserved": "7200000",
+    "reserved_for": "Future contributors, treasury, and operations",
+    "methodology_version": "1.0",
+    "notes": "This is sample data for testing. Real allocations will be calculated based on actual contributions per the scoring methodology."
+  }
+}
