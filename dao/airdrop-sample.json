@@ -1,0 +1,64 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T00:00:00Z",
+  "description": "Example airdrop allocations for SmartContractAudit DAO",
+  "total_supply": "1000000000000000000000000",
+  "recipients_count": 5,
+  "allocations": {
+    "0x1111111111111111111111111111111111111111": {
+      "amount": "100000000000000000000",
+      "score": 100,
+      "tier": "Contributor",
+      "contributions": [
+        "Merged PR #1: Security fix",
+        "Merged PR #2: Documentation update"
+      ]
+    },
+    "0x2222222222222222222222222222222222222222": {
+      "amount": "250000000000000000000",
+      "score": 250,
+      "tier": "Regular Contributor",
+      "contributions": [
+        "Multiple PRs with test coverage",
+        "Community support",
+        "Code reviews"
+      ]
+    },
+    "0x3333333333333333333333333333333333333333": {
+      "amount": "500000000000000000000",
+      "score": 500,
+      "tier": "Core Contributor",
+      "contributions": [
+        "Major feature implementation",
+        "Security audits",
+        "Documentation leadership"
+      ]
+    },
+    "0x4444444444444444444444444444444444444444": {
+      "amount": "50000000000000000000",
+      "score": 50,
+      "tier": "Contributor",
+      "contributions": [
+        "Issue reporting",
+        "Testing"
+      ]
+    },
+    "0x5555555555555555555555555555555555555555": {
+      "amount": "750000000000000000000",
+      "score": 750,
+      "tier": "Maintainer",
+      "contributions": [
+        "Project leadership",
+        "Architecture decisions",
+        "Release management",
+        "Community governance"
+      ]
+    }
+  },
+  "notes": [
+    "This is a sample allocation file for demonstration purposes",
+    "Replace with actual contributor data before distribution",
+    "All amounts in wei (18 decimals)",
+    "Scores calculated using formula in docs/dao/scoring.md"
+  ]
+}

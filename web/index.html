@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartContractAudit - Dashboard</title>
+    <meta name="description" content="Security scanning dashboard for SmartContractAudit">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .card {
+            @apply bg-white rounded-lg shadow-md p-6 mb-4;
+        }
+        .stat-card {
+            @apply bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg p-6;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-2xl font-bold text-blue-600">SmartContractAudit</h1>
+                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded">BETA</span>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="#dashboard" class="text-gray-700 hover:text-blue-600">Dashboard</a>
+                    <a href="#docs" class="text-gray-700 hover:text-blue-600">Docs</a>
+                    <a href="billing.html" class="text-gray-700 hover:text-blue-600">Billing</a>
+                    <a href="https://github.com/SolanaRemix/SmartContractAudit" class="text-gray-700 hover:text-blue-600">GitHub</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="mb-12">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Security Scanning Dashboard</h2>
+            <p class="text-xl text-gray-600 mb-6">Automated security scanning for blockchain projects</p>
+            <div class="flex space-x-4">
+                <a href="https://github.com/SolanaRemix/SmartContractAudit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+                    Get Started
+                </a>
+                <a href="#sponsor" class="bg-white text-blue-600 border-2 border-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition">
+                    Become a Sponsor
+                </a>
+            </div>
+        </section>
+
+        <!-- Stats Overview -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="stat-card">
+                <div class="text-sm font-semibold mb-2 opacity-90">Total Scans</div>
+                <div class="text-4xl font-bold mb-2">1,234</div>
+                <div class="text-sm opacity-75">+12% from last month</div>
+            </div>
+            <div class="stat-card">
+                <div class="text-sm font-semibold mb-2 opacity-90">Vulnerabilities Found</div>
+                <div class="text-4xl font-bold mb-2">89</div>
+                <div class="text-sm opacity-75">-5% from last month</div>
+            </div>
+            <div class="stat-card">
+                <div class="text-sm font-semibold mb-2 opacity-90">Active Projects</div>
+                <div class="text-4xl font-bold mb-2">42</div>
+                <div class="text-sm opacity-75">+3 new this week</div>
+            </div>
+        </section>
+
+        <!-- Recent Scans -->
+        <section class="card mb-8">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Recent Scan Runs</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Repository</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Findings</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">example/defi-protocol</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Clean</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">0 issues</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2026-01-01</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <a href="#" class="text-blue-600 hover:text-blue-800">View Report</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">example/nft-marketplace</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">Warning</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">3 issues</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2026-01-01</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <a href="#" class="text-blue-600 hover:text-blue-800">View Report</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">example/dao-contract</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">Running</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">In progress...</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2026-01-01</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <a href="#" class="text-blue-600 hover:text-blue-800">View Progress</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Artifacts & Reports -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="card">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Latest Artifacts</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium">SMARTBRAIN.log</div>
+                            <div class="text-sm text-gray-500">Agent scan logs</div>
+                        </div>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 text-sm">Download</a>
+                    </li>
+                    <li class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium">AUDIT-REPORT.md</div>
+                            <div class="text-sm text-gray-500">Comprehensive audit</div>
+                        </div>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 text-sm">Download</a>
+                    </li>
+                    <li class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium">.quarantine/</div>
+                            <div class="text-sm text-gray-500">Quarantined files</div>
+                        </div>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 text-sm">View</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Quick Links</h3>
+                <ul class="space-y-3">
+                    <li>
+                        <a href="https://github.com/SolanaRemix/SmartContractAudit/blob/main/GOVERNANCE.md" class="text-blue-600 hover:text-blue-800">
+                            📋 Governance Documentation
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/SolanaRemix/SmartContractAudit/blob/main/SECURITY.md" class="text-blue-600 hover:text-blue-800">
+                            🔒 Security Policy
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/SolanaRemix/SmartContractAudit/blob/main/docs/dao/README.md" class="text-blue-600 hover:text-blue-800">
+                            🏛️ DAO Documentation
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/SolanaRemix/SmartContractAudit/blob/main/docs/partners/README.md" class="text-blue-600 hover:text-blue-800">
+                            🤝 Partner Program
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Sponsor CTA -->
+        <section id="sponsor" class="card bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+            <h3 class="text-2xl font-bold mb-4">Support Open Source Security</h3>
+            <p class="mb-6 text-lg">Help us build better security tools for the blockchain ecosystem. Become a sponsor today!</p>
+            <div class="flex flex-wrap gap-4">
+                <a href="https://github.com/sponsors" class="bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-gray-100 transition font-semibold">
+                    💖 GitHub Sponsors
+                </a>
+                <a href="https://opencollective.com" class="bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-gray-100 transition font-semibold">
+                    🌟 Open Collective
+                </a>
+                <a href="billing.html" class="bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-gray-100 transition font-semibold">
+                    💳 Direct Support
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-12">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="font-bold mb-4">SmartContractAudit</h4>
+                    <p class="text-gray-400 text-sm">Automated security scanning for blockchain projects</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white">API Reference</a></li>
+                        <li><a href="#" class="hover:text-white">Tutorials</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Community</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white">GitHub</a></li>
+                        <li><a href="#" class="hover:text-white">Discord</a></li>
+                        <li><a href="#" class="hover:text-white">Twitter</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white">License</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2026 SmartContractAudit. Licensed under Apache 2.0. No secrets included.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Placeholder for dynamic content loading
+        console.log('SmartContractAudit Dashboard - No secrets, safe for public use');
+        
+        // Example: Load scan data (would connect to API in production)
+        // Note: No API keys or secrets in client-side code
+        function loadScanData() {
+            console.log('Loading scan data from API...');
+            // API calls would use server-side authentication
+        }
+    </script>
+</body>
+</html>
