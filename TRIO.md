@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # TRIO: Product · Governance · Security
 
 <<<<<<< HEAD
@@ -596,3 +597,16 @@ Apache-2.0 - See LICENSE file for full text.
 
 For detailed information, see the respective policy documents linked above.
 >>>>>>> origin/pr10
+=======
+# TRIO Pillars
+
+The CuberAi project is built on three foundational pillars:
+
+- **Product**: A comprehensive AI-powered smart contract audit system with on-chain automation
+- **Governance**: Community-driven decision-making and transparent development processes
+- **Security**: Rigorous vulnerability assessment, secure coding practices, and proactive threat mitigation
+
+This SmartContractAudit repository serves as a focused tool for contract auditing and security automation.
+
+**For the full CuberAi product scaffold, see [SolanaRemix/CuberAi](https://github.com/SolanaRemix/CuberAi).**
+>>>>>>> origin/pr11
