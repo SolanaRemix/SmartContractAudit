@@ -1,0 +1,7 @@
+# CODEOWNERS
+# Request review from @SolanaRemix for all changes
+# Add security-team for scripts and contracts
+
+/scripts/ @SolanaRemix @security-team
+/contracts/ @SolanaRemix @security-team
+* @SolanaRemix
