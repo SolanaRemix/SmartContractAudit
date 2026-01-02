@@ -1,6 +1,6 @@
 # Partners
 
-Welcome to the SmartContractAudit Partner Program! This directory contains information for current and prospective partners.
+Welcome to the CyberAi Partner Program! This directory contains information for current and prospective partners.
 
 ## Contents
 
@@ -106,9 +106,9 @@ A: See [sla_and_support.md](sla_and_support.md) for dispute resolution process.
 
 Ready to partner? Get in touch:
 
-- **Partnerships**: funding@cuberai.example
+- **Partnerships**: funding@cyberai.network
 - **Technical**: Open a GitHub issue
-- **Security**: security@cuberai.example
+- **Security**: security@cyberai.network
 - **Press**: See [press_kit.md](press_kit.md)
 
 ---

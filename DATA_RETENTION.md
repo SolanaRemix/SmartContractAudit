@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the data retention policies for SmartContractAudit, including default retention periods, deletion procedures, and how to request data removal.
+This document outlines the data retention policies for CyberAi, including default retention periods, deletion procedures, and how to request data removal.
 
 ## Default Retention Periods
 
@@ -117,7 +117,7 @@ We automatically delete:
 
 To request data deletion:
 
-1. **Email**: privacy@cuberai.example
+1. **Email**: privacy@cyberai.network
 2. **Subject**: "Data Deletion Request - [Your GitHub Username]"
 3. **Include**:
    - Your GitHub username
@@ -228,8 +228,8 @@ We practice data minimization:
 You can export your data:
 
 - **GitHub data**: Use GitHub's data export tools
-- **Analytics**: Request export via privacy@cuberai.example
-- **Communications**: Request archive via privacy@cuberai.example
+- **Analytics**: Request export via privacy@cyberai.network
+- **Communications**: Request archive via privacy@cyberai.network
 
 Exports provided in common formats (JSON, CSV, etc.).
 
@@ -251,9 +251,9 @@ Changes announced in:
 
 For data retention questions or deletion requests:
 
-**Email**: privacy@cuberai.example
+**Email**: privacy@cyberai.network
 
-For security data concerns: security@cuberai.example  
+For security data concerns: security@cyberai.network  
 For general questions: See CONTRIBUTING.md
 
 ## Compliance

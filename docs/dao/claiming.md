@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide explains how to claim your SmartContractAudit DAO token allocation after a snapshot has been taken and the merkle tree has been generated.
+This guide explains how to claim your CyberAi DAO token allocation after a snapshot has been taken and the merkle tree has been generated.
 
 ## Prerequisites
 
@@ -215,7 +215,7 @@ Before submitting, verify:
 **Solutions:**
 - Check wallet for tokens (may have claimed previously)
 - Verify transaction history
-- If stolen, report immediately to security@cuberai.example
+- If stolen, report immediately to security@cyberai.network
 - Check block explorer for original claim
 
 #### "Insufficient gas"
@@ -260,7 +260,7 @@ Before submitting, verify:
 
 **Direct Support:**
 - **Technical Issues**: Open GitHub Issue (tag: `dao-claiming-issue`)
-- **Security Concerns**: security@cuberai.example
+- **Security Concerns**: security@cyberai.network
 - **Lost Access**: Follow account recovery process
 
 ## Security Best Practices
@@ -369,7 +369,7 @@ A: Only for extraordinary circumstances; request via GitHub
 ### Support
 - GitHub Discussions: General questions
 - GitHub Issues: Technical problems
-- security@cuberai.example: Security concerns
+- security@cyberai.network: Security concerns
 
 ## Claiming Checklist
 

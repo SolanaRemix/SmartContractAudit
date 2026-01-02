@@ -104,7 +104,7 @@ jobs:
           npm install
           
           # Or use with GitHub Actions
-          uses: solanaremix/smartcontractaudit-action@${TAG_NAME}
+          uses: cyberai/cyberai-action@${TAG_NAME}
           \`\`\`
           
           ### Documentation
@@ -129,10 +129,10 @@ jobs:
           
           ### Support
           
-          - **Security Issues**: security@cuberai.example
+          - **Security Issues**: security@cyberai.network
           - **General Questions**: GitHub Discussions
           - **Bug Reports**: GitHub Issues
-          - **Partnerships**: funding@cuberai.example
+          - **Partnerships**: funding@cyberai.network
           
           ---
           

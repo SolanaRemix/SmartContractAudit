@@ -1,6 +1,6 @@
 # Issue Report
 
-<!-- Thank you for contributing to SmartContractAudit! -->
+<!-- Thank you for contributing to CyberAi! -->
 <!-- Please fill out this template to help us understand and address your issue or request. -->
 
 ## Issue Type
@@ -11,7 +11,7 @@
 - [ ] Feature Request
 - [ ] Documentation Issue
 - [ ] Question/Support
-- [ ] Security Vulnerability (⚠️ **Please use security@cuberai.example instead**)
+- [ ] Security Vulnerability (⚠️ **Please use security@cyberai.network instead**)
 
 ---
 
@@ -136,7 +136,7 @@ Paste error messages here
 
 <!-- Additional context that might help us answer -->
 
-**Note**: For general questions, consider using [GitHub Discussions](https://github.com/SolanaRemix/SmartContractAudit/discussions) instead.
+**Note**: For general questions, consider using [GitHub Discussions](https://github.com/CyberAi/CyberAi/discussions) instead.
 
 ---
 

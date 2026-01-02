@@ -2,7 +2,7 @@
 
 ## Summary
 
-This pull request adds a comprehensive governance framework, DAO contributor reward system, partner program documentation, security automation workflows, and web control panel scaffold to SmartContractAudit.
+This pull request adds a comprehensive governance framework, DAO contributor reward system, partner program documentation, security automation workflows, and web control panel scaffold to CyberAi.
 
 ## What's Included
 
@@ -210,9 +210,9 @@ All new files are self-documented:
 
 ## Questions?
 
-- **Security concerns**: Review SECURITY.md or contact security@cuberai.example
+- **Security concerns**: Review SECURITY.md or contact security@cyberai.network
 - **Governance questions**: See GOVERNANCE.md or open a discussion
-- **Partnership inquiries**: See docs/partners/contact.md or email funding@cuberai.example
+- **Partnership inquiries**: See docs/partners/contact.md or email funding@cyberai.network
 - **Technical issues**: Open an issue with details
 
 ---

@@ -2,7 +2,7 @@
 
 ## Overview
 
-SmartContractAudit is committed to protecting the privacy of our users and contributors. This document outlines our privacy practices, data handling policies, and your rights.
+CyberAi is committed to protecting the privacy of our users and contributors. This document outlines our privacy practices, data handling policies, and your rights.
 
 ## Information We Collect
 
@@ -74,7 +74,7 @@ We do not:
 
 If you need to redact sensitive information accidentally disclosed:
 
-1. **Contact us immediately**: privacy@cuberai.example
+1. **Contact us immediately**: privacy@cyberai.network
 2. **Describe the information**: What needs to be redacted and where
 3. **Provide context**: Why redaction is necessary
 
@@ -127,7 +127,7 @@ We retain active data as long as it's necessary for:
 
 ### Data Deletion Requests
 
-You may request deletion of personal data by contacting privacy@cuberai.example.
+You may request deletion of personal data by contacting privacy@cyberai.network.
 
 **Note**: Some data cannot be deleted due to:
 - Legal requirements
@@ -146,7 +146,7 @@ Depending on your jurisdiction, you may have rights to:
 - **Objection**: Object to certain data processing
 - **Restriction**: Request restricted processing
 
-To exercise these rights, contact privacy@cuberai.example.
+To exercise these rights, contact privacy@cyberai.network.
 
 ## Security
 
@@ -158,7 +158,7 @@ We implement reasonable security measures:
 - Incident response procedures
 - Secure development practices
 
-However, no system is completely secure. Report security concerns to security@cuberai.example.
+However, no system is completely secure. Report security concerns to security@cyberai.network.
 
 ## Third-Party Services
 
@@ -178,7 +178,7 @@ We do not use tracking cookies for advertising.
 
 ## Children's Privacy
 
-This project is not directed at children under 13. We do not knowingly collect information from children. If you believe a child has provided information, contact privacy@cuberai.example.
+This project is not directed at children under 13. We do not knowingly collect information from children. If you believe a child has provided information, contact privacy@cyberai.network.
 
 ## International Data Transfers
 
@@ -204,9 +204,9 @@ Check back regularly for updates.
 
 For privacy questions, concerns, or requests:
 
-**Email**: privacy@cuberai.example
+**Email**: privacy@cyberai.network
 
-For security issues: security@cuberai.example  
+For security issues: security@cyberai.network  
 For general questions: See CONTRIBUTING.md
 
 ## Effective Date

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the release process for SmartContractAudit, including planning, testing, deployment, and communication.
+This document describes the release process for CyberAi, including planning, testing, deployment, and communication.
 
 ## Release Types
 
@@ -178,7 +178,7 @@ git push origin vX.Y.Z
 2. Click "Draft a new release"
 3. Select tag: vX.Y.Z
 4. Set as **DRAFT** initially
-5. Add release title: "SmartContractAudit vX.Y.Z"
+5. Add release title: "CyberAi vX.Y.Z"
 6. Copy CHANGELOG content
 7. Attach build artifacts
 8. Add installation instructions
@@ -198,10 +198,10 @@ npm publish
 
 **Docker**:
 ```bash
-docker build -t smartcontractaudit/scanner:vX.Y.Z .
-docker push smartcontractaudit/scanner:vX.Y.Z
-docker tag smartcontractaudit/scanner:vX.Y.Z smartcontractaudit/scanner:latest
-docker push smartcontractaudit/scanner:latest
+docker build -t cyberai/scanner:vX.Y.Z .
+docker push cyberai/scanner:vX.Y.Z
+docker tag cyberai/scanner:vX.Y.Z cyberai/scanner:latest
+docker push cyberai/scanner:latest
 ```
 
 ### 9. Update Documentation
@@ -223,14 +223,14 @@ docker push smartcontractaudit/scanner:latest
 
 **Template**:
 ```markdown
-🎉 SmartContractAudit vX.Y.Z Released!
+🎉 CyberAi vX.Y.Z Released!
 
 Highlights:
 - [Major feature 1]
 - [Major feature 2]
 - [Security improvements]
 
-📦 Install: npm install -g @smartcontractaudit/cli
+📦 Install: npm install -g @cyberai/cli
 📖 Docs: [link]
 📝 Changelog: [link]
 🐛 Report issues: [link]
@@ -395,11 +395,11 @@ git tag -a vX.Y.Z+1 -m "Hotfix for critical bug"
 **Rollback Steps**:
 ```bash
 # Unpublish bad version (npm)
-npm unpublish @smartcontractaudit/cli@vX.Y.Z
+npm unpublish @cyberai/cli@vX.Y.Z
 
 # Revert Docker tags
-docker tag smartcontractaudit/scanner:vX.Y.Z-1 smartcontractaudit/scanner:latest
-docker push smartcontractaudit/scanner:latest
+docker tag cyberai/scanner:vX.Y.Z-1 cyberai/scanner:latest
+docker push cyberai/scanner:latest
 ```
 
 ## Calendar Versioning
@@ -423,13 +423,13 @@ docker push smartcontractaudit/scanner:latest
 - [RELEASE.md](../RELEASE.md) - Detailed release checklist
 - [CHANGELOG.md](../CHANGELOG.md) - Version history
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - Contributing guidelines
-- [GitHub Releases](https://github.com/SolanaRemix/SmartContractAudit/releases)
+- [GitHub Releases](https://github.com/CyberAi/CyberAi/releases)
 
 ## Questions
 
 **Release Questions**: GitHub Discussions  
 **Release Manager**: Current maintainer rotation  
-**Emergency**: security@cuberai.example
+**Emergency**: security@cyberai.network
 
 ---
 

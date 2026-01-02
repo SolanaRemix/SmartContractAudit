@@ -2,7 +2,7 @@
 
 ## Target Release: v2026.01.01
 
-This document provides a comprehensive checklist for preparing and executing a release of SmartContractAudit.
+This document provides a comprehensive checklist for preparing and executing a release of CyberAi.
 
 ## Pre-Release Checklist
 
@@ -96,7 +96,7 @@ git push origin $VERSION
 
 - [ ] Create GitHub Release for tag v2026.01.01
 - [ ] Set as **DRAFT** initially
-- [ ] Add release title: "SmartContractAudit v2026.01.01"
+- [ ] Add release title: "CyberAi v2026.01.01"
 - [ ] Copy relevant sections from CHANGELOG.md
 - [ ] Attach release artifacts
 - [ ] Include upgrade instructions
@@ -106,7 +106,7 @@ git push origin $VERSION
 ### 5. Release Notes Template
 
 ```markdown
-## SmartContractAudit v2026.01.01
+## CyberAi v2026.01.01
 
 ### Highlights
 
@@ -257,9 +257,9 @@ If critical issues are discovered:
 ## Contacts
 
 - **Release Manager**: [Name/GitHub handle]
-- **Security Team**: security@cuberai.example
+- **Security Team**: security@cyberai.network
 - **Technical Questions**: Open GitHub issue
-- **Emergency**: security@cuberai.example
+- **Emergency**: security@cyberai.network
 
 ## Notes
 

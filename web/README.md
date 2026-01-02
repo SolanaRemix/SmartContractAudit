@@ -2,7 +2,7 @@
 
 ## Overview
 
-This directory contains a simple web-based dashboard for SmartContractAudit, designed to be published via GitHub Pages.
+This directory contains a simple web-based dashboard for CyberAi, designed to be published via GitHub Pages.
 
 ## Contents
 
@@ -23,7 +23,7 @@ This directory contains a simple web-based dashboard for SmartContractAudit, des
    - Click Save
 
 2. **Access Your Site**:
-   - URL will be: `https://solanaremix.github.io/SmartContractAudit/`
+   - URL will be: `https://solanaremix.github.io/CyberAi/`
    - Wait 1-2 minutes for initial deployment
 
 ### Custom Domain (Optional)
@@ -137,7 +137,7 @@ The web interface links to sponsorship options defined in `/FUNDING.yml`:
 
 ```yaml
 github: [username]  # Links to GitHub Sponsors
-custom: ['mailto:funding@cuberai.example']  # Billing inquiries
+custom: ['mailto:funding@cyberai.network']  # Billing inquiries
 ```
 
 Update FUNDING.yml with real values when ready.
@@ -246,7 +246,7 @@ Or use privacy-friendly alternatives:
 
 Same as project: Apache-2.0
 
-The web interface is part of SmartContractAudit and follows the same license terms.
+The web interface is part of CyberAi and follows the same license terms.
 
 ## Contributing
 

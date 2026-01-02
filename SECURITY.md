@@ -2,7 +2,7 @@
 
 ## Vulnerability Disclosure Policy
 
-The SmartContractAudit project takes security seriously. We appreciate responsible disclosure of security vulnerabilities and will work with security researchers to resolve issues quickly.
+The CyberAi project takes security seriously. We appreciate responsible disclosure of security vulnerabilities and will work with security researchers to resolve issues quickly.
 
 ## Reporting a Vulnerability
 
@@ -16,7 +16,7 @@ Please **do not** open a public GitHub issue for security vulnerabilities. This 
 
 Send details of the vulnerability to:
 
-**security@cuberai.example**
+**security@cyberai.network**
 
 ### 3. Include the Following Information
 
@@ -36,7 +36,7 @@ For sensitive disclosures, you may encrypt your report using our PGP key:
 
 ```
 -----BEGIN PGP PUBLIC KEY BLOCK-----
-[PGP Key Placeholder - Contact security@cuberai.example for actual key]
+[PGP Key Placeholder - Contact security@cyberai.network for actual key]
 -----END PGP PUBLIC KEY BLOCK-----
 ```
 
@@ -143,9 +143,9 @@ We currently do not have a paid bug bounty program. However, we deeply appreciat
 
 ## Contact
 
-- **Security reports**: security@cuberai.example
+- **Security reports**: security@cyberai.network
 - **General inquiries**: See CONTRIBUTING.md
-- **PGP key requests**: security@cuberai.example
+- **PGP key requests**: security@cyberai.network
 
 ## Policy Updates
 

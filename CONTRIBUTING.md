@@ -1,6 +1,6 @@
-# Contributing to SmartContractAudit
+# Contributing to CyberAi
 
-Thank you for your interest in contributing to SmartContractAudit! This document provides guidelines and instructions for contributing to this project.
+Thank you for your interest in contributing to CyberAi! This document provides guidelines and instructions for contributing to this project.
 
 ## Developer Certificate of Origin (DCO)
 

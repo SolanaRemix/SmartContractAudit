@@ -4,19 +4,19 @@
 
 ### Project Inquiries
 
-For general questions about SmartContractAudit:
+For general questions about CyberAi:
 
-**GitHub Discussions**: [github.com/SolanaRemix/SmartContractAudit/discussions](https://github.com/SolanaRemix/SmartContractAudit/discussions)  
+**GitHub Discussions**: [github.com/CyberAi/CyberAi/discussions](https://github.com/CyberAi/CyberAi/discussions)  
 Best for: Community questions, feature discussions, general inquiries
 
-**GitHub Issues**: [github.com/SolanaRemix/SmartContractAudit/issues](https://github.com/SolanaRemix/SmartContractAudit/issues)  
+**GitHub Issues**: [github.com/CyberAi/CyberAi/issues](https://github.com/CyberAi/CyberAi/issues)  
 Best for: Bug reports, feature requests, technical issues
 
 ## Partnership & Sponsorship
 
 ### Partnership Inquiries
 
-**Email**: funding@cuberai.example  
+**Email**: funding@cyberai.network  
 **Response Time**: 5-10 business days  
 **Best For**:
 - Sponsorship inquiries
@@ -33,7 +33,7 @@ Best for: Bug reports, feature requests, technical issues
 
 ### Technical Partnership
 
-**Email**: funding@cuberai.example (include "TECHNICAL PARTNERSHIP" in subject)  
+**Email**: funding@cyberai.network (include "TECHNICAL PARTNERSHIP" in subject)  
 **GitHub**: Open issue with tag `partnership`  
 **Best For**:
 - Platform integration discussions
@@ -54,7 +54,7 @@ Best for: Bug reports, feature requests, technical issues
 ### Partner Support
 
 **Paid Partner Support** (Gold tier and above):
-- **Email**: partners-support@cuberai.example
+- **Email**: partners-support@cyberai.network
 - **Slack/Discord**: Private channels (invitation sent after partnership)
 - **Response Time**: See [sla_and_support.md](sla_and_support.md)
 
@@ -91,8 +91,8 @@ Logs/Screenshots:
 
 **IMPORTANT**: Do NOT open public issues for security vulnerabilities.
 
-**Email**: security@cuberai.example  
-**PGP Key**: Available on request at security@cuberai.example  
+**Email**: security@cyberai.network  
+**PGP Key**: Available on request at security@cyberai.network  
 **Response Time**: 48 hours for acknowledgment
 
 **What to Include**:
@@ -107,7 +107,7 @@ Logs/Screenshots:
 
 ### Security Incidents
 
-**Emergency Security Contact**: security@cuberai.example  
+**Emergency Security Contact**: security@cyberai.network  
 **Subject Line**: "SECURITY INCIDENT - [Brief Description]"  
 **Response Time**: Immediate (24/7 monitoring)
 
@@ -115,7 +115,7 @@ Logs/Screenshots:
 
 ### Press Inquiries
 
-**Email**: press@cuberai.example  
+**Email**: press@cyberai.network  
 **Response Time**: 1-2 business days  
 **Best For**:
 - Press releases and announcements
@@ -128,7 +128,7 @@ Logs/Screenshots:
 
 ### Speaking Opportunities
 
-**Email**: press@cuberai.example (include "SPEAKING" in subject)  
+**Email**: press@cyberai.network (include "SPEAKING" in subject)  
 **Best For**:
 - Conference speaking requests
 - Podcast interviews
@@ -147,7 +147,7 @@ Logs/Screenshots:
 
 ### Privacy Inquiries
 
-**Email**: privacy@cuberai.example  
+**Email**: privacy@cyberai.network  
 **Response Time**: 5 business days  
 **Best For**:
 - Data access requests
@@ -160,7 +160,7 @@ Logs/Screenshots:
 
 ### Data Redaction Requests
 
-**Email**: privacy@cuberai.example  
+**Email**: privacy@cyberai.network  
 **Subject**: "DATA REDACTION REQUEST"  
 **Response Time**: 5 business days for review  
 **See Also**: [PRIVACY.md](../../PRIVACY.md) redaction section
@@ -170,7 +170,7 @@ Logs/Screenshots:
 ### Governance Questions
 
 **GitHub Discussions**: Tag `governance`  
-**Email**: funding@cuberai.example (for formal governance matters)  
+**Email**: funding@cyberai.network (for formal governance matters)  
 **Best For**:
 - Policy questions
 - Proposal discussions
@@ -181,7 +181,7 @@ Logs/Screenshots:
 
 ### Code of Conduct Reports
 
-**Email**: security@cuberai.example  
+**Email**: security@cyberai.network  
 **Confidential**: Yes  
 **Best For**:
 - Code of Conduct violations
@@ -217,7 +217,7 @@ Logs/Screenshots:
 
 **Documentation**: See [technical_onboarding.md](technical_onboarding.md)  
 **GitHub Issues**: Tag `api` or `integration`  
-**Partner Support**: partners-support@cuberai.example (paid partners)
+**Partner Support**: partners-support@cyberai.network (paid partners)
 
 ### Bug Reports
 
@@ -240,11 +240,11 @@ Currently, we operate globally from a central team. Regional contacts may be add
 
 ### Official Channels
 
-- **GitHub**: [github.com/SolanaRemix/SmartContractAudit](https://github.com/SolanaRemix/SmartContractAudit)
-- **Twitter**: [@SmartContractAudit](#) (Coming soon)
-- **LinkedIn**: [SmartContractAudit](#) (Coming soon)
+- **GitHub**: [github.com/CyberAi/CyberAi](https://github.com/CyberAi/CyberAi)
+- **Twitter**: [@CyberAi](#) (Coming soon)
+- **LinkedIn**: [CyberAi](#) (Coming soon)
 - **Discord**: [Community Server](#) (Coming soon)
-- **YouTube**: [SmartContractAudit](#) (Coming soon)
+- **YouTube**: [CyberAi](#) (Coming soon)
 
 ### Community Guidelines
 
@@ -260,7 +260,7 @@ When engaging on social media:
 ### Maintainer Office Hours
 
 **Currently**: By appointment only  
-**Request**: funding@cuberai.example
+**Request**: funding@cyberai.network
 
 Future plans include:
 - Regular community office hours
@@ -286,9 +286,9 @@ Future plans include:
 
 ### Critical Issues Only
 
-**Security Incidents**: security@cuberai.example  
-**Service Outages** (partners): partners-support@cuberai.example with "CRITICAL" in subject  
-**Media Crisis**: press@cuberai.example
+**Security Incidents**: security@cyberai.network  
+**Service Outages** (partners): partners-support@cyberai.network with "CRITICAL" in subject  
+**Media Crisis**: press@cyberai.network
 
 **What Qualifies as Emergency**:
 - Active security breach
@@ -304,11 +304,11 @@ Future plans include:
 |---------------|---------------|----------|
 | GitHub Discussions | 1-3 days | General questions |
 | GitHub Issues | 1-5 days | Bugs, features |
-| security@cuberai.example | 48 hours | Security issues |
-| funding@cuberai.example | 5-10 days | Partnerships |
-| press@cuberai.example | 1-2 days | Media inquiries |
-| privacy@cuberai.example | 5 days | Privacy requests |
-| partners-support@cuberai.example | See SLA | Partner support |
+| security@cyberai.network | 48 hours | Security issues |
+| funding@cyberai.network | 5-10 days | Partnerships |
+| press@cyberai.network | 1-2 days | Media inquiries |
+| privacy@cyberai.network | 5 days | Privacy requests |
+| partners-support@cyberai.network | See SLA | Partner support |
 
 ### Business Hours
 
@@ -353,11 +353,11 @@ We love hearing from the community!
 
 **General**: GitHub Discussions  
 **Bugs**: GitHub Issues  
-**Security**: security@cuberai.example  
-**Partners**: funding@cuberai.example  
-**Press**: press@cuberai.example  
-**Privacy**: privacy@cuberai.example  
-**Support**: partners-support@cuberai.example (paid partners)
+**Security**: security@cyberai.network  
+**Partners**: funding@cyberai.network  
+**Press**: press@cyberai.network  
+**Privacy**: privacy@cyberai.network  
+**Support**: partners-support@cyberai.network (paid partners)
 
 ---
 

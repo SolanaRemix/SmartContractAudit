@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document explains how SmartContractAudit takes snapshots of contributor data for DAO token distribution.
+This document explains how CyberAi takes snapshots of contributor data for DAO token distribution.
 
 ## What is a Snapshot?
 
@@ -107,7 +107,7 @@ gh api /repos/OWNER/REPO/pulls/PR_NUMBER/reviews
 ### Security Contributions
 
 **Private vulnerability reports:**
-- Collected separately from security@cuberai.example
+- Collected separately from security@cyberai.network
 - Manually scored by security team
 - Privacy maintained (no public disclosure)
 

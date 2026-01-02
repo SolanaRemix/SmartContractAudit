@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-SmartContractAudit is an open-source project committed to transparent governance, community participation, and security-first development practices.
+CyberAi is an open-source project committed to transparent governance, community participation, and security-first development practices.
 
 ## Project Roles
 
@@ -44,7 +44,7 @@ SmartContractAudit is an open-source project committed to transparent governance
 - Respond to incidents per SECURITY.md
 
 **Contact:**
-- security@cuberai.example
+- security@cyberai.network
 
 ## Decision-Making Model
 
@@ -136,7 +136,7 @@ Members are appointed by maintainers based on:
 
 ### Code of Conduct Violations
 
-1. Report to security@cuberai.example
+1. Report to security@cyberai.network
 2. Security team reviews privately
 3. Action taken according to severity:
    - Warning

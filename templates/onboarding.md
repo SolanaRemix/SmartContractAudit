@@ -15,8 +15,8 @@ Welcome to the **CuberAi SmartBrain Orchestration System**! This guide will help
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/SolanaRemix/SmartContractAudit.git
-   cd SmartContractAudit
+   git clone https://github.com/CyberAi/CyberAi.git
+   cd CyberAi
    ```
 
 2. **Set up environment**
@@ -207,7 +207,7 @@ npm install -g pnpm
 
 ## 📚 Additional Resources
 
-- [GitHub Repository](https://github.com/SolanaRemix/SmartContractAudit)
+- [GitHub Repository](https://github.com/CyberAi/CyberAi)
 - [CuberAi Documentation](docs/cuberai-setup.md)
 - [Security Best Practices](docs/security.md)
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the criteria for eligibility in SmartContractAudit DAO airdrops and governance token distribution.
+This document outlines the criteria for eligibility in CyberAi DAO airdrops and governance token distribution.
 
 ## General Eligibility
 

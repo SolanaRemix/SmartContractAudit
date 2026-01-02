@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document details how contributions are scored for DAO token allocation in SmartContractAudit.
+This document details how contributions are scored for DAO token allocation in CyberAi.
 
 ## Scoring Philosophy
 

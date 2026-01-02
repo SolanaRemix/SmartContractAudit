@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines how SmartContractAudit handles data in partnership contexts, extending our main [PRIVACY.md](/PRIVACY.md) policy.
+This document outlines how CyberAi handles data in partnership contexts, extending our main [PRIVACY.md](/PRIVACY.md) policy.
 
 ## Data Shared with Partners
 
@@ -79,7 +79,7 @@ Our DPA covers:
 - Data retention
 - International transfers
 
-**Request DPA**: privacy@cuberai.example
+**Request DPA**: privacy@cyberai.network
 
 ## User Consent
 
@@ -152,7 +152,7 @@ Partners must notify us within **24 hours** of discovering:
 - Loss of data integrity
 - Compliance violations
 
-**Contact**: security@cuberai.example
+**Contact**: security@cyberai.network
 
 ## International Data Transfers
 
@@ -184,7 +184,7 @@ For data shared with partners, users have rights to:
 - **Objection**: Object to certain processing
 - **Restriction**: Limit processing
 
-**How to Exercise**: privacy@cuberai.example
+**How to Exercise**: privacy@cyberai.network
 
 ### Partner Cooperation
 
@@ -289,19 +289,19 @@ Partners must:
 ## Contact
 
 ### General Privacy Questions
-**Email**: privacy@cuberai.example  
+**Email**: privacy@cyberai.network  
 **Response Time**: 5 business days
 
 ### Partner Data Requests
-**Email**: partners-privacy@cuberai.example  
+**Email**: partners-privacy@cyberai.network  
 **Response Time**: 2 business days
 
 ### Data Breach
-**Email**: security@cuberai.example  
+**Email**: security@cyberai.network  
 **Response Time**: Immediate
 
 ### DPA Requests
-**Email**: privacy@cuberai.example  
+**Email**: privacy@cyberai.network  
 **Include**: Partner name, data types, processing description
 
 ---

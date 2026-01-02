@@ -2,7 +2,7 @@
 
 ## Overview
 
-This directory contains documentation and tools for the SmartContractAudit DAO (Decentralized Autonomous Organization) and contributor reward systems.
+This directory contains documentation and tools for the CyberAi DAO (Decentralized Autonomous Organization) and contributor reward systems.
 
 ## Contents
 
@@ -109,7 +109,7 @@ See GOVERNANCE.md for how DAO governance integrates with project governance.
 
 - **General Questions**: GitHub Discussions
 - **Allocation Issues**: Open a GitHub issue with tag `dao`
-- **Security Concerns**: security@cuberai.example
+- **Security Concerns**: security@cyberai.network
 
 ---
 

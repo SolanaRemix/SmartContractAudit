@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document explains how SmartContractAudit uses Merkle trees for secure and efficient token distribution in DAO airdrops.
+This document explains how CyberAi uses Merkle trees for secure and efficient token distribution in DAO airdrops.
 
 ## What is a Merkle Tree?
 
@@ -310,7 +310,7 @@ Our tool (`/dao/merkle/generate_merkle.js`):
 
 - **Technical Issues**: GitHub Issues with tag `merkle`
 - **Claiming Problems**: Support channel (see claiming.md)
-- **Security Concerns**: security@cuberai.example
+- **Security Concerns**: security@cyberai.network
 
 ## Resources
 

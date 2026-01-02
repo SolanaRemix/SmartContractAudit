@@ -2,7 +2,7 @@
 
 ## Overview
 
-SmartContractAudit welcomes partnerships with organizations that share our commitment to blockchain security and open source principles.
+CyberAi welcomes partnerships with organizations that share our commitment to blockchain security and open source principles.
 
 ## Types of Partnerships
 
@@ -21,7 +21,7 @@ SmartContractAudit welcomes partnerships with organizations that share our commi
 
 **Commitment**: Monthly or annual contributions
 
-**How to Join**: Contact funding@cuberai.example
+**How to Join**: Contact funding@cyberai.network
 
 ### 2. Technical Partnership
 
@@ -136,7 +136,7 @@ SmartContractAudit welcomes partnerships with organizations that share our commi
 ### 1. Initial Contact
 
 Reach out via:
-- **Email**: funding@cuberai.example
+- **Email**: funding@cyberai.network
 - **GitHub**: Open an issue with tag `partnership`
 - **Community**: Introduce yourself in Discussions
 
@@ -271,10 +271,10 @@ Partnerships may be terminated by either party:
 
 ## Questions?
 
-- **General Partnerships**: funding@cuberai.example
+- **General Partnerships**: funding@cyberai.network
 - **Technical Partnerships**: Open GitHub issue
-- **Research Collaborations**: funding@cuberai.example
-- **Educational Use**: funding@cuberai.example
+- **Research Collaborations**: funding@cyberai.network
+- **Educational Use**: funding@cyberai.network
 
 ---
 

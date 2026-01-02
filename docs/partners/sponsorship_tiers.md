@@ -2,7 +2,7 @@
 
 ## Overview
 
-Financial sponsorship helps sustain SmartContractAudit development, infrastructure, and community. We offer multiple tiers to accommodate different levels of support.
+Financial sponsorship helps sustain CyberAi development, infrastructure, and community. We offer multiple tiers to accommodate different levels of support.
 
 ## Important Notes
 
@@ -135,7 +135,7 @@ For organizations with unique needs:
 - Training and consulting
 - Research collaborations
 
-**Contact**: funding@cuberai.example
+**Contact**: funding@cyberai.network
 
 ## Additional Sponsorship Options
 
@@ -249,7 +249,7 @@ Your sponsorship supports:
 
 ### GitHub Sponsors (Preferred)
 
-1. Visit our GitHub Sponsors page: [github.com/sponsors/SolanaRemix](https://github.com/sponsors/SolanaRemix)
+1. Visit our GitHub Sponsors page: [github.com/sponsors/CyberAi](https://github.com/sponsors/CyberAi)
 2. Select your tier
 3. Complete payment setup
 4. Automatic recognition in README
@@ -265,7 +265,7 @@ Your sponsorship supports:
 
 For Platinum or Custom sponsorships:
 
-1. Email funding@cuberai.example
+1. Email funding@cyberai.network
 2. We'll send invoice
 3. Payment via bank transfer, check, or other method
 4. Formal agreement if needed
@@ -278,7 +278,7 @@ We accept:
 - Solana (SOL)
 - USDC/USDT stablecoins
 
-Contact funding@cuberai.example for wallet addresses.
+Contact funding@cyberai.network for wallet addresses.
 
 ## Frequently Asked Questions
 
@@ -327,10 +327,10 @@ A: USD primary. Can accommodate EUR, GBP, and cryptocurrency.
 
 ## Contact
 
-**General Inquiries**: funding@cuberai.example  
-**Custom Sponsorship**: funding@cuberai.example  
+**General Inquiries**: funding@cyberai.network  
+**Custom Sponsorship**: funding@cyberai.network  
 **Technical Questions**: GitHub Issues  
-**Existing Sponsors**: Your dedicated channel or funding@cuberai.example
+**Existing Sponsors**: Your dedicated channel or funding@cyberai.network
 
 ---
 

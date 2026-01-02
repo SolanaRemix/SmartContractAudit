@@ -1,11 +1,11 @@
 ---
-name: SmartContractAudit
+name: CyberAi
 title: Lead Maintainer & Core Developer
 role: Maintainer
-organization: SmartContractAudit Open Source Project
+organization: CyberAi Open Source Project
 location: Global (Remote)
 period: 2025 - Present
-contact: https://github.com/SolanaRemix/SmartContractAudit
+contact: https://github.com/CyberAi/CyberAi
 languages:
   - JavaScript
   - Python
@@ -19,14 +19,14 @@ skills:
   - Security Auditing
 ---
 
-# SmartContractAudit Project Resume
+# CyberAi Project Resume
 
 ## Project Overview
 
-**SmartContractAudit** is an open-source security analysis platform for smart contracts, providing automated vulnerability detection and security best practices enforcement for blockchain applications.
+**CyberAi** is an open-source security analysis platform for smart contracts, providing automated vulnerability detection and security best practices enforcement for blockchain applications.
 
 - **License**: Apache-2.0
-- **Repository**: github.com/SolanaRemix/SmartContractAudit
+- **Repository**: github.com/CyberAi/CyberAi
 - **Status**: Active Development
 - **Community**: Open to contributors worldwide
 
@@ -207,9 +207,9 @@ Built framework for partnerships:
 
 ## Contact & Links
 
-- **GitHub**: https://github.com/SolanaRemix/SmartContractAudit
-- **Security Contact**: security@cuberai.example
-- **Project Email**: funding@cuberai.example
+- **GitHub**: https://github.com/CyberAi/CyberAi
+- **Security Contact**: security@cyberai.network
+- **Project Email**: funding@cyberai.network
 - **Documentation**: See repository README.md
 
 ## Availability

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document showcases how partners and users successfully integrate and use SmartContractAudit.
+This document showcases how partners and users successfully integrate and use CyberAi.
 
 ## Use Cases by Industry
 
@@ -170,7 +170,7 @@ This document showcases how partners and users successfully integrate and use Sm
 New DeFi protocol preparing for $10M TVL launch needed to ensure security without delaying go-to-market.
 
 **Solution**:
-- Integrated SmartContractAudit into CI/CD
+- Integrated CyberAi into CI/CD
 - Automated scanning on every PR
 - Weekly security reports to team
 - Pre-audit preparation with automated tools
@@ -178,7 +178,7 @@ New DeFi protocol preparing for $10M TVL launch needed to ensure security withou
 **Implementation**:
 ```yaml
 # .github/workflows/security.yml
-- uses: solanaremix/smartcontractaudit-action@v1
+- uses: cyberai/cyberai-action@v1
   with:
     severity-threshold: 'medium'
     block-on-critical: true
@@ -191,7 +191,7 @@ New DeFi protocol preparing for $10M TVL launch needed to ensure security withou
 - **Zero security incidents** in first 6 months
 
 **Testimonial**:
-> "SmartContractAudit caught critical reentrancy issues that could have lost user funds. It's now an essential part of our development workflow." - CTO
+> "CyberAi caught critical reentrancy issues that could have lost user funds. It's now an essential part of our development workflow." - CTO
 
 ---
 
@@ -302,7 +302,7 @@ Growing demand for audits but limited auditor capacity. Need to scale without co
 **Value Protected**:
 - Average TVL per protocol: $10M
 - Cost of security incident: $1M average (10% of TVL)
-- Cost of SmartContractAudit: $5,000/year
+- Cost of CyberAi: $5,000/year
 - **ROI**: 200x risk mitigation value
 
 ---
@@ -320,13 +320,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: solanaremix/smartcontractaudit-action@v1
+      - uses: cyberai/cyberai-action@v1
 ```
 
 **15-Minute Integration** (CI/CD Pipeline):
 ```bash
 # Install CLI
-npm install -g @smartcontractaudit/cli
+npm install -g @cyberai/cli
 
 # Add to pipeline
 sca scan ./contracts --format junit > results.xml

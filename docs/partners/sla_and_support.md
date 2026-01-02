@@ -4,7 +4,7 @@
 
 ### Overview
 
-This document outlines service level agreements (SLAs) and support commitments for SmartContractAudit partners.
+This document outlines service level agreements (SLAs) and support commitments for CyberAi partners.
 
 **Note**: SLAs apply to paid partners at Gold tier and above. Community users receive best-effort support.
 
@@ -27,7 +27,7 @@ This document outlines service level agreements (SLAs) and support commitments f
 - 99.0-99.5%: 25% monthly fee credit
 - <99.0%: 50% monthly fee credit
 
-**To Claim**: Email partners-support@cuberai.example with affected time period within 30 days
+**To Claim**: Email partners-support@cyberai.network with affected time period within 30 days
 
 ### Scheduled Maintenance
 
@@ -98,7 +98,7 @@ This document outlines service level agreements (SLAs) and support commitments f
 **Bronze Sponsors**:
 - GitHub Issues (public)
 - GitHub Discussions
-- Email (partners-support@cuberai.example)
+- Email (partners-support@cyberai.network)
 
 **Silver Sponsors**:
 - All Bronze channels
@@ -118,11 +118,11 @@ This document outlines service level agreements (SLAs) and support commitments f
 
 ### Contact Methods
 
-**Email**: partners-support@cuberai.example
+**Email**: partners-support@cyberai.network
 - Include partner name, tier, and severity
 - Attach logs, error messages, reproduction steps
 
-**GitHub Issues**: [github.com/SolanaRemix/SmartContractAudit/issues](https://github.com/SolanaRemix/SmartContractAudit/issues)
+**GitHub Issues**: [github.com/CyberAi/CyberAi/issues](https://github.com/CyberAi/CyberAi/issues)
 - Use template
 - Tag: `partner-support`
 - Link to partnership
@@ -131,7 +131,7 @@ This document outlines service level agreements (SLAs) and support commitments f
 - Direct message or channel post
 - @mention support team for urgent issues
 
-**Emergency**: security@cuberai.example (security issues only)
+**Emergency**: security@cyberai.network (security issues only)
 
 ## Support Scope
 
@@ -158,10 +158,10 @@ This document outlines service level agreements (SLAs) and support commitments f
 
 If issue not resolved within SLA:
 
-1. **Email**: partners-support@cuberai.example with "ESCALATION" in subject
+1. **Email**: partners-support@cyberai.network with "ESCALATION" in subject
 2. **Include**: Original ticket number, timeline, impact
 3. **Escalation Review**: Within 4 hours (business hours)
-4. **Executive Contact**: If still unresolved, escalate to funding@cuberai.example
+4. **Executive Contact**: If still unresolved, escalate to funding@cyberai.network
 
 ## Performance SLA
 
@@ -312,8 +312,8 @@ We measure:
 
 ### Process
 
-1. **Informal Resolution**: Contact your partner liaison or partners-support@cuberai.example
-2. **Formal Review**: If unresolved, escalate to funding@cuberai.example
+1. **Informal Resolution**: Contact your partner liaison or partners-support@cyberai.network
+2. **Formal Review**: If unresolved, escalate to funding@cyberai.network
 3. **Executive Review**: CTO and partner executive discuss
 4. **Mediation**: Third-party mediation if needed (costs shared)
 5. **Arbitration**: Binding arbitration per partnership agreement
@@ -322,11 +322,11 @@ We measure:
 
 ### SLA Credit Disputes
 
-1. **Submit Claim**: partners-support@cuberai.example within 30 days
+1. **Submit Claim**: partners-support@cyberai.network within 30 days
 2. **Provide Evidence**: Logs, timestamps, impact description
 3. **Review**: We investigate within 10 business days
 4. **Decision**: Credit issued or denial with explanation
-5. **Appeal**: To funding@cuberai.example if disputed
+5. **Appeal**: To funding@cyberai.network if disputed
 
 ## Termination
 
@@ -360,10 +360,10 @@ SLAs don't apply during:
 
 ## Contact
 
-**Support**: partners-support@cuberai.example  
-**Escalation**: funding@cuberai.example  
-**Emergency**: security@cuberai.example  
-**Billing**: funding@cuberai.example
+**Support**: partners-support@cyberai.network  
+**Escalation**: funding@cyberai.network  
+**Emergency**: security@cyberai.network  
+**Billing**: funding@cyberai.network
 
 **Phone**: (Available for Platinum partners upon request)
 

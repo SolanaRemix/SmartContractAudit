@@ -70,30 +70,30 @@
 
 ### Short Description (50 words)
 
-SmartContractAudit is an open-source security analysis platform for smart contracts. It provides automated vulnerability detection, helping developers, auditors, and blockchain projects identify and fix security issues before deployment. Apache-2.0 licensed and community-driven.
+CyberAi is an open-source security analysis platform for smart contracts. It provides automated vulnerability detection, helping developers, auditors, and blockchain projects identify and fix security issues before deployment. Apache-2.0 licensed and community-driven.
 
 ### Medium Description (100 words)
 
-SmartContractAudit is an open-source smart contract security analysis platform that helps developers and auditors identify vulnerabilities before deployment. With automated scanning, CI/CD integration, and real-time feedback, it catches common security issues like reentrancy, overflow, and access control bugs. Built for Solana, Ethereum, and EVM-compatible chains, SmartContractAudit combines community-driven rules with professional-grade analysis. Free and open source under Apache-2.0 license, with transparent governance and security-first principles. Used by DeFi protocols, NFT marketplaces, audit firms, and development teams worldwide.
+CyberAi is an open-source smart contract security analysis platform that helps developers and auditors identify vulnerabilities before deployment. With automated scanning, CI/CD integration, and real-time feedback, it catches common security issues like reentrancy, overflow, and access control bugs. Built for Solana, Ethereum, and EVM-compatible chains, CyberAi combines community-driven rules with professional-grade analysis. Free and open source under Apache-2.0 license, with transparent governance and security-first principles. Used by DeFi protocols, NFT marketplaces, audit firms, and development teams worldwide.
 
 ### Long Description (200 words)
 
-SmartContractAudit is a comprehensive open-source security analysis platform designed to protect smart contracts across multiple blockchain ecosystems. Our automated scanning tools identify critical vulnerabilities including reentrancy attacks, integer overflows, access control issues, and dozens of other security patterns before deployment.
+CyberAi is a comprehensive open-source security analysis platform designed to protect smart contracts across multiple blockchain ecosystems. Our automated scanning tools identify critical vulnerabilities including reentrancy attacks, integer overflows, access control issues, and dozens of other security patterns before deployment.
 
-Built with security-first principles, SmartContractAudit integrates seamlessly into development workflows through GitHub Actions, CI/CD pipelines, IDE plugins, and API access. Developers get real-time feedback during coding, catching bugs early when fixes are cheapest. Audit firms use our tools to scale their capacity while maintaining quality. Marketplaces protect users by scanning contracts before listing.
+Built with security-first principles, CyberAi integrates seamlessly into development workflows through GitHub Actions, CI/CD pipelines, IDE plugins, and API access. Developers get real-time feedback during coding, catching bugs early when fixes are cheapest. Audit firms use our tools to scale their capacity while maintaining quality. Marketplaces protect users by scanning contracts before listing.
 
 Key features include multi-chain support (Solana, Ethereum, and EVM-compatible networks), customizable rule sets, detailed vulnerability reports, and continuous monitoring capabilities. Our community-driven approach means constantly evolving detection patterns based on the latest threat research.
 
-Licensed under Apache-2.0, SmartContractAudit maintains transparent governance where sponsors support development but don't control decisions. The project serves thousands of developers, has prevented millions in potential losses, and contributes to a more secure blockchain ecosystem. Join our community to build safer smart contracts together.
+Licensed under Apache-2.0, CyberAi maintains transparent governance where sponsors support development but don't control decisions. The project serves thousands of developers, has prevented millions in potential losses, and contributes to a more secure blockchain ecosystem. Join our community to build safer smart contracts together.
 
 ## Boilerplate Text
 
-### About SmartContractAudit
+### About CyberAi
 
 For inclusion in press releases and articles:
 
-> **About SmartContractAudit**  
-> SmartContractAudit is an open-source security analysis platform for smart contracts, providing automated vulnerability detection across Solana, Ethereum, and EVM-compatible blockchains. With thousands of users worldwide, the project helps developers and auditors identify security issues early in the development cycle. Licensed under Apache-2.0 with transparent community governance, SmartContractAudit is committed to making blockchain security accessible to all. Learn more at [github.com/SolanaRemix/SmartContractAudit](https://github.com/SolanaRemix/SmartContractAudit).
+> **About CyberAi**  
+> CyberAi is an open-source security analysis platform for smart contracts, providing automated vulnerability detection across Solana, Ethereum, and EVM-compatible blockchains. With thousands of users worldwide, the project helps developers and auditors identify security issues early in the development cycle. Licensed under Apache-2.0 with transparent community governance, CyberAi is committed to making blockchain security accessible to all. Learn more at [github.com/CyberAi/CyberAi](https://github.com/CyberAi/CyberAi).
 
 ## Key Facts & Statistics
 
@@ -136,7 +136,7 @@ For inclusion in press releases and articles:
 - [VS Code Plugin](screenshots/vscode.png)
 - [CLI Output](screenshots/cli.png)
 
-**Request Additional**: press@cuberai.example
+**Request Additional**: press@cyberai.network
 
 ### Video Resources
 
@@ -154,54 +154,54 @@ For inclusion in press releases and articles:
 
 ### Sample Headlines
 
-- "SmartContractAudit Launches Open-Source Security Platform for Blockchain Developers"
+- "CyberAi Launches Open-Source Security Platform for Blockchain Developers"
 - "New Tool Helps Developers Catch Smart Contract Bugs Before Deployment"
 - "Open-Source Project Aims to Improve Blockchain Security Through Automated Analysis"
-- "SmartContractAudit Reaches 10,000 Scans Milestone, Prevents Millions in Potential Losses"
-- "Audit Firms Adopt SmartContractAudit to Scale Security Reviews"
+- "CyberAi Reaches 10,000 Scans Milestone, Prevents Millions in Potential Losses"
+- "Audit Firms Adopt CyberAi to Scale Security Reviews"
 
 ## Quotes
 
 ### Maintainer Quotes
 
 > "Our mission is to make smart contract security accessible to every developer, regardless of budget or expertise. By providing professional-grade tools as open source, we're raising the security baseline for the entire blockchain ecosystem."  
-> — SmartContractAudit Core Team
+> — CyberAi Core Team
 
-> "Security shouldn't be an afterthought or a luxury. SmartContractAudit integrates security into the development workflow, catching vulnerabilities when they're easiest and cheapest to fix."  
-> — SmartContractAudit Security Lead
+> "Security shouldn't be an afterthought or a luxury. CyberAi integrates security into the development workflow, catching vulnerabilities when they're easiest and cheapest to fix."  
+> — CyberAi Security Lead
 
 ### Partner Testimonials
 
 (See [use_cases.md](use_cases.md) for full case studies)
 
-> "SmartContractAudit caught critical vulnerabilities that could have cost our users millions. It's now an essential part of our development process."  
+> "CyberAi caught critical vulnerabilities that could have cost our users millions. It's now an essential part of our development process."  
 > — DeFi Protocol CTO
 
-> "By integrating SmartContractAudit, we've reduced scam contracts by 95% and significantly increased user trust in our marketplace."  
+> "By integrating CyberAi, we've reduced scam contracts by 95% and significantly increased user trust in our marketplace."  
 > — NFT Marketplace Founder
 
 ## Contact Information
 
 ### Media Inquiries
 
-**Email**: press@cuberai.example  
+**Email**: press@cyberai.network  
 **Response Time**: 1-2 business days
 
 ### Partnership Inquiries
 
-**Email**: funding@cuberai.example  
+**Email**: funding@cyberai.network  
 **Phone**: [Available for partners]
 
 ### Technical Questions
 
-**GitHub**: [github.com/SolanaRemix/SmartContractAudit/issues](https://github.com/SolanaRemix/SmartContractAudit/issues)  
-**Documentation**: [Project README](https://github.com/SolanaRemix/SmartContractAudit)
+**GitHub**: [github.com/CyberAi/CyberAi/issues](https://github.com/CyberAi/CyberAi/issues)  
+**Documentation**: [Project README](https://github.com/CyberAi/CyberAi)
 
 ### Social Media
 
-- **GitHub**: [@SolanaRemix/SmartContractAudit](https://github.com/SolanaRemix/SmartContractAudit)
-- **Twitter**: [@SmartContractAudit](#)
-- **LinkedIn**: [SmartContractAudit](#)
+- **GitHub**: [@CyberAi/CyberAi](https://github.com/CyberAi/CyberAi)
+- **Twitter**: [@CyberAi](#)
+- **LinkedIn**: [CyberAi](#)
 - **Discord**: [Community Server](#)
 
 ## Press Releases
@@ -211,19 +211,19 @@ For inclusion in press releases and articles:
 ```
 FOR IMMEDIATE RELEASE
 
-SmartContractAudit Announces [News/Partnership/Milestone]
+CyberAi Announces [News/Partnership/Milestone]
 
-[CITY, DATE] — SmartContractAudit, an open-source security analysis platform for smart contracts, today announced [news]. [Additional context and details].
+[CITY, DATE] — CyberAi, an open-source security analysis platform for smart contracts, today announced [news]. [Additional context and details].
 
 [Quote from maintainer or partner]
 
 [Additional details about the announcement]
 
-About SmartContractAudit
+About CyberAi
 [Use boilerplate text above]
 
 Media Contact:
-press@cuberai.example
+press@cyberai.network
 
 ###
 ```
@@ -251,7 +251,7 @@ press@cuberai.example
 ### Permitted Uses
 
 You may use our brand assets to:
-- ✅ Write news articles or blog posts about SmartContractAudit
+- ✅ Write news articles or blog posts about CyberAi
 - ✅ Include in partnership announcements (approved partners)
 - ✅ Show integration or usage of our tools
 - ✅ Educational or review purposes
@@ -269,32 +269,32 @@ You may NOT:
 ### Attribution
 
 When using our brand assets, please attribute:
-- "SmartContractAudit" (proper capitalization)
-- Link to: github.com/SolanaRemix/SmartContractAudit
+- "CyberAi" (proper capitalization)
+- Link to: github.com/CyberAi/CyberAi
 - Mention open-source status when relevant
 
 ## FAQ for Media
 
-**Q: Is SmartContractAudit free to use?**  
+**Q: Is CyberAi free to use?**  
 A: Yes, it's open source under Apache-2.0 license. Free for all users.
 
-**Q: Who maintains SmartContractAudit?**  
+**Q: Who maintains CyberAi?**  
 A: Community-driven with transparent governance. Core maintainers listed in repository.
 
 **Q: How is the project funded?**  
 A: Through voluntary sponsorships that don't control project decisions. See FUNDING.yml.
 
 **Q: Can I get a quote or interview?**  
-A: Yes! Contact press@cuberai.example to arrange.
+A: Yes! Contact press@cyberai.network to arrange.
 
 **Q: Do you have case studies or success stories?**  
 A: Yes, see [use_cases.md](use_cases.md) or contact us for detailed case studies.
 
-**Q: What makes SmartContractAudit different?**  
+**Q: What makes CyberAi different?**  
 A: Open source, community-driven, transparent governance, multi-chain support, and free for all.
 
 ---
 
 **Last Updated**: 2026-01-01  
 **Press Kit Version**: 1.0  
-**Contact**: press@cuberai.example
+**Contact**: press@cyberai.network

@@ -1,12 +1,12 @@
 # TRIO: Product · Governance · Security
 
-**SmartContractAudit** is an open-source smart contract security analysis platform with transparent governance and security-first principles.
+**CyberAi** is an open-source smart contract security analysis platform with transparent governance and security-first principles.
 
 ## Product Summary
 
-### What is SmartContractAudit?
+### What is CyberAi?
 
-SmartContractAudit provides automated security analysis and auditing tools for smart contracts, helping developers identify vulnerabilities before deployment.
+CyberAi provides automated security analysis and auditing tools for smart contracts, helping developers identify vulnerabilities before deployment.
 
 **Key Features:**
 - Automated vulnerability scanning
@@ -81,7 +81,7 @@ Security is our top priority. We follow industry best practices and maintain tra
 
 ### Vulnerability Reporting
 
-**Report security issues privately to**: security@cuberai.example
+**Report security issues privately to**: security@cyberai.network
 
 **Do not** open public issues for security vulnerabilities.
 
@@ -157,9 +157,9 @@ All tools and workflows default to safe, non-destructive modes:
 
 ### Support
 - General: See CONTRIBUTING.md
-- Security: security@cuberai.example
-- Privacy: privacy@cuberai.example
-- Funding: funding@cuberai.example
+- Security: security@cyberai.network
+- Privacy: privacy@cyberai.network
+- Funding: funding@cyberai.network
 
 ### Sponsorship
 - See FUNDING.yml for sponsorship options
@@ -183,8 +183,8 @@ Apache-2.0 - See LICENSE file for full text.
 ## Contact
 
 - **General inquiries**: Open a GitHub issue
-- **Security**: security@cuberai.example
-- **Privacy**: privacy@cuberai.example
+- **Security**: security@cyberai.network
+- **Privacy**: privacy@cyberai.network
 - **Governance**: Participate in GitHub Discussions
 
 ---

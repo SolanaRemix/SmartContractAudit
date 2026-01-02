@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide helps partners integrate SmartContractAudit into their platforms, workflows, or infrastructure.
+This guide helps partners integrate CyberAi into their platforms, workflows, or infrastructure.
 
 ## Prerequisites
 
@@ -33,8 +33,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run SmartContractAudit
-        uses: solanaremix/smartcontractaudit-action@v1
+      - name: Run CyberAi
+        uses: cyberai/cyberai-action@v1
         with:
           contracts-path: './contracts'
           severity-threshold: 'medium'
@@ -60,10 +60,10 @@ jobs:
 
 ```bash
 # npm
-npm install -g @smartcontractaudit/cli
+npm install -g @cyberai/cli
 
 # or with pnpm
-pnpm add -g @smartcontractaudit/cli
+pnpm add -g @cyberai/cli
 ```
 
 **Basic Usage:**
@@ -172,7 +172,7 @@ curl -X POST https://api.smartcontractaudit.example/v1/scan \
 **VS Code Installation:**
 
 1. Open VS Code Extensions
-2. Search "SmartContractAudit"
+2. Search "CyberAi"
 3. Click Install
 4. Configure API key in settings
 
@@ -195,7 +195,7 @@ curl -X POST https://api.smartcontractaudit.example/v1/scan \
 **Pull Image:**
 
 ```bash
-docker pull smartcontractaudit/scanner:latest
+docker pull cyberai/scanner:latest
 ```
 
 **Run Scan:**
@@ -203,7 +203,7 @@ docker pull smartcontractaudit/scanner:latest
 ```bash
 docker run --rm \
   -v $(pwd)/contracts:/contracts \
-  smartcontractaudit/scanner:latest \
+  cyberai/scanner:latest \
   scan /contracts
 ```
 
@@ -213,7 +213,7 @@ docker run --rm \
 version: '3.8'
 services:
   scanner:
-    image: smartcontractaudit/scanner:latest
+    image: cyberai/scanner:latest
     volumes:
       - ./contracts:/contracts
     command: scan /contracts --format json
@@ -352,8 +352,8 @@ Create `sca.config.json`:
 We provide test contracts with known vulnerabilities:
 
 ```bash
-git clone https://github.com/SolanaRemix/SmartContractAudit-test-contracts
-cd SmartContractAudit-test-contracts
+git clone https://github.com/CyberAi/CyberAi-test-contracts
+cd CyberAi-test-contracts
 sca scan ./contracts
 ```
 
@@ -381,9 +381,9 @@ sca scan ./test-contracts --dry-run
 **Partners get priority support:**
 
 - **Slack/Discord**: Private partner channel
-- **Email**: partners-support@cuberai.example
+- **Email**: partners-support@cyberai.network
 - **GitHub Issues**: Tag with `partner-support`
-- **Video Calls**: Schedule via partners-support@cuberai.example
+- **Video Calls**: Schedule via partners-support@cyberai.network
 
 ### Response Times
 
@@ -395,9 +395,9 @@ sca scan ./test-contracts --dry-run
 ### Escalation
 
 If not resolved in SLA time:
-1. Email partners-support@cuberai.example with "ESCALATION" in subject
+1. Email partners-support@cyberai.network with "ESCALATION" in subject
 2. Include original ticket number
-3. CC: funding@cuberai.example
+3. CC: funding@cyberai.network
 
 ---
 
@@ -504,10 +504,10 @@ Before launching your integration:
 
 ## Contact
 
-**Technical Onboarding**: partners-support@cuberai.example  
-**API Access**: funding@cuberai.example  
+**Technical Onboarding**: partners-support@cyberai.network  
+**API Access**: funding@cyberai.network  
 **Bug Reports**: GitHub Issues with `partner` tag  
-**Emergency Support**: partners-support@cuberai.example (subject: URGENT)
+**Emergency Support**: partners-support@cyberai.network (subject: URGENT)
 
 ---
 
