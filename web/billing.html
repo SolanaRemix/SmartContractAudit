@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <meta name="description" content="SmartContractAudit - Sponsorship and Billing">
     <title>Billing & Sponsorship - SmartContractAudit</title>
     
@@ -35,10 +36,31 @@
                 </nav>
             </div>
         </div>
+=======
+    <title>Billing - SmartContractAudit</title>
+    <meta name="description" content="Support SmartContractAudit through various payment options">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-2xl font-bold text-blue-600">SmartContractAudit</a>
+                <div class="flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600">Dashboard</a>
+                    <a href="billing.html" class="text-blue-600 font-semibold">Billing</a>
+                    <a href="https://github.com/SolanaRemix/SmartContractAudit" class="text-gray-700 hover:text-blue-600">GitHub</a>
+                </div>
+            </div>
+        </nav>
+>>>>>>> origin/pr9
     </header>
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
+<<<<<<< HEAD
         <!-- Notice Banner -->
         <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
             <div class="flex">
@@ -272,10 +294,190 @@ CASH_APP_HANDLE=$YourHandle
                     <strong>⚠️ Security:</strong> Never commit API keys to the repository. Use environment variables or GitHub Secrets.
                 </p>
             </div>
+=======
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">Support SmartContractAudit</h1>
+                <p class="text-xl text-gray-600">Choose your preferred payment method to support open-source security</p>
+            </div>
+
+            <!-- Payment Options -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <!-- Stripe Checkout -->
+                <div class="bg-white rounded-lg shadow-md p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">Credit/Debit Card</h3>
+                            <p class="text-sm text-gray-500">via Stripe</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">Secure payment processing with Stripe. One-time or recurring donations.</p>
+                    
+                    <!-- Amount Selection -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Select Amount</label>
+                        <div class="grid grid-cols-3 gap-3 mb-3">
+                            <button onclick="selectAmount(10)" class="amount-btn border-2 border-gray-300 rounded-lg py-2 hover:border-blue-500 hover:bg-blue-50 transition">
+                                $10
+                            </button>
+                            <button onclick="selectAmount(25)" class="amount-btn border-2 border-gray-300 rounded-lg py-2 hover:border-blue-500 hover:bg-blue-50 transition">
+                                $25
+                            </button>
+                            <button onclick="selectAmount(50)" class="amount-btn border-2 border-blue-500 bg-blue-50 rounded-lg py-2 font-semibold">
+                                $50
+                            </button>
+                        </div>
+                        <input type="number" id="custom-amount" placeholder="Custom amount" class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-blue-500 focus:outline-none">
+                    </div>
+                    
+                    <button id="stripe-checkout-btn" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition font-semibold">
+                        Continue with Stripe
+                    </button>
+                    
+                    <p class="text-xs text-gray-500 mt-4">
+                        ⚠️ Test mode only. Use test card: 4242 4242 4242 4242
+                    </p>
+                </div>
+
+                <!-- Cash App -->
+                <div class="bg-white rounded-lg shadow-md p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">Cash App</h3>
+                            <p class="text-sm text-gray-500">Direct P2P</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">Send directly via Cash App. No fees, instant transfer.</p>
+                    
+                    <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                        <p class="text-sm text-gray-600 mb-2">Cash App Tag:</p>
+                        <div class="flex items-center justify-between">
+                            <code class="text-lg font-mono font-semibold text-gray-900">$SmartContractAudit</code>
+                            <button onclick="copyCashTag()" class="text-blue-600 hover:text-blue-700 text-sm font-semibold">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <a href="https://cash.app/$SmartContractAudit" target="_blank" class="block w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition font-semibold text-center">
+                        Open Cash App
+                    </a>
+                    
+                    <p class="text-xs text-gray-500 mt-4">
+                        💡 Include your GitHub username in the note for recognition
+                    </p>
+                </div>
+            </div>
+
+            <!-- Other Payment Methods -->
+            <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Other Payment Methods</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- GitHub Sponsors -->
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-pink-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                        </div>
+                        <h4 class="font-semibold mb-2">GitHub Sponsors</h4>
+                        <p class="text-sm text-gray-600 mb-4">Monthly recurring support</p>
+                        <a href="https://github.com/sponsors" target="_blank" class="inline-block bg-gray-900 text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition text-sm">
+                            Sponsor
+                        </a>
+                    </div>
+
+                    <!-- Open Collective -->
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="font-semibold mb-2">Open Collective</h4>
+                        <p class="text-sm text-gray-600 mb-4">Transparent community funding</p>
+                        <a href="https://opencollective.com" target="_blank" class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition text-sm">
+                            Contribute
+                        </a>
+                    </div>
+
+                    <!-- Crypto -->
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="font-semibold mb-2">Cryptocurrency</h4>
+                        <p class="text-sm text-gray-600 mb-4">BTC, ETH, USDC accepted</p>
+                        <button onclick="showCryptoInfo()" class="inline-block bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 transition text-sm">
+                            View Addresses
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integration Instructions -->
+            <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-6 mb-8">
+                <h3 class="text-lg font-bold text-blue-900 mb-3">🔧 Integration Instructions</h3>
+                <div class="text-sm text-blue-800 space-y-2">
+                    <p><strong>For Stripe Checkout:</strong></p>
+                    <ol class="list-decimal list-inside space-y-1 ml-4">
+                        <li>Create a Stripe account at <a href="https://stripe.com" class="underline" target="_blank">stripe.com</a></li>
+                        <li>Get your publishable key from the Stripe dashboard</li>
+                        <li>Replace <code class="bg-white px-1 py-0.5 rounded">STRIPE_PUBLISHABLE_KEY</code> in the script below</li>
+                        <li>Create products and prices in Stripe dashboard</li>
+                        <li>Update the checkout session with your price IDs</li>
+                    </ol>
+                    <p class="mt-3"><strong>Test Mode:</strong> Use test keys for testing. Test card: 4242 4242 4242 4242</p>
+                    <p><strong>Production:</strong> Switch to live keys when ready. Never commit keys to source control!</p>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="bg-white rounded-lg shadow-md p-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Is my payment secure?</h4>
+                        <p class="text-gray-600">Yes! All payments are processed through secure, industry-standard payment providers. We never store your payment information.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Can I get a receipt?</h4>
+                        <p class="text-gray-600">Yes, you'll receive an email receipt for all transactions. For GitHub Sponsors and Open Collective, receipts are available in your account dashboard.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Are donations tax-deductible?</h4>
+                        <p class="text-gray-600">This depends on your jurisdiction and the payment method. Consult your tax advisor for specific guidance.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">What are the funds used for?</h4>
+                        <p class="text-gray-600">All funds support open-source development, security audits, infrastructure costs, and community programs. See our transparency reports for details.</p>
+                    </div>
+                </div>
+            </div>
+>>>>>>> origin/pr9
         </div>
     </main>
 
     <!-- Footer -->
+<<<<<<< HEAD
     <footer class="bg-gray-800 text-white mt-12 py-8">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
@@ -288,10 +490,17 @@ CASH_APP_HANDLE=$YourHandle
                     <a href="mailto:partners@cuberai.example" class="hover:text-gray-300">Contact</a>
                 </div>
             </div>
+=======
+    <footer class="bg-gray-900 text-white mt-12 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-400 text-sm">&copy; 2026 SmartContractAudit. Licensed under Apache 2.0.</p>
+            <p class="text-gray-500 text-xs mt-2">No secrets included. Test keys only for demonstration.</p>
+>>>>>>> origin/pr9
         </div>
     </footer>
 
     <script>
+<<<<<<< HEAD
         // Tier selection
         function selectTier(tierName, price) {
             document.getElementById('selected-tier').classList.remove('hidden');
@@ -330,6 +539,65 @@ CASH_APP_HANDLE=$YourHandle
         //     const session = await response.json();
         //     return stripe.redirectToCheckout({ sessionId: session.id });
         // }
+=======
+        // ⚠️ IMPORTANT: Replace with your actual Stripe publishable key
+        // Use TEST key for development: pk_test_xxxxx
+        // Use LIVE key for production: pk_live_xxxxx
+        // NEVER commit secret keys to source control!
+        const STRIPE_PUBLISHABLE_KEY = 'pk_test_REPLACE_WITH_YOUR_TEST_KEY';
+        
+        // Initialize Stripe (only if key is configured)
+        let stripe;
+        if (STRIPE_PUBLISHABLE_KEY !== 'pk_test_REPLACE_WITH_YOUR_TEST_KEY') {
+            stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+        }
+        
+        let selectedAmount = 50;
+        
+        function selectAmount(amount) {
+            selectedAmount = amount;
+            document.querySelectorAll('.amount-btn').forEach(btn => {
+                btn.classList.remove('border-blue-500', 'bg-blue-50', 'font-semibold');
+                btn.classList.add('border-gray-300');
+            });
+            event.target.classList.remove('border-gray-300');
+            event.target.classList.add('border-blue-500', 'bg-blue-50', 'font-semibold');
+            document.getElementById('custom-amount').value = '';
+        }
+        
+        document.getElementById('stripe-checkout-btn').addEventListener('click', async () => {
+            const customAmount = document.getElementById('custom-amount').value;
+            const amount = customAmount || selectedAmount;
+            
+            if (!stripe) {
+                alert('Stripe is not configured. Please add your Stripe publishable key to enable payments.');
+                return;
+            }
+            
+            alert(`This would redirect to Stripe Checkout for $${amount}.\n\nTo enable:\n1. Get Stripe API keys\n2. Replace STRIPE_PUBLISHABLE_KEY\n3. Create Checkout Session on backend\n4. Redirect to session.url`);
+            
+            // Production code would look like:
+            // const response = await fetch('/create-checkout-session', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ amount: amount * 100 }) // Convert to cents
+            // });
+            // const session = await response.json();
+            // await stripe.redirectToCheckout({ sessionId: session.id });
+        });
+        
+        function copyCashTag() {
+            navigator.clipboard.writeText('$SmartContractAudit');
+            alert('Cash App tag copied to clipboard!');
+        }
+        
+        function showCryptoInfo() {
+            alert('Cryptocurrency Addresses:\n\nBTC: [Your BTC Address]\nETH: [Your ETH Address]\nUSDC: [Your USDC Address]\n\n⚠️ Update with real addresses before use!');
+        }
+        
+        console.log('Billing page loaded - Test mode only');
+        console.log('Configure Stripe keys to enable payments');
+>>>>>>> origin/pr9
     </script>
 </body>
 </html>
