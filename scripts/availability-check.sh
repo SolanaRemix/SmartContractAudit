@@ -59,14 +59,47 @@ log_verbose() {
 }
 
 ##############################################################################
+# Input Validation
+##############################################################################
+
+validate_username() {
+    local name="$1"
+    
+    # Check if empty
+    if [[ -z "$name" ]]; then
+        log_error "Username cannot be empty"
+        return 1
+    fi
+    
+    # Validate: only alphanumeric, hyphens, and underscores allowed
+    # This prevents command injection via shell metacharacters
+    if [[ ! "$name" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+        log_error "Invalid username: '$name' (only alphanumeric, hyphens, and underscores allowed)"
+        return 1
+    fi
+    
+    return 0
+}
+
+##############################################################################
 # Availability Checkers
 ##############################################################################
 
 check_github() {
     local username="$1"
+    
+    # Validate input to prevent command injection
+    if ! validate_username "$username"; then
+        return 1
+    fi
+    
     log_verbose "Checking GitHub for: $username"
     
-    if curl -sf "https://api.github.com/users/$username" > /dev/null 2>&1; then
+    # Use printf %s to safely pass username to curl without interpolation
+    local url
+    url=$(printf "https://api.github.com/users/%s" "$username")
+    
+    if curl -sf "$url" > /dev/null 2>&1; then
         log_error "GitHub: $username is TAKEN"
         return 1
     else
@@ -77,9 +110,19 @@ check_github() {
 
 check_npm() {
     local package="$1"
+    
+    # Validate input to prevent command injection
+    if ! validate_username "$package"; then
+        return 1
+    fi
+    
     log_verbose "Checking npm for: $package"
     
-    if curl -sf "https://registry.npmjs.org/$package" > /dev/null 2>&1; then
+    # Use printf %s to safely pass package name to curl without interpolation
+    local url
+    url=$(printf "https://registry.npmjs.org/%s" "$package")
+    
+    if curl -sf "$url" > /dev/null 2>&1; then
         log_error "npm: $package is TAKEN"
         return 1
     else
@@ -90,9 +133,19 @@ check_npm() {
 
 check_pypi() {
     local package="$1"
+    
+    # Validate input to prevent command injection
+    if ! validate_username "$package"; then
+        return 1
+    fi
+    
     log_verbose "Checking PyPI for: $package"
     
-    if curl -sf "https://pypi.org/project/$package/" > /dev/null 2>&1; then
+    # Use printf %s to safely pass package name to curl without interpolation
+    local url
+    url=$(printf "https://pypi.org/project/%s/" "$package")
+    
+    if curl -sf "$url" > /dev/null 2>&1; then
         log_error "PyPI: $package is TAKEN"
         return 1
     else
@@ -103,9 +156,19 @@ check_pypi() {
 
 check_dockerhub() {
     local username="$1"
+    
+    # Validate input to prevent command injection
+    if ! validate_username "$username"; then
+        return 1
+    fi
+    
     log_verbose "Checking Docker Hub for: $username"
     
-    if curl -sf "https://hub.docker.com/v2/repositories/$username/" > /dev/null 2>&1; then
+    # Use printf %s to safely pass username to curl without interpolation
+    local url
+    url=$(printf "https://hub.docker.com/v2/repositories/%s/" "$username")
+    
+    if curl -sf "$url" > /dev/null 2>&1; then
         log_error "Docker Hub: $username is TAKEN"
         return 1
     else
