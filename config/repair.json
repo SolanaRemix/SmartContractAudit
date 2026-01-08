@@ -1,7 +1,44 @@
 {
-  "auto_apply": false,
-  "dry_run_default": true,
-  "allowlist_orgs": [],
-  "max_prs_per_run": 3,
-  "pings_enabled": false
+  "enabled": true,
+  "autoCreatePR": true,
+  "requireApproval": true,
+  "repairPatterns": {
+    "reentrancy": {
+      "enabled": true,
+      "strategy": "checks-effects-interactions",
+      "confidence": 85
+    },
+    "overflow": {
+      "enabled": true,
+      "strategy": "safemath",
+      "confidence": 95
+    },
+    "uncheckedSend": {
+      "enabled": true,
+      "strategy": "require-check",
+      "confidence": 90
+    },
+    "txOrigin": {
+      "enabled": true,
+      "strategy": "use-msg-sender",
+      "confidence": 100
+    },
+    "publicMint": {
+      "enabled": true,
+      "strategy": "add-access-control",
+      "confidence": 95
+    },
+    "delegatecall": {
+      "enabled": false,
+      "strategy": "manual",
+      "confidence": 50
+    }
+  },
+  "pr": {
+    "branch": "auto-repair",
+    "title": "🔒 Automated Security Fix: {vulnerability}",
+    "labels": ["security", "automated-fix"],
+    "assignees": [],
+    "reviewers": []
+  }
 }

@@ -1,0 +1,160 @@
+name: Deep Scan
+
+on:
+  schedule:
+    # Run weekly on Sundays at midnight
+    - cron: '0 0 * * 0'
+  release:
+    types: [created, published]
+  workflow_dispatch:
+    inputs:
+      targets:
+        description: 'Targets to scan (comma-separated addresses)'
+        required: false
+      chain:
+        description: 'Blockchain network'
+        required: false
+        default: 'ethereum'
+
+jobs:
+  deep-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run comprehensive deep scan
+        env:
+          ETHEREUM_RPC_URL: ${{ secrets.ETHEREUM_RPC_URL }}
+          BSC_RPC_URL: ${{ secrets.BSC_RPC_URL }}
+          POLYGON_RPC_URL: ${{ secrets.POLYGON_RPC_URL }}
+          SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
+          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
+          BSCSCAN_API_KEY: ${{ secrets.BSCSCAN_API_KEY }}
+        run: |
+          echo "Starting comprehensive deep scan..."
+          
+          # Load targets
+          if [ -n "${{ github.event.inputs.targets }}" ]; then
+            TARGETS="${{ github.event.inputs.targets }}"
+          elif [ -f "config/deep-scan-targets.txt" ]; then
+            TARGETS=$(cat config/deep-scan-targets.txt | tr '\n' ',')
+          else
+            echo "No targets specified"
+            exit 0
+          fi
+          
+          # Run deep scan
+          IFS=',' read -ra TARGET_ARRAY <<< "$TARGETS"
+          for target in "${TARGET_ARRAY[@]}"; do
+            target=$(echo "$target" | xargs)
+            if [ -n "$target" ]; then
+              echo "Deep scanning $target..."
+              node script/scan.js \
+                --address "$target" \
+                --chain "${{ github.event.inputs.chain || 'ethereum' }}" \
+                --modules antivirus,spam,honeypot,tracer \
+                --depth 10 \
+                --output json
+            fi
+          done
+      
+      - name: Generate detailed report
+        run: |
+          if [ -f "reports/latest.json" ]; then
+            echo "Generating detailed analysis..."
+            
+            # Extract statistics
+            TOTAL=$(jq 'length' reports/latest.json)
+            CRITICAL=$(jq '[.[] | select(.summary.overallRisk == "critical")] | length' reports/latest.json)
+            HIGH=$(jq '[.[] | select(.summary.overallRisk == "high")] | length' reports/latest.json)
+            MEDIUM=$(jq '[.[] | select(.summary.overallRisk == "medium")] | length' reports/latest.json)
+            
+            echo "## Deep Scan Summary" > reports/summary.md
+            echo "" >> reports/summary.md
+            echo "- Total scanned: $TOTAL" >> reports/summary.md
+            echo "- Critical risk: $CRITICAL" >> reports/summary.md
+            echo "- High risk: $HIGH" >> reports/summary.md
+            echo "- Medium risk: $MEDIUM" >> reports/summary.md
+            echo "" >> reports/summary.md
+            echo "Scan completed at: $(date)" >> reports/summary.md
+            
+            cat reports/summary.md
+          fi
+      
+      - name: Upload detailed reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: deep-scan-reports-${{ github.run_number }}
+          path: |
+            reports/
+          retention-days: 90
+      
+      - name: Create scan summary issue
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            
+            if (!fs.existsSync('reports/summary.md')) {
+              console.log('No summary to report');
+              return;
+            }
+            
+            const summary = fs.readFileSync('reports/summary.md', 'utf8');
+            
+            let issueBody = '## 📊 Weekly Deep Scan Results\n\n';
+            issueBody += summary + '\n\n';
+            
+            if (fs.existsSync('reports/latest.json')) {
+              const report = JSON.parse(fs.readFileSync('reports/latest.json', 'utf8'));
+              
+              const criticalResults = report.filter(r => r.summary?.overallRisk === 'critical');
+              if (criticalResults.length > 0) {
+                issueBody += '### 🚨 Critical Findings\n\n';
+                for (const result of criticalResults) {
+                  issueBody += `- **${result.target}** on ${result.chain}\n`;
+                }
+                issueBody += '\n';
+              }
+              
+              const highResults = report.filter(r => r.summary?.overallRisk === 'high');
+              if (highResults.length > 0) {
+                issueBody += '### ⚠️ High Risk Findings\n\n';
+                for (const result of highResults) {
+                  issueBody += `- **${result.target}** on ${result.chain}\n`;
+                }
+                issueBody += '\n';
+              }
+            }
+            
+            issueBody += '\n---\n';
+            issueBody += `*Deep scan completed on ${new Date().toISOString()}*\n`;
+            issueBody += `[View full report](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`;
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `📊 Deep Scan Results - ${new Date().toISOString().split('T')[0]}`,
+              body: issueBody,
+              labels: ['deep-scan', 'report']
+            });
+      
+      - name: Send notification
+        if: always()
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        run: |
+          if [ -f "reports/latest.json" ]; then
+            node script/notify.js --report reports/latest.json
+          fi

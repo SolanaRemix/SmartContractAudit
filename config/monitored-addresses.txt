@@ -1,0 +1,4 @@
+# Example monitored addresses (one per line)
+# Ethereum mainnet addresses to continuously monitor
+# 0x1234567890123456789012345678901234567890
+# 0xabcdefabcdefabcdefabcdefabcdefabcdefabcd
