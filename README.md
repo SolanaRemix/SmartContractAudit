@@ -1,7 +1,10 @@
 # SmartContractAudit 🛡️
 
-Professional multi-chain smart contract auditing, monitoring, and automated repair system with AI-powered detection and GitHub Actions integration.
+Experimental multi-chain smart contract auditing, monitoring, and automated repair framework with AI-powered detection and GitHub Actions integration.
 
+> **Status: Prototype – Not Production-Ready**
+>
+> This project is currently a framework/skeleton. The core detection modules are implemented as placeholders and may return no (or only trivial) results. **Do not rely on this project for real-world security audits or production decisions until the detection logic is fully implemented and thoroughly tested.**
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen)](https://nodejs.org/)
 
