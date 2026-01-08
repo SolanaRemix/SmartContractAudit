@@ -38,7 +38,7 @@ smartbrain_log() {
 
 clean_ports() {
   log "Cleaning hanging Node.js processes on ports 3000-3010 and 4000."
-  local ports=(3000 3001 3002 3003 3004 3005 3006 3007 3008 3009 3010 4000)
+  local ports=({3000..3010} 4000)
 
   for port in "${ports[@]}"; do
     if command -v lsof >/dev/null 2>&1; then
