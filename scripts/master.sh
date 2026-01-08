@@ -219,7 +219,7 @@ cmd_health() {
 scan_file_for_suspicious_patterns() {
   local file="$1"
 
-  if grep -Eqi "rm -rf /|curl .*sh|wget .*sh|eval\`\(" "$file" 2>/dev/null; then
+  if grep -Eqi -e 'rm -rf /' -e 'curl.*sh' -e 'wget.*sh' -e 'eval\`\(' "$file" 2>/dev/null; then
     smartbrain_log "AgentX" "ALERT" "Suspicious pattern in $file."
     echo "$file" >> "$QUARANTINE_DIR/suspicious-files.txt"
   fi
