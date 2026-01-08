@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # ============================================================
-# FIX.SH — SmartBrain Orchestrator
+# MASTER.SH — SmartBrain Orchestrator
 # Non-destructive. No core rewrites. No repo structure changes.
 # ============================================================
 
