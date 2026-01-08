@@ -9,7 +9,7 @@
     "portRange": {
       "start": 3000,
       "end": 3010,
-      "additional": [4000, 8080]
+      "additional": [4000]
     },
     "healingStrategies": {
       "portCleanup": {
