@@ -2,6 +2,7 @@
 set -euo pipefail
 
 # ============================================================
+# MASTER.SH — SmartBrain Orchestrator
 # FIX.SH — SmartBrain Orchestrator
 # Non-destructive. No core rewrites. No repo structure changes.
 # ============================================================
@@ -29,6 +30,7 @@ smartbrain_log() {
   local agent="$1"; shift
   local level="$1"; shift
   local msg="$*"
+  printf '[%s][%s][%s] %s\n' "$(date +"%Y-%m-%dT%H:%M:%S%z")" "$agent" "$level" "$msg" >> "$SMARTBRAIN_LOG"
   printf '[%s][%s][%s] %s\n' "$(date -Iseconds)" "$agent" "$level" "$msg" >> "$SMARTBRAIN_LOG"
 }
 
@@ -38,6 +40,7 @@ smartbrain_log() {
 
 clean_ports() {
   log "Cleaning hanging Node.js processes on ports 3000-3010 and 4000."
+  local ports=({3000..3010} 4000)
   local ports=(3000 3001 3002 3003 3004 3005 3006 3007 3008 3009 3010 4000)
 
   for port in "${ports[@]}"; do
@@ -219,6 +222,7 @@ cmd_health() {
 scan_file_for_suspicious_patterns() {
   local file="$1"
 
+  if grep -Eqi -e 'rm -rf /' -e 'curl.*sh' -e 'wget.*sh' -e 'eval\`\(' "$file" 2>/dev/null; then
   if grep -Eqi "rm -rf /|curl .*sh|wget .*sh|eval\`\(" "$file" 2>/dev/null; then
     smartbrain_log "AgentX" "ALERT" "Suspicious pattern in $file."
     echo "$file" >> "$QUARANTINE_DIR/suspicious-files.txt"
@@ -263,6 +267,17 @@ usage() {
 Usage: $0 <command>
 
 Commands:
+  audit      Run full audit (Agent A)
+  heal       Run heal sequence (Agent B)
+  integrity  Run integrity checks (Agent C)
+  health     Run health checks (Agent F)
+  scan       Run antivirus scan (Agent X)
+  help       Show this help message
+
+Examples:
+  $0 audit
+  $0 heal
+  $0 scan
   audit       Run full audit (Agent A)
   heal        Run heal sequence (Agent B)
   integrity   Run integrity checks (Agent C)
@@ -279,6 +294,19 @@ EOF
 }
 
 # ------------------------------------------------------------
+# Main dispatcher
+# ------------------------------------------------------------
+
+main() {
+  case "${1:-help}" in
+    audit)     cmd_audit ;;
+    heal)      cmd_heal ;;
+    integrity) cmd_integrity ;;
+    health)    cmd_health ;;
+    scan)      cmd_scan ;;
+    help|--help|-h) usage ;;
+    *)
+      err "Unknown command: $1"
 # Main
 # ------------------------------------------------------------
 
