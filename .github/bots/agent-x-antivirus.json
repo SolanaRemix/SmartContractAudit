@@ -12,7 +12,7 @@
         "rm -rf /",
         "curl.*sh",
         "wget.*sh",
-        "eval`\\(",
+        "eval\\`\\(",
         "exec\\(",
         "system\\(",
         "__import__"
