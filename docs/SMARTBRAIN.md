@@ -164,7 +164,7 @@ All operations are logged to `SMARTBRAIN.log` with format:
 
 Example:
 ```
-[2025-12-31T01:00:00+00:00][AgentX][ALERT] Suspicious pattern in file.js
+[YYYY-MM-DDTHH:MM:SS+00:00][AgentX][ALERT] Suspicious pattern in file.js
 ```
 
 ### Log Levels
