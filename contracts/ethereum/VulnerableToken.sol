@@ -28,6 +28,9 @@ contract VulnerableToken {
     }
     
     // VULNERABILITY: No access control on mint function
+    // INTENTIONAL FOR TESTING: Any caller can arbitrarily increase totalSupply and balanceOf
+    // This demonstrates why access control (e.g., onlyOwner) is critical for privileged functions
+    // Real attack: Attacker can mint unlimited tokens, breaking scarcity assumptions
     function mint(address _to, uint256 _amount) public {
         totalSupply += _amount;
         balanceOf[_to] += _amount;
@@ -60,7 +63,11 @@ contract VulnerableToken {
         return true;
     }
     
-    // VULNERABILITY: Unchecked external call
+    // VULNERABILITY: Unchecked external call with reentrancy
+    // INTENTIONAL FOR TESTING: State changes after external call allow reentrancy attacks
+    // The call{value} can trigger fallback functions that reenter withdraw()
+    // Real attack: Malicious contract can drain more ETH than intended by reentering
+    // Also fails to check success flag, so balance set to 0 even if transfer fails
     function withdraw() public {
         uint256 amount = balanceOf[msg.sender];
         (bool success, ) = msg.sender.call{value: amount}("");
@@ -68,6 +75,10 @@ contract VulnerableToken {
     }
     
     // VULNERABILITY: Delegatecall to user-controlled address
+    // INTENTIONAL FOR TESTING: Allows execution of arbitrary code in this contract's context
+    // Real attack: Attacker deploys malicious contract and calls execute() to run its code
+    // This can overwrite storage (e.g., set owner to attacker, inflate balances)
+    // delegatecall executes target code with this contract's storage and msg.sender
     function execute(address _target, bytes memory _data) public returns (bool) {
         (bool success, ) = _target.delegatecall(_data);
         return success;

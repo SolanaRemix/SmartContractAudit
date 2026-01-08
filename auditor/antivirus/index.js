@@ -197,16 +197,22 @@ class AntivirusScanner {
    * Get contract bytecode from blockchain
    */
   async getBytecode(address, chain) {
-    // Placeholder - implement actual RPC call
-    return null;
+    // This method must be implemented with real RPC calls
+    throw new Error(
+      `AntivirusScanner.getBytecode is not implemented for address ${address} on chain ${chain}. ` +
+      'Implement RPC provider integration to fetch contract bytecode.'
+    );
   }
 
   /**
    * Get contract source code from block explorer
    */
   async getSourceCode(address, chain) {
-    // Placeholder - implement actual API call to block explorer
-    return null;
+    // This method must be implemented with real block explorer API calls
+    throw new Error(
+      `AntivirusScanner.getSourceCode is not implemented for address ${address} on chain ${chain}. ` +
+      'Implement block explorer API integration to fetch verified source code.'
+    );
   }
 }
 

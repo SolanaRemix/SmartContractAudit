@@ -134,12 +134,24 @@ async function main() {
   for (let i = 0; i < args.length; i++) {
     switch (args[i]) {
       case '--message':
+        if (i + 1 >= args.length) {
+          console.error('Error: --message requires a value');
+          process.exit(1);
+        }
         message = args[++i];
         break;
       case '--severity':
+        if (i + 1 >= args.length) {
+          console.error('Error: --severity requires a value');
+          process.exit(1);
+        }
         severity = args[++i];
         break;
       case '--report':
+        if (i + 1 >= args.length) {
+          console.error('Error: --report requires a value');
+          process.exit(1);
+        }
         // Load report and extract message
         const reportPath = args[++i];
         const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));

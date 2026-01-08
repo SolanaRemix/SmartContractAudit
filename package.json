@@ -1,14 +1,14 @@
 {
   "name": "smart-contract-audit",
   "version": "1.0.0",
-  "description": "Professional multi-chain smart contract auditing, monitoring, and automated repair system",
+  "description": "Experimental multi-chain smart contract auditing, monitoring, and automated repair framework",
   "main": "auditor/index.js",
   "scripts": {
     "start": "node script/scan.js",
     "scan": "node script/scan.js",
     "notify": "node script/notify.js",
     "repair": "node script/repair.js",
-    "test": "echo \"Tests not yet implemented\"",
+    "test": "echo \"Error: No tests implemented yet\" && exit 1",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
@@ -38,5 +38,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/SolanaRemix/SmartContractAudit.git"
+  },
+  "notes": {
+    "ethers-version": "Using ethers v5.7.2 for stability. v6 has breaking API changes. Update when implementing RPC integration."
   }
 }

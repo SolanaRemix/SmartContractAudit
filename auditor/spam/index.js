@@ -137,73 +137,64 @@ class SpamDetector {
    * Check if contract is too new (suspicious)
    */
   async checkContractAge(address, chain) {
-    // Placeholder implementation
-    return {
-      type: 'contract-age',
-      isSuspicious: false,
-      weight: 0,
-      description: 'Contract age check'
-    };
+    // This method must be implemented with real blockchain data
+    throw new Error(
+      `SpamDetector.checkContractAge is not implemented for address ${address} on chain ${chain}`
+    );
   }
 
   /**
    * Check deployment frequency from same deployer
    */
   async checkDeploymentFrequency(address, chain) {
-    // Placeholder implementation
-    return {
-      type: 'deployment-frequency',
-      isSuspicious: false,
-      weight: 0,
-      description: 'Multiple contracts deployed rapidly'
-    };
+    // This method must be implemented with real blockchain data
+    throw new Error(
+      `SpamDetector.checkDeploymentFrequency is not implemented for address ${address} on chain ${chain}`
+    );
   }
 
   /**
    * Check for airdrop spam patterns
    */
   async checkAirdropPattern(address, chain) {
-    // Placeholder implementation
-    return {
-      type: 'airdrop-pattern',
-      isSuspicious: false,
-      weight: 0,
-      description: 'Unsolicited airdrop behavior'
-    };
+    // This method must be implemented with real detection logic.
+    // Throwing here prevents silently marking contracts as safe.
+    throw new Error(
+      `SpamDetector.checkAirdropPattern is not implemented for address ${address} on chain ${chain}`
+    );
   }
 
   /**
    * Check for code similarity with known spam
    */
   async checkCodeSimilarity(address, chain) {
-    // Placeholder implementation
-    return {
-      type: 'code-similarity',
-      isSuspicious: false,
-      weight: 0,
-      description: 'Similar to known spam contracts'
-    };
+    // This method must be implemented with real detection logic.
+    // Throwing here prevents silently marking contracts as safe.
+    throw new Error(
+      `SpamDetector.checkCodeSimilarity is not implemented for address ${address} on chain ${chain}`
+    );
   }
 
   /**
    * Check token distribution pattern
    */
   async checkDistributionPattern(address, chain) {
-    // Placeholder implementation
-    return {
-      type: 'distribution-pattern',
-      isSuspicious: false,
-      weight: 0,
-      description: 'Suspicious token distribution'
-    };
+    // This method must be implemented with real detection logic.
+    // Throwing here prevents silently marking contracts as safe.
+    throw new Error(
+      `SpamDetector.checkDistributionPattern is not implemented for address ${address} on chain ${chain}`
+    );
   }
 
   /**
    * Get transaction details
    */
   async getTransaction(txHash, chain) {
-    // Placeholder implementation
-    return null;
+    // This method must be implemented to fetch real transaction data.
+    // Throwing here prevents consumers from assuming a missing transaction is benign.
+    throw new Error(
+      `SpamDetector.getTransaction is not implemented for txHash ${txHash} on chain ${chain}`
+    );
   }
 }
 

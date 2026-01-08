@@ -290,9 +290,17 @@ Options:
   for (let i = 0; i < args.length; i++) {
     switch (args[i]) {
       case '--report':
+        if (i + 1 >= args.length) {
+          console.error('Error: --report requires a value');
+          process.exit(1);
+        }
         reportPath = args[++i];
         break;
       case '--source':
+        if (i + 1 >= args.length) {
+          console.error('Error: --source requires a value');
+          process.exit(1);
+        }
         sourcePath = args[++i];
         break;
       case '--create-pr':

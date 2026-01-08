@@ -237,32 +237,40 @@ class WalletTracer {
    * Get incoming transactions for an address
    */
   async getIncomingTransactions(address, chain) {
-    // Placeholder implementation
-    return [];
+    // This method must be implemented with real blockchain data fetching
+    throw new Error(
+      `WalletTracer.getIncomingTransactions is not implemented for address ${address} on chain ${chain}`
+    );
   }
 
   /**
    * Get all transactions for an address
    */
   async getAllTransactions(address, chain, timeRange) {
-    // Placeholder implementation
-    return [];
+    // This method must be implemented with real blockchain data fetching
+    throw new Error(
+      `WalletTracer.getAllTransactions is not implemented for address ${address} on chain ${chain}`
+    );
   }
 
   /**
    * Get token holdings for an address
    */
   async getTokenHoldings(address, chain) {
-    // Placeholder implementation
-    return [];
+    // This method must be implemented with real token balance fetching
+    throw new Error(
+      `WalletTracer.getTokenHoldings is not implemented for address ${address} on chain ${chain}`
+    );
   }
 
   /**
    * Get NFT holdings for an address
    */
   async getNFTHoldings(address, chain) {
-    // Placeholder implementation
-    return [];
+    // This method must be implemented with real NFT balance fetching
+    throw new Error(
+      `WalletTracer.getNFTHoldings is not implemented for address ${address} on chain ${chain}`
+    );
   }
 }
 

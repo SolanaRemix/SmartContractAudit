@@ -24,21 +24,45 @@ function parseArgs() {
   for (let i = 0; i < args.length; i++) {
     switch (args[i]) {
       case '--address':
+        if (i + 1 >= args.length) {
+          console.error('Error: --address requires a value');
+          process.exit(1);
+        }
         options.address = args[++i];
         break;
       case '--chain':
+        if (i + 1 >= args.length) {
+          console.error('Error: --chain requires a value');
+          process.exit(1);
+        }
         options.chain = args[++i];
         break;
       case '--modules':
+        if (i + 1 >= args.length) {
+          console.error('Error: --modules requires a value');
+          process.exit(1);
+        }
         options.modules = args[++i].split(',');
         break;
       case '--output':
+        if (i + 1 >= args.length) {
+          console.error('Error: --output requires a value');
+          process.exit(1);
+        }
         options.output = args[++i];
         break;
       case '--depth':
+        if (i + 1 >= args.length) {
+          console.error('Error: --depth requires a value');
+          process.exit(1);
+        }
         options.depth = parseInt(args[++i]);
         break;
       case '--file':
+        if (i + 1 >= args.length) {
+          console.error('Error: --file requires a value');
+          process.exit(1);
+        }
         options.file = args[++i];
         break;
       case '--help':

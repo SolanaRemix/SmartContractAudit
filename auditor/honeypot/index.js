@@ -118,81 +118,77 @@ class HoneypotDetector {
    * Check for transfer restrictions
    */
   async checkTransferRestrictions(address, chain) {
-    // Placeholder - check for modifiers that restrict transfers
-    return {
-      type: 'transfer-restrictions',
-      detected: false,
-      details: 'No transfer restrictions found'
-    };
+    // This method must be implemented with real contract analysis
+    throw new Error(
+      'HoneypotDetector.checkTransferRestrictions is not implemented. ' +
+      'Transfer restriction detection must be implemented before using this method.'
+    );
   }
 
   /**
    * Check buy and sell taxes
    */
   async checkTaxes(address, chain) {
-    // Placeholder - analyze contract for fee calculations
-    return {
-      type: 'taxes',
-      detected: false,
-      buyTax: 0,
-      sellTax: 0,
-      details: 'No excessive taxes found'
-    };
+    // This method must be implemented with real contract analysis
+    throw new Error(
+      'HoneypotDetector.checkTaxes is not implemented. ' +
+      'Tax analysis must be implemented before using this method.'
+    );
   }
 
   /**
    * Check for hidden mint functions
    */
   async checkHiddenMint(address, chain) {
-    // Placeholder - look for mint functions without proper access control
-    return {
-      type: 'hidden-mint',
-      detected: false,
-      details: 'No hidden mint functions found'
-    };
+    // This method must be implemented with real contract analysis
+    throw new Error(
+      'HoneypotDetector.checkHiddenMint is not implemented. ' +
+      'Hidden mint detection must be implemented before using this method.'
+    );
   }
 
   /**
    * Check for blacklist mechanism
    */
   async checkBlacklist(address, chain) {
-    // Placeholder - check for blacklist mapping and usage
-    return {
-      type: 'blacklist',
-      detected: false,
-      details: 'No blacklist mechanism found'
-    };
+    // Explicitly fail until real blacklist detection is implemented
+    throw new Error(
+      'HoneypotDetector.checkBlacklist is not implemented. ' +
+      'Blacklist detection must be implemented before using this method.'
+    );
   }
 
   /**
    * Check for ownership manipulation
    */
   async checkOwnershipManipulation(address, chain) {
-    // Placeholder - check for owner functions and renouncement
-    return {
-      type: 'ownership',
-      detected: false,
-      details: 'No ownership manipulation detected'
-    };
+    // Explicitly fail until real ownership manipulation detection is implemented
+    throw new Error(
+      'HoneypotDetector.checkOwnershipManipulation is not implemented. ' +
+      'Ownership manipulation detection must be implemented before using this method.'
+    );
   }
 
   /**
    * Simulate a transfer to check if selling is possible
    */
   async simulateTransfer(address, chain) {
-    // Placeholder - simulate buy and sell on DEX
-    return {
-      success: true,
-      error: null
-    };
+    // Explicitly fail until real transfer simulation is implemented
+    throw new Error(
+      'HoneypotDetector.simulateTransfer is not implemented. ' +
+      'DEX transfer simulation must be implemented before using this method.'
+    );
   }
 
   /**
    * Get contract code for analysis
    */
   async getContractCode(address, chain) {
-    // Placeholder implementation
-    return null;
+    // Explicitly fail until contract code retrieval is implemented
+    throw new Error(
+      'HoneypotDetector.getContractCode is not implemented. ' +
+      'Contract code retrieval must be implemented before using this method.'
+    );
   }
 }
 
