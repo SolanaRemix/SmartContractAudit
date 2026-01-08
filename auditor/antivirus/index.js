@@ -3,8 +3,6 @@
  * Scans smart contracts for known vulnerabilities and malicious patterns
  */
 
-const { ethers } = require('ethers');
-
 class AntivirusScanner {
   constructor(config = {}) {
     this.config = {
