@@ -29,7 +29,7 @@ smartbrain_log() {
   local agent="$1"; shift
   local level="$1"; shift
   local msg="$*"
-  printf '[%s][%s][%s] %s\n' "$(date +"%Y-%m-%dT%H:%M:%S%z")" "$agent" "$level" "$msg" >> "$SMARTBRAIN_LOG"
+  printf '[%s][%s][%s] %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%S%z")" "$agent" "$level" "$msg" >> "$SMARTBRAIN_LOG"
 }
 
 # ------------------------------------------------------------
@@ -39,6 +39,7 @@ smartbrain_log() {
 clean_ports() {
   log "Cleaning hanging Node.js processes on ports 3000-3010 and 4000."
   local ports=({3000..3010} 4000)
+  local dry_run="${DRY_RUN:-true}"
 
   for port in "${ports[@]}"; do
     if command -v lsof >/dev/null 2>&1; then
@@ -46,9 +47,14 @@ clean_ports() {
       pids=$(lsof -t -iTCP:"$port" -sTCP:LISTEN || true)
 
       if [[ -n "${pids:-}" ]]; then
-        warn "Killing processes on port $port (PIDs: $pids)."
-        smartbrain_log "AgentB" "WARN" "Killing processes on port $port (PIDs: $pids)."
-        kill $pids || true
+        if [[ "$dry_run" == "true" ]]; then
+          warn "DRY_RUN: Would kill processes on port $port (PIDs: $pids)."
+          smartbrain_log "AgentB" "INFO" "DRY_RUN: Would kill processes on port $port (PIDs: $pids)."
+        else
+          warn "Killing processes on port $port (PIDs: $pids)."
+          smartbrain_log "AgentB" "WARN" "Killing processes on port $port (PIDs: $pids)."
+          kill $pids || true
+        fi
       fi
     fi
   done
