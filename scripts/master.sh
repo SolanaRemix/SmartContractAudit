@@ -29,7 +29,7 @@ smartbrain_log() {
   local agent="$1"; shift
   local level="$1"; shift
   local msg="$*"
-  printf '[%s][%s][%s] %s\n' "$(date -Iseconds)" "$agent" "$level" "$msg" >> "$SMARTBRAIN_LOG"
+  printf '[%s][%s][%s] %s\n' "$(date +"%Y-%m-%dT%H:%M:%S%z")" "$agent" "$level" "$msg" >> "$SMARTBRAIN_LOG"
 }
 
 # ------------------------------------------------------------
