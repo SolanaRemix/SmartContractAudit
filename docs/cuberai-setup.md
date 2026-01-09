@@ -57,8 +57,8 @@ CuberAi is a comprehensive AI-powered orchestration system for smart contract au
 #### 1. Clone and Initialize
 
 ```bash
-git clone https://github.com/SolanaRemix/SmartContractAudit.git
-cd SmartContractAudit
+git clone https://github.com/CyberAi/CyberAi.git
+cd CyberAi
 ```
 
 #### 2. Environment Configuration
@@ -481,7 +481,7 @@ jobs:
 
 ## Support
 
-- **Repository**: https://github.com/SolanaRemix/SmartContractAudit
+- **Repository**: https://github.com/CyberAi/CyberAi
 - **Issues**: Report bugs and request features
 - **Discussions**: Ask questions and share ideas
 

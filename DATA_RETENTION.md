@@ -2,6 +2,8 @@
 
 ## Overview
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 This document defines how long different types of data are retained in the SmartContractAudit project and the process for requesting data deletion.
 
 ## Artifact Retention Periods
@@ -242,3 +244,478 @@ For urgent security-related deletion:
 **Last Updated**: 2026-01-01
 
 **Next Review**: 2026-07-01
+=======
+This document outlines SmartContractAudit's data retention practices, including how long we keep different types of data and how to request deletion.
+
+## Default Retention Periods
+
+### Artifacts and Scan Results
+
+| Data Type | Default Retention | Configurable |
+|-----------|------------------|--------------|
+| Workflow artifacts | 90 days | Yes (30-400 days) |
+| Scan logs | 90 days | Yes |
+| Quarantine files | 90 days | Yes |
+| Security reports | 90 days | Yes |
+| Audit summaries | 90 days | Yes |
+
+### Repository Data
+
+| Data Type | Retention Period | Notes |
+|-----------|-----------------|-------|
+| Git commits | Indefinite | Part of repository history |
+| Pull requests | Indefinite | GitHub controls retention |
+| Issues | Indefinite | GitHub controls retention |
+| Discussions | Indefinite | GitHub controls retention |
+
+### User Data
+
+| Data Type | Retention Period | Notes |
+|-----------|-----------------|-------|
+| Contributor info | Indefinite | From git history |
+| Sign-off (DCO) | Indefinite | Legal requirement |
+| Email addresses | Indefinite | From git commits |
+
+### Temporary Data
+
+| Data Type | Retention Period | Notes |
+|-----------|-----------------|-------|
+| Build caches | 7 days | Automatic cleanup |
+| Temp files | 24 hours | Automatic cleanup |
+| Session data | End of session | Not persisted |
+
+## Configuring Retention
+
+### GitHub Actions Artifacts
+
+You can customize artifact retention in workflow files:
+
+```yaml
+- name: Upload artifacts
+  uses: actions/upload-artifact@v4
+  with:
+    name: scan-results
+    path: .quarantine/
+    retention-days: 90  # Adjust as needed (30-400)
+```
+
+### Organization Settings
+
+Repository administrators can set default retention periods in GitHub organization settings.
+=======
+This document outlines the data retention policies for CyberAi, including default retention periods, deletion procedures, and how to request data removal.
+
+## Default Retention Periods
+
+### Build and CI Artifacts
+
+**Retention**: **90 days** (default)
+
+Includes:
+- Build outputs
+- Test results
+- Log files from CI/CD runs
+- Workflow artifacts
+- Security scan reports
+- Temporary files
+
+**Rationale**: Balance between debugging capabilities and storage costs.
+
+### Source Code and Version Control
+
+**Retention**: Indefinite (permanent)
+
+Includes:
+- Git commits and history
+- Pull requests and reviews
+- Code releases and tags
+- Branch history
+
+**Rationale**: Essential for project integrity, attribution, and historical reference.
+
+### Issues and Discussions
+
+**Retention**: Indefinite (permanent)
+
+Includes:
+- GitHub issues (open and closed)
+- Pull request discussions
+- GitHub Discussions posts
+- Comments and reactions
+
+**Rationale**: Valuable for project knowledge base and decision history.
+
+### Analytics and Logs
+
+**Retention**: 90 days (default)
+
+Includes:
+- Server access logs
+- Error logs
+- Usage analytics
+- Performance metrics
+
+**Rationale**: Sufficient for monitoring and troubleshooting while minimizing privacy impact.
+
+### Security Data
+
+**Retention**: Varies by type
+
+- **Security advisories**: Indefinite (permanent)
+- **Vulnerability reports**: 2 years after resolution
+- **Security scan results**: 1 year
+- **Incident response logs**: 3 years (compliance)
+
+**Rationale**: Balance between security oversight and regulatory requirements.
+
+### Documentation
+
+**Retention**: Indefinite (permanent)
+
+Includes:
+- Project documentation
+- API documentation
+- Tutorials and guides
+- Changelogs
+
+**Rationale**: Core project resources that provide ongoing value.
+
+### User Communications
+
+**Retention**: Varies by type
+
+- **Support emails**: 1 year after resolution
+- **Community messages**: Indefinite (public forums)
+- **Private communications**: 90 days unless actively relevant
+
+**Rationale**: Support quality while respecting privacy.
+
+## Automated Deletion
+
+### CI/CD Artifact Cleanup
+
+We automatically delete:
+
+- GitHub Actions artifacts after **90 days**
+- Workflow logs after **90 days**
+- Temporary build files after **90 days**
+
+### Log Rotation
+
+- Server logs rotate and archive after **30 days**
+- Archives deleted after **90 days**
+- Critical security logs retained longer
+
+### Branch Cleanup
+
+- Feature branches may be deleted after merge
+- Stale branches (inactive >6 months) may be cleaned
+- Protected branches (main, release/*) retained indefinitely
+>>>>>>> origin/pr10
+
+## Data Deletion Requests
+
+### How to Request Deletion
+
+<<<<<<< HEAD
+To request deletion of your data:
+
+1. **Email**: privacy@cuberai.example (placeholder contact)
+2. **Subject**: Data Deletion Request - [Your GitHub Username]
+3. **Include**:
+   - Your GitHub username
+   - Type of data to delete
+   - Reason for deletion (optional)
+   - Verification of your identity
+
+### What Can Be Deleted
+
+✅ **Can be deleted**:
+- Workflow artifacts (before retention expires)
+- Scan logs and reports
+- Quarantine files
+- Cached data
+- Session data
+
+❌ **Cannot be deleted** (or requires special handling):
+- Git commit history (immutable by design)
+- Merged pull requests (GitHub retention policy)
+- Signed-off commits (legal DCO requirement)
+- Data required for legal/compliance purposes
+
+### Deletion Process
+
+1. **Request received** - We acknowledge within 2 business days
+2. **Verification** - We verify your identity (typically via GitHub)
+3. **Review** - We review what data can be deleted
+4. **Deletion** - We delete eligible data within 14 days
+5. **Confirmation** - We confirm completion via email
+
+### Special Cases
+
+#### Git History
+
+Removing data from git history requires:
+- Force-push capabilities (destructive operation)
+- Coordination with all repository clones
+- May not be possible for merged/public code
+
+We can:
+- Add data to .gitignore for future
+- Redact secrets from logs
+- Remove from active branches
+
+#### Legal Holds
+
+Some data may be retained longer if:
+- Required by law or regulation
+- Subject to legal proceedings
+- Needed for security investigations
+- Part of audit trails
+
+## Automatic Cleanup
+
+### Scheduled Cleanup
+
+We automatically clean up:
+- Expired artifacts (daily)
+- Old temporary files (daily)
+- Completed workflow logs (after retention period)
+- Unused caches (weekly)
+
+### Manual Cleanup
+
+Repository maintainers can manually trigger cleanup:
+
+```bash
+# Clean old artifacts
+gh api repos/:owner/:repo/actions/artifacts --paginate \
+  | jq -r '.artifacts[] | select(.expired == true) | .id' \
+  | xargs -I {} gh api -X DELETE repos/:owner/:repo/actions/artifacts/{}
+
+# Clean local caches
+rm -rf .cache/
+rm -rf /tmp/smartcontract-*
+```
+
+## Data Export
+
+### Requesting Your Data
+
+To export your data:
+
+1. **Email**: privacy@cuberai.example
+2. **Subject**: Data Export Request - [Your GitHub Username]
+3. **Include**: Specific data you want exported
+
+We will provide:
+- Machine-readable format (JSON/CSV)
+- Within 30 days of request
+- Via secure download link
+
+### Self-Service Export
+
+You can export some data yourself:
+- Git repository: `git clone` or GitHub export
+- Artifacts: Download from GitHub Actions UI
+- Reports: Download from workflow runs
+
+## Compliance
+
+This retention policy complies with:
+- GDPR (Right to erasure)
+- CCPA (Right to deletion)
+- GitHub Terms of Service
+- Apache 2.0 License requirements
+
+## Exceptions
+
+Data retention may be extended for:
+- Active security investigations
+- Ongoing legal proceedings
+- Regulatory compliance requirements
+- With your explicit consent
+
+## Updates to This Policy
+
+We may update this policy to:
+- Reflect new features
+- Comply with regulations
+- Improve data handling
+
+Changes are effective 30 days after posting, unless:
+- Required immediately by law
+- Needed for security reasons
+
+## Contact
+
+For questions or requests regarding data retention:
+
+- **Email**: privacy@cuberai.example (placeholder contact)
+- **Response time**: Within 7 business days
+- **Deletion requests**: Acknowledged within 2 business days
+
+For security-related data inquiries, see [SECURITY.md](SECURITY.md).
+
+---
+
+Last updated: 2026-01-01
+>>>>>>> origin/pr9
+=======
+To request data deletion:
+
+1. **Email**: privacy@cyberai.network
+2. **Subject**: "Data Deletion Request - [Your GitHub Username]"
+3. **Include**:
+   - Your GitHub username
+   - Specific data to be deleted
+   - Reason for request (optional)
+   - Verification of identity
+
+### What Can Be Deleted
+
+✅ **Can typically delete:**
+
+- Personal information in issues/comments (redacted, not removed)
+- Accidentally disclosed sensitive data
+- Unused branches you created
+- Your account from mailing lists
+- Analytics data associated with your activity
+- Cached artifacts with your data
+
+❌ **Cannot typically delete:**
+
+- Git commit history (integrity and attribution)
+- Public contributions (project integrity)
+- Merged code (derivative works)
+- Historical project decisions
+- Security incident records (compliance)
+- Legal hold data
+
+### Response Timeline
+
+1. **Acknowledgment**: Within **5 business days**
+2. **Assessment**: Within **10 business days**
+3. **Action**: Within **30 days** (complex cases may take longer)
+4. **Notification**: You'll be informed of action taken or limitations
+
+### Limitations
+
+Some data cannot be fully deleted due to:
+
+- **Git's distributed nature**: Clones and forks retain history
+- **Legal requirements**: Some data must be retained for compliance
+- **Attribution rights**: Contributors have rights to attribution
+- **Project integrity**: Removing data may break project history
+- **Third-party systems**: Caches, archives, search engines
+
+We will make reasonable efforts to:
+- Redact sensitive information
+- Remove from our systems where possible
+- Provide guidance on external systems
+
+## Retention Overrides
+
+### Legal Hold
+
+Data under legal hold is retained until:
+- Legal matter is resolved
+- Regulatory requirement ends
+- Counsel authorizes release
+
+### Security Incidents
+
+Data related to active security incidents is retained until:
+- Incident is fully resolved
+- Investigation is complete
+- Compliance period expires
+
+### Compliance Requirements
+
+Some data must be retained for compliance with:
+- Open source license obligations
+- Tax and financial regulations (if applicable)
+- Data protection regulations (GDPR, CCPA, etc.)
+- Contract obligations
+
+## Archival Policy
+
+### What We Archive
+
+- Major release artifacts
+- Significant project milestones
+- Security advisories and patches
+- Governance decisions
+- Annual reports and statistics
+
+### Archive Access
+
+- Public archives available to community
+- Private archives restricted to maintainers
+- Security archives restricted to security team
+
+### Archive Retention
+
+- Archives retained indefinitely unless superseded
+- May be migrated to new formats for preservation
+- Access methods documented
+
+## Data Minimization
+
+We practice data minimization:
+
+- Collect only necessary information
+- Limit access to sensitive data
+- Anonymize where possible
+- Regular reviews of data practices
+- Delete data when no longer needed
+
+## Export Your Data
+
+You can export your data:
+
+- **GitHub data**: Use GitHub's data export tools
+- **Analytics**: Request export via privacy@cyberai.network
+- **Communications**: Request archive via privacy@cyberai.network
+
+Exports provided in common formats (JSON, CSV, etc.).
+
+## Updates to Retention Policy
+
+We may update retention periods based on:
+
+- Community feedback
+- Legal requirements
+- Storage constraints
+- Security considerations
+
+Changes announced in:
+- Repository commits
+- Release notes
+- Email notifications (for significant changes)
+
+## Contact
+
+For data retention questions or deletion requests:
+
+**Email**: privacy@cyberai.network
+
+For security data concerns: security@cyberai.network  
+For general questions: See CONTRIBUTING.md
+
+## Compliance
+
+This policy aims to comply with:
+
+- GDPR (European Union)
+- CCPA (California)
+- Other applicable data protection laws
+
+Specific regional requirements may apply based on your location.
+
+---
+
+**Document Version**: 1.0  
+**Last Updated**: 2026-01-01  
+**Default Artifact Retention**: **90 days**
+>>>>>>> origin/pr10
