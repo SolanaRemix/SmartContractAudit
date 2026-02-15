@@ -142,11 +142,11 @@ if [[ -f "$ARTIFACT" ]]; then
             log_success "Artifact is valid JSON"
             
             # Show artifact summary
-            local size=$(wc -c < "$ARTIFACT" | tr -d ' ')
+            size=$(wc -c < "$ARTIFACT" | tr -d ' ')
             log_info "Artifact size: $size bytes"
             
             if jq -e '.version' "$ARTIFACT" &> /dev/null; then
-                local version=$(jq -r '.version' "$ARTIFACT")
+                version=$(jq -r '.version' "$ARTIFACT")
                 log_info "Artifact version: $version"
             fi
         else
