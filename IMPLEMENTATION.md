@@ -266,15 +266,24 @@ node script/scan.js --address 0xabc... --chain ethereum --modules antivirus,spam
 - Best practices documentation
 - Contribution guidelines
 
-## 🌟 Ready for Use
+## 🚧 Development Status
 
-The system is now fully functional and ready for:
-1. ✅ Scanning smart contracts across multiple chains
-2. ✅ Detecting vulnerabilities, spam, and honeypots
-3. ✅ Tracing wallet fund flows
-4. ✅ Automated continuous monitoring
-5. ✅ Automated vulnerability repairs
-6. ✅ PR security audits
-7. ✅ Multi-channel notifications
+**Note: This is a prototype framework, not a production-ready system.**
 
-All components are professionally documented and follow industry best practices!
+The system provides a framework for:
+1. ⚠️ Scanning smart contracts across multiple chains (requires RPC integration)
+2. ⚠️ Detecting vulnerabilities, spam, and honeypots (core detection not yet implemented)
+3. ⚠️ Tracing wallet fund flows (requires blockchain data provider)
+4. ✅ Automated continuous monitoring workflows (GitHub Actions configured)
+5. ⚠️ Automated vulnerability repairs (pattern matching configured, needs real implementation)
+6. ✅ PR security audits (workflow configured)
+7. ✅ Multi-channel notifications (framework in place)
+
+**Current State:**
+- ✅ Professional documentation and architecture
+- ✅ GitHub Actions workflows configured
+- ✅ Configuration files and examples
+- ⚠️ Detection modules throw explicit errors until blockchain integration is implemented
+- ⚠️ Requires RPC providers, block explorers, and other integrations to be functional
+
+See README.md for the prototype status warning and implementation requirements.

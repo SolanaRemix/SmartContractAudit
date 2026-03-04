@@ -23,6 +23,12 @@ pub mod secure_token {
         let from = &mut ctx.accounts.from;
         let to = &mut ctx.accounts.to;
 
+        // Check: Authority must be the owner of the from account
+        require!(
+            from.owner == ctx.accounts.authority.key(),
+            ErrorCode::Unauthorized
+        );
+
         // Check: Sufficient balance
         require!(from.balance >= amount, ErrorCode::InsufficientFunds);
 

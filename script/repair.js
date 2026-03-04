@@ -15,7 +15,8 @@ class RepairEngine {
   }
 
   initializeRepairPatterns() {
-    return {
+    // Default patterns
+    const defaults = {
       reentrancy: {
         enabled: true,
         strategy: 'checks-effects-interactions',
@@ -45,8 +46,30 @@ class RepairEngine {
         strategy: 'add-access-control',
         confidence: 95,
         fix: this.fixPublicMint.bind(this)
+      },
+      delegatecall: {
+        enabled: true,
+        strategy: 'add-access-control',
+        confidence: 50,
+        fix: this.fixDelegatecall.bind(this)
       }
     };
+
+    // Merge config with defaults if config is provided
+    if (this.config && typeof this.config === 'object') {
+      Object.keys(defaults).forEach(key => {
+        if (this.config[key]) {
+          // Merge config values but preserve the fix function
+          defaults[key] = {
+            ...defaults[key],
+            ...this.config[key],
+            fix: defaults[key].fix
+          };
+        }
+      });
+    }
+
+    return defaults;
   }
 
   /**
@@ -196,6 +219,43 @@ class RepairEngine {
   }
 
   /**
+   * Fix unsafe delegatecall
+   */
+  fixDelegatecall(vulnerability, sourceCode) {
+    // Delegatecall is complex and often requires manual review
+    // Provide a comment and access control suggestion
+    const fixes = [];
+    
+    // Add access control if missing
+    if (!sourceCode.includes('Ownable')) {
+      fixes.push({
+        type: 'add-import',
+        code: 'import "@openzeppelin/contracts/access/Ownable.sol";'
+      });
+      
+      fixes.push({
+        type: 'inherit-contract',
+        code: ', Ownable'
+      });
+    }
+    
+    // Add modifier to function with delegatecall
+    fixes.push({
+      type: 'add-modifier',
+      function: vulnerability.location,
+      code: 'onlyOwner'
+    });
+
+    // Add warning comment
+    fixes.push({
+      type: 'add-comment',
+      code: '// WARNING: delegatecall is inherently dangerous. Review carefully!'
+    });
+
+    return this.generatePatch(fixes);
+  }
+
+  /**
    * Generate unified diff patch
    */
   generatePatch(fixes) {
@@ -212,7 +272,8 @@ class RepairEngine {
       overflow: 'Added SafeMath to prevent integer overflow/underflow',
       uncheckedSend: 'Added require check for external call return value',
       txOrigin: 'Replaced tx.origin with msg.sender for authentication',
-      publicMint: 'Added onlyOwner modifier to mint function'
+      publicMint: 'Added onlyOwner modifier to mint function',
+      delegatecall: 'Added access control to delegatecall function (manual review required)'
     };
     
     return descriptions[vulnType] || 'Applied security fix';
