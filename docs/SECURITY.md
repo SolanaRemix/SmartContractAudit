@@ -8,10 +8,9 @@ SmartContractAudit is built with security as a top priority. This document outli
 
 ### 1. GitAntivirus System
 
-Our automated security scanning system includes:
+Our automated security scanning system currently includes:
 
-- **Pattern Detection**: Scans for malicious code patterns
-- **Secret Detection**: Identifies exposed credentials and API keys
+- **Pattern Detection**: Scans for a small, curated set of potentially dangerous command patterns
 - **Archive Scanning**: Flags compressed files for manual review
 - **Quarantine System**: Isolates suspicious files for investigation
 
