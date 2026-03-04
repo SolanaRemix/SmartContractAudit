@@ -35,7 +35,7 @@ SmartBrain Orchestrator
   - Ensures dependency synchronization
   - Runs healing scripts
   - Optimizes build processes
-- **Safety**: Non-destructive, requires confirmation for port cleanup
+- **Safety**: Non-destructive; port cleanup is gated by the `DRY_RUN` flag (no interactive confirmation prompt)
 
 #### Agent C - Security & Compliance
 - **Purpose**: Smart contract and code security
