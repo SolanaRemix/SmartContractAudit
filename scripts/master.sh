@@ -239,24 +239,35 @@ cmd_scan() {
 
   mkdir -p "$QUARANTINE_DIR"
 
-  local patterns=(
-    "*.json" "*.js" "*.jsx" "*.ts" "*.tsx" "*.java" "*.kt"
-    "*.rs" "*.go" "*.php" "*.py" "*.rb" "*.c" "*.cc" "*.cpp"
-    "*.h" "*.hpp" "*.css" "*.scss" "*.less" "*.html" "*.svelte"
-    "*.sh" "*.ps1" "*.bash" "*.zsh" "*.sol" "*.yml" "*.yaml"
-    "*.toml" "*.lock"
+  # Single traversal of the repo for source files, pruning heavy/irrelevant directories.
+  while IFS= read -r -d '' file; do
+    scan_file_for_suspicious_patterns "$file"
+  done < <(
+    find "$ROOT_DIR" \
+      \( -path "$ROOT_DIR/.git" -o -path "$ROOT_DIR/node_modules" \) -prune -o \
+      -type f \( \
+        -name "*.json" -o -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" -o \
+        -name "*.java" -o -name "*.kt" -o -name "*.rs" -o -name "*.go" -o -name "*.php" -o \
+        -name "*.py" -o -name "*.rb" -o -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o \
+        -name "*.h" -o -name "*.hpp" -o -name "*.css" -o -name "*.scss" -o -name "*.less" -o \
+        -name "*.html" -o -name "*.svelte" -o -name "*.sh" -o -name "*.ps1" -o -name "*.bash" -o \
+        -name "*.zsh" -o -name "*.sol" -o -name "*.yml" -o -name "*.yaml" -o -name "*.toml" -o \
+        -name "*.lock" \
+      \) -print0 2>/dev/null || true
   )
 
-  for pat in "${patterns[@]}"; do
-    while IFS= read -r -d '' file; do
-      scan_file_for_suspicious_patterns "$file"
-    done < <(find "$ROOT_DIR" -type f -name "$pat" -print0 2>/dev/null || true)
-  done
-
+  # Archive scan, also pruning heavy/irrelevant directories.
   while IFS= read -r -d '' archive; do
     smartbrain_log "AgentX" "WARN" "Archive flagged: $archive"
     echo "$archive" >> "$QUARANTINE_DIR/archives-review.txt"
-  done < <(find "$ROOT_DIR" -type f \( -name "*.zip" -o -name "*.tar" -o -name "*.gz" -o -name "*.tgz" -o -name "*.bz2" -o -name "*.apk" \) -print0 2>/dev/null || true)
+  done < <(
+    find "$ROOT_DIR" \
+      \( -path "$ROOT_DIR/.git" -o -path "$ROOT_DIR/node_modules" \) -prune -o \
+      -type f \( \
+        -name "*.zip" -o -name "*.tar" -o -name "*.gz" -o \
+        -name "*.tgz" -o -name "*.bz2" -o -name "*.apk" \
+      \) -print0 2>/dev/null || true
+  )
 
   smartbrain_log "AgentX" "INFO" "Scan complete."
   log "Scan complete."
