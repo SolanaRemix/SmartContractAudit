@@ -24,7 +24,7 @@ on:
           - 'false'
 
 env:
-  DRY_RUN: true
+  DRY_RUN: 'true'
   NODE_VERSION: '18'
 
 jobs:
