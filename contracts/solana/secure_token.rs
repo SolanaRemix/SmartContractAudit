@@ -13,6 +13,7 @@ pub mod secure_token {
         let token = &mut ctx.accounts.token;
         token.authority = ctx.accounts.authority.key();
         token.total_supply = total_supply;
+        token.max_supply = u64::MAX;
         token.mint_authority = ctx.accounts.authority.key();
         Ok(())
     }
