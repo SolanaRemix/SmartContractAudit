@@ -68,10 +68,31 @@ jobs:
       - name: Apply fixes to code
         if: steps.fix.outputs.fix_count > 0
         run: |
-          echo "Applying ${{ steps.fix.outputs.fix_count }} fixes..."
-          # This would apply the generated patches
-          # For now, just log what would be done
-          cat reports/fixes.json
+          echo "Applying ${{ steps.fix.outputs.fix_count }} fixes from reports/fixes.json..."
+          
+          if [ ! -f "reports/fixes.json" ]; then
+            echo "Error: reports/fixes.json not found, cannot apply fixes."
+            exit 1
+          fi
+          
+          # Expecting reports/fixes.json to be an array of objects like:
+          # [{ "file": "path/to/file", "patch": "unified diff for git apply" }, ...]
+          jq -c '.[]' reports/fixes.json | while read -r fix; do
+            FILE_PATH=$(echo "$fix" | jq -r '.file // empty')
+            PATCH_CONTENT=$(echo "$fix" | jq -r '.patch // empty')
+          
+            if [ -z "$FILE_PATH" ] || [ -z "$PATCH_CONTENT" ]; then
+              echo "Skipping entry with missing file or patch:"
+              echo "$fix"
+              continue
+            fi
+          
+            echo "Applying patch to $FILE_PATH..."
+            # Apply the patch; fail fast if any patch cannot be applied
+            printf '%s\n' "$PATCH_CONTENT" | git apply --whitespace=nowarn - || exit 1
+          done
+          
+          echo "Finished applying fixes."
       
       - name: Create Pull Request
         if: steps.fix.outputs.fix_count > 0
