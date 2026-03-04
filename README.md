@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # CyberAi
 Audis files contracts Antivirus on chain automation Ai workers
 =======
@@ -86,4 +85,4 @@ See [SECURITY.md](SECURITY.md) for responsible disclosure process.
 
 **License**: Apache-2.0  
 **Organization**: SolanaRemix
->>>>>>> origin/pr12
+origin/pr12
