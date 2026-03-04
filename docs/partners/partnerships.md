@@ -1,4 +1,6 @@
+<<<<<<< HEAD
 ---
+<<<<<<< HEAD
 title: Partnership Agreements
 description: Terms and structure for SmartContractAudit partnerships
 keywords: partnership, agreements, terms, collaboration
@@ -291,3 +293,582 @@ A: Early termination is possible with notice. See specific agreement for terms.
 **Next Review**: 2026-07-01
 
 **Note**: This document provides general information. Specific agreements will contain complete terms and conditions.
+=======
+title: Partnership Models
+description: Different ways to partner with SmartContractAudit
+keywords: partnerships, collaboration, integration
+---
+
+# Partnership Models
+
+## Overview
+
+SmartContractAudit offers flexible partnership models to suit different organizational needs and goals.
+
+## Types of Partnerships
+
+### 1. Technology Integration
+
+**Description**: Integrate our security scanning into your platform
+
+**Best for**:
+- Development tools
+- CI/CD platforms
+- IDE extensions
+- Blockchain explorers
+- Wallet providers
+
+**What we provide**:
+- API access
+- Technical documentation
+- Integration support
+- Co-marketing materials
+- Joint case studies
+
+**What we need**:
+- Technical POC
+- API usage commitment
+- Attribution/branding
+- Feedback and improvement suggestions
+
+### 2. Reseller Partnership
+
+**Description**: Offer SmartContractAudit services to your clients
+
+**Best for**:
+- Consulting firms
+- Security companies
+- Development agencies
+- Blockchain services
+- System integrators
+
+**What we provide**:
+- White-label options
+- Revenue sharing
+- Sales enablement
+- Technical training
+- Marketing support
+
+**What we need**:
+- Sales commitment
+- Client support capability
+- Brand alignment
+- Regular communication
+
+### 3. Strategic Alliance
+
+**Description**: Long-term strategic collaboration
+
+**Best for**:
+- Major blockchain protocols
+- Industry leaders
+- Ecosystem players
+- Standard bodies
+- Research institutions
+
+**What we provide**:
+- Custom development
+- Priority features
+- Dedicated resources
+- Joint governance
+- IP collaboration
+
+**What we need**:
+- Strategic alignment
+- Resource commitment
+- Long-term vision
+- Mutual benefit
+
+### 4. Sponsorship
+
+**Description**: Financial support for open-source development
+
+**Best for**:
+- Any organization using our tools
+- Community supporters
+- Companies needing recognition
+- Long-term backers
+
+See [sponsorship_tiers.md](sponsorship_tiers.md) for details.
+
+## Partnership Process
+
+### Phase 1: Discovery (Week 1-2)
+
+1. **Initial Contact**
+   - Submit partnership inquiry
+   - Preliminary discussion
+   - NDA if needed
+
+2. **Needs Assessment**
+   - Understand goals
+   - Define requirements
+   - Identify success metrics
+
+3. **Proposal Development**
+   - Draft partnership terms
+   - Define deliverables
+   - Set timeline
+
+### Phase 2: Agreement (Week 3-4)
+
+1. **Technical Review**
+   - Architecture discussion
+   - Integration planning
+   - Resource allocation
+
+2. **Legal Review**
+   - Partnership agreement
+   - Terms and conditions
+   - IP agreements
+
+3. **Execution**
+   - Sign agreements
+   - Kickoff meeting
+   - Assign teams
+
+### Phase 3: Implementation (Month 2-3)
+
+1. **Technical Onboarding**
+   - API credentials
+   - Documentation access
+   - Development environment
+
+2. **Integration Development**
+   - Build integration
+   - Testing and QA
+   - Security review
+
+3. **Launch Preparation**
+   - Marketing materials
+   - Press release
+   - Training completion
+
+### Phase 4: Launch & Growth (Month 4+)
+
+1. **Go Live**
+   - Production deployment
+   - Monitoring setup
+   - Support activation
+
+2. **Optimization**
+   - Performance tuning
+   - Feature enhancement
+   - Usage analysis
+
+3. **Expansion**
+   - Scale integration
+   - New use cases
+   - Deeper collaboration
+
+## Requirements
+
+### Minimum Requirements
+
+For all partnerships:
+- Alignment with our mission
+- Commitment to security
+- Professional conduct
+- Clear communication
+- Mutual benefit
+
+### Technical Requirements
+
+For technology integrations:
+- API usage best practices
+- Security standards compliance
+- Error handling
+- Rate limiting respect
+- Usage reporting
+
+### Business Requirements
+
+For commercial partnerships:
+- Active business entity
+- Financial stability
+- Market presence
+- Customer base
+- Support capability
+
+## Benefits
+
+### For Partners
+
+- **Access to Technology**: Use our cutting-edge security tools
+- **Market Differentiation**: Stand out with security focus
+- **Revenue Opportunities**: Generate income through partnership
+- **Brand Association**: Align with trusted security brand
+- **Technical Support**: Access to our engineering team
+- **Co-Marketing**: Joint marketing initiatives
+- **Early Access**: New features and capabilities
+- **Community**: Join our partner ecosystem
+
+### For SmartContractAudit
+
+- **Ecosystem Growth**: Expand reach and impact
+- **Product Improvement**: Learn from partner feedback
+- **Market Validation**: Real-world usage and cases
+- **Revenue**: Sustainable project funding
+- **Innovation**: Collaborative development
+- **Community**: Stronger ecosystem
+
+## Success Metrics
+
+We measure partnership success through:
+
+**Technical Metrics**:
+- Integration quality
+- API usage
+- Uptime and reliability
+- Error rates
+- Performance
+
+**Business Metrics**:
+- User adoption
+- Revenue generated
+- Customer satisfaction
+- Market reach
+- Brand awareness
+
+**Relationship Metrics**:
+- Communication quality
+- Issue resolution time
+- Collaboration effectiveness
+- Innovation output
+- Mutual benefit
+
+## Case Studies
+
+### Example: DeFi Platform Integration
+
+**Partner**: [DeFi Platform Name]  
+**Type**: Technology Integration  
+**Result**: 
+- 50% reduction in security incidents
+- 10,000+ contracts scanned
+- Improved user trust
+- Joint marketing success
+
+### Example: Consulting Firm Reseller
+
+**Partner**: [Consulting Firm]  
+**Type**: Reseller Partnership  
+**Result**:
+- 20+ clients onboarded
+- $500K+ revenue generated
+- 95% client satisfaction
+- Strategic account growth
+
+## FAQ
+
+**Q: How long does partnership setup take?**
+A: Typically 4-6 weeks from initial contact to go-live.
+
+**Q: What are the costs?**
+A: Varies by partnership type. Contact us for custom pricing.
+
+**Q: Can we customize the integration?**
+A: Yes, we offer custom development for strategic partners.
+
+**Q: Is there a minimum commitment?**
+A: Depends on partnership type. Discuss with our team.
+
+**Q: How is IP handled?**
+A: Defined in partnership agreement. Generally, each party retains their IP.
+
+## Next Steps
+
+1. Review [technical onboarding](technical_onboarding.md)
+2. Check [sponsorship tiers](sponsorship_tiers.md)
+3. Read [SLA and support](sla_and_support.md)
+4. [Contact us](contact.md) to start the conversation
+
+---
+
+*Last updated: 2026-01-01*
+>>>>>>> origin/pr9
+=======
+# Partnership Opportunities
+
+## Overview
+
+CyberAi welcomes partnerships with organizations that share our commitment to blockchain security and open source principles.
+
+## Types of Partnerships
+
+### 1. Financial Sponsorship
+
+**Description**: Support the project with funding
+
+**Benefits:**
+- Logo placement and recognition
+- Priority support channels
+- Input on roadmap (non-binding)
+- Co-marketing opportunities
+- Speaking opportunities at events
+
+**Levels**: See [sponsorship_tiers.md](sponsorship_tiers.md)
+
+**Commitment**: Monthly or annual contributions
+
+**How to Join**: Contact funding@cyberai.network
+
+### 2. Technical Partnership
+
+**Description**: Integrate our tools into your platform or contribute technical resources
+
+**Benefits:**
+- Deep technical integration support
+- Custom feature development (community approved)
+- Co-branded solutions
+- Dedicated technical liaison
+- Early access to features
+
+**Requirements:**
+- Technical integration plan
+- Community benefit alignment
+- Open source contribution
+
+**Examples:**
+- CI/CD platform integration
+- Blockchain explorer integration
+- IDE plugin partnerships
+- Cloud provider integrations
+
+### 3. Audit Firm Partnership
+
+**Description**: Enhance your audit workflow with our automated tools
+
+**Benefits:**
+- White-label deployment options
+- Custom rule sets for your methodology
+- Training for your team
+- Joint case studies
+- Priority bug fixes
+
+**Requirements:**
+- Active audit practice
+- Alignment with security best practices
+- Feedback on tool improvements
+
+**Value Proposition:**
+- Reduce manual review time
+- Catch common vulnerabilities automatically
+- Focus auditor time on complex issues
+- Consistent baseline security checks
+
+### 4. Research Partnership
+
+**Description**: Academic or industry research collaboration
+
+**Benefits:**
+- Access to anonymized usage data (opt-in)
+- Co-authorship on papers
+- Dataset collaboration
+- Testing ground for new techniques
+- Student contributions welcomed
+
+**Requirements:**
+- Research proposal aligned with project goals
+- Ethical review approval
+- Open publication of results
+- Attribution and citation
+
+**Focus Areas:**
+- Smart contract vulnerability patterns
+- Automated security analysis techniques
+- Machine learning for code analysis
+- Secure development practices
+
+### 5. Educational Partnership
+
+**Description**: Use our tools in teaching smart contract security
+
+**Benefits:**
+- Free access for educational use
+- Curriculum development support
+- Guest lectures from maintainers
+- Student contribution opportunities
+- Academic license terms
+
+**Requirements:**
+- Accredited educational institution or recognized training program
+- Smart contract or blockchain security focus
+- Attribution in course materials
+
+**Opportunities:**
+- Semester-long projects
+- Capstone contributions
+- Workshop facilitation
+- Internship programs
+
+### 6. Community Partnership
+
+**Description**: Non-financial collaboration to grow the ecosystem
+
+**Benefits:**
+- Cross-promotion
+- Resource sharing
+- Event collaboration
+- Community building
+- Knowledge exchange
+
+**Examples:**
+- Blockchain communities
+- Developer meetup groups
+- Security research communities
+- Open source advocacy groups
+
+**No Cost**: Just mutual benefit and collaboration
+
+## Partnership Process
+
+### 1. Initial Contact
+
+Reach out via:
+- **Email**: funding@cyberai.network
+- **GitHub**: Open an issue with tag `partnership`
+- **Community**: Introduce yourself in Discussions
+
+### 2. Discovery Call
+
+We'll schedule a call to discuss:
+- Your goals and needs
+- How we can help each other
+- Alignment with project values
+- Partnership structure
+
+### 3. Proposal
+
+You or we submit a proposal including:
+- Partnership type and objectives
+- Expected benefits for both parties
+- Timeline and milestones
+- Resource commitments
+- Success metrics
+
+### 4. Community Review
+
+For significant partnerships:
+- Announcement in GitHub Discussions
+- Community feedback period (7-14 days)
+- Maintainer review and decision
+- Governance approval if needed
+
+### 5. Agreement
+
+- Formalize partnership terms
+- Sign agreement if needed
+- Public announcement
+- Onboarding process begins
+
+### 6. Ongoing Collaboration
+
+- Regular check-ins
+- Progress tracking
+- Adjustment as needed
+- Renewal discussions
+
+## Partnership Criteria
+
+### We Look For:
+
+✅ **Alignment**: Shared values and mission  
+✅ **Community Benefit**: Partnership benefits the community  
+✅ **Sustainability**: Long-term commitment  
+✅ **Transparency**: Open communication  
+✅ **Quality**: High standards and professionalism  
+✅ **Ethics**: Strong ethical practices  
+
+### We Avoid:
+
+❌ **Conflicts of Interest**: Competing interests  
+❌ **Control Attempts**: Partners trying to control project  
+❌ **Closed Source**: Pressure to close source  
+❌ **Unethical Practices**: Misalignment with our values  
+❌ **Short-term Focus**: Purely transactional relationships  
+
+## Case Studies
+
+### Example: CI/CD Integration
+
+**Partner**: (Hypothetical) Major CI/CD Platform  
+**Type**: Technical Partnership
+
+**Collaboration:**
+- Native integration of security scanning
+- Marketplace listing
+- Co-marketing campaign
+- Shared documentation
+
+**Results:**
+- 10,000+ developers using integration
+- Improved security coverage
+- Increased project visibility
+- Community growth
+
+### Example: Academic Research
+
+**Partner**: (Hypothetical) University Security Lab  
+**Type**: Research Partnership
+
+**Collaboration:**
+- Joint research on vulnerability patterns
+- Student contributions to codebase
+- Published research papers
+- Conference presentations
+
+**Results:**
+- 3 published papers
+- 15 student contributors
+- New vulnerability detection techniques
+- Enhanced project credibility
+
+## Partnership Governance
+
+See [GOVERNANCE.md](/GOVERNANCE.md) for how partnerships interact with project governance.
+
+**Key Points:**
+- Partners participate as community members
+- No special voting or veto rights
+- Input welcomed but not binding
+- Transparency in all partnership terms
+- Community can challenge problematic partnerships
+
+## Success Metrics
+
+We measure partnership success by:
+
+- **Community Impact**: How the community benefits
+- **Technical Value**: Improvements to tools and platform
+- **Sustainability**: Long-term relationship health
+- **Mutual Benefit**: Both parties achieving goals
+- **Reputation**: Enhanced standing in ecosystem
+
+## Termination
+
+Partnerships may be terminated by either party:
+
+- **With Cause**: Violations of terms or values
+- **Without Cause**: 30-day notice for most partnerships
+- **Mutual Agreement**: Collaborative conclusion
+
+**Process:**
+- Written notice
+- Wind-down period
+- Asset/recognition removal timeline
+- Public announcement
+
+## Questions?
+
+- **General Partnerships**: funding@cyberai.network
+- **Technical Partnerships**: Open GitHub issue
+- **Research Collaborations**: funding@cyberai.network
+- **Educational Use**: funding@cyberai.network
+
+---
+
+**Last Updated**: 2026-01-01  
+**Partnership Applications**: Open  
+**Response Time**: 5-10 business days
+>>>>>>> origin/pr10
