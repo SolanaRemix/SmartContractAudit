@@ -229,6 +229,8 @@ scan_file_for_suspicious_patterns() {
     smartbrain_log "AgentX" "ALERT" "Suspicious pattern in $file."
     echo "$file" >> "$QUARANTINE_DIR/suspicious-files.txt"
   fi
+
+  return 0
 }
 
 cmd_scan() {
