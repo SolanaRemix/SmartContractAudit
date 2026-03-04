@@ -91,7 +91,7 @@ Scans for malicious code patterns, suspicious files, and potential security thre
 - **Non-Destructive by Default**: All operations run in DRY_RUN mode
 - **Quarantine System**: Suspicious files isolated for review in `.quarantine/`
 - **Pattern Detection**: Scans for malicious code patterns
-- **Secret Detection**: Identifies exposed credentials
+- **Secret Detection (planned)**: Future support for detecting exposed credentials
 - **Comprehensive Logging**: All operations logged to `SMARTBRAIN.log`
 
 ## 📚 Documentation
