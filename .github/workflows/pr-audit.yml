@@ -155,7 +155,7 @@ jobs:
             });
       
       - name: Block merge if critical issues
-        if: steps.report.outputs.critical > 0
+        if: fromJSON(steps.report.outputs.critical) > 0
         run: |
           echo "::error::Critical security issues detected! Please fix before merging."
           exit 1
