@@ -113,7 +113,7 @@ If you have a report file with addresses:
 npm run scan -- --report path/to/report.json
 ```
 
-This will scan the contract every 5 minutes (300 seconds) and alert on changes.
+The scan will analyze all addresses found in the report and generate a new comprehensive report.
 
 ### Custom Rules
 
