@@ -189,6 +189,13 @@ cmd_integrity() {
   log "Running integrity checks."
   smartbrain_log "AgentC" "INFO" "Integrity check started."
 
+  # Skip if no package.json (not a Node.js project)
+  if [[ ! -f "$ROOT_DIR/package.json" ]]; then
+    log "No package.json found. Skipping Node.js integrity checks."
+    smartbrain_log "AgentC" "INFO" "Skipped: No package.json found."
+    return 0
+  fi
+
   ensure_pnpm_install
 
   if $PNPM run check:abi-sdk-consistency 2>/dev/null; then
@@ -208,6 +215,13 @@ cmd_integrity() {
 cmd_health() {
   log "Running health check."
   smartbrain_log "AgentF" "INFO" "Health check started."
+
+  # Skip if no package.json (not a Node.js project)
+  if [[ ! -f "$ROOT_DIR/package.json" ]]; then
+    log "No package.json found. Skipping Node.js health checks."
+    smartbrain_log "AgentF" "INFO" "Skipped: No package.json found."
+    return 0
+  fi
 
   ensure_pnpm_install
 

@@ -48,10 +48,14 @@ Each BOT configuration includes:
 
 ## Usage
 
-These templates are referenced by:
-1. GitHub Actions workflows (`.github/workflows/gitantivirus.yml`)
-2. SmartBrain orchestrator (`scripts/master.sh`)
-3. CI/CD pipeline automation
+These are **template configurations** for future integration. Currently:
+1. GitHub Actions workflows (`.github/workflows/gitantivirus.yml`) use hardcoded logic
+2. SmartBrain orchestrator (`scripts/master.sh`) uses hardcoded behavior
+3. These JSON files serve as **reference templates** for teams to customize
+
+> **Note**: The current implementation does not dynamically read these BOT configs. 
+> They are provided as standalone templates showing recommended agent configurations 
+> that can be adapted for future dynamic integration or as reference for custom implementations.
 
 ## Security Notes
 
