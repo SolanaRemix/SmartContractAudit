@@ -197,6 +197,7 @@ cmd_integrity() {
   else
     warn "ABI ↔ SDK mismatch."
     smartbrain_log "AgentC" "ERROR" "ABI ↔ SDK mismatch."
+    return 1
   fi
 }
 
