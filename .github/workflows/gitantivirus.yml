@@ -195,13 +195,15 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const projectUrl = '${{ secrets.PROJECT_URL }}';
+            const projectUrl = process.env.PROJECT_URL;
             if (projectUrl) {
               console.log('📌 Project URL configured');
               // Project integration would go here if PROJECT_URL is set
             } else {
               console.log('⚠️ No PROJECT_URL configured');
             }
+        env:
+          PROJECT_URL: ${{ secrets.PROJECT_URL }}
       
       - name: 📝 Summary
         if: always()
