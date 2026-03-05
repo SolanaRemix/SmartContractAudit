@@ -101,8 +101,8 @@ Relates to #
 
 ## 👥 Reviewers
 
-<!-- Tag specific reviewers if needed -->
-/cc @SolanaRemix @smsdao @SmartBrain
+<!-- Optional: tag specific reviewers or teams if needed. Uncomment or edit the line below if you explicitly want to ping these accounts. -->
+<!-- /cc @SolanaRemix @smsdao @SmartBrain -->
 
 ## 📚 Documentation
 
