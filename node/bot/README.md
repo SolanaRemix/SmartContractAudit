@@ -107,14 +107,7 @@ Pings are **disabled by default** to respect repository owners. To enable:
    export BOT_PINGS_ENABLED=true
    ```
 
-2. **Configure in config/repair.json**:
-   ```json
-   {
-     "pings_enabled": true
-   }
-   ```
-
-3. **Requirements**:
+2. **Requirements**:
    - Must be owner or explicit collaborator
    - Repository must be in allowlist
    - DRY_RUN must be false
