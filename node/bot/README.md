@@ -129,8 +129,10 @@ All bot activity is logged to:
   "mode": "dry_run",
   "repositories_scanned": 50,
   "prs_created": 0,
-  "pings_sent": 0,
-  "errors": []
+  "prs_dry_run": true,
+  "errors": 0,
+  "configuration": {},
+  "results": []
 }
 ```
 
