@@ -244,6 +244,7 @@ scan_file_for_suspicious_patterns() {
   if grep -Eqi -e 'rm -rf /' -e 'curl.*sh' -e 'wget.*sh' -e 'eval`\(' "$file" 2>/dev/null; then
     smartbrain_log "AgentX" "ALERT" "Suspicious pattern in $file."
     echo "$file" >> "$QUARANTINE_DIR/suspicious-files.txt"
+    return 1
   fi
 
   return 0
@@ -254,10 +255,13 @@ cmd_scan() {
   smartbrain_log "AgentX" "INFO" "Scan started."
 
   mkdir -p "$QUARANTINE_DIR"
+  local findings=0
 
   # Single traversal of the repo for source files, pruning heavy/irrelevant directories.
   while IFS= read -r -d '' file; do
-    scan_file_for_suspicious_patterns "$file"
+    if ! scan_file_for_suspicious_patterns "$file"; then
+      findings=$((findings + 1))
+    fi
   done < <(
     find "$ROOT_DIR" \
       \( -path "$ROOT_DIR/.git" -o -path "$ROOT_DIR/node_modules" \) -prune -o \
@@ -285,8 +289,14 @@ cmd_scan() {
       \) -print0 2>/dev/null || true
   )
 
-  smartbrain_log "AgentX" "INFO" "Scan complete."
-  log "Scan complete."
+  smartbrain_log "AgentX" "INFO" "Scan complete. Findings: $findings"
+  log "Scan complete. Findings: $findings"
+
+  if [[ $findings -gt 0 ]]; then
+    return 1
+  fi
+
+  return 0
 }
 
 # ------------------------------------------------------------

@@ -55,7 +55,6 @@ jobs:
           echo "Running GitAntivirus scan in DRY_RUN mode..."
           chmod +x scripts/master.sh
           DRY_RUN=${{ github.event.inputs.dry_run || 'true' }} scripts/master.sh scan
-        continue-on-error: true
 
       - name: Upload quarantine report
         if: always()
