@@ -1,10 +1,15 @@
 #!/usr/bin/env node
 /**
  * ═══════════════════════════════════════════════════════════════════════════
- * 🤖 GitAntivirus Node Bot - Automated Security Scanner
+ * 🤖 GitAntivirus Node Bot - Automated Security Scanner (TEMPLATE)
  * ═══════════════════════════════════════════════════════════════════════════
  * Description: Scans GitHub repositories for security issues and creates
  *              draft PRs with fixes. Operates in dry-run mode by default.
+ * 
+ * ⚠️  IMPORTANT: This is a TEMPLATE implementation. The PR creation logic
+ *     (createDraftPR function) is a placeholder and requires full implementation
+ *     including repository forking, branch creation, and actual PR submission.
+ *     See inline comments in createDraftPR() for implementation details.
  * 
  * Usage: node index.js
  * 
@@ -224,9 +229,24 @@ async function createDraftPR(repo, analysis) {
     
     log.info(`Creating draft PR for ${repo.full_name}...`);
     
-    // Note: Actual PR creation requires fork + branch creation
-    // This is a template - implement full logic as needed
-    log.warning('PR creation logic is a template - implement full workflow');
+    // ⚠️  TEMPLATE: This function is a placeholder and requires full implementation.
+    // To implement actual PR creation, you need to:
+    // 1. Fork the target repository (if not already forked)
+    // 2. Create a new branch in your fork with the proposed changes
+    // 3. Commit the security fixes to that branch
+    // 4. Use octokit.rest.pulls.create() to open a draft PR from your fork to the target repo
+    // 5. Handle authentication, rate limiting, and error cases appropriately
+    // 
+    // Example implementation outline:
+    //   const fork = await octokit.rest.repos.createFork({ owner, repo });
+    //   const branch = await createBranch(fork, 'security-fixes');
+    //   await commitChanges(branch, fixes);
+    //   const pr = await octokit.rest.pulls.create({
+    //     owner, repo, head: `${fork.owner.login}:${branch}`, base: 'main',
+    //     title: 'Security fixes', body: prBody, draft: true
+    //   });
+    
+    log.warning('PR creation logic is a template - implement full workflow as described above');
     
     return { created: false, reason: 'template-only' };
   } catch (error) {

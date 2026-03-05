@@ -1,11 +1,23 @@
-# 🤖 GitAntivirus Bot - Automated Security Scanner
+# 🤖 GitAntivirus Bot - Automated Security Scanner (TEMPLATE)
 
 ```
 ╔═══════════════════════════════════════════════════════════════════════════╗
 ║                    🛡️  GitAntivirus Bot System                           ║
 ║                 Automated Smart Contract Security Scanner                 ║
+║                              ⚠️  TEMPLATE ⚠️                               ║
 ╚═══════════════════════════════════════════════════════════════════════════╝
 ```
+
+## ⚠️ Important Notice
+
+**This is a TEMPLATE implementation.** The bot includes placeholder code for PR creation that requires full implementation before it can create actual pull requests. The `createDraftPR()` function in `index.js` is a stub that needs to be completed with:
+
+1. Repository forking logic
+2. Branch creation
+3. Commit and push operations
+4. Actual PR creation via GitHub API
+
+See inline comments in `index.js` for implementation details.
 
 ## 🎯 Overview
 

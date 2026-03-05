@@ -14,6 +14,11 @@
 set -euo pipefail
 
 # ═══════════════════════════════════════════════════════════════════════════
+# 📌 Version
+# ═══════════════════════════════════════════════════════════════════════════
+readonly VERSION="1.0.0"
+
+# ═══════════════════════════════════════════════════════════════════════════
 # 🎨 Colors and Formatting
 # ═══════════════════════════════════════════════════════════════════════════
 readonly RED='\033[0;31m'
@@ -367,7 +372,7 @@ main() {
     command="${1:-help}"
     
     # Display configuration
-    log_info "SmartBrain Orchestrator v1.0.0"
+    log_info "SmartBrain Orchestrator v${VERSION}"
     log_info "DRY_RUN: ${DRY_RUN}"
     log_info "VERBOSE: ${VERBOSE}"
     log_info "Project: ${PROJECT_ROOT}"

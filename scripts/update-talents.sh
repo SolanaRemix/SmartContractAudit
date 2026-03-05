@@ -64,7 +64,7 @@ check_package_json() {
 ensure_build_dir() {
     log_info "Ensuring build directory exists..."
     
-    if [[ "${DRY_RUN}" == "true" ]]; then
+    if [[ "${DRY_RUN:-true}" == "true" ]]; then
         log_warning "[DRY-RUN] Would create: ${BUILD_DIR}"
     else
         mkdir -p "${BUILD_DIR}"
@@ -75,7 +75,7 @@ ensure_build_dir() {
 run_build() {
     log_info "Running build process..."
     
-    if [[ "${DRY_RUN}" == "true" ]]; then
+    if [[ "${DRY_RUN:-true}" == "true" ]]; then
         log_warning "[DRY-RUN] Would run: pnpm build"
         log_info "Expected output: ${ARTIFACT_PATH}"
     else
@@ -97,7 +97,7 @@ run_build() {
 validate_artifact() {
     log_info "Validating artifact..."
     
-    if [[ "${DRY_RUN}" == "true" ]]; then
+    if [[ "${DRY_RUN:-true}" == "true" ]]; then
         log_warning "[DRY-RUN] Would validate: ${ARTIFACT_PATH}"
         return 0
     fi
