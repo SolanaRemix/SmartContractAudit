@@ -75,7 +75,7 @@ class RepairEngine {
   /**
    * Generate fix for a vulnerability
    */
-  async generateFix(vulnerability, sourceCode) {
+  async generateFix(vulnerability, sourceCode, filePath = null) {
     const pattern = this.repairPatterns[vulnerability.type];
     
     if (!pattern || !pattern.enabled) {
@@ -90,6 +90,7 @@ class RepairEngine {
       const patch = await pattern.fix(vulnerability, sourceCode);
       
       return {
+        file: filePath || vulnerability.file || 'unknown',
         vulnerabilityId: vulnerability.type,
         fixAvailable: true,
         patch,
@@ -392,7 +393,7 @@ Options:
   const fixes = [];
 
   for (const vuln of vulnerabilities) {
-    const fix = await engine.generateFix(vuln, sourceCode);
+    const fix = await engine.generateFix(vuln, sourceCode, sourcePath);
     if (fix.fixAvailable) {
       fixes.push(fix);
       console.log(`✅ Generated fix for ${vuln.type}`);
