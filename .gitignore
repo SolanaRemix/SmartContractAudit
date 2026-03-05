@@ -1,95 +1,51 @@
-# CuberAi .gitignore
-
-# ============================================================
-# ENVIRONMENT & SECRETS
-# ============================================================
-.env
-.env.local
-.env.*.local
-*.key
-*.pem
-*.p12
-secrets/
-credentials/
-
-# ============================================================
-# LOGS
-# ============================================================
-*.log
-SMARTBRAIN.log
-SMARTBRAIN.log.*
-logs/
-*.log.*
-
-# ============================================================
-# QUARANTINE
-# ============================================================
-.quarantine/
-quarantine/
-suspicious-files.txt
-archives-review.txt
-
-# ============================================================
-# REPORTS (Optional - uncomment if you don't want to track)
-# ============================================================
-# AUDIT-REPORT.md
-
-# ============================================================
-# NODE & DEPENDENCIES
-# ============================================================
+# Node modules
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-.pnpm-store/
 package-lock.json
 yarn.lock
 
-# ============================================================
-# BUILD OUTPUTS
-# ============================================================
-dist/
-build/
-out/
-.next/
-.cache/
-*.tsbuildinfo
+# Environment variables
+.env
+.env.local
+.env.*.local
 
-# ============================================================
-# TEMPORARY FILES
-# ============================================================
-tmp/
-temp/
-*.tmp
-*.temp
+# IDE
+.vscode/
+.idea/
 *.swp
 *.swo
 *~
 .DS_Store
-Thumbs.db
 
-# ============================================================
-# IDE & EDITORS
-# ============================================================
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
-.project
-.classpath
-.settings/
+# Build outputs
+dist/
+build/
+out/
+*.log
 
-# ============================================================
-# TESTING
-# ============================================================
+# Reports (keep structure, ignore content)
+reports/*.json
+reports/json/*
+reports/html/*
+reports/pdf/*
+!reports/.gitkeep
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Test coverage
 coverage/
 .nyc_output/
-*.lcov
 
-# ============================================================
-# MISC
-# ============================================================
-.git-antivirus/
-backup/
-*.backup
+# Cache
+.cache/
+.eslintcache
+.prettierache
+
+# OS files
+Thumbs.db
+.DS_Store

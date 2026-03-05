@@ -1,88 +1,298 @@
-# CyberAi
-Audis files contracts Antivirus on chain automation Ai workers
-=======
-# SmartContractAudit
+# SmartContractAudit 🛡️
 
-Automated smart contract auditing and security for blockchain repositories - providing foundational security infrastructure for the SolanaRemix ecosystem.
+Experimental multi-chain smart contract auditing, monitoring, and automated repair framework with AI-powered detection and GitHub Actions integration.
 
-## 🔐 Overview
+> **Status: Prototype – Not Production-Ready**
+>
+> This project is currently a framework/skeleton. The core detection modules are implemented as placeholders and may return no (or only trivial) results. **Do not rely on this project for real-world security audits or production decisions until the detection logic is fully implemented and thoroughly tested.**
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen)](https://nodejs.org/)
 
-SmartContractAudit provides core security functions, auditing scripts, and GitAntivirus workflow automation. This repository serves as the foundation for smart contract security, while the **CyberAi Bot** (separate repository) orchestrates advanced multi-bot operations.
+## 🌟 Features
 
-## 🤖 CyberAi Architecture
+### Multi-Chain Support
+- **EVM Chains**: Ethereum, BSC, Polygon, Avalanche, Arbitrum, Optimism, Fantom
+- **Solana**: Full Solana program analysis support
+- Extensible architecture for adding new chains
 
-For information about the CyberAi Bot ecosystem and how it integrates with SmartContractAudit:
+### Advanced Detection Modules
 
-- **[CyberAi Architecture Guide](docs/CYBERAI_ARCHITECTURE.md)** - Complete architecture overview
-- **[CyberAi PR Merge Guide](docs/CYBERAI_PR_MERGE_GUIDE.md)** - Safe PR review and merge strategy
-- **[CyberAi Setup Documentation](docs/cuberai-setup.md)** - Detailed setup instructions
+#### 🦠 Antivirus Scanner
+- Bytecode pattern analysis
+- Source code vulnerability detection
+- Known exploit signature matching
+- Risk scoring algorithm
 
-### Quick Architecture Summary
+**Detects:**
+- Reentrancy attacks
+- Integer overflow/underflow
+- Unchecked external calls
+- tx.origin authentication
+- Unsafe delegatecall
+- Unprotected selfdestruct
+- Public mint functions
 
-```
-SmartContractAudit (This Repo)    →    CyberAi Bot (Separate Repo)
-├─ Smart contract functions            ├─ AI-powered orchestration
-├─ Security scripts                    ├─ Multi-bot coordination
-├─ GitAntivirus workflow               ├─ Advanced automation
-├─ SmartBrain orchestrator             └─ DAO & governance
-└─ Foundation infrastructure
-```
+#### 🚫 Spam Detector
+- Contract age analysis
+- Deployment frequency monitoring
+- Airdrop pattern recognition
+- Code similarity detection
 
-**Key Principle**: SmartContracts stay in SmartContractAudit. CyberAi Bot orchestrates and coordinates.
+#### 🍯 Honeypot Detector
+- Transfer simulation testing
+- Fee structure analysis
+- Hidden function detection
+- Blacklist mechanism identification
+- Ownership manipulation checks
 
-## 🚀 Quick Start
+#### 🔍 Wallet Tracer
+- Recursive deposit tracing
+- Fund flow visualization
+- Deep wallet activity analysis
+- Transaction graph generation
+- Risk factor identification
 
-### Scan CyberAi Related PRs
+### Automation & CI/CD
+
+#### GitHub Actions Workflows
+1. **Auditor Bot**: Continuous monitoring (runs every 6 hours)
+2. **Auto-Repair**: Automatic vulnerability fixing via PR
+3. **PR Security Audit**: Automated security checks on pull requests
+4. **Deep Scan**: Comprehensive weekly scans
+
+#### Notification System
+- Email alerts
+- Slack integration
+- Telegram bot
+- Discord webhooks
+- Custom webhook support
+
+## 📦 Installation
 
 ```bash
-# Scan repository for all CyberAi/CuberAi references
-./scripts/scan-cyberai-prs.sh
-```
+# Clone the repository
+git clone https://github.com/SolanaRemix/SmartContractAudit.git
+cd SmartContractAudit
 
-### Run SmartBrain Orchestrator
-
-```bash
-# Make scripts executable
-chmod +x scripts/*.sh
+# Install dependencies
+npm install
 
 # Copy environment template
 cp .env.example .env
 
-# Run health check (dry-run mode)
-DRY_RUN=true ./scripts/master.sh health
+# Edit .env with your API keys and RPC endpoints
+nano .env
+```
 
-# Run audit
-DRY_RUN=true ./scripts/master.sh audit
+## 🚀 Quick Start
+
+### Scan a Contract
+
+```bash
+# Basic scan
+npm run scan -- --address 0x1234567890123456789012345678901234567890 --chain ethereum
+
+# Scan with specific modules
+npm run scan -- --address 0x1234... --chain bsc --modules antivirus,honeypot
+
+# Batch scan from file
+npm run scan -- --file addresses.txt --chain polygon
+```
+
+### Check for Honeypot
+
+```bash
+node script/scan.js --address 0x1234... --chain bsc --modules honeypot
+```
+
+### Trace Wallet Deposits
+
+```bash
+node script/scan.js --address 0x1234... --chain ethereum --modules tracer --depth 10
+```
+
+### Full Comprehensive Scan
+
+```bash
+node script/scan.js --address 0x1234... --chain ethereum --modules antivirus,spam,honeypot,tracer
 ```
 
 ## 📚 Documentation
 
-- **[TRIO.md](TRIO.md)** - Product, Governance, Security overview
-- **[SECURITY.md](SECURITY.md)** - Security policies
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
-- **[GOVERNANCE.md](GOVERNANCE.md)** - Project governance
+- [Architecture](./docs/ARCHITECTURE.md) - System design and components
+- [API Reference](./docs/API.md) - Complete API documentation
+- [User Guide](./docs/USER_GUIDE.md) - Detailed usage instructions
+- [Development Guide](./docs/DEVELOPMENT.md) - Contributing and extending
+- [Configuration](./docs/CONFIGURATION.md) - Configuration options
+- [Workflows](./docs/WORKFLOWS.md) - GitHub Actions setup
 
-## 🔍 What to Clone First?
+## 🏗️ Project Structure
 
-**Clone SmartContractAudit first** - it's the foundation repository that CyberAi Bot depends on.
+```
+SmartContractAudit/
+├── auditor/              # Core auditing modules
+│   ├── antivirus/       # Vulnerability scanner
+│   ├── spam/            # Spam detector
+│   ├── honeypot/        # Honeypot detector
+│   ├── tracer/          # Wallet tracer
+│   ├── scanner/         # Deep scanner orchestrator
+│   └── index.js         # Main auditor entry point
+├── contracts/           # Example smart contracts
+│   ├── ethereum/        # EVM contracts
+│   └── solana/          # Solana programs
+├── script/              # Automation scripts
+│   ├── scan.js          # Main scanning script
+│   ├── notify.js        # Notification handler
+│   └── repair.js        # Auto-repair engine
+├── config/              # Configuration files
+│   ├── chains.json      # Chain configurations
+│   ├── scanner.json     # Scanner settings
+│   ├── notifications.json
+│   └── repair.json
+├── .github/workflows/   # GitHub Actions
+├── docs/                # Documentation
+└── reports/             # Scan reports
+```
 
-See [CyberAi Architecture Guide](docs/CYBERAI_ARCHITECTURE.md) for complete cloning and deployment strategy.
+## ⚙️ Configuration
 
-## 🛡️ Security
+### Chain Configuration (`config/chains.json`)
 
-Report security issues to: security@cuberai.example (placeholder)
+Add your RPC endpoints and API keys:
 
-See [SECURITY.md](SECURITY.md) for responsible disclosure process.
+```json
+{
+  "ethereum": {
+    "rpc": "https://mainnet.infura.io/v3/YOUR_KEY",
+    "apiKey": "YOUR_ETHERSCAN_KEY"
+  }
+}
+```
 
-## 📖 Learn More
+### Scanner Configuration (`config/scanner.json`)
 
-- [Resume/Project Overview](resume.md)
-- [Release Process](RELEASE.md)
-- [Partner Program](docs/partners/)
-- [DAO Documentation](docs/dao/)
+Customize detection thresholds:
+
+```json
+{
+  "antivirus": {
+    "threshold": 70,
+    "patterns": ["reentrancy", "overflow", ...]
+  }
+}
+```
+
+See [Configuration Guide](./docs/CONFIGURATION.md) for complete options.
+
+## 🤖 GitHub Actions Setup
+
+### 1. Add Repository Secrets
+
+Go to Settings → Secrets → Actions and add:
+
+```
+ETHEREUM_RPC_URL
+BSC_RPC_URL
+POLYGON_RPC_URL
+SOLANA_RPC_URL
+ETHERSCAN_API_KEY
+BSCSCAN_API_KEY
+SLACK_WEBHOOK
+NOTIFICATION_WEBHOOK
+```
+
+### 2. Enable Workflows
+
+Workflows are located in `.github/workflows/`:
+- `auditor-bot.yml` - Continuous monitoring
+- `auto-repair.yml` - Automated fixes
+- `pr-audit.yml` - PR security checks
+- `deep-scan.yml` - Weekly comprehensive scans
+
+### 3. Configure Monitoring
+
+Create `config/monitored-addresses.txt` with addresses to monitor (one per line).
+
+## 📊 Reports
+
+All scan results are saved in the `reports/` directory:
+
+- `reports/json/` - JSON format reports
+- `reports/latest.json` - Most recent scan
+- Uploaded as GitHub Actions artifacts
+
+## 🔧 Development
+
+### Adding a New Detection Module
+
+1. Create module directory: `auditor/mymodule/`
+2. Implement scanner class with `scan()` method
+3. Register in `auditor/index.js`
+4. Add configuration to `config/scanner.json`
+5. Add tests
+
+### Adding Chain Support
+
+1. Add chain config to `config/chains.json`
+2. Create connector if needed
+3. Update documentation
+
+See [Development Guide](./docs/DEVELOPMENT.md) for details.
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+npm test
+
+# Run specific module tests
+npm test -- auditor/antivirus
+
+# With coverage
+npm run test:coverage
+```
+
+## 🔐 Security
+
+This tool is designed to **detect** security vulnerabilities, not exploit them. Always use responsibly and ethically.
+
+- Report security issues privately
+- Do not use for malicious purposes
+- Respect rate limits and terms of service
+- Keep API keys and secrets secure
+
+## 📝 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](docs/CONTRIBUTING.md) for guidelines.
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+## 📞 Support
+
+- **Issues**: [GitHub Issues](https://github.com/SolanaRemix/SmartContractAudit/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/SolanaRemix/SmartContractAudit/discussions)
+- **Documentation**: [docs/](./docs/)
+
+## 🌟 Star History
+
+If you find this project useful, please consider giving it a star! ⭐
+
+## 🙏 Acknowledgments
+
+- OpenZeppelin for security best practices
+- The Ethereum security community
+- All contributors and supporters
 
 ---
 
-**License**: Apache-2.0  
-**Organization**: SolanaRemix
-origin/pr12
+**⚠️ Disclaimer**: This tool is provided as-is for educational and security research purposes. Users are responsible for complying with all applicable laws and regulations. The authors assume no liability for misuse.
+
+**Made with ❤️ by the SmartContractAudit Team**
