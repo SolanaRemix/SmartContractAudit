@@ -187,8 +187,9 @@ If a file is incorrectly flagged:
 
 1. Review the file content
 2. Understand why it was flagged
-3. If safe, add to whitelist (create `.gitantivirus-whitelist`)
-4. Document the exception
+3. If safe, optionally record it in a local whitelist file (for example, `.gitantivirus-whitelist`) for your team’s reference.
+   > Note: the current `scripts/master.sh scan` implementation does **not** read or enforce this file; it is intended only for human documentation and tracking of known-safe exceptions.
+4. Document the exception in your security notes or ticketing system
 
 ## Incident Response
 
