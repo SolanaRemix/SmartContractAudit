@@ -158,24 +158,14 @@ if [[ -f "$ARTIFACT" ]]; then
     fi
 else
     if [[ "$DRY_RUN" == "false" ]]; then
-        log_warn "Artifact not found: $ARTIFACT"
-        log_info "Creating placeholder artifact..."
-        
-        cat > "$ARTIFACT" <<EOF
-{
-  "version": "1.0.0",
-  "timestamp": "$(date -Iseconds)",
-  "talents": [],
-  "metadata": {
-    "generator": "update-talents.sh",
-    "network": "base",
-    "ens": "gxqstudio.eth"
-  }
-}
-EOF
-        log_success "Placeholder artifact created"
+        log_error "Artifact not found: $ARTIFACT"
+        log_error "Build did not produce expected artifact"
+        log_info ""
+        log_info "Expected artifact at: $ARTIFACT"
+        log_info "Ensure your build command creates this file"
+        exit 1
     else
-        log_info "DRY_RUN: Would create artifact $ARTIFACT"
+        log_info "DRY_RUN: Would check for artifact $ARTIFACT"
     fi
 fi
 
