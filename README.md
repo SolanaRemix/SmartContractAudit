@@ -13,7 +13,7 @@ SmartContractAudit is an advanced security framework that combines autonomous AI
 - 🧠 **SmartBrain Orchestrator**: Multi-agent autonomous system for code quality and security
 - 🛡️ **GitAntivirus**: Automated malware and vulnerability scanning
 - 🔍 **Smart Contract Analysis**: Specialized auditing for Solidity contracts
-- 🤖 **AI-Powered Agents**: Six specialized agents working in harmony
+- 🤖 **AI-Powered Agents**: Five specialized agents working in harmony
 - 🔐 **Security-First**: Non-destructive scanning with comprehensive reporting
 - ⚡ **CI/CD Integration**: Seamless GitHub Actions workflow
 - 📊 **Detailed Reporting**: Audit reports and security summaries
