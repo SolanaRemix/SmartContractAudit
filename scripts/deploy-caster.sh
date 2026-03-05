@@ -97,9 +97,14 @@ check_prerequisites() {
     
     # Check artifact file
     if [[ ! -f "$ARTIFACT_PATH" ]]; then
-        log_error "Artifact not found: $ARTIFACT_PATH"
-        log_info "Run 'pnpm build' or './scripts/update-talents.sh' first"
-        exit 1
+        if [[ "$DRY_RUN" == "true" ]]; then
+            log_warning "Artifact not found: $ARTIFACT_PATH"
+            log_info "Dry-run mode: skipping artifact requirement. For live deployment, run 'pnpm build' or './scripts/update-talents.sh' first."
+        else
+            log_error "Artifact not found: $ARTIFACT_PATH"
+            log_info "Run 'pnpm build' or './scripts/update-talents.sh' first"
+            exit 1
+        fi
     else
         log_success "Artifact found: $ARTIFACT_PATH"
     fi
