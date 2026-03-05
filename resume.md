@@ -193,7 +193,7 @@ Comprehensive technical documentation author:
 ├── Configuration: Conservative defaults, dry-run enabled
 ├── Security: Zero secrets in code, all via env vars
 ├── Testing: Dry-run mode standard, live mode opt-in
-└── Status: 🟢 Production Ready
+└── Status: 🧪 Template / Active Development (opt-in for live writes)
 ```
 
 ## 🔗 Links & Resources
