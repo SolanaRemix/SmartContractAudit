@@ -255,6 +255,11 @@ cmd_scan() {
   smartbrain_log "AgentX" "INFO" "Scan started."
 
   mkdir -p "$QUARANTINE_DIR"
+  
+  # Clear previous scan results to avoid accumulating duplicates
+  > "$QUARANTINE_DIR/suspicious-files.txt"
+  > "$QUARANTINE_DIR/archives-review.txt"
+  
   local findings=0
 
   # Single traversal of the repo for source files, pruning heavy/irrelevant directories.
