@@ -210,12 +210,27 @@ cmd_health() {
 
   ensure_pnpm_install
 
-  $PNPM lint || smartbrain_log "AgentF" "WARN" "Lint issues."
-  $PNPM test || smartbrain_log "AgentF" "WARN" "Test failures."
-  $PNPM -r run typecheck || smartbrain_log "AgentF" "WARN" "Typecheck errors."
+  local failed=0
+
+  if ! $PNPM lint; then
+    smartbrain_log "AgentF" "WARN" "Lint issues."
+    failed=1
+  fi
+
+  if ! $PNPM test; then
+    smartbrain_log "AgentF" "WARN" "Test failures."
+    failed=1
+  fi
+
+  if ! $PNPM -r run typecheck; then
+    smartbrain_log "AgentF" "WARN" "Typecheck errors."
+    failed=1
+  fi
 
   smartbrain_log "AgentF" "INFO" "Health check complete."
   log "Health check complete."
+
+  return $failed
 }
 
 # ------------------------------------------------------------
