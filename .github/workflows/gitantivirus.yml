@@ -107,7 +107,7 @@ jobs:
           name: gitantivirus-reports-${{ github.run_number }}
           path: |
             reports/
-            *.md
+            SECURITY-SUMMARY*.md
           retention-days: 30
           if-no-files-found: ignore
       
