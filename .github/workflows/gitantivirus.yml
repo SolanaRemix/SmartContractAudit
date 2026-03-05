@@ -42,17 +42,17 @@ jobs:
     
     steps:
       - name: 📦 Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
       
       - name: 🔧 Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4
         with:
           node-version: ${{ env.NODE_VERSION }}
       
       - name: 📥 Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@915ab073a5962af465c19f547244203f87a0a13b # v2
         with:
           version: 8
       
