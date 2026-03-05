@@ -75,7 +75,7 @@ jobs:
         run: |
           echo "Running SMSDAO repair in dry-run mode..."
           if [ -f "scripts/master.sh" ]; then
-            ./scripts/master.sh repair --dry-run
+            ./scripts/master.sh --dry-run repair
           else
             echo "master.sh not found, skipping repair"
           fi
