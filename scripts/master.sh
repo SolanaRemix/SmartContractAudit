@@ -94,14 +94,14 @@ cmd_audit() {
   if [[ -x "$AUDIT_SCRIPT" ]]; then
     log "Running scripts/audit.sh..."
     if "$AUDIT_SCRIPT"; then
-      smartbrain_log "AgentC" "INFO" "audit.sh completed successfully."
+      smartbrain_log "AgentA" "INFO" "audit.sh completed successfully."
     else
       warn "audit.sh returned non-zero."
-      smartbrain_log "AgentC" "ERROR" "audit.sh failed."
+      smartbrain_log "AgentA" "ERROR" "audit.sh failed."
     fi
   else
     warn "audit.sh missing."
-    smartbrain_log "AgentC" "WARN" "audit.sh missing."
+    smartbrain_log "AgentA" "WARN" "audit.sh missing."
   fi
 
   log "Running lint/test/build..."
