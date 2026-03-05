@@ -86,29 +86,32 @@ async function searchRepositories(octokit) {
   log.info('Searching for repositories...');
   
   const results = [];
+  const languages = ['javascript', 'typescript', 'rust', 'solidity'];
   
   for (const keyword of CONFIG.searchKeywords) {
-    try {
-      const query = `${keyword} stars:>=${CONFIG.minStars} language:javascript OR language:typescript OR language:rust OR language:solidity`;
-      
-      log.debug(`Query: ${query}`);
-      
-      if (CONFIG.dryRun || !octokit) {
-        log.warning(`[DRY RUN] Would search for: ${keyword}`);
-        continue;
+    for (const language of languages) {
+      try {
+        const query = `${keyword} stars:>=${CONFIG.minStars} language:${language}`;
+        
+        log.debug(`Query: ${query}`);
+        
+        if (CONFIG.dryRun || !octokit) {
+          log.warning(`[DRY RUN] Would search for: ${keyword} (language: ${language})`);
+          continue;
+        }
+        
+        const response = await octokit.rest.search.repos({
+          q: query,
+          sort: 'stars',
+          order: 'desc',
+          per_page: 10,
+        });
+        
+        results.push(...response.data.items);
+        log.success(`Found ${response.data.items.length} repositories for "${keyword}" (language: ${language})`);
+      } catch (error) {
+        log.error(`Search error for "${keyword}" (language: ${language}): ${error.message}`);
       }
-      
-      const response = await octokit.rest.search.repos({
-        q: query,
-        sort: 'stars',
-        order: 'desc',
-        per_page: 10,
-      });
-      
-      results.push(...response.data.items);
-      log.success(`Found ${response.data.items.length} repositories for "${keyword}"`);
-    } catch (error) {
-      log.error(`Search error for "${keyword}": ${error.message}`);
     }
   }
   
