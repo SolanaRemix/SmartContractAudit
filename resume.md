@@ -279,7 +279,7 @@ cat autom/onboarding.md
 ---
 
 **Version**: 1.0.0  
-**Status**: 🟢 Production Ready  
+**Status**: 🧪 Template / Active Development  
 **Last Updated**: 2025-12-31  
 **Maintained By**: SmartBrain / SMSDAO / SolanaRemix
 
