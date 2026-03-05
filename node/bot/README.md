@@ -127,12 +127,23 @@ All bot activity is logged to:
 {
   "timestamp": "2025-12-31T01:40:00Z",
   "mode": "dry_run",
+  "configuration": {
+    "allowlist_orgs": [],
+    "max_prs_per_run": 3,
+    "bot_pings_enabled": false,
+    "search_keywords": ["solana", "smart-contract", "audit"],
+    "min_stars": 10
+  },
   "repositories_scanned": 50,
-  "prs_created": 0,
-  "prs_dry_run": true,
+  "prs_created": 15,
+  "prs_dry_run": 15,
   "errors": 0,
-  "configuration": {},
-  "results": []
+  "results": [
+    {
+      "status": "dry_run",
+      "repo": "owner/repo-name"
+    }
+  ]
 }
 ```
 
