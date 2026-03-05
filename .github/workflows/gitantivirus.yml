@@ -27,10 +27,8 @@ on:
           - 'false'
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
-  issues: write
-
 env:
   DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
   BOT_PINGS_ENABLED: ${{ github.event.inputs.bot_pings_enabled || 'false' }}
