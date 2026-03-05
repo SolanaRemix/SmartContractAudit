@@ -139,7 +139,7 @@ jobs:
       - name: Run Integrity Check
         run: |
           chmod +x scripts/master.sh
-          scripts/master.sh integrity || echo "Integrity check completed with warnings"
+          scripts/master.sh integrity
 
       - name: Upload integrity report
         if: always()
