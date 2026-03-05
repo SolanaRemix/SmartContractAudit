@@ -21,7 +21,7 @@ echo "[audit.sh] Starting code audit..."
 echo "[audit.sh] Checking for common issues..."
 
 # Check for TODO/FIXME comments (informational)
-if find "$ROOT_DIR" -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec grep -Hn "TODO\|FIXME" {} \; 2>/dev/null | head -10; then
+if find "$ROOT_DIR" \( -path "$ROOT_DIR/.git" -o -path "$ROOT_DIR/node_modules" -o -path "$ROOT_DIR/dist" -o -path "$ROOT_DIR/build" \) -prune -o \( -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec grep -Hn "TODO\|FIXME" {} \; \) 2>/dev/null | head -10; then
   echo "[audit.sh] Found TODO/FIXME comments (review recommended)"
 fi
 
