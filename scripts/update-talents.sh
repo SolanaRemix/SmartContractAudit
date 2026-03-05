@@ -109,8 +109,18 @@ validate_artifact() {
     fi
     
     # Check if it's valid JSON
-    if ! jq empty "${ARTIFACT_PATH}" 2>/dev/null; then
-        log_error "Artifact is not valid JSON"
+    if command -v jq >/dev/null 2>&1; then
+        if ! jq empty "${ARTIFACT_PATH}" 2>/dev/null; then
+            log_error "Artifact is not valid JSON"
+            return 1
+        fi
+    elif command -v node >/dev/null 2>&1; then
+        if ! node -e "const fs = require('fs'); const p = process.argv[1]; const c = fs.readFileSync(p, 'utf8'); JSON.parse(c);" "${ARTIFACT_PATH}" 2>/dev/null; then
+            log_error "Artifact is not valid JSON"
+            return 1
+        fi
+    else
+        log_error "Neither 'jq' nor 'node' is available to validate JSON"
         return 1
     fi
     
