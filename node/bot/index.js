@@ -233,7 +233,7 @@ function generateSummary(repos, results) {
       min_stars: CONFIG.minStars,
     },
     repositories_scanned: repos.length,
-    prs_created: results.filter(r => r.status === 'created').length,
+    prs_created: results.filter(r => r.status === 'dry_run' || r.status === 'template_mode').length,
     prs_dry_run: results.filter(r => r.status === 'dry_run').length,
     errors: results.filter(r => r.status === 'error').length,
     results: results,
