@@ -105,7 +105,7 @@ jobs:
       - name: Run SmartBrain Health Check
         run: |
           chmod +x scripts/master.sh
-          scripts/master.sh health || echo "Health check completed with warnings"
+          scripts/master.sh health
 
       - name: Upload health report
         if: always()
