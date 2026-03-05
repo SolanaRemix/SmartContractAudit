@@ -65,7 +65,7 @@ npm run scan -- \
 To quickly check if a token is a honeypot:
 
 ```bash
-npm run honeypot -- --address 0x1234... --chain bsc
+npm run scan -- --address 0x1234... --chain bsc --modules honeypot
 ```
 
 ### Tracing Wallet Deposits
@@ -73,44 +73,44 @@ npm run honeypot -- --address 0x1234... --chain bsc
 To trace deposits to their source:
 
 ```bash
-npm run trace -- --address 0x1234... --chain ethereum --depth 5
+npm run scan -- --address 0x1234... --chain ethereum --modules tracer --depth 5
 ```
 
 Options:
 - `--depth`: How many levels to trace back (default: 5)
-- `--min-amount`: Minimum deposit amount to include
+- `--modules tracer`: Use the wallet tracer module
 
 ### Deep Wallet Scan
 
-To perform a comprehensive wallet analysis:
+To perform a comprehensive wallet analysis using all modules:
 
 ```bash
-npm run deep-scan -- --address 0x1234... --chain ethereum
+npm run scan -- --address 0x1234... --chain ethereum --modules antivirus,spam,honeypot,tracer
 ```
 
 This will:
-- Analyze all transactions
-- Identify counterparties
-- List all tokens and NFTs
-- Calculate risk factors
+- Scan for vulnerabilities (antivirus)
+- Detect spam patterns
+- Check for honeypot characteristics
+- Trace transaction history
 - Generate a detailed report
 
 ## Advanced Features
 
-### Batch Scanning
+### Multiple Modules
 
-Create a file `addresses.txt` with one address per line, then:
+You can specify multiple detection modules in a single scan:
 
 ```bash
-npm run batch-scan -- --file addresses.txt --chain ethereum
+npm run scan -- --address 0x1234... --chain ethereum --modules antivirus,honeypot
 ```
 
-### Continuous Monitoring
+### Scanning from Report File
 
-Set up continuous monitoring for specific contracts:
+If you have a report file with addresses:
 
 ```bash
-npm run monitor -- --address 0x1234... --chain ethereum --interval 300
+npm run scan -- --report path/to/report.json
 ```
 
 This will scan the contract every 5 minutes (300 seconds) and alert on changes.

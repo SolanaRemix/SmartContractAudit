@@ -181,7 +181,9 @@ jobs:
           
       - name: Create Pull Request
         if: steps.fix.outputs.fix_generated == '0'
-        uses: peter-evans/create-pull-request@v5
+        # Pin to specific commit SHA for security (v6.1.0)
+        # Periodically update to latest stable release
+        uses: peter-evans/create-pull-request@5e914681df9dc83aa4e4098168140606ad016ba4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: auto-fix-${{ github.event.issue.number }}

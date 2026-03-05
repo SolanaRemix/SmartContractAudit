@@ -344,7 +344,7 @@ Configure automated repair behavior.
       "strategy": "safemath",
       "confidence": 95
     },
-    "unchecked-send": {
+    "uncheckedSend": {
       "enabled": true,
       "strategy": "require-check",
       "confidence": 90
