@@ -88,9 +88,14 @@ class RepairEngine {
 
     try {
       const patch = await pattern.fix(vulnerability, sourceCode);
+      const resolvedFile = filePath || vulnerability.file;
+      
+      if (!resolvedFile) {
+        throw new Error('File path is required for generating fix but was not provided');
+      }
       
       return {
-        file: filePath || vulnerability.file || 'unknown',
+        file: resolvedFile,
         vulnerabilityId: vulnerability.type,
         fixAvailable: true,
         patch,
