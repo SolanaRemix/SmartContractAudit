@@ -26,8 +26,12 @@ if find "$ROOT_DIR" \( -path "$ROOT_DIR/.git" -o -path "$ROOT_DIR/node_modules" 
 fi
 
 # Check for console.log in production code (warning)
-if find "$ROOT_DIR/src" -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec grep -Hn "console\.log" {} \; 2>/dev/null | head -5; then
-  echo "[audit.sh] Warning: Found console.log statements in src/"
+if [ -d "$ROOT_DIR/src" ]; then
+  matches=$(find "$ROOT_DIR/src" -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) -exec grep -Hn "console\.log" {} \; 2>/dev/null | head -5 || true)
+  if [ -n "$matches" ]; then
+    printf '%s\n' "$matches"
+    echo "[audit.sh] Warning: Found console.log statements in src/"
+  fi
 fi
 
 echo "[audit.sh] Audit complete. Review findings above."
