@@ -74,6 +74,10 @@ class RepairEngine {
 
   /**
    * Generate fix for a vulnerability
+   * @param {Object} vulnerability - The vulnerability object to fix
+   * @param {string} sourceCode - The source code containing the vulnerability
+   * @param {string|null} filePath - Path to the file being fixed (falls back to vulnerability.file if not provided)
+   * @returns {Object} Fix object with file, vulnerabilityId, fixAvailable, patch, description, confidence, and strategy
    */
   async generateFix(vulnerability, sourceCode, filePath = null) {
     const pattern = this.repairPatterns[vulnerability.type];
@@ -88,14 +92,14 @@ class RepairEngine {
 
     try {
       const patch = await pattern.fix(vulnerability, sourceCode);
-      const resolvedFile = filePath || vulnerability.file;
+      const targetFilePath = filePath || vulnerability.file;
       
-      if (!resolvedFile) {
+      if (!targetFilePath) {
         throw new Error('File path is required for generating fix but was not provided');
       }
       
       return {
-        file: resolvedFile,
+        file: targetFilePath,
         vulnerabilityId: vulnerability.type,
         fixAvailable: true,
         patch,
