@@ -100,7 +100,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 8.15.0
 
       - name: Run SmartBrain Health Check
         run: |
@@ -134,7 +134,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 8.15.0
 
       - name: Run Integrity Check
         run: |
