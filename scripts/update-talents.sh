@@ -152,7 +152,7 @@ build_project() {
 EOF
             # Replace timestamp
             if command -v sed &> /dev/null; then
-                sed -i "s/TIMESTAMP_PLACEHOLDER/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/" "$OUTPUT_FILE"
+                sed -i '' "s/TIMESTAMP_PLACEHOLDER/$(date -u +"%Y-%m-%dT%H:%M:%SZ")/" "$OUTPUT_FILE"
             fi
             
             log_success "Created placeholder artifact: $OUTPUT_FILE"
