@@ -12,13 +12,13 @@
 #
 # 📝 Usage:
 #   # Dry-run (safe, default)
-#   ./deploy-caster.sh
+#   ./scripts/deploy-caster.sh
 #
 #   # Live deployment (requires secrets)
-#   DRY_RUN=false CASTER_KEY=xxx PROVIDER_URL=yyy ./deploy-caster.sh
+#   DRY_RUN=false CASTER_KEY=xxx PROVIDER_URL=yyy ./scripts/deploy-caster.sh
 #
 #   # With explicit dry-run flag
-#   ./deploy-caster.sh --dry-run
+#   ./scripts/deploy-caster.sh --dry-run
 #
 # 🚀 Example deployment command (when secrets are set):
 #   caster push --ens gxqstudio.eth --network base --artifact ./build/talents.json
