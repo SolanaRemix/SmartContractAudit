@@ -180,8 +180,8 @@ Example:
 
 - **DRY_RUN mode**: Enabled by default
 - **Graceful failures**: Continues on non-critical errors
-- **Confirmation prompts**: For destructive operations
-- **Rollback capability**: Maintains state for recovery
+- **Planned confirmation prompts** (future work): For destructive operations once implemented
+- **Planned rollback capability** (future work): Will maintain state for recovery once implemented
 
 ### Port Cleanup Safety
 
