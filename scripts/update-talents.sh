@@ -14,13 +14,13 @@
 #
 # 📝 Usage:
 #   # Dry-run (safe, default)
-#   ./update-talents.sh
+#   ./scripts/update-talents.sh
 #
 #   # Live build (creates actual files)
-#   DRY_RUN=false ./update-talents.sh
+#   DRY_RUN=false ./scripts/update-talents.sh
 #
 #   # With explicit dry-run flag
-#   ./update-talents.sh --dry-run
+#   ./scripts/update-talents.sh --dry-run
 #
 ################################################################################
 
