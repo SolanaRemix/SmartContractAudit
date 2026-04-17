@@ -1,0 +1,79 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+# Funding and Sponsorship
+
+Thank you for considering supporting SmartContractAudit! Your support helps maintain and improve this project.
+
+## Support This Project
+
+### GitHub Sponsors
+
+[![Sponsor on GitHub](https://img.shields.io/badge/Sponsor-GitHub-ea4aaa)](https://github.com/sponsors/PLACEHOLDER)
+
+[Sponsor this project on GitHub Sponsors](https://github.com/sponsors/PLACEHOLDER)
+
+### Open Collective
+
+[![Sponsor on Open Collective](https://img.shields.io/badge/Sponsor-Open%20Collective-blue)](https://opencollective.com/PLACEHOLDER)
+
+Support us through Open Collective for transparent funding:
+https://opencollective.com/PLACEHOLDER
+
+### Custom Support
+
+For enterprise support, partnerships, or custom arrangements:
+
+📧 Email: sponsors@cuberai.example
+
+## Sponsorship Benefits
+
+Different sponsorship tiers provide various benefits. See [docs/partners/sponsorship_tiers.md](docs/partners/sponsorship_tiers.md) for details.
+
+## How Funds Are Used
+
+All funding is used to:
+
+- Maintain and improve the project
+- Pay for infrastructure and services
+- Support contributors and maintainers
+- Develop new features
+- Improve documentation
+- Enhance security
+
+## Thank You to Our Sponsors
+
+We appreciate all our sponsors and supporters! 🙏
+
+---
+
+For more information about partnerships and sponsorships, see our [partner documentation](docs/partners/).
+=======
+# These are supported funding model platforms
+
+github: # [username1, username2] # Replace with up to 4 GitHub Sponsors-enabled usernames
+patreon: # Replace with a single Patreon username
+open_collective: # Replace with a single Open Collective username
+ko_fi: # Replace with a single Ko-fi username
+tidelift: # Replace with a single Tidelift platform-name/package-name
+community_bridge: # Replace with a single Community Bridge project-name
+liberapay: # Replace with a single Liberapay username
+issuehunt: # Replace with a single IssueHunt username
+otechie: # Replace with a single Otechie username
+lfx_crowdfunding: # Replace with a single LFX Crowdfunding project-name
+custom: ['mailto:funding@cuberai.example'] # Replace with up to 4 custom sponsorship URLs
+>>>>>>> origin/pr9
+=======
+# These are supported funding model platforms
+
+github: # [username] - Replace with GitHub username(s) for GitHub Sponsors
+patreon: # Replace with a single Patreon username
+open_collective: # Replace with a single Open Collective username
+ko_fi: # Replace with a single Ko-fi username
+tidelift: # Replace with a single Tidelift package name
+community_bridge: # Replace with a single Community Bridge project name
+liberapay: # Replace with a single Liberapay username
+issuehunt: # Replace with a single IssueHunt username
+otechie: # Replace with a single Otechie username
+lfx_crowdfunding: # Replace with a single LFX Crowdfunding project name
+custom: ['mailto:funding@cyberai.network'] # Replace with up to 4 custom sponsorship URLs
+>>>>>>> origin/pr10
