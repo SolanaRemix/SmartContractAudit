@@ -7,8 +7,8 @@ This PR adds the SmartBrain orchestrator system, GitAntivirus security workflow,
 
 ### 1. SmartBrain Orchestrator (`scripts/master.sh`)
 - Multi-agent autonomous system for code quality and security
-- Six specialized agents (A, B, C, F, X) working in harmony
-- Non-destructive by default (all operations safe)
+- Five specialized agents (A, B, C, F, X) working in harmony
+- Non-destructive by default (destructive operations gated by DRY_RUN)
 - Comprehensive logging to `SMARTBRAIN.log`
 - Quarantine system for suspicious files
 

@@ -132,13 +132,13 @@ The GitAntivirus workflow runs automatically on:
 - Daily at 2 AM UTC
 - Manual trigger via GitHub Actions
 
-All scans run in **DRY_RUN mode** by default (non-destructive).
+By default, destructive actions in scripts (like port cleanup) honor **DRY_RUN mode** to avoid unintended changes. Non-destructive steps (like install, lint, and tests) still run normally.
 
 ## Safety Features
 
 ⚠️ **Important Safety Notes:**
 
-1. **Non-Destructive by Default**: All scripts run in DRY_RUN mode unless explicitly configured otherwise
+1. **Non-Destructive by Default**: Destructive actions within scripts (such as port killing or quarantining) are gated by DRY_RUN unless explicitly configured otherwise; normal dev commands (install, lint, tests) still execute
 2. **No Secrets**: Never commit secrets, API keys, or credentials to the repository
 3. **Quarantine System**: Suspicious files are isolated in `.quarantine/` for review
 4. **Logging**: All agent activities are logged to `SMARTBRAIN.log`
@@ -146,15 +146,15 @@ All scans run in **DRY_RUN mode** by default (non-destructive).
 
 ## Getting Help
 
-- **Documentation**: Check `.github/bots/README.md` for BOT configuration details
+- **Documentation**: Check `../bots/README.md` for BOT configuration details
 - **Issues**: Open an issue on GitHub for bugs or feature requests
 - **Security**: Report security vulnerabilities privately to the maintainers
 
 ## Next Steps
 
-1. Read through the [BOT Configuration Guide](.github/bots/README.md)
+1. Read through the [BOT Configuration Guide](../bots/README.md)
 2. Review the [Development Guidelines](DEVELOPMENT.md)
-3. Explore the [Security Best Practices](SECURITY.md)
+3. Explore the [Security Best Practices](../../docs/SECURITY.md)
 4. Join the team communication channels
 5. Make your first contribution!
 

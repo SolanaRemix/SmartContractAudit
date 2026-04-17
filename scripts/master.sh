@@ -111,41 +111,39 @@ cmd_audit() {
 
   log "Writing AUDIT-REPORT.md..."
   {
-    echo "# Orchestration Summary: Audit & Auto-Heal Pass"
+    echo "# Orchestration Summary: Audit & Build Run"
+    echo
+    echo "This report summarizes the actions performed by scripts/master.sh:cmd_audit"
+    echo "during the latest run. It reflects only what this script executed directly."
     echo
     echo "## Agent A – Code Auditor"
-    echo "- Audited: pnpm workspaces, package.json, core scripts."
-    echo "- Findings: audit.sh focused on contracts; missing TS/Next.js coverage."
-    echo "- Improvements: tsconfig consistency; missing type guards flagged."
+    echo "- Attempted to run: scripts/audit.sh (if present and executable)."
+    echo "- Scope of audit.sh is defined by that script and may vary by project."
     echo
     echo "## Agent B – Fixer & Optimizer"
-    echo "- Audited: master.sh."
-    echo "- Fixed: Execution flow; port cleaning extended."
-    echo "- Optimized: pnpm parallel builds."
+    echo "- Orchestrated audit, lint, test, and build steps via master.sh."
+    echo "- Ensured pnpm-based workflows (lint/test/build) were invoked."
     echo
     echo "## Agent C – Security & Compliance"
-    echo "- Audited: contracts + workflows."
-    echo "- Hardening: reentrancy + zero-address checks."
-    echo "- Improved: ci.yml runs pnpm audit + Solc 0.8.23."
+    echo "- Relies on project-specific checks implemented in scripts/audit.sh and tooling."
+    echo "- No assumptions are made here about specific CI files, solc versions, or policies."
     echo
     echo "## Agent D – Documentation & DX"
-    echo "- Updated: README badges."
-    echo "- Added: heal/integrity docs."
+    echo "- Generated AUDIT-REPORT.md from the current master.sh run."
+    echo "- Intended as a high-level summary; details should be confirmed from logs and tooling."
     echo
     echo "## Agent E – UI/UX Auto-Heal"
-    echo "- Healed: error boundaries; Neo-Glow fallback UI."
-    echo "- Added: prop validation."
+    echo "- Not directly modified by cmd_audit; behavior depends on project configuration."
     echo
     echo "## Agent F – CI/CD"
-    echo "- Fixed: operator.ps1 permissions."
-    echo "- Added: PR validation via master.sh health."
+    echo "- This script can be wired into CI, but does not itself modify CI scripts or operators."
+    echo "- Any PR validation or health checks are determined by the surrounding CI configuration."
     echo
     echo "## TODOs & Risks"
-    echo "- TODO: Phase 2 migration."
-    echo "- TODO: Mobile auto-heal."
-    echo "- Risk: Port cleaning may affect other services."
+    echo "- TODO: Extend cmd_audit summary once additional automated checks are verified."
+    echo "- Risk: Port cleaning may affect other services on the same machine."
     echo
-    echo "Status: Audit Pass ✅ | Auto-Heal Active 🚀 | Strengthened 🌌"
+    echo "Status: Audit Pass ✅ | Orchestration Active 🚀"
   } > "$AUDIT_REPORT"
 
   smartbrain_log "AgentA" "INFO" "Audit complete."

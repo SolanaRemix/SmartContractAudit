@@ -29,7 +29,6 @@ Every commit triggers:
 - Antivirus scanning
 - Health checks
 - Integrity verification
-- Dependency auditing
 
 ## Reporting Security Vulnerabilities
 
@@ -147,20 +146,15 @@ Files matching these patterns are flagged:
    - `rm -rf /`
    - `curl ... | sh`
    - `wget ... | sh`
-   - `eval`
-   - Dynamic execution patterns
+   - `eval` used with command substitution (e.g., `eval $(...)`, `eval \`...\``)
+   - Specific dynamic execution patterns
 
-2. **Secret Patterns**:
-   - API keys
-   - Access tokens
-   - Private keys
-   - Password strings
-   - Bearer tokens
+2. **Secret Patterns (planned)**:
+   - Future support for API keys, tokens, and credentials detection
 
-3. **Malware Signatures**:
-   - Obfuscated code
-   - Base64 + eval combinations
-   - Suspicious script patterns
+3. **Code Patterns (current)**:
+   - Suspicious command execution patterns
+   - Shell injection risks
 
 4. **Archives**:
    - ZIP files

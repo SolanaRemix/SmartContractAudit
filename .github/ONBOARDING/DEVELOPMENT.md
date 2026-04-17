@@ -293,7 +293,7 @@ touch SMARTBRAIN.log
 ## Next Steps
 
 - Review [WELCOME.md](WELCOME.md) for project overview
-- Read [SECURITY.md](SECURITY.md) for security guidelines
+- Read [SECURITY.md](../../docs/SECURITY.md) for security guidelines
 - Check [../bots/README.md](../bots/README.md) for BOT configurations
 - Join the team and start contributing!
 

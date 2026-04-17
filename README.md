@@ -88,7 +88,7 @@ Scans for malicious code patterns, suspicious files, and potential security thre
 
 ## 🔒 Security Features
 
-- **Non-Destructive by Default**: All operations run in DRY_RUN mode
+- **Non-Destructive by Default**: Destructive operations (port killing, quarantining) run in DRY_RUN mode by default
 - **Quarantine System**: Suspicious files isolated for review in `.quarantine/`
 - **Pattern Detection**: Scans for malicious code patterns
 - **Secret Detection (planned)**: Future support for detecting exposed credentials
