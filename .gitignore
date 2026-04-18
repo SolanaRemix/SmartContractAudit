@@ -1,13 +1,37 @@
+<<<<<<< HEAD
 # Dependencies
 node_modules/
 .pnp
 .pnp.js
 .yarn/
+=======
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 
 # Build outputs
 dist/
 build/
 out/
+<<<<<<< HEAD
 .next/
 .nuxt/
 .cache/
@@ -59,11 +83,22 @@ coverage/
 .DS_Store
 Thumbs.db
 Desktop.ini
+=======
+*.log
+
+# Reports (keep structure, ignore content)
+reports/*.json
+reports/json/*
+reports/html/*
+reports/pdf/*
+!reports/.gitkeep
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 
 # Temporary files
 tmp/
 temp/
 *.tmp
+<<<<<<< HEAD
 *.temp
 
 # Package manager locks (keep pnpm-lock.yaml)
@@ -142,3 +177,18 @@ secrets/
 
 # Audit reports (can be regenerated)
 AUDIT-REPORT.md
+=======
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Cache
+.cache/
+.eslintcache
+.prettierache
+
+# OS files
+Thumbs.db
+.DS_Store
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
