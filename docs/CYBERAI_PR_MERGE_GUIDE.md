@@ -327,9 +327,15 @@ When reviewing PRs:
 git checkout -b standardize-cyberai-naming
 
 # Update references (carefully!)
-find . -type f \( -name "*.md" -o -name "*.sh" \) \
+if ! find . -type f \( -name "*.md" -o -name "*.sh" \) \
   -not -path "./.git/*" \
-  -exec sed -i 's/CuberAi/CyberAi/g' {} \;
+  -exec sed -i.bak 's/CuberAi/CyberAi/g' {} \; ; then
+  echo "Error: Failed to update references from 'CuberAi' to 'CyberAi'." >&2
+  exit 1
+fi
+
+# Remove sed backup files created by -i.bak
+find . -type f -name "*.bak" -delete
 
 # Review changes
 git diff

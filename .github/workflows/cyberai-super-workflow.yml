@@ -46,6 +46,7 @@ jobs:
       contents: read
       pull-requests: write
       actions: read
+      issues: write
     
     steps:
       - name: Checkout SmartContractAudit
@@ -250,9 +251,9 @@ jobs:
             body += `- Status: ${{ steps.health_check.outputs.health_status }}\n\n`;
             
             // Add audit status
-            if ('${{ steps.audit.outputs.audit_status }}' !== 'not_run') {
+            if ("${{ steps.audit.outputs.audit_status || 'not_run' }}" !== 'not_run') {
               body += '### Audit\n';
-              body += `- Status: ${{ steps.audit.outputs.audit_status }}\n`;
+              body += `- Status: ${{ steps.audit.outputs.audit_status || 'not_run' }}\n`;
               body += `- Mode: ${{ github.event.inputs.mode || 'dry-run' }}\n\n`;
             }
             

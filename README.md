@@ -67,7 +67,7 @@ See [CyberAi Architecture Guide](docs/CYBERAI_ARCHITECTURE.md) for complete clon
 
 ## 🛡️ Security
 
-Report security issues to: security@cuberai.example (placeholder)
+Report security issues to: security@cuberai.example (**PLACEHOLDER – replace with your real security contact email; do not use in production**)
 
 See [SECURITY.md](SECURITY.md) for responsible disclosure process.
 
