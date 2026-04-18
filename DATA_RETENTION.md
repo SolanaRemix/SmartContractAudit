@@ -245,14 +245,15 @@ Users can:
 
 ```json
 {
-  "retention": {
-    "artifacts": "90d",
-    "logs": "30d",
-    "quarantine": "30d",
-    "reports": "1y"
-  }
+  "auto_apply": false,
+  "dry_run_default": true,
+  "allowlist_orgs": [],
+  "max_prs_per_run": 3,
+  "pings_enabled": false
 }
 ```
+
+**Note**: Retention settings can be added to this configuration file as needed.
 
 ### Custom Retention
 

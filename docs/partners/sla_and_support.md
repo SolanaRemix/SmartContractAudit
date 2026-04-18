@@ -391,7 +391,7 @@ Reproduction:
 3. Response: 500 Internal Server Error
 
 Environment:
-- API Key: pk_live_abc...
+- API Key: pk_test_EXAMPLE_NOT_A_REAL_KEY
 - Endpoint: api.smartcontractaudit.example
 - Request ID: req_xyz123
 

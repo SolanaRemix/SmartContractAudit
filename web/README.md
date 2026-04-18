@@ -88,7 +88,7 @@ Update `.github/FUNDING.yml`:
 
 ```yaml
 github: [your-github-username]
-custom: ["https://solanaremix.github.io/SmartContractAudit/web/billing.html"]
+custom: ["https://solanaremix.github.io/SmartContractAudit/billing.html"]
 ```
 
 ## Features

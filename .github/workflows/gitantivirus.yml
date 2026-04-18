@@ -17,11 +17,11 @@ on:
 permissions:
   contents: write
   pull-requests: write
-  issues: read
+  issues: write
 
 env:
   # SAFETY DEFAULTS - Always enabled unless explicitly disabled
-  DRY_RUN: true
+  DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
   BOT_PINGS_ENABLED: false
   ALLOWLIST_ORGS: ''
   AUTO_APPLY: false
@@ -85,9 +85,13 @@ jobs:
           # Placeholder for actual scan logic
           # In production, this would call scripts/master.sh or similar
           
+          SCAN_EXIT_CODE=0
           if [ -f "scripts/master.sh" ]; then
             echo "Running SmartBrain scan..."
-            ./scripts/master.sh scan --dry-run || echo "Scan script not yet implemented"
+            ./scripts/master.sh scan --dry-run || SCAN_EXIT_CODE=$?
+            if [ $SCAN_EXIT_CODE -ne 0 ]; then
+              echo "⚠️  Scan script exited with code $SCAN_EXIT_CODE"
+            fi
           else
             echo "ℹ️  SmartBrain scan script not found"
             echo "This is a placeholder workflow. Implement scripts/master.sh for actual scanning."
@@ -185,11 +189,18 @@ jobs:
           script: |
             const fs = require('fs');
             
-            let reportContent = '';
+            let reportSummary = '';
             try {
-              reportContent = fs.readFileSync('AUDIT-REPORT.md', 'utf8');
+              const reportContent = fs.readFileSync('AUDIT-REPORT.md', 'utf8');
+              // Truncate to prevent comment size issues
+              const maxLength = 5000;
+              if (reportContent.length > maxLength) {
+                reportSummary = reportContent.substring(0, maxLength) + '\n\n... (truncated, see artifacts for full report)';
+              } else {
+                reportSummary = reportContent;
+              }
             } catch (error) {
-              reportContent = 'Audit report not generated';
+              reportSummary = 'Audit report not generated';
             }
             
             const comment = `## 🛡️ SmartBrain Security Scan Results
@@ -209,10 +220,12 @@ jobs:
             - 📄 AUDIT-REPORT.md
             - 📁 .quarantine/
             
-            <details>
-            <summary>View Audit Report</summary>
+            Download full artifacts from the [Actions tab](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).
             
-            ${reportContent}
+            <details>
+            <summary>View Audit Report (Summary)</summary>
+            
+            ${reportSummary}
             
             </details>
             
