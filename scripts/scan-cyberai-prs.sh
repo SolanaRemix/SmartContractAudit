@@ -60,11 +60,11 @@ echo "Searching markdown and script files..."
 files=$(find . -type f \( -name "*.md" -o -name "*.sh" -o -name "*.yml" -o -name "*.yaml" \) \
   -not -path "./.git/*" \
   -not -path "./node_modules/*" \
-  -exec grep -l "CyberAi\|CuberAi\|cyberai" {} \; 2>/dev/null | sort)
+  -exec grep -il "cyber\|cuber" {} \; 2>/dev/null | sort)
 
 if [[ -n "$files" ]]; then
   echo "$files" | while IFS= read -r file; do
-    count=$(grep -c "CyberAi\|CuberAi\|cyberai" "$file" 2>/dev/null || echo "0")
+    count=$(grep -ic "cyber\|cuber" "$file" 2>/dev/null || echo "0")
     echo -e "  ${YELLOW}•${NC} $file ${BLUE}($count references)${NC}"
   done
   
@@ -144,7 +144,7 @@ echo ""
 echo -e "${BLUE}Next Steps:${NC}"
 echo "  • Read: cat docs/CYBERAI_ARCHITECTURE.md"
 echo "  • Setup: cat docs/cuberai-setup.md"
-echo "  • Review: ./scripts/scan-cyberai-prs.sh --detailed"
+echo "  • Review: ./scripts/scan-cyberai-prs.sh"
 
 echo ""
 echo -e "${BLUE}════════════════════════════════════════════════════════════${NC}"

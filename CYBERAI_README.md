@@ -9,7 +9,7 @@ Run the scanner:
 ./scripts/scan-cyberai-prs.sh
 ```
 
-Current status: **10 files with 244+ CyberAi references**
+To see the current status, run the command above. Example output from a recent run: **10 files with 244+ CyberAi references**.
 
 ### 2. What should I clone first?
 
