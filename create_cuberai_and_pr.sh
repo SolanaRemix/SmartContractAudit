@@ -2,12 +2,12 @@
 # create_cuberai_and_pr.sh
 # Creates a minimal Draft PR in SolanaRemix/SmartContractAudit and creates/pushes a new SolanaRemix/CuberAi repo scaffold.
 # Usage:
-#   DRY_RUN=1 ./create_cuberai_and_pr.sh    # prints actions only
-#   ./create_cuberai_and_pr.sh              # performs actions (requires gh CLI & git auth)
+#   ./create_cuberai_and_pr.sh              # prints actions only (DRY_RUN=1 by default)
+#   DRY_RUN=0 ./create_cuberai_and_pr.sh    # performs actions (requires gh CLI & git auth)
 #
 set -euo pipefail
 
-DRY_RUN=${DRY_RUN:-0}
+DRY_RUN=${DRY_RUN:-1}
 ORG="${ORG:-SolanaRemix}"
 AUDIT_REPO="${AUDIT_REPO:-SmartContractAudit}"
 CYBER_BRANCH="${CYBER_BRANCH:-CyberAi-minimal}"
@@ -20,7 +20,7 @@ run_cmd() {
     echo "[DRY_RUN] $*"
   else
     echo "[RUN] $*"
-    eval "$@"
+    "$@"
   fi
 }
 

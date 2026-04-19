@@ -2,6 +2,8 @@ name: Release Schedule
 
 on:
   schedule:
+<<<<<<< HEAD
+<<<<<<< HEAD
     # Scheduled for 2026-01-01 at 00:00 UTC
     - cron: '0 0 1 1 *'  # January 1st at midnight UTC
   
@@ -42,10 +44,42 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Full history for changelog
+=======
+    # Run on the 1st of January every year at 00:00 UTC
+    - cron: '0 0 1 1 *'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Release tag (e.g., v2026.01.01)'
+        required: false
+        default: ''
+      release_name:
+        description: 'Release name'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+env:
+  DRY_RUN: true
+
+jobs:
+  create-draft-release:
+    name: Create Draft Release
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+>>>>>>> origin/pr10
       
       - name: Determine release version
         id: version
         run: |
+<<<<<<< HEAD
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             VERSION="${{ github.event.inputs.release_version }}"
           else
@@ -90,11 +124,42 @@ jobs:
             git status --short
           else
             echo "✅ No uncommitted changes"
+=======
+          if [ -n "${{ github.event.inputs.tag_name }}" ]; then
+            TAG_NAME="${{ github.event.inputs.tag_name }}"
+          else
+            # Generate version from current date: v2026.01.01
+            TAG_NAME="v$(date +%Y.%m.%d)"
+          fi
+          
+          if [ -n "${{ github.event.inputs.release_name }}" ]; then
+            RELEASE_NAME="${{ github.event.inputs.release_name }}"
+          else
+            RELEASE_NAME="SmartContractAudit ${TAG_NAME}"
+          fi
+          
+          echo "tag_name=${TAG_NAME}" >> $GITHUB_OUTPUT
+          echo "release_name=${RELEASE_NAME}" >> $GITHUB_OUTPUT
+          echo "📦 Release tag: ${TAG_NAME}"
+          echo "📝 Release name: ${RELEASE_NAME}"
+      
+      - name: Check if tag exists
+        id: check_tag
+        run: |
+          TAG_NAME="${{ steps.version.outputs.tag_name }}"
+          if git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "⚠️  Tag ${TAG_NAME} already exists"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "✅ Tag ${TAG_NAME} does not exist yet"
+>>>>>>> origin/pr10
           fi
       
       - name: Generate changelog
         id: changelog
         run: |
+<<<<<<< HEAD
           echo "📝 Generating changelog..."
           
           # Get list of commits since last release (or all if no previous release)
@@ -268,10 +333,39 @@ jobs:
     name: Create Draft Release
     runs-on: ubuntu-latest
     needs: prepare-release
+=======
+    # Runs on January 1st, 2026 at 10:00 UTC
+    - cron: '0 10 1 1 *'
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Type of release'
+        required: true
+        default: 'draft'
+        type: choice
+        options:
+          - draft
+          - pre-release
+          - release
+      tag_name:
+        description: 'Release tag (e.g., v2026.01.01)'
+        required: false
+        default: 'v2026.01.01'
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  create-draft-release:
+    name: Create Draft Release
+    runs-on: ubuntu-latest
+>>>>>>> origin/pr9
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+<<<<<<< HEAD
       
       - name: Create draft release
         id: create_release
@@ -282,11 +376,148 @@ jobs:
             const isDraft = '${{ github.event.inputs.create_draft || 'true' }}' === 'true';
             
             console.log(`Creating ${isDraft ? 'draft' : 'public'} release ${version}`);
+=======
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      
+      - name: Generate release notes
+        id: release_notes
+        run: |
+          echo "Generating release notes for ${{ github.event.inputs.tag_name || 'v2026.01.01' }}"
+          
+          # Create release notes
+          cat > release-notes.md << 'EOF'
+          ## 🎉 SmartContractAudit v2026.01.01
+          
+          ### Highlights
+          
+          This release includes comprehensive governance documentation, DAO helpers, partner resources, and enhanced security workflows.
+          
+          ### ✨ New Features
+          
+          #### Governance & Community
+          - Complete governance framework (GOVERNANCE.md)
+          - Contributor guidelines with DCO (CONTRIBUTING.md)
+          - Code of Conduct (Contributor Covenant)
+          - Security policy and vulnerability disclosure process
+          - Privacy policy and data retention guidelines
+          - TRIO framework documentation
+          
+          #### DAO & Contributor Tools
+          - DAO governance documentation and workflows
+          - Contributor eligibility criteria and scoring system
+          - Merkle airdrop implementation and tools
+          - Snapshot integration guide
+          - Token claiming process documentation
+          - Sample allocation data and merkle generator script
+          
+          #### Partner Program
+          - Comprehensive partner documentation
+          - Sponsorship tiers and benefits
+          - Technical onboarding guides
+          - SLA and support documentation
+          - Data privacy policies for partners
+          - Use cases and press kit
+          
+          #### Automation & Security
+          - GitAntivirus workflow with safe dry-run mode
+          - Conservative repair configuration
+          - Availability checker script for handles/packages
+          - Enhanced security scanning workflows
+          
+          #### Web Scaffold
+          - GitHub Pages dashboard scaffold
+          - Billing page with payment integration placeholders
+          - Web deployment documentation
+          
+          ### 🔒 Security
+          
+          - All workflows run in dry-run mode by default
+          - No automatic fixes or merges without explicit approval
+          - Conservative permission model
+          - No secrets included in any files
+          
+          ### 📚 Documentation
+          
+          - 30+ new documentation files
+          - Comprehensive governance and policy docs
+          - Partner and sponsor resources
+          - DAO and contributor guides
+          
+          ### ⚙️ Configuration
+          
+          - Conservative repair config with auto_apply: false
+          - Dry-run enabled by default
+          - Bot pings disabled by default
+          - Safe operational defaults throughout
+          
+          ### 🙏 Contributors
+          
+          Thank you to all contributors who made this release possible!
+          
+          ### 📦 Installation
+          
+          See the [README](README.md) for installation instructions.
+          
+          ### 🐛 Known Issues
+          
+          None at this time. Please report issues on GitHub.
+          
+          ### ⚠️ Important Notes
+          
+          - This is a DRAFT release and requires manual approval before deployment
+          - Review all changes before proceeding with production deployment
+          - Test in staging environment first
+          - Ensure all security checks pass
+          
+          ### 🔗 Resources
+          
+          - [Documentation](docs/)
+          - [Governance](GOVERNANCE.md)
+          - [Security Policy](SECURITY.md)
+          - [Contributing Guide](CONTRIBUTING.md)
+          
+          ---
+          
+          **Full Changelog**: Check commit history for detailed changes
+          EOF
+          
+          echo "Release notes generated"
+          cat release-notes.md
+      
+      - name: Check if tag exists
+        id: check_tag
+        run: |
+          TAG="${{ github.event.inputs.tag_name || 'v2026.01.01' }}"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "tag_exists=true" >> $GITHUB_OUTPUT
+            echo "Tag $TAG already exists"
+          else
+            echo "tag_exists=false" >> $GITHUB_OUTPUT
+            echo "Tag $TAG does not exist yet"
+          fi
+      
+      - name: Create draft release
+        if: steps.check_tag.outputs.tag_exists == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const releaseNotes = fs.readFileSync('release-notes.md', 'utf8');
+            const tagName = '${{ github.event.inputs.tag_name || 'v2026.01.01' }}';
+            const releaseType = '${{ github.event.inputs.release_type || 'draft' }}';
+>>>>>>> origin/pr9
             
             try {
               const release = await github.rest.repos.createRelease({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
+<<<<<<< HEAD
                 tag_name: version,
                 name: `SmartContractAudit ${version}`,
                 body: `# SmartContractAudit ${version}
@@ -415,3 +646,249 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "---" >> $GITHUB_STEP_SUMMARY
           echo "*This workflow creates DRAFT releases only. Manual approval required for publishing.*" >> $GITHUB_STEP_SUMMARY
+=======
+                tag_name: tagName,
+                name: `Release ${tagName}`,
+                body: releaseNotes,
+                draft: releaseType === 'draft',
+                prerelease: releaseType === 'pre-release',
+                target_commitish: context.sha
+              });
+              
+              console.log('✅ Release created successfully!');
+              console.log(`Release URL: ${release.data.html_url}`);
+              core.summary.addHeading('🎉 Draft Release Created');
+              core.summary.addRaw(`\n**Tag**: ${tagName}\n`);
+              core.summary.addRaw(`**Type**: ${releaseType}\n`);
+              core.summary.addRaw(`**URL**: ${release.data.html_url}\n`);
+              core.summary.addRaw(`\n### Next Steps\n`);
+              core.summary.addRaw(`1. Review the draft release\n`);
+              core.summary.addRaw(`2. Test in staging environment\n`);
+              core.summary.addRaw(`3. Run security checks\n`);
+              core.summary.addRaw(`4. Manually publish when ready\n`);
+              await core.summary.write();
+            } catch (error) {
+              console.error('❌ Failed to create release:', error);
+              core.setFailed(`Failed to create release: ${error.message}`);
+            }
+      
+      - name: Manual approval required notice
+        run: |
+          echo "## ⚠️  Manual Approval Required" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This workflow created a **DRAFT** release that requires manual review and approval." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Before Publishing:" >> $GITHUB_STEP_SUMMARY
+          echo "- [ ] Review all changes in the draft release" >> $GITHUB_STEP_SUMMARY
+          echo "- [ ] Run full test suite" >> $GITHUB_STEP_SUMMARY
+          echo "- [ ] Perform security audit" >> $GITHUB_STEP_SUMMARY
+          echo "- [ ] Test in staging environment" >> $GITHUB_STEP_SUMMARY
+          echo "- [ ] Verify documentation is up to date" >> $GITHUB_STEP_SUMMARY
+          echo "- [ ] Confirm all approvals are in place" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Publishing Steps:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Go to [Releases](https://github.com/${{ github.repository }}/releases)" >> $GITHUB_STEP_SUMMARY
+          echo "2. Edit the draft release" >> $GITHUB_STEP_SUMMARY
+          echo "3. Make any necessary adjustments" >> $GITHUB_STEP_SUMMARY
+          echo "4. Click 'Publish release' when ready" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Note**: No automatic deployment or publishing will occur." >> $GITHUB_STEP_SUMMARY
+  
+  # Deployment job (requires manual approval via environment)
+  deploy:
+    name: Deploy (Manual Approval Required)
+    needs: create-draft-release
+    runs-on: ubuntu-latest
+    # Requires manual approval via GitHub Environments
+    environment:
+      name: production
+      url: https://github.com/${{ github.repository }}/releases
+    
+    steps:
+      - name: Deployment placeholder
+        run: |
+          echo "🚀 Deployment would happen here"
+          echo "This step requires manual approval via GitHub Environments"
+          echo "Configure the 'production' environment with required reviewers"
+          echo ""
+          echo "Deployment steps would include:"
+          echo "  1. Publish release assets"
+          echo "  2. Update documentation site"
+          echo "  3. Notify stakeholders"
+          echo "  4. Update project boards"
+          echo ""
+          echo "⚠️  This is a placeholder - configure actual deployment as needed"
+>>>>>>> origin/pr9
+=======
+          TAG_NAME="${{ steps.version.outputs.tag_name }}"
+          
+          # Check if CHANGELOG.md exists
+          if [ -f "CHANGELOG.md" ]; then
+            echo "📖 Reading from CHANGELOG.md"
+            # Extract section for this version if it exists
+            CHANGELOG=$(awk "/## \[${TAG_NAME}\]/,/## \[/" CHANGELOG.md | head -n -1)
+            if [ -z "$CHANGELOG" ]; then
+              CHANGELOG="See CHANGELOG.md for details."
+            fi
+          else
+            CHANGELOG="No changelog available yet. See commit history for details."
+          fi
+          
+          # Save to file for multi-line output
+          cat > release-notes.md <<EOF
+          ## Highlights
+          
+          This is a scheduled release of SmartContractAudit.
+          
+          ### What's New
+          
+          ${CHANGELOG}
+          
+          ### Installation
+          
+          \`\`\`bash
+          # Clone repository
+          git clone https://github.com/${{ github.repository }}.git
+          cd SmartContractAudit
+          git checkout ${TAG_NAME}
+          
+          # Install dependencies (if applicable)
+          npm install
+          
+          # Or use with GitHub Actions
+          uses: cyberai/cyberai-action@${TAG_NAME}
+          \`\`\`
+          
+          ### Documentation
+          
+          - [README](https://github.com/${{ github.repository }})
+          - [Documentation](https://github.com/${{ github.repository }}/tree/${TAG_NAME}/docs)
+          - [Contributing Guide](https://github.com/${{ github.repository }}/blob/${TAG_NAME}/CONTRIBUTING.md)
+          
+          ### Important Notes
+          
+          - This is a **DRAFT** release for review
+          - Review all changes before publishing
+          - Test thoroughly before deploying to production
+          - Report issues at: https://github.com/${{ github.repository }}/issues
+          
+          ### Security
+          
+          - All operations default to DRY_RUN=true (safe mode)
+          - No secrets included in source code
+          - Write operations require explicit scoped token
+          - BOT_PINGS_ENABLED=false by default
+          
+          ### Support
+          
+          - **Security Issues**: security@cyberai.network
+          - **General Questions**: GitHub Discussions
+          - **Bug Reports**: GitHub Issues
+          - **Partnerships**: funding@cyberai.network
+          
+          ---
+          
+          **Full Changelog**: [View all changes](https://github.com/${{ github.repository }}/compare/...${TAG_NAME})
+          
+          **Release Date**: $(date -u +"%Y-%m-%d")  
+          **Release Mode**: DRAFT (not yet published)  
+          **Default Safety**: DRY_RUN=true
+          EOF
+          
+          cat release-notes.md
+          echo "✅ Release notes generated"
+      
+      - name: Create draft release
+        if: steps.check_tag.outputs.exists == 'false'
+        uses: actions/github-script@v7
+        env:
+          TAG_NAME: ${{ steps.version.outputs.tag_name }}
+          RELEASE_NAME: ${{ steps.version.outputs.release_name }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const releaseNotes = fs.readFileSync('release-notes.md', 'utf8');
+            
+            try {
+              const response = await github.rest.repos.createRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag_name: process.env.TAG_NAME,
+                name: process.env.RELEASE_NAME,
+                body: releaseNotes,
+                draft: true,
+                prerelease: false,
+                generate_release_notes: true
+              });
+              
+              console.log('✅ Draft release created successfully!');
+              console.log('📦 Release ID:', response.data.id);
+              console.log('🔗 URL:', response.data.html_url);
+              console.log('');
+              console.log('⚠️  This is a DRAFT release. Review and publish manually.');
+              
+              core.summary
+                .addHeading('🎉 Draft Release Created')
+                .addRaw('\n\n')
+                .addTable([
+                  [{data: 'Property', header: true}, {data: 'Value', header: true}],
+                  ['Tag', process.env.TAG_NAME],
+                  ['Name', process.env.RELEASE_NAME],
+                  ['Status', '📝 DRAFT (not published)'],
+                  ['URL', response.data.html_url]
+                ])
+                .addRaw('\n\n')
+                .addQuote('⚠️  This is a DRAFT release. Review all changes and publish manually when ready.')
+                .write();
+              
+            } catch (error) {
+              core.setFailed(`Failed to create release: ${error.message}`);
+            }
+      
+      - name: Tag already exists
+        if: steps.check_tag.outputs.exists == 'true'
+        run: |
+          echo "⚠️  Release tag ${{ steps.version.outputs.tag_name }} already exists"
+          echo "Skipping release creation."
+          echo "::warning::Tag ${{ steps.version.outputs.tag_name }} already exists"
+          
+          echo "## ⚠️  Tag Already Exists" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The tag **${{ steps.version.outputs.tag_name }}** already exists in the repository." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "No new release was created." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "To create a new release:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Use a different tag name" >> $GITHUB_STEP_SUMMARY
+          echo "2. Or delete the existing tag first (not recommended)" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Summary
+        if: steps.check_tag.outputs.exists == 'false'
+        run: |
+          echo "## 📦 Draft Release Prepared" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ A draft release has been created and is ready for review." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Release Details" >> $GITHUB_STEP_SUMMARY
+          echo "- **Tag**: ${{ steps.version.outputs.tag_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Name**: ${{ steps.version.outputs.release_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: 📝 DRAFT (not published)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "1. Review the draft release on GitHub" >> $GITHUB_STEP_SUMMARY
+          echo "2. Verify all changes are correct" >> $GITHUB_STEP_SUMMARY
+          echo "3. Update release notes if needed" >> $GITHUB_STEP_SUMMARY
+          echo "4. Test the release thoroughly" >> $GITHUB_STEP_SUMMARY
+          echo "5. Publish when ready" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Important" >> $GITHUB_STEP_SUMMARY
+          echo "- ⚠️  This release is in DRAFT mode" >> $GITHUB_STEP_SUMMARY
+          echo "- 🔒 All operations default to DRY_RUN=true" >> $GITHUB_STEP_SUMMARY
+          echo "- 📝 Review before publishing" >> $GITHUB_STEP_SUMMARY
+          echo "- 🚀 Do NOT auto-deploy" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**View Releases**: [GitHub Releases](https://github.com/${{ github.repository }}/releases)" >> $GITHUB_STEP_SUMMARY
+>>>>>>> origin/pr10

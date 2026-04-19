@@ -2,7 +2,11 @@
 set -euo pipefail
 
 # ============================================================
+<<<<<<< HEAD
+# MASTER.SH — SmartBrain Orchestrator
+=======
 # FIX.SH — SmartBrain Orchestrator
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 # Non-destructive. No core rewrites. No repo structure changes.
 # ============================================================
 
@@ -29,7 +33,11 @@ smartbrain_log() {
   local agent="$1"; shift
   local level="$1"; shift
   local msg="$*"
+<<<<<<< HEAD
+  printf '[%s][%s][%s] %s\n' "$(date -u +"%Y-%m-%dT%H:%M:%S%z")" "$agent" "$level" "$msg" >> "$SMARTBRAIN_LOG"
+=======
   printf '[%s][%s][%s] %s\n' "$(date -Iseconds)" "$agent" "$level" "$msg" >> "$SMARTBRAIN_LOG"
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 }
 
 # ------------------------------------------------------------
@@ -38,7 +46,12 @@ smartbrain_log() {
 
 clean_ports() {
   log "Cleaning hanging Node.js processes on ports 3000-3010 and 4000."
+<<<<<<< HEAD
+  local ports=({3000..3010} 4000)
+  local dry_run="${DRY_RUN:-true}"
+=======
   local ports=(3000 3001 3002 3003 3004 3005 3006 3007 3008 3009 3010 4000)
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 
   for port in "${ports[@]}"; do
     if command -v lsof >/dev/null 2>&1; then
@@ -46,9 +59,20 @@ clean_ports() {
       pids=$(lsof -t -iTCP:"$port" -sTCP:LISTEN || true)
 
       if [[ -n "${pids:-}" ]]; then
+<<<<<<< HEAD
+        if [[ "$dry_run" == "true" ]]; then
+          warn "DRY_RUN: Would kill processes on port $port (PIDs: $pids)."
+          smartbrain_log "AgentB" "INFO" "DRY_RUN: Would kill processes on port $port (PIDs: $pids)."
+        else
+          warn "Killing processes on port $port (PIDs: $pids)."
+          smartbrain_log "AgentB" "WARN" "Killing processes on port $port (PIDs: $pids)."
+          kill $pids || true
+        fi
+=======
         warn "Killing processes on port $port (PIDs: $pids)."
         smartbrain_log "AgentB" "WARN" "Killing processes on port $port (PIDs: $pids)."
         kill $pids || true
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
       fi
     fi
   done
@@ -88,6 +112,16 @@ cmd_audit() {
   if [[ -x "$AUDIT_SCRIPT" ]]; then
     log "Running scripts/audit.sh..."
     if "$AUDIT_SCRIPT"; then
+<<<<<<< HEAD
+      smartbrain_log "AgentA" "INFO" "audit.sh completed successfully."
+    else
+      warn "audit.sh returned non-zero."
+      smartbrain_log "AgentA" "ERROR" "audit.sh failed."
+    fi
+  else
+    warn "audit.sh missing."
+    smartbrain_log "AgentA" "WARN" "audit.sh missing."
+=======
       smartbrain_log "AgentC" "INFO" "audit.sh completed successfully."
     else
       warn "audit.sh returned non-zero."
@@ -96,6 +130,7 @@ cmd_audit() {
   else
     warn "audit.sh missing."
     smartbrain_log "AgentC" "WARN" "audit.sh missing."
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
   fi
 
   log "Running lint/test/build..."
@@ -105,6 +140,41 @@ cmd_audit() {
 
   log "Writing AUDIT-REPORT.md..."
   {
+<<<<<<< HEAD
+    echo "# Orchestration Summary: Audit & Build Run"
+    echo
+    echo "This report summarizes the actions performed by scripts/master.sh:cmd_audit"
+    echo "during the latest run. It reflects only what this script executed directly."
+    echo
+    echo "## Agent A – Code Auditor"
+    echo "- Attempted to run: scripts/audit.sh (if present and executable)."
+    echo "- Scope of audit.sh is defined by that script and may vary by project."
+    echo
+    echo "## Agent B – Fixer & Optimizer"
+    echo "- Orchestrated audit, lint, test, and build steps via master.sh."
+    echo "- Ensured pnpm-based workflows (lint/test/build) were invoked."
+    echo
+    echo "## Agent C – Security & Compliance"
+    echo "- Relies on project-specific checks implemented in scripts/audit.sh and tooling."
+    echo "- No assumptions are made here about specific CI files, solc versions, or policies."
+    echo
+    echo "## Agent D – Documentation & DX"
+    echo "- Generated AUDIT-REPORT.md from the current master.sh run."
+    echo "- Intended as a high-level summary; details should be confirmed from logs and tooling."
+    echo
+    echo "## Agent E – UI/UX Auto-Heal"
+    echo "- Not directly modified by cmd_audit; behavior depends on project configuration."
+    echo
+    echo "## Agent F – CI/CD"
+    echo "- This script can be wired into CI, but does not itself modify CI scripts or operators."
+    echo "- Any PR validation or health checks are determined by the surrounding CI configuration."
+    echo
+    echo "## TODOs & Risks"
+    echo "- TODO: Extend cmd_audit summary once additional automated checks are verified."
+    echo "- Risk: Port cleaning may affect other services on the same machine."
+    echo
+    echo "Status: Audit Pass ✅ | Orchestration Active 🚀"
+=======
     echo "# Orchestration Summary: Audit & Auto-Heal Pass"
     echo
     echo "## Agent A – Code Auditor"
@@ -140,6 +210,7 @@ cmd_audit() {
     echo "- Risk: Port cleaning may affect other services."
     echo
     echo "Status: Audit Pass ✅ | Auto-Heal Active 🚀 | Strengthened 🌌"
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
   } > "$AUDIT_REPORT"
 
   smartbrain_log "AgentA" "INFO" "Audit complete."
@@ -183,6 +254,16 @@ cmd_integrity() {
   log "Running integrity checks."
   smartbrain_log "AgentC" "INFO" "Integrity check started."
 
+<<<<<<< HEAD
+  # Skip if no package.json (not a Node.js project)
+  if [[ ! -f "$ROOT_DIR/package.json" ]]; then
+    log "No package.json found. Skipping Node.js integrity checks."
+    smartbrain_log "AgentC" "INFO" "Skipped: No package.json found."
+    return 0
+  fi
+
+=======
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
   ensure_pnpm_install
 
   if $PNPM run check:abi-sdk-consistency 2>/dev/null; then
@@ -191,6 +272,10 @@ cmd_integrity() {
   else
     warn "ABI ↔ SDK mismatch."
     smartbrain_log "AgentC" "ERROR" "ABI ↔ SDK mismatch."
+<<<<<<< HEAD
+    return 1
+=======
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
   fi
 }
 
@@ -202,6 +287,38 @@ cmd_health() {
   log "Running health check."
   smartbrain_log "AgentF" "INFO" "Health check started."
 
+<<<<<<< HEAD
+  # Skip if no package.json (not a Node.js project)
+  if [[ ! -f "$ROOT_DIR/package.json" ]]; then
+    log "No package.json found. Skipping Node.js health checks."
+    smartbrain_log "AgentF" "INFO" "Skipped: No package.json found."
+    return 0
+  fi
+
+  ensure_pnpm_install
+
+  local failed=0
+
+  if ! $PNPM lint; then
+    smartbrain_log "AgentF" "WARN" "Lint issues."
+    failed=1
+  fi
+
+  if ! $PNPM test; then
+    smartbrain_log "AgentF" "WARN" "Test failures."
+    failed=1
+  fi
+
+  if ! $PNPM -r run typecheck; then
+    smartbrain_log "AgentF" "WARN" "Typecheck errors."
+    failed=1
+  fi
+
+  smartbrain_log "AgentF" "INFO" "Health check complete."
+  log "Health check complete."
+
+  return $failed
+=======
   ensure_pnpm_install
 
   $PNPM lint || smartbrain_log "AgentF" "WARN" "Lint issues."
@@ -210,6 +327,7 @@ cmd_health() {
 
   smartbrain_log "AgentF" "INFO" "Health check complete."
   log "Health check complete."
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 }
 
 # ------------------------------------------------------------
@@ -219,10 +337,20 @@ cmd_health() {
 scan_file_for_suspicious_patterns() {
   local file="$1"
 
+<<<<<<< HEAD
+  if grep -Eqi -e 'rm -rf /' -e 'curl.*sh' -e 'wget.*sh' -e 'eval`\(' "$file" 2>/dev/null; then
+    smartbrain_log "AgentX" "ALERT" "Suspicious pattern in $file."
+    echo "$file" >> "$QUARANTINE_DIR/suspicious-files.txt"
+    return 1
+  fi
+
+  return 0
+=======
   if grep -Eqi "rm -rf /|curl .*sh|wget .*sh|eval\`\(" "$file" 2>/dev/null; then
     smartbrain_log "AgentX" "ALERT" "Suspicious pattern in $file."
     echo "$file" >> "$QUARANTINE_DIR/suspicious-files.txt"
   fi
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 }
 
 cmd_scan() {
@@ -230,6 +358,55 @@ cmd_scan() {
   smartbrain_log "AgentX" "INFO" "Scan started."
 
   mkdir -p "$QUARANTINE_DIR"
+<<<<<<< HEAD
+  
+  # Clear previous scan results to avoid accumulating duplicates
+  > "$QUARANTINE_DIR/suspicious-files.txt"
+  > "$QUARANTINE_DIR/archives-review.txt"
+  
+  local findings=0
+
+  # Single traversal of the repo for source files, pruning heavy/irrelevant directories.
+  while IFS= read -r -d '' file; do
+    if ! scan_file_for_suspicious_patterns "$file"; then
+      findings=$((findings + 1))
+    fi
+  done < <(
+    find "$ROOT_DIR" \
+      \( -path "$ROOT_DIR/.git" -o -path "$ROOT_DIR/node_modules" \) -prune -o \
+      -type f \( \
+        -name "*.json" -o -name "*.js" -o -name "*.jsx" -o -name "*.ts" -o -name "*.tsx" -o \
+        -name "*.java" -o -name "*.kt" -o -name "*.rs" -o -name "*.go" -o -name "*.php" -o \
+        -name "*.py" -o -name "*.rb" -o -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o \
+        -name "*.h" -o -name "*.hpp" -o -name "*.css" -o -name "*.scss" -o -name "*.less" -o \
+        -name "*.html" -o -name "*.svelte" -o -name "*.sh" -o -name "*.ps1" -o -name "*.bash" -o \
+        -name "*.zsh" -o -name "*.sol" -o -name "*.yml" -o -name "*.yaml" -o -name "*.toml" -o \
+        -name "*.lock" \
+      \) -print0 2>/dev/null || true
+  )
+
+  # Archive scan, also pruning heavy/irrelevant directories.
+  while IFS= read -r -d '' archive; do
+    smartbrain_log "AgentX" "WARN" "Archive flagged: $archive"
+    echo "$archive" >> "$QUARANTINE_DIR/archives-review.txt"
+  done < <(
+    find "$ROOT_DIR" \
+      \( -path "$ROOT_DIR/.git" -o -path "$ROOT_DIR/node_modules" \) -prune -o \
+      -type f \( \
+        -name "*.zip" -o -name "*.tar" -o -name "*.gz" -o \
+        -name "*.tgz" -o -name "*.bz2" -o -name "*.apk" \
+      \) -print0 2>/dev/null || true
+  )
+
+  smartbrain_log "AgentX" "INFO" "Scan complete. Findings: $findings"
+  log "Scan complete. Findings: $findings"
+
+  if [[ $findings -gt 0 ]]; then
+    return 1
+  fi
+
+  return 0
+=======
 
   local patterns=(
     "*.json" "*.js" "*.jsx" "*.ts" "*.tsx" "*.java" "*.kt"
@@ -252,6 +429,7 @@ cmd_scan() {
 
   smartbrain_log "AgentX" "INFO" "Scan complete."
   log "Scan complete."
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 }
 
 # ------------------------------------------------------------
@@ -263,6 +441,19 @@ usage() {
 Usage: $0 <command>
 
 Commands:
+<<<<<<< HEAD
+  audit      Run full audit (Agent A)
+  heal       Run heal sequence (Agent B)
+  integrity  Run integrity checks (Agent C)
+  health     Run health checks (Agent F)
+  scan       Run antivirus scan (Agent X)
+  help       Show this help message
+
+Examples:
+  $0 audit
+  $0 heal
+  $0 scan
+=======
   audit       Run full audit (Agent A)
   heal        Run heal sequence (Agent B)
   integrity   Run integrity checks (Agent C)
@@ -274,11 +465,27 @@ Example:
   $0 audit
   $0 heal
   $0 health
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 
 EOF
 }
 
 # ------------------------------------------------------------
+<<<<<<< HEAD
+# Main dispatcher
+# ------------------------------------------------------------
+
+main() {
+  case "${1:-help}" in
+    audit)     cmd_audit ;;
+    heal)      cmd_heal ;;
+    integrity) cmd_integrity ;;
+    health)    cmd_health ;;
+    scan)      cmd_scan ;;
+    help|--help|-h) usage ;;
+    *)
+      err "Unknown command: $1"
+=======
 # Main
 # ------------------------------------------------------------
 
@@ -307,6 +514,7 @@ main() {
       ;;
     *)
       err "Unknown command: $cmd"
+>>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
       usage
       exit 1
       ;;

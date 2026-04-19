@@ -1,11 +1,18 @@
+<<<<<<< HEAD
 ---
 title: SLA and Support
+<<<<<<< HEAD
 description: Service level agreements and support for SmartContractAudit partners
 keywords: SLA, support, response time, uptime, service level
+=======
+description: Service level agreements and support options for partners
+keywords: SLA, support, uptime, response time
+>>>>>>> origin/pr9
 ---
 
 # SLA and Support
 
+<<<<<<< HEAD
 ## Overview
 
 This document outlines service level agreements (SLAs) and support policies for SmartContractAudit partners.
@@ -451,10 +458,331 @@ We continuously improve our support:
 - Resolution times
 - Customer satisfaction
 - First-contact resolution
+=======
+## Service Level Agreements
+
+### Uptime Guarantee
+
+**API Availability**:
+- **Standard**: 99.5% uptime
+- **Premium**: 99.9% uptime
+- **Enterprise**: 99.95% uptime
+
+**Calculation**: Monthly uptime excluding scheduled maintenance
+
+**Credits**: If SLA not met:
+- 99.0-99.5%: 10% credit
+- 98.0-99.0%: 25% credit
+- <98.0%: 50% credit
+
+### Performance
+
+**API Response Times** (p95):
+- Scan initiation: <500ms
+- Status check: <200ms
+- Results retrieval: <1s
+
+**Scan Completion**:
+- Small repos (<100 files): <5 minutes
+- Medium repos (100-1000 files): <15 minutes
+- Large repos (>1000 files): <60 minutes
+
+## Support Tiers
+
+### Community Support (Free)
+
+**Channels**:
+- GitHub Issues
+- Community Forum
+- Documentation
+
+**Response Time**:
+- Best effort
+- Community-driven
+- No SLA
+
+**Coverage**:
+- Monday-Friday
+- Business hours
+- Public issues only
+
+### Standard Support (Included)
+
+**Channels**:
+- Email support
+- GitHub Issues (priority)
+- Monthly office hours
+
+**Response Times**:
+| Severity | First Response | Resolution Target |
+|----------|---------------|-------------------|
+| Critical | 4 business hours | 48 hours |
+| High | 8 business hours | 5 business days |
+| Medium | 1 business day | 10 business days |
+| Low | 2 business days | Best effort |
+
+**Coverage**:
+- Monday-Friday
+- 9 AM - 5 PM EST
+- Email and tickets
+
+### Premium Support (Add-on)
+
+**Channels**:
+- Priority email
+- Dedicated Slack channel
+- Phone support
+- Video calls
+
+**Response Times**:
+| Severity | First Response | Resolution Target |
+|----------|---------------|-------------------|
+| Critical | 1 hour | 24 hours |
+| High | 4 hours | 48 hours |
+| Medium | 8 hours | 5 business days |
+| Low | 1 business day | 10 business days |
+
+**Coverage**:
+- Monday-Friday
+- 6 AM - 8 PM EST
+- Email, phone, Slack
+
+### Enterprise Support (Custom)
+
+**Channels**:
+- All Premium channels
+- Dedicated account manager
+- Direct engineer access
+- Emergency hotline
+
+**Response Times**:
+| Severity | First Response | Resolution Target |
+|----------|---------------|-------------------|
+| Critical | 15 minutes | 4 hours |
+| High | 1 hour | 12 hours |
+| Medium | 4 hours | 2 business days |
+| Low | 8 hours | 5 business days |
+
+**Coverage**:
+- 24/7/365 for Critical
+- Extended hours for others
+- All channels available
+
+## Severity Levels
+
+### Critical (P0)
+
+**Definition**: Complete service outage or security vulnerability
+
+**Examples**:
+- API completely down
+- Data breach
+- Critical security flaw
+- All scans failing
+
+**Requirements**:
+- Business completely blocked
+- No workaround available
+- Immediate attention needed
+
+### High (P1)
+
+**Definition**: Major functionality impaired
+
+**Examples**:
+- API degraded performance
+- Scan failures for specific repos
+- Integration broken
+- Critical feature not working
+
+**Requirements**:
+- Core functionality affected
+- Limited or difficult workaround
+- Significant impact
+
+### Medium (P2)
+
+**Definition**: Moderate impact, workaround available
+
+**Examples**:
+- Non-critical feature issue
+- Performance degradation
+- Intermittent errors
+- Configuration issues
+
+**Requirements**:
+- Workaround available
+- Moderate impact
+- Not blocking
+
+### Low (P3)
+
+**Definition**: Minor issue or question
+
+**Examples**:
+- Documentation unclear
+- Feature requests
+- General questions
+- Minor bugs
+
+**Requirements**:
+- Minimal impact
+- Easy workaround
+- Can wait for resolution
+
+## Support Channels
+
+### Email Support
+
+**Address**: support@cuberai.example  
+**Best for**: Non-urgent issues, detailed questions  
+**Include**: Account ID, error messages, reproduction steps
+
+### GitHub Issues
+
+**Repository**: github.com/SolanaRemix/SmartContractAudit/issues  
+**Best for**: Bug reports, feature requests  
+**Label**: Use partner label for priority
+
+### Slack Channel
+
+**Available**: Premium+ tiers  
+**Best for**: Quick questions, real-time discussion  
+**Hours**: Based on support tier
+
+### Phone Support
+
+**Available**: Premium+ tiers  
+**Best for**: Critical issues, urgent matters  
+**Number**: Provided upon enrollment
+
+### Video Calls
+
+**Available**: Gold+ sponsors, Premium+ support  
+**Best for**: Complex integrations, training  
+**Schedule**: Via calendar link
+
+## Scheduled Maintenance
+
+**Frequency**: Monthly (first Sunday)  
+**Duration**: 1-2 hours  
+**Notice**: 7 days advance  
+**Window**: 2 AM - 4 AM EST
+
+**Emergency Maintenance**:
+- Announced 1 hour before (if possible)
+- Critical security patches
+- Immediate fixes only
+
+## Status & Monitoring
+
+**Status Page**: status.smartcontractaudit.io
+
+**Subscriptions**:
+- Email notifications
+- SMS alerts (Premium+)
+- Webhook notifications
+- RSS feed
+
+**Metrics**:
+- API uptime
+- Response times
+- Scan queue depth
+- Incident history
+
+## Escalation
+
+### Standard Escalation Path
+
+1. **Tier 1**: Support engineer (immediate)
+2. **Tier 2**: Senior engineer (if unresolved in SLA)
+3. **Tier 3**: Engineering lead (critical issues)
+4. **Tier 4**: CTO/Leadership (business impact)
+
+### Emergency Escalation
+
+For critical issues:
+- **Immediate**: Email emergency@cuberai.example
+- **Phone**: Emergency hotline (Enterprise tier)
+- **Automatic**: P0 tickets auto-escalate after 15 min
+
+## Best Practices
+
+### Reporting Issues
+
+**Good Issue Report**:
+```
+Title: API returns 500 error on scan initiation
+
+Severity: High
+Account ID: partner_1234
+Environment: Production
+
+Description:
+When initiating scans for repositories with >500 files,
+API returns 500 Internal Server Error.
+
+Reproduction:
+1. POST /v1/scan with repository "large-repo"
+2. Observe 500 response
+3. Scan never starts
+
+Expected: Scan should initiate successfully
+Actual: 500 error received
+
+Error message: "Internal Server Error"
+Request ID: req_abc123
+Timestamp: 2026-01-01T12:00:00Z
+
+Impact: Cannot scan large repositories
+Workaround: None found
+```
+
+### Effective Communication
+
+- Be specific and detailed
+- Include error messages
+- Provide request IDs
+- Share reproduction steps
+- Indicate business impact
+- Suggest workarounds tried
+
+## SLA Credits
+
+### Eligibility
+
+Credits issued when:
+- Uptime falls below guarantee
+- Response time exceeds SLA
+- Resolution target missed
+
+### Calculation
+
+```
+Credit = (Guaranteed % - Actual %) × Monthly Fee
+```
+
+### Requesting Credits
+
+1. Submit claim within 30 days
+2. Include incident references
+3. Provide impact documentation
+4. Receive credit next billing cycle
+
+**Maximum**: 50% of monthly fee
+
+## Resources
+
+- Status Page: [Link]
+- Knowledge Base: [Link]
+- API Documentation: [Link]
+- Community Forum: [Link]
+>>>>>>> origin/pr9
 
 ## Contact
 
 **General Support**: support@cuberai.example  
+<<<<<<< HEAD
 **Partner Success**: partners@cuberai.example  
 **Security Issues**: security@cuberai.example  
 **Billing**: billing@cuberai.example  
@@ -466,11 +794,396 @@ We continuously improve our support:
 - [Technical Onboarding](technical_onboarding.md)
 - [Partnership Agreement](partnerships.md)
 - [Data Privacy](data_privacy.md)
+=======
+# SLA and Support
+
+## Service Level Agreements
+
+### Overview
+
+This document outlines service level agreements (SLAs) and support commitments for CyberAi partners.
+
+**Note**: SLAs apply to paid partners at Gold tier and above. Community users receive best-effort support.
+
+## Uptime SLA
+
+### API Availability
+
+**Target**: 99.9% uptime (monthly)
+
+**Exclusions**:
+- Scheduled maintenance (announced 7 days in advance)
+- Force majeure events
+- Third-party service failures
+- User-caused issues
+
+**Measurement**: Calculated monthly from our monitoring systems
+
+**Credits** (for SLA violations):
+- 99.5-99.9%: 10% monthly fee credit
+- 99.0-99.5%: 25% monthly fee credit
+- <99.0%: 50% monthly fee credit
+
+**To Claim**: Email partners-support@cyberai.network with affected time period within 30 days
+
+### Scheduled Maintenance
+
+**Notification**: 7 days advance notice
+**Frequency**: Monthly maximum
+**Window**: Tuesday 2-4 AM UTC (2 hours max)
+**Emergency**: Minimum 24 hours notice if possible
+
+## Response Time SLA
+
+### Support Ticket Response
+
+| Severity | Bronze | Silver | Gold | Platinum | Custom |
+|----------|---------|---------|-------|----------|---------|
+| **Critical** | 2 days | 1 day | 4 hours | 1 hour | Custom |
+| **High** | 5 days | 3 days | 1 day | 4 hours | Custom |
+| **Medium** | 7 days | 5 days | 2 days | 1 day | Custom |
+| **Low** | 10 days | 7 days | 5 days | 2 days | Custom |
+
+**Business Hours**: Monday-Friday, 9 AM - 5 PM UTC (excluding holidays)
+
+### Severity Definitions
+
+**Critical**:
+- Service completely unavailable
+- Data loss or corruption
+- Security breach
+- Major functionality broken for all users
+
+**High**:
+- Major feature not working
+- Significant performance degradation
+- Security vulnerability (non-exploited)
+- Affecting multiple users
+
+**Medium**:
+- Feature partially working
+- Moderate performance issues
+- Affecting individual users
+- Workaround available
+
+**Low**:
+- Minor bugs
+- Feature requests
+- Documentation issues
+- Cosmetic problems
+
+## Resolution Time SLA
+
+**Targets** (not guarantees):
+
+| Severity | Target Resolution |
+|----------|-------------------|
+| **Critical** | 24 hours |
+| **High** | 5 business days |
+| **Medium** | 10 business days |
+| **Low** | Best effort |
+
+**Notes**:
+- Complex issues may take longer
+- Escalation available if targets missed
+- Regular updates provided
+
+## Support Channels
+
+### By Partner Tier
+
+**Bronze Sponsors**:
+- GitHub Issues (public)
+- GitHub Discussions
+- Email (partners-support@cyberai.network)
+
+**Silver Sponsors**:
+- All Bronze channels
+- Priority email support
+- Community Slack/Discord
+
+**Gold Sponsors**:
+- All Silver channels
+- Dedicated support channel
+- Video call support (scheduled)
+
+**Platinum Sponsors**:
+- All Gold channels
+- Dedicated Slack channel with core team
+- On-call support (business hours)
+- Annual on-site visit option
+
+### Contact Methods
+
+**Email**: partners-support@cyberai.network
+- Include partner name, tier, and severity
+- Attach logs, error messages, reproduction steps
+
+**GitHub Issues**: [github.com/CyberAi/CyberAi/issues](https://github.com/CyberAi/CyberAi/issues)
+- Use template
+- Tag: `partner-support`
+- Link to partnership
+
+**Slack/Discord**: (Invited after partnership begins)
+- Direct message or channel post
+- @mention support team for urgent issues
+
+**Emergency**: security@cyberai.network (security issues only)
+
+## Support Scope
+
+### Included Support
+
+✅ **Covered**:
+- Bug fixes and issue resolution
+- API and integration questions
+- Configuration assistance
+- Feature usage guidance
+- Performance optimization help
+- Security vulnerability reports
+- Documentation clarification
+
+❌ **Not Covered** (available as custom services):
+- Custom feature development
+- On-site training (except Platinum annual)
+- Code review of your implementations
+- Architecture consulting
+- Third-party integration debugging
+- General development support
+
+### Escalation Path
+
+If issue not resolved within SLA:
+
+1. **Email**: partners-support@cyberai.network with "ESCALATION" in subject
+2. **Include**: Original ticket number, timeline, impact
+3. **Escalation Review**: Within 4 hours (business hours)
+4. **Executive Contact**: If still unresolved, escalate to funding@cyberai.network
+
+## Performance SLA
+
+### API Performance
+
+**Target Response Times** (95th percentile):
+
+- Scan initiation: <2 seconds
+- Status check: <500ms
+- Results retrieval: <3 seconds
+- Report generation: <10 seconds
+
+**Throughput**:
+- Minimum 100 requests/minute per partner
+- Higher limits available (contact us)
+
+### Rate Limits
+
+**Default Limits**:
+
+| Tier | Requests/Hour | Concurrent Scans |
+|------|---------------|------------------|
+| Bronze | 100 | 2 |
+| Silver | 500 | 5 |
+| Gold | 2,000 | 10 |
+| Platinum | 10,000 | 25 |
+| Custom | Custom | Custom |
+
+**Exceeding Limits**:
+- HTTP 429 (Too Many Requests)
+- Retry-After header provided
+- Contact us to increase limits
+
+## Data SLA
+
+### Backup and Recovery
+
+**Backups**:
+- Daily automated backups
+- 30-day retention
+- Encrypted storage
+- Geographically distributed
+
+**Recovery**:
+- RPO (Recovery Point Objective): 24 hours
+- RTO (Recovery Time Objective): 4 hours
+
+### Data Retention
+
+**Active Data**: Duration of partnership + 30 days  
+**Backups**: 30 days rolling  
+**Logs**: 90 days  
+**Aggregate Analytics**: Indefinitely (anonymized)
+
+See [DATA_RETENTION.md](/DATA_RETENTION.md) for details.
+
+## Security SLA
+
+### Vulnerability Response
+
+| Severity | Response | Patch Target |
+|----------|----------|--------------|
+| **Critical** | 4 hours | 7 days |
+| **High** | 1 day | 14 days |
+| **Medium** | 3 days | 30 days |
+| **Low** | 5 days | 60 days |
+
+**Notification**:
+- Partners notified within response time
+- Security advisory published after patch
+- Coordinated disclosure process
+
+### Security Updates
+
+- Zero-day vulnerabilities: Immediate notification
+- Dependency updates: Monthly
+- Security patches: As needed
+- Annual security audit results shared with Platinum partners
+
+## Maintenance Windows
+
+### Planned Maintenance
+
+**Advance Notice**: 7 days minimum  
+**Frequency**: Once per month maximum  
+**Duration**: 2 hours maximum  
+**Time**: Tuesday 2-4 AM UTC (lowest traffic)
+
+**Communication**:
+1. Email to all partners (7 days before)
+2. Status page update (7 days before)
+3. Reminder (24 hours before)
+4. Start notification
+5. Completion notification
+
+### Emergency Maintenance
+
+**Notice**: 24 hours when possible, less if critical security issue  
+**Duration**: As short as possible  
+**Communication**: Immediate notification via all channels
+
+## Monitoring and Status
+
+### Public Status Page
+
+**URL**: [status.smartcontractaudit.example](#)
+
+**Shows**:
+- Current system status
+- Planned maintenance
+- Incident history
+- Performance metrics
+- Uptime statistics
+
+**Subscribe**: Email or RSS feed for notifications
+
+### Partner Dashboard
+
+Gold and Platinum partners get access to:
+- Real-time API metrics
+- Usage statistics
+- Error rates
+- Performance graphs
+- Historical data
+
+## Feedback and Improvement
+
+### Quarterly Business Reviews
+
+**Gold and Platinum Partners**:
+- Scheduled quarterly call
+- Review metrics and SLA performance
+- Discuss feature requests
+- Gather feedback
+- Plan ahead
+
+### Support Satisfaction
+
+We measure:
+- Response time compliance
+- Resolution time
+- Partner satisfaction (surveys)
+- Issue recurrence
+
+**Goal**: >90% satisfaction rating
+
+## Dispute Resolution
+
+### Process
+
+1. **Informal Resolution**: Contact your partner liaison or partners-support@cyberai.network
+2. **Formal Review**: If unresolved, escalate to funding@cyberai.network
+3. **Executive Review**: CTO and partner executive discuss
+4. **Mediation**: Third-party mediation if needed (costs shared)
+5. **Arbitration**: Binding arbitration per partnership agreement
+
+**Timeline**: Good faith effort to resolve within 30 days
+
+### SLA Credit Disputes
+
+1. **Submit Claim**: partners-support@cyberai.network within 30 days
+2. **Provide Evidence**: Logs, timestamps, impact description
+3. **Review**: We investigate within 10 business days
+4. **Decision**: Credit issued or denial with explanation
+5. **Appeal**: To funding@cyberai.network if disputed
+
+## Termination
+
+### SLA Upon Termination
+
+**30-Day Wind-Down**:
+- Support continues for 30 days
+- Data export assistance provided
+- Migration support available
+- Final invoicing and credits
+
+**Immediate Termination** (for cause):
+- Support ends immediately
+- Data export provided (if compliant with terms)
+- No refunds
+- Credits void
+
+## Exceptions and Force Majeure
+
+SLAs don't apply during:
+
+- Acts of God (natural disasters)
+- War, terrorism, civil unrest
+- Government actions or regulations
+- Internet backbone failures
+- Third-party service failures (beyond our control)
+- Cyber attacks (while being mitigated)
+- Partner-caused issues
+
+**Notification**: We'll communicate cause and expected resolution
+
+## Contact
+
+**Support**: partners-support@cyberai.network  
+**Escalation**: funding@cyberai.network  
+**Emergency**: security@cyberai.network  
+**Billing**: funding@cyberai.network
+
+**Phone**: (Available for Platinum partners upon request)
+>>>>>>> origin/pr10
 
 ---
 
 **Last Updated**: 2026-01-01  
+<<<<<<< HEAD
 **Version**: 1.0  
 **Next Review**: 2026-04-01
 
 We're committed to your success! 🚀
+=======
+**Account Issues**: accounts@cuberai.example  
+**Emergency**: emergency@cuberai.example  
+**Sales**: partnerships@cuberai.example
+
+---
+
+*Last updated: 2026-01-01*
+>>>>>>> origin/pr9
+=======
+**SLA Version**: 1.0  
+**Review Cycle**: Quarterly  
+**Next Review**: 2026-04-01
+>>>>>>> origin/pr10

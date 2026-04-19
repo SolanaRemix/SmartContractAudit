@@ -6,7 +6,7 @@
 
 ## Type of Change
 
-<!-- Check all that apply -->
+<!-- Mark relevant options with an 'x' -->
 
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)

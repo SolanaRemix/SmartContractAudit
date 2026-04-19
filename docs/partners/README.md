@@ -1,4 +1,6 @@
+<<<<<<< HEAD
 ---
+<<<<<<< HEAD
 title: Partner Program Overview
 description: Join the SmartContractAudit partner ecosystem
 keywords: partnership, sponsors, blockchain, smart contracts, collaboration
@@ -247,10 +249,267 @@ We value all partners while maintaining project independence and community-first
 **General Questions**: GitHub Discussions
 
 We look forward to collaborating with you! 🤝
+=======
+# Partners
+
+Welcome to the CyberAi Partner Program! This directory contains information for current and prospective partners.
+
+## Contents
+
+- **[partnerships.md](partnerships.md)** - Overview of partnership opportunities
+- **[sponsorship_tiers.md](sponsorship_tiers.md)** - Sponsorship levels and benefits
+- **[technical_onboarding.md](technical_onboarding.md)** - Integration and technical setup
+- **[data_privacy.md](data_privacy.md)** - Data handling and privacy for partners
+- **[sla_and_support.md](sla_and_support.md)** - Service level agreements and support
+- **[use_cases.md](use_cases.md)** - Partner success stories and use cases
+- **[press_kit.md](press_kit.md)** - Branding assets and press materials
+- **[contact.md](contact.md)** - How to get in touch
+
+## Who Should Partner?
+
+Our partner program is designed for:
+
+- **Blockchain Projects**: Integrate security scanning into your development workflow
+- **Audit Firms**: Enhance your audit process with automated tools
+- **Development Teams**: Protect your smart contracts before deployment
+- **Infrastructure Providers**: Add security features to your platform
+- **Educational Institutions**: Teach smart contract security best practices
+- **Sponsors**: Support open source security tools
+
+## Benefits of Partnership
+
+### Technical Integration
+- Priority API access
+- Custom integration support
+- Dedicated technical contact
+- Early access to new features
+
+### Brand Recognition
+- Logo on our website and README
+- Case study opportunities
+- Co-marketing initiatives
+- Speaking opportunities
+
+### Community Access
+- Direct line to maintainers
+- Input on feature roadmap (non-binding)
+- Access to community channels
+- Networking opportunities
+
+### Commercial Support
+- Professional support tiers
+- SLA guarantees
+- Custom deployment options
+- Training and onboarding
+
+## Partnership Principles
+
+We maintain these core principles:
+
+✅ **Independence**: Partners don't control project decisions  
+✅ **Transparency**: All partnerships publicly disclosed  
+✅ **Community First**: Open source community is our priority  
+✅ **Fair Terms**: Clear, equitable partnership agreements  
+✅ **Ethical Standards**: Partners must align with our values
+
+See [GOVERNANCE.md](/GOVERNANCE.md) for details on sponsor influence.
+
+## Getting Started
+
+1. **Learn**: Review partnership opportunities in [partnerships.md](partnerships.md)
+2. **Choose**: Select sponsorship tier in [sponsorship_tiers.md](sponsorship_tiers.md)
+3. **Integrate**: Follow [technical_onboarding.md](technical_onboarding.md)
+4. **Connect**: Reach out via [contact.md](contact.md)
+
+## Current Partners
+
+_This section will list our partners as they join._
+
+### Sponsors
+
+See [FUNDING.yml](/FUNDING.yml) for sponsorship options.
+
+### Technical Partners
+
+_Coming soon_
+
+### Community Partners
+
+_Coming soon_
+
+## FAQ
+
+**Q: Does sponsorship guarantee features?**  
+A: No. All development is community-driven. Sponsors can provide input but don't control the roadmap.
+
+**Q: What data do partners receive?**  
+A: See [data_privacy.md](data_privacy.md). We minimize data sharing and respect user privacy.
+
+**Q: Can we white-label the tools?**  
+A: Apache-2.0 license allows it, but commercial support available for custom deployments.
+
+**Q: What if our values diverge?**  
+A: We reserve the right to terminate partnerships that conflict with project values.
+
+**Q: How are disputes resolved?**  
+A: See [sla_and_support.md](sla_and_support.md) for dispute resolution process.
+
+## Contact
+
+Ready to partner? Get in touch:
+
+- **Partnerships**: funding@cyberai.network
+- **Technical**: Open a GitHub issue
+- **Security**: security@cyberai.network
+- **Press**: See [press_kit.md](press_kit.md)
+>>>>>>> origin/pr10
 
 ---
 
 **Last Updated**: 2026-01-01  
+<<<<<<< HEAD
 **Document Version**: 1.0
 
 For the latest partnership information, visit our [GitHub repository](https://github.com/SolanaRemix/SmartContractAudit).
+=======
+title: Partners Program
+description: Partnership opportunities with SmartContractAudit
+keywords: partnerships, enterprise, collaboration, blockchain security
+---
+
+# Partners Program
+
+## Welcome
+
+Thank you for your interest in partnering with SmartContractAudit! We work with organizations across the blockchain ecosystem to enhance security, build trust, and drive innovation.
+
+## Partnership Opportunities
+
+### Technology Partners
+
+Integrate SmartContractAudit into your platform:
+- Security scanning for your users
+- White-label solutions
+- API integration
+- Custom workflows
+- Joint development
+
+**Benefits**:
+- Enhance your platform's security
+- Differentiate your offering
+- Access to our technology
+- Co-marketing opportunities
+- Technical support
+
+### Blockchain Projects
+
+Security partnerships for blockchain projects:
+- Smart contract auditing
+- Continuous security monitoring
+- Vulnerability assessment
+- Security consulting
+- Incident response
+
+**Benefits**:
+- Professional security audits
+- Continuous monitoring
+- Expert consultation
+- Community trust
+- Compliance support
+
+### Enterprise Partners
+
+Enterprise-grade security solutions:
+- Dedicated support
+- Custom integrations
+- Private deployments
+- Training and onboarding
+- SLA guarantees
+
+**Benefits**:
+- Enterprise features
+- Priority support
+- Custom pricing
+- Dedicated account manager
+- Strategic collaboration
+
+### Infrastructure Partners
+
+Collaborate on infrastructure:
+- Node providers
+- Storage providers
+- Hosting partners
+- DevOps platforms
+- CI/CD integration
+
+**Benefits**:
+- Technical collaboration
+- Joint optimization
+- Shared resources
+- Co-marketing
+- Revenue sharing
+
+## Partnership Tiers
+
+See [sponsorship_tiers.md](sponsorship_tiers.md) for detailed tier information.
+
+## Getting Started
+
+1. **Review Documentation**
+   - Read partner materials
+   - Understand integration options
+   - Review case studies
+
+2. **Schedule Discovery Call**
+   - Discuss your needs
+   - Explore opportunities
+   - Assess fit
+
+3. **Technical Onboarding**
+   - API access
+   - Integration support
+   - Testing environment
+
+4. **Launch Partnership**
+   - Execute agreement
+   - Begin collaboration
+   - Track success
+
+## Resources
+
+- [Partnership Options](partnerships.md)
+- [Sponsorship Tiers](sponsorship_tiers.md)
+- [Technical Onboarding](technical_onboarding.md)
+- [Data Privacy](data_privacy.md)
+- [SLA & Support](sla_and_support.md)
+- [Use Cases](use_cases.md)
+- [Press Kit](press_kit.md)
+- [Contact Us](contact.md)
+
+## Success Stories
+
+We're building partnerships with:
+- Blockchain protocols
+- DeFi platforms
+- NFT marketplaces
+- Development tools
+- Security platforms
+
+*Contact us to become a featured partner.*
+
+## Contact
+
+Ready to explore partnership opportunities?
+
+📧 **Email**: partnerships@cuberai.example  
+🌐 **Website**: [Link]  
+📅 **Schedule Call**: [Calendar Link]
+
+---
+
+*Last updated: 2026-01-01*
+>>>>>>> origin/pr9
+=======
+**Program Status**: Active  
+**Open to New Partners**: Yes
+>>>>>>> origin/pr10
