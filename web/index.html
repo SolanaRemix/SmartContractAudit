@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartContractAudit - Control Panel</title>
-    <meta name="description" content="SmartContractAudit security scanning control panel and dashboard">
+    <meta name="description" content="SmartContractAudit - Automated smart contract security dashboard">
+    <title>SmartContractAudit Dashboard</title>
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
         .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -17,11 +20,15 @@
     <header class="gradient-bg text-white shadow-lg">
         <div class="container mx-auto px-4 py-6">
             <div class="flex items-center justify-between">
-                <h1 class="text-3xl font-bold">SmartContractAudit</h1>
+                <div>
+                    <h1 class="text-3xl font-bold">🔒 SmartContractAudit</h1>
+                    <p class="text-sm opacity-90">Automated Smart Contract Security</p>
+                </div>
                 <nav class="space-x-4">
-                    <a href="index.html" class="hover:underline">Dashboard</a>
+                    <a href="#dashboard" class="hover:underline">Dashboard</a>
+                    <a href="#artifacts" class="hover:underline">Artifacts</a>
                     <a href="billing.html" class="hover:underline">Billing</a>
-                    <a href="https://github.com/SolanaRemix/SmartContractAudit" class="hover:underline" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://github.com/SolanaRemix/SmartContractAudit" class="hover:underline" target="_blank">GitHub</a>
                 </nav>
             </div>
         </div>
@@ -29,182 +36,193 @@
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
-        <!-- Welcome Section -->
-        <section class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">Welcome to SmartContractAudit</h2>
-            <p class="text-gray-600 mb-4">
-                AI-powered smart contract security auditing with on-chain automation.
-                Monitor your scans, view reports, and manage your security infrastructure.
-            </p>
-            <div class="flex gap-4">
-                <a href="#recent-runs" class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition">
-                    View Recent Scans
-                </a>
-                <a href="billing.html" class="bg-white text-purple-600 border-2 border-purple-600 px-6 py-2 rounded-lg hover:bg-purple-50 transition">
-                    Become a Sponsor
-                </a>
+        <!-- Alert Banner -->
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-yellow-700">
+                        <strong>Notice:</strong> This is a placeholder dashboard. To fully activate, configure GitHub Actions and integrate with repository workflows.
+                    </p>
+                </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Stats Overview -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white rounded-lg shadow-md p-6">
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-gray-500 text-sm">Total Scans</p>
-                        <p class="text-3xl font-bold text-gray-800" id="total-scans">-</p>
+                        <p class="text-gray-500 text-sm font-medium">Total Scans</p>
+                        <p class="text-3xl font-bold text-gray-900">0</p>
                     </div>
-                    <div class="bg-blue-100 p-3 rounded-lg">
-                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <div class="bg-blue-100 rounded-full p-3">
+                        <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                         </svg>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="bg-white rounded-lg shadow p-6">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-gray-500 text-sm">High Severity Issues</p>
-                        <p class="text-3xl font-bold text-red-600" id="high-issues">-</p>
+                        <p class="text-gray-500 text-sm font-medium">Issues Found</p>
+                        <p class="text-3xl font-bold text-gray-900">0</p>
                     </div>
-                    <div class="bg-red-100 p-3 rounded-lg">
-                        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="bg-yellow-100 rounded-full p-3">
+                        <svg class="h-6 w-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                         </svg>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="bg-white rounded-lg shadow p-6">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-gray-500 text-sm">Success Rate</p>
-                        <p class="text-3xl font-bold text-green-600" id="success-rate">-</p>
+                        <p class="text-gray-500 text-sm font-medium">Fixed Issues</p>
+                        <p class="text-3xl font-bold text-gray-900">0</p>
                     </div>
-                    <div class="bg-green-100 p-3 rounded-lg">
-                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    <div class="bg-green-100 rounded-full p-3">
+                        <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Recent Scan Runs -->
-        <section id="recent-runs" class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">Recent Scan Runs</h2>
-            <div class="overflow-x-auto">
-                <table class="min-w-full">
-                    <thead>
-                        <tr class="bg-gray-50">
-                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Scan ID</th>
-                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Date</th>
-                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Status</th>
-                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Findings</th>
-                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="scan-runs-tbody">
-                        <tr>
-                            <td colspan="5" class="px-4 py-8 text-center text-gray-500">
-                                No recent scans available. Configure GitHub Actions to start scanning.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium">Last Scan</p>
+                        <p class="text-xl font-bold text-gray-900">Never</p>
+                    </div>
+                    <div class="bg-purple-100 rounded-full p-3">
+                        <svg class="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
+
+        <!-- Recent Runs Section -->
+        <div id="dashboard" class="bg-white rounded-lg shadow mb-8">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-xl font-bold text-gray-900">Recent Scan Runs</h2>
+            </div>
+            <div class="px-6 py-8">
+                <div class="text-center text-gray-500">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <p class="mt-2 text-sm">No scan runs yet. Configure GitHub Actions to see activity.</p>
+                    <a href="https://github.com/SolanaRemix/SmartContractAudit" class="mt-4 inline-block text-blue-600 hover:text-blue-800">
+                        View Setup Instructions →
+                    </a>
+                </div>
+            </div>
+        </div>
 
         <!-- Artifacts Section -->
-        <section class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">Available Artifacts</h2>
-            <div class="space-y-4">
-                <div class="border-l-4 border-blue-500 pl-4">
-                    <h3 class="font-semibold text-gray-800">SMARTBRAIN.log</h3>
-                    <p class="text-sm text-gray-600">Detailed scan execution logs</p>
-                    <a href="#" class="text-blue-600 hover:underline text-sm">Download →</a>
-                </div>
-                <div class="border-l-4 border-purple-500 pl-4">
-                    <h3 class="font-semibold text-gray-800">AUDIT-REPORT.md</h3>
-                    <p class="text-sm text-gray-600">Formatted security audit report</p>
-                    <a href="#" class="text-purple-600 hover:underline text-sm">Download →</a>
-                </div>
-                <div class="border-l-4 border-yellow-500 pl-4">
-                    <h3 class="font-semibold text-gray-800">.quarantine/</h3>
-                    <p class="text-sm text-gray-600">Quarantined files and detected secrets (redacted)</p>
-                    <a href="#" class="text-yellow-600 hover:underline text-sm">Browse →</a>
+        <div id="artifacts" class="bg-white rounded-lg shadow mb-8">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-xl font-bold text-gray-900">Scan Artifacts</h2>
+            </div>
+            <div class="px-6 py-8">
+                <div class="text-center text-gray-500">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                    </svg>
+                    <p class="mt-2 text-sm">No artifacts available. Artifacts are uploaded after each scan run.</p>
+                    <p class="mt-1 text-xs text-gray-400">Retention: 90 days (configurable)</p>
                 </div>
             </div>
-        </section>
+        </div>
 
         <!-- Sponsor CTA -->
-        <section class="gradient-bg rounded-lg shadow-md p-8 text-white text-center">
+        <div class="gradient-bg rounded-lg shadow-lg p-8 text-white text-center">
             <h2 class="text-2xl font-bold mb-4">Support SmartContractAudit</h2>
-            <p class="mb-6 text-purple-100">
-                Help us maintain and improve this open-source security tool. 
-                Your sponsorship enables faster development and better security for everyone.
+            <p class="mb-6 opacity-90">
+                Help us maintain and improve this open-source security platform. Sponsors receive priority support, early access to features, and more.
             </p>
-            <div class="flex gap-4 justify-center">
-                <a href="billing.html" class="bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-purple-50 transition">
+            <div class="flex justify-center space-x-4">
+                <a href="billing.html" class="bg-white text-purple-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
                     View Sponsorship Tiers
                 </a>
-                <a href="https://github.com/SolanaRemix/SmartContractAudit" target="_blank" rel="noopener noreferrer" class="bg-purple-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-600 transition">
+                <a href="https://github.com/sponsors/PLACEHOLDER" class="border-2 border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-purple-700 transition">
                     GitHub Sponsors
                 </a>
             </div>
-        </section>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="font-bold text-lg mb-3">📚 Documentation</h3>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li><a href="https://github.com/SolanaRemix/SmartContractAudit#readme" class="hover:text-blue-600">Getting Started</a></li>
+                    <li><a href="../CONTRIBUTING.md" class="hover:text-blue-600">Contributing Guide</a></li>
+                    <li><a href="../SECURITY.md" class="hover:text-blue-600">Security Policy</a></li>
+                    <li><a href="../docs/" class="hover:text-blue-600">Full Documentation</a></li>
+                </ul>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="font-bold text-lg mb-3">🤝 Community</h3>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li><a href="https://github.com/SolanaRemix/SmartContractAudit/issues" class="hover:text-blue-600">Report Issues</a></li>
+                    <li><a href="https://github.com/SolanaRemix/SmartContractAudit/discussions" class="hover:text-blue-600">Discussions</a></li>
+                    <li><a href="../docs/dao/" class="hover:text-blue-600">DAO Governance</a></li>
+                    <li><a href="../docs/partners/" class="hover:text-blue-600">Partner Program</a></li>
+                </ul>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="font-bold text-lg mb-3">📧 Contact</h3>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li>General: hello@cuberai.example</li>
+                    <li>Security: security@cuberai.example</li>
+                    <li>Partners: partners@cuberai.example</li>
+                    <li>Support: support@cuberai.example</li>
+                </ul>
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-12">
-        <div class="container mx-auto px-4 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <h3 class="font-bold text-lg mb-4">SmartContractAudit</h3>
-                    <p class="text-gray-400 text-sm">
-                        Open-source AI-powered smart contract security auditing.
-                    </p>
+    <footer class="bg-gray-800 text-white mt-12 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm">&copy; 2026 SmartContractAudit. Licensed under Apache-2.0.</p>
                 </div>
-                <div>
-                    <h3 class="font-bold text-lg mb-4">Links</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="https://github.com/SolanaRemix/SmartContractAudit" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">GitHub</a></li>
-                        <li><a href="https://github.com/SolanaRemix/SmartContractAudit/blob/main/docs/partners/README.md" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">Partners</a></li>
-                        <li><a href="https://github.com/SolanaRemix/SmartContractAudit/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">Security</a></li>
-                        <li><a href="https://github.com/SolanaRemix/SmartContractAudit/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">Contributing</a></li>
-                    </ul>
+                <div class="flex space-x-6 text-sm">
+                    <a href="../LICENSE" class="hover:text-gray-300">License</a>
+                    <a href="../PRIVACY.md" class="hover:text-gray-300">Privacy</a>
+                    <a href="../SECURITY.md" class="hover:text-gray-300">Security</a>
+                    <a href="https://github.com/SolanaRemix/SmartContractAudit" class="hover:text-gray-300">GitHub</a>
                 </div>
-                <div>
-                    <h3 class="font-bold text-lg mb-4">Legal</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="https://github.com/SolanaRemix/SmartContractAudit/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">Apache 2.0 License</a></li>
-                        <li><a href="https://github.com/SolanaRemix/SmartContractAudit/blob/main/PRIVACY.md" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
-                        <li><a href="https://github.com/SolanaRemix/SmartContractAudit/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">Code of Conduct</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
-                <p>&copy; 2025 SmartContractAudit. Open source under Apache 2.0 License.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Placeholder for loading scan data
-        // In production, this would fetch from GitHub Actions API or artifacts
+        // Placeholder for dynamic data loading
+        // In production, this would fetch real data from GitHub API or your backend
+        console.log('SmartContractAudit Dashboard loaded');
+        console.log('Configure GitHub Actions to populate data');
         
-        function loadScanData() {
-            // Placeholder stats
-            document.getElementById('total-scans').textContent = '0';
-            document.getElementById('high-issues').textContent = '0';
-            document.getElementById('success-rate').textContent = '-';
-            
-            console.log('Dashboard loaded. Configure GitHub Actions to see scan results.');
-        }
-        
-        // Load data on page load
-        window.addEventListener('DOMContentLoaded', loadScanData);
+        // Example: Load stats from localStorage or API
+        document.addEventListener('DOMContentLoaded', function() {
+            // Future: Load actual scan data
+            // fetch('/api/scans').then(...)
+        });
     </script>
 </body>
 </html>

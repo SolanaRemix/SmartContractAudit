@@ -1,486 +1,361 @@
 ---
 title: Press Kit
-description: Media resources and branding guidelines for partners
-keywords: press kit, media, branding, logos, guidelines, marketing
+description: Brand assets and media resources for SmartContractAudit
+keywords: press kit, media, brand, logo, assets
 ---
 
 # Press Kit
 
-Media resources, branding guidelines, and marketing materials for SmartContractAudit partners and press.
+## Overview
 
-## Quick Downloads
+This press kit provides brand assets, key information, and media resources for SmartContractAudit partners, press, and community members.
 
-### Logos
+## Quick Facts
 
-**Primary Logo Package**: [Download ZIP - to be hosted]
+**Project Name**: SmartContractAudit  
+**Founded**: 2025  
+**License**: Apache-2.0 (Open Source)  
+**Category**: Smart Contract Security, Blockchain Development Tools  
+**Repository**: https://github.com/SolanaRemix/SmartContractAudit
 
-Includes:
-- Full color (PNG, SVG, AI)
-- White version (PNG, SVG)
-- Black version (PNG, SVG)
-- Icon only (PNG, SVG)
-- Multiple sizes
+**Mission**: Automated smart contract auditing and security for the blockchain ecosystem
 
-### Partner Badges
+**Key Features**:
+- Automated security auditing
+- Multi-chain support (Solana, Ethereum, and more)
+- GitHub Actions integration
+- AI-powered vulnerability detection
+- Continuous monitoring capabilities
 
-**Sponsor Badges**: [Download ZIP - to be hosted]
+## Boilerplate
 
-Available for:
-- Bronze Sponsor
-- Silver Sponsor
-- Gold Sponsor
-- Platinum Sponsor
-- Technology Partner
-- Certified Integration
+### Short (50 words)
 
-### Marketing Templates
+SmartContractAudit is an open-source automated auditing platform for smart contracts. It provides continuous security scanning, vulnerability detection, and integration with development workflows to help blockchain developers build secure applications across multiple chains.
 
-**Social Media Templates**: [Download ZIP - to be hosted]
+### Medium (100 words)
 
-Includes:
-- Twitter/X headers and posts
-- LinkedIn banners and posts
-- Facebook covers and posts
-- Instagram story templates
+SmartContractAudit is an open-source security platform that automates smart contract auditing for blockchain developers. Built on Apache-2.0 license, it integrates seamlessly with GitHub Actions and CI/CD pipelines to provide continuous security monitoring. The platform supports multiple blockchain platforms including Solana and Ethereum, using AI-powered analysis to detect vulnerabilities, security issues, and best practice violations. With features like automated scanning, customizable rules, and detailed reporting, SmartContractAudit helps development teams catch security issues early in the development cycle, reducing audit costs and improving overall smart contract security across the blockchain ecosystem.
 
-## Brand Identity
+### Long (200 words)
 
-### Logo Variations
+SmartContractAudit is a comprehensive open-source security platform designed to automate and enhance smart contract auditing for blockchain developers and organizations. Released under the Apache-2.0 license, the platform addresses the growing need for accessible, continuous security validation in blockchain development.
 
-#### Primary Logo
-- **Use**: Default for most applications
-- **Colors**: Full brand colors
-- **Minimum Size**: 120px wide (digital), 1 inch wide (print)
-- **Clear Space**: Minimum 1/4 logo height on all sides
+The platform integrates seamlessly into modern development workflows through GitHub Actions, pre-commit hooks, and API integrations, enabling teams to catch security vulnerabilities early in the development cycle. SmartContractAudit supports multiple blockchain platforms including Solana, Ethereum, and other EVM-compatible chains, with extensible architecture for additional networks.
 
-#### Icon/Symbol Only
-- **Use**: Small spaces, social media avatars, app icons
-- **Minimum Size**: 32px × 32px (digital)
-- **Use independently when space constrained**
+Key capabilities include AI-powered vulnerability detection, automated code analysis, customizable security rule sets, and comprehensive reporting. The platform operates in a safety-first model with dry-run defaults, ensuring non-destructive scanning by default. Advanced features include merkle tree-based airdrop management, DAO governance infrastructure, and partner integration capabilities.
 
-#### Wordmark Only
-- **Use**: Horizontal layouts, footer credits
-- **Minimum Size**: 100px wide (digital)
+SmartContractAudit serves a diverse ecosystem including DeFi protocols, blockchain platforms, security firms, enterprises, and educational institutions. The project is supported through a tiered partnership program and operates under transparent community governance, ensuring independence while providing enterprise-grade support options.
 
-### Color Palette
+By making professional-grade security tooling accessible to all developers, SmartContractAudit aims to raise the security bar across the entire blockchain ecosystem, reducing vulnerabilities and building trust in decentralized applications.
 
-#### Primary Colors
+## Logo and Brand Assets
 
-**Brand Blue**
-- Hex: #0066CC
-- RGB: 0, 102, 204
-- CMYK: 100, 50, 0, 20
-- Pantone: [TBD]
+### Logo Usage Guidelines
 
-**Deep Navy**
-- Hex: #001F3F
-- RGB: 0, 31, 63
-- CMYK: 100, 75, 0, 75
+**Primary Logo**: [TO BE PROVIDED]
 
-**White**
-- Hex: #FFFFFF
-- RGB: 255, 255, 255
-- CMYK: 0, 0, 0, 0
+**Logo Variations**:
+- Full color (preferred)
+- White/light backgrounds
+- Dark/black backgrounds
+- Monochrome
 
-#### Secondary Colors
+**File Formats Available**:
+- SVG (vector, preferred)
+- PNG (1000px, 2000px, 4000px)
+- EPS (print)
 
-**Accent Green** (Success)
-- Hex: #00CC66
-- RGB: 0, 204, 102
+**Download**: [LINK TO BE PROVIDED]
 
-**Warning Orange**
-- Hex: #FF9900
-- RGB: 255, 153, 0
+### Logo Usage Rules
 
-**Alert Red**
-- Hex: #CC0033
-- RGB: 204, 0, 51
+**Do**:
+✅ Use official logo files  
+✅ Maintain aspect ratio  
+✅ Provide clear space around logo  
+✅ Use on contrasting backgrounds  
+✅ Scale proportionally  
 
-**Neutral Gray**
-- Hex: #6C757D
-- RGB: 108, 117, 125
-
-### Typography
-
-#### Primary Font
-**Inter** (Open source, free to use)
-- Headings: Inter Bold
-- Body: Inter Regular
-- UI: Inter Medium
-
-**Fallback**: system-ui, -apple-system, sans-serif
-
-#### Secondary Font
-**JetBrains Mono** (for code)
-- Code snippets
-- Technical documentation
-- Terminal output
-
-**Fallback**: monospace
-
-### Logo Usage
-
-#### ✅ Do
-
-- Use official logo files provided
-- Maintain proper clear space
-- Use approved color variations
-- Scale proportionally
-- Ensure adequate contrast with background
-- Use on approved backgrounds
-
-#### ❌ Don't
-
-- Distort, rotate, or modify the logo
-- Change logo colors
-- Add effects (shadows, glows, etc.)
-- Place on busy backgrounds
-- Use outdated versions
-- Recreate or redraw the logo
-- Use unapproved variations
-
-### Minimum Sizes
-
-**Digital**:
-- Full logo: 120px wide
-- Icon only: 32px × 32px
-- Wordmark: 100px wide
-
-**Print**:
-- Full logo: 1 inch wide
-- Icon only: 0.25 inch
-- Wordmark: 0.75 inch wide
+**Don't**:
+❌ Modify colors or design  
+❌ Stretch or distort  
+❌ Add effects or shadows  
+❌ Use low-resolution versions  
+❌ Combine with other logos  
 
 ### Clear Space
 
-Maintain clear space around logo equal to:
-- **Minimum**: 1/4 of logo height
-- **Recommended**: 1/2 of logo height
+Minimum clear space: Height of the "S" in SmartContractAudit
 
-No text, graphics, or other elements should intrude into this space.
+### Minimum Size
 
-### Background Usage
+- Digital: 120px width minimum
+- Print: 1 inch width minimum
 
-#### Approved Backgrounds
+## Brand Colors
 
-**Light backgrounds**:
-- White
-- Light gray (#F8F9FA)
-- Light blue (#E3F2FD)
+### Primary Palette
 
-**Dark backgrounds**:
-- Black
-- Deep navy (#001F3F)
-- Dark gray (#212529)
+**Primary Blue**: `#0066CC`  
+- RGB: 0, 102, 204  
+- CMYK: 100, 50, 0, 20  
+- Usage: Primary brand color, CTAs, links
 
-**Overlays**:
-- Use white logo on dark images
-- Use dark logo on light images
-- Ensure contrast ratio ≥ 4.5:1
+**Dark Gray**: `#2C3E50`  
+- RGB: 44, 62, 80  
+- CMYK: 45, 23, 0, 69  
+- Usage: Text, headers
 
-#### Not Approved
+**Light Gray**: `#ECF0F1`  
+- RGB: 236, 240, 241  
+- CMYK: 2, 0, 0, 5  
+- Usage: Backgrounds, secondary elements
 
-- Busy patterns
-- Low-contrast backgrounds
-- Gradients (without testing)
-- Photos (without sufficient contrast)
+### Secondary Palette
 
-## Partner Branding
+**Success Green**: `#27AE60`  
+- Usage: Success states, positive actions
 
-### Co-Branding Guidelines
+**Warning Orange**: `#F39C12`  
+- Usage: Warnings, cautions
 
-When featuring SmartContractAudit alongside your brand:
+**Error Red**: `#E74C3C`  
+- Usage: Errors, critical issues
 
-**Logo Placement**:
-- Equal prominence with partner logo
-- Appropriate clear space maintained
-- Aligned consistently (top, center, or baseline)
+**Info Blue**: `#3498DB`  
+- Usage: Information, tips
 
-**Sizing**:
-- Similar visual weight
-- Neither logo should dominate
-- Maintain proportions
+## Typography
 
-**Spacing**:
-- Adequate separation between logos
-- Use divider if needed (vertical line, "&" symbol, "+" symbol)
+**Primary Font**: Inter (sans-serif)  
+**Code Font**: JetBrains Mono, Monaco, Courier (monospace)  
+**Fallback**: System fonts
 
-### Sponsor Badges
+**Download**: https://fonts.google.com/specimen/Inter
 
-Partners may display sponsor badges:
+## Screenshots
 
-**Bronze Tier**:
-- Badge text: "Bronze Sponsor"
-- Color: #CD7F32
-- Size: Standard or small
+### Application Screenshots
 
-**Silver Tier**:
-- Badge text: "Silver Sponsor"
-- Color: #C0C0C0
-- Size: Standard or medium
+[TO BE PROVIDED]
 
-**Gold Tier**:
-- Badge text: "Gold Sponsor"
-- Color: #FFD700
-- Size: Standard, medium, or large
+**Available Screenshots**:
+1. GitHub Actions workflow in action
+2. Audit report example
+3. Security dashboard (if applicable)
+4. Integration examples
+5. Documentation homepage
 
-**Platinum Tier**:
-- Badge text: "Platinum Sponsor"
-- Color: #E5E4E2
-- Size: Any size
+**Format**: PNG, 1920×1080 minimum
 
-### Partner Descriptions
-
-#### Approved Descriptions
-
-**Short** (Twitter, bios):
-> "SmartContractAudit: AI-powered smart contract security auditing with on-chain automation."
-
-**Medium** (Web pages):
-> "SmartContractAudit provides automated security auditing for smart contracts using AI workers and on-chain automation. Detect vulnerabilities early, deploy with confidence."
-
-**Long** (Press releases, about pages):
-> "SmartContractAudit is an open-source platform for automated smart contract security auditing. Using AI-powered analysis and on-chain automation, it helps developers and organizations detect vulnerabilities, maintain security best practices, and deploy smart contracts with confidence. Trusted by leading DeFi protocols, NFT marketplaces, and blockchain enterprises."
-
-### Terminology
-
-**Correct**:
-- SmartContractAudit (one word, camelCase)
-- Smart contract auditing
-- Security scanning
-- Vulnerability detection
-- AI-powered analysis
-
-**Avoid**:
-- Smart Contract Audit (three words)
-- SCA (ambiguous acronym)
-- Contract checker
-- Bug finder
-
-## Messaging
-
-### Key Messages
-
-**1. Security First**
-- "Detect vulnerabilities before they become exploits"
-- "Proactive security for blockchain applications"
-- "Peace of mind for smart contract deployments"
-
-**2. AI-Powered**
-- "Advanced AI analysis catches what manual reviews miss"
-- "Machine learning trained on thousands of vulnerabilities"
-- "Continuous improvement through AI"
-
-**3. Developer-Friendly**
-- "Integrates with your existing workflow"
-- "Real-time feedback during development"
-- "Clear, actionable security recommendations"
-
-**4. Open Source**
-- "Transparent, auditable, community-driven"
-- "Trust through openness"
-- "Contribute and customize"
-
-**5. Enterprise-Ready**
-- "Scales from startups to enterprises"
-- "Compliance and audit support"
-- "On-premise deployment options"
+## Key Messaging
 
 ### Value Propositions
 
-**For Developers**:
-- Catch bugs early when they're cheap to fix
-- Learn security best practices
-- Ship with confidence
+1. **Accessible Security**: Professional-grade security tools for all developers
+2. **Continuous Protection**: Automated scanning throughout development lifecycle
+3. **Multi-Chain Support**: Works across major blockchain platforms
+4. **Open Source**: Transparent, community-driven, Apache-2.0 licensed
+5. **Developer-Friendly**: Easy integration into existing workflows
 
-**For Security Teams**:
-- Automate routine checks
-- Focus on complex analysis
-- Comprehensive coverage
+### Key Differentiators
 
-**For Organizations**:
-- Reduce risk of exploits
-- Faster development cycles
-- Meet compliance requirements
+- **Open Source & Free**: No cost barrier to entry
+- **Non-Destructive**: Safe defaults with dry-run mode
+- **Comprehensive**: From development to deployment
+- **Community-Driven**: Governed by contributors
+- **Flexible**: From individuals to enterprises
 
-## Media Assets
+## Target Audience
 
-### Screenshots
+### Primary
+- Smart contract developers
+- Blockchain development teams
+- DeFi protocol teams
+- Security engineers
 
-**Dashboard**: [Link to hosted image]
-- Overview of scan results
-- Use for: Product demos, presentations
+### Secondary
+- Blockchain platforms
+- Security audit firms
+- Educational institutions
+- Enterprise blockchain teams
 
-**IDE Integration**: [Link to hosted image]
-- VS Code with real-time warnings
-- Use for: Developer-focused content
+## Media Contact
 
-**Scan Report**: [Link to hosted image]
-- Detailed vulnerability report
-- Use for: Feature highlights
+**Press Inquiries**: press@cuberai.example  
+**Partnership Inquiries**: partners@cuberai.example  
+**General Inquiries**: hello@cuberai.example
 
-**CLI Output**: [Link to hosted image]
-- Terminal scan execution
-- Use for: Technical documentation
+**Response Time**: 2-3 business days
 
-### Product Images
+## Leadership
 
-**High-Resolution**: [Link to hosted images]
-- Product screenshots (PNG, 300 DPI)
-- Use for: Print, high-quality web
+[TO BE COMPLETED]
 
-**Web-Optimized**: [Link to hosted images]
-- Product screenshots (JPG, optimized)
-- Use for: Web, email
+**Bios and headshots**: Available upon request
 
-### Team Photos
+## Statistics (as of 2026-01-01)
 
-**Founders/Leadership**: [Link to hosted images]
-- Professional headshots
-- Use for: About pages, press releases
+- **Supported Chains**: 2+ (Solana, Ethereum)
+- **GitHub Stars**: [Current count]
+- **Contributors**: [Current count]
+- **Security Issues Detected**: [Cumulative]
+- **Partnerships**: [Current count]
 
-**Team**: [Link to hosted images]
-- Group photos
-- Use for: Culture, recruitment
+*Note: Current statistics available in repository*
 
-### Demo Videos
+## Awards and Recognition
 
-**Product Demo** (2 minutes): [Link to video]
-- Overview of key features
-- Use for: Landing pages, presentations
-
-**Integration Tutorial** (5 minutes): [Link to video]
-- Step-by-step integration guide
-- Use for: Onboarding, documentation
-
-**Case Study Video** (3 minutes): [Link to video]
-- Partner success story
-- Use for: Marketing, sales
-
-## Press Information
-
-### Boilerplate
-
-**Short** (50 words):
-> SmartContractAudit is an AI-powered security platform for smart contracts. The open-source tool integrates into development workflows to detect vulnerabilities and ensure secure blockchain deployments. Used by leading DeFi protocols, NFT marketplaces, and enterprises worldwide.
-
-**Long** (100 words):
-> SmartContractAudit is an open-source platform providing automated security auditing for smart contracts through AI-powered analysis and on-chain automation. The platform integrates seamlessly into developer workflows via IDE plugins, CI/CD pipelines, and API integrations, enabling teams to detect vulnerabilities early and deploy with confidence. Founded in [Year], SmartContractAudit serves developers, security teams, and organizations across DeFi, NFTs, gaming, and enterprise blockchain applications. The platform combines automated scanning with human expertise, offering solutions from community tiers to enterprise deployments. Learn more at [URL].
-
-### Key Facts
-
-- **Founded**: [Year]
-- **Type**: Open Source
-- **License**: Apache 2.0
-- **Headquarters**: [Location]
-- **Employees**: [Number]
-- **Contracts Scanned**: [Number] and growing
-- **Partners**: [Number] across [Number] countries
-
-### Leadership
-
-**[Name]** - Founder & CEO
-- Bio: [To be added]
-- LinkedIn: [Link]
-- Twitter: [Link]
-
-**[Name]** - CTO
-- Bio: [To be added]
-- LinkedIn: [Link]
-- Twitter: [Link]
-
-### Press Contacts
-
-**Media Inquiries**:
-- Email: press@cuberai.example
-- Phone: [To be added]
-
-**Partnership Inquiries**:
-- Email: partners@cuberai.example
-
-**General Information**:
-- Website: [URL]
-- Twitter: [@handle]
-- LinkedIn: [Company page]
-- GitHub: [Org page]
+*To be updated as received*
 
 ## Recent News
 
-### Press Releases
+*To be updated with announcements*
 
-**[Date]** - [Title]
-- Summary: [Brief description]
-- Link: [URL]
+**Press Releases**:
+- Product launch announcement
+- Partnership announcements
+- Major feature releases
+- Security advisories
 
-**[Date]** - [Title]
-- Summary: [Brief description]
-- Link: [URL]
+## Usage in Media
 
-### Media Coverage
+### Naming
 
-**[Date]** - [Publication]
-- Article: "[Title]"
-- Link: [URL]
+**Correct**:
+- SmartContractAudit
+- SmartContractAudit platform
+- The SmartContractAudit project
 
-**[Date]** - [Publication]
-- Article: "[Title]"
-- Link: [URL]
+**Incorrect**:
+- ~~Smart Contract Audit~~ (as one word)
+- ~~SCA~~ (abbreviation not official)
+- ~~Smart Audit~~
 
-## Partner Marketing
+### Descriptions
 
-### Co-Marketing Opportunities
+When describing SmartContractAudit:
 
-**Blog Posts**:
-- Guest posts on partner blogs
-- Cross-promotion
-- Technical tutorials
+- "Open-source smart contract security platform"
+- "Automated auditing for blockchain developers"
+- "Smart contract security and auditing tool"
+- "Blockchain security automation platform"
 
-**Webinars**:
-- Joint educational webinars
-- Product demonstrations
-- Q&A sessions
+## Social Media
 
-**Events**:
-- Conference sponsorship
-- Booth presence
-- Speaking opportunities
+**GitHub**: https://github.com/SolanaRemix/SmartContractAudit  
+**Twitter**: [TO BE PROVIDED]  
+**LinkedIn**: [TO BE PROVIDED]  
+**Discord**: [TO BE PROVIDED]
 
-**Social Media**:
-- Cross-promotion
-- Tag mentions
-- Shared content
+**Hashtags**: #SmartContractAudit #BlockchainSecurity #SmartContractSecurity
 
-**Case Studies**:
-- Success stories
-- Video testimonials
-- Written case studies
+## Partner Logos
 
-### Approval Process
+Partners may display "Powered by SmartContractAudit" badge:
 
-**Required for**:
-- Press releases mentioning SmartContractAudit
-- Co-branded materials
-- Use of logo in marketing
-- Public case studies
+[BADGE TO BE PROVIDED]
+
+**Usage**: Partners may use badge on websites, documentation, and marketing materials.
+
+## Co-Marketing Opportunities
+
+**For Partners**:
+- Joint blog posts
+- Case studies
+- Webinars
+- Conference co-presentations
+- Social media campaigns
 
 **Contact**: partners@cuberai.example
 
-**Timeline**: 5 business days for review
+## Sample Headlines
 
-## Contact
+For press releases or announcements:
 
-### Press Kit Questions
+- "SmartContractAudit Launches Open-Source Security Platform for Blockchain Developers"
+- "[Company] Partners with SmartContractAudit to Enhance Smart Contract Security"
+- "New Tool Brings Professional Security Auditing to All Blockchain Developers"
+- "SmartContractAudit Adds Support for [Blockchain Platform]"
 
-- **Email**: press@cuberai.example
-- **Download Full Kit**: [Link to ZIP]
-- **Request Custom Assets**: [Contact form]
+## Fact Sheet
 
-### Partner Marketing
+**One-Pager**: [LINK TO BE PROVIDED]
 
-- **Email**: partnerships@cuberai.example
-- **Co-Marketing Opportunities**: [Calendar link]
-- **Approval Requests**: partners@cuberai.example
+Includes:
+- Key facts
+- Features overview
+- Partnership information
+- Contact details
+
+## B-Roll and Video Assets
+
+[TO BE PROVIDED]
+
+**Available**:
+- Product demo videos
+- Tutorial screencast
+- Developer testimonials
+- Integration examples
+
+**Format**: MP4, 1080p
+
+## Presentation Templates
+
+**For Partners**: Presentation templates available
+
+**Includes**:
+- PowerPoint/Google Slides templates
+- Brand-compliant designs
+- Editable slides
+- Usage guidelines
+
+**Request**: partners@cuberai.example
+
+## Trademark Information
+
+"SmartContractAudit" is a trademark of [ENTITY TO BE DETERMINED].
+
+**Usage**: Partners may reference the trademark in descriptive contexts. Commercial use requires partnership agreement.
+
+## Attribution
+
+When featuring SmartContractAudit:
+
+**Preferred Attribution**:
+"Security provided by SmartContractAudit" or "Powered by SmartContractAudit"
+
+**Link**: https://github.com/SolanaRemix/SmartContractAudit
+
+## Resources
+
+**Documentation**: See /docs directory in repository  
+**Blog**: [TO BE PROVIDED]  
+**Developer Resources**: See /docs/partners in repository
+
+## Updates
+
+This press kit is updated quarterly.
+
+**Last Updated**: 2026-01-01  
+**Next Update**: 2026-04-01
+
+**Subscribe**: Join our mailing list for press updates
+
+## Download Press Kit
+
+**Full Press Kit ZIP**: [TO BE PROVIDED]
+
+Includes:
+- All logo variations
+- Brand guidelines PDF
+- Screenshots
+- Fact sheet
+- Boilerplate text
 
 ---
 
-*Press kit and brand guidelines last updated: 2025-12-31. All trademarks and logos are property of their respective owners. Usage subject to brand guidelines and partnership agreements.*
+For additional assets or questions, contact: press@cuberai.example
+
+Thank you for your interest in SmartContractAudit! 📰

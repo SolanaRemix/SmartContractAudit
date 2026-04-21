@@ -2,300 +2,390 @@
 
 ## Overview
 
-This document outlines how long different types of data are retained in the SmartContractAudit system and the processes for data deletion.
+This document defines how long different types of data are retained in the SmartContractAudit project and the process for requesting data deletion.
 
-## Retention Periods
+## Artifact Retention Periods
 
-### Audit Artifacts
+### Workflow Artifacts
 
 **Default Retention: 90 days**
 
-Audit artifacts include:
-- SMARTBRAIN.log files
-- AUDIT-REPORT.md files
-- .quarantine/ directory contents
-- Scan results and findings
+GitHub Actions artifacts include:
 
-**After 90 days:**
-- Automatically archived or deleted
-- Users can request extended retention
-- Critical security findings may be retained longer (anonymized)
+- Build outputs
+- Test results
+- Audit reports (AUDIT-REPORT.md)
+- Scan logs (SMARTBRAIN.log)
+- Quarantine directories (.quarantine/)
+- Coverage reports
 
-### System Logs
+**Rationale**: Balances storage costs with troubleshooting needs.
 
-**Default Retention: 30 days**
+### Log Files
 
-System logs include:
+**Standard Logs: 30 days**
 - Application logs
-- Access logs
-- Error logs
 - Debug logs
+- Workflow run logs
 
-**Characteristics:**
-- Automatically sanitized (see PRIVACY.md)
-- Rotated daily
-- Compressed after 7 days
-- Purged after 30 days
+**Security Logs: 180 days**
+- Authentication logs
+- Security scan results
+- Vulnerability reports
+- Incident response logs
 
-### Quarantine Data
+**Rationale**: Security logs retained longer for compliance and investigation purposes.
 
-**Default Retention: 30 days**
+### Release Artifacts
 
-Quarantined files:
-- Suspicious or malicious code samples
-- Detected secrets (redacted, hashed only)
-- Flagged artifacts
+**Retention: Indefinite**
 
-**After 30 days:**
-- Automatically purged
-- Only hashes retained for detection
-- No plaintext or reversible data kept
+Stable release artifacts are retained permanently:
 
-### Audit Reports
+- Release binaries and packages
+- Release notes and changelogs
+- Version tags
+- Release documentation
 
-**Retention: Until user deletion or 1 year**
+**Rationale**: Required for reproducibility and user access to specific versions.
 
-Published audit reports:
-- Retained with user consent
-- Can be deleted on request
-- Anonymized versions may be retained for research
-- Public reports retained indefinitely (with permission)
+### Git Repository Data
 
-### User Submissions
+**Retention: Permanent (with caveats)**
 
-**Retention: Until processing complete + 7 days**
+Git commits, issues, and pull requests:
 
-Code submitted for audit:
-- Processed and analyzed
-- Retained during audit period
-- Deleted 7 days after report delivery
-- Can be deleted immediately on request
+- Commits are part of permanent git history
+- Closed issues and PRs remain accessible
+- Discussions and comments are retained
+- Some data can be redacted but not fully deleted
 
-### Scan Metadata
+**Rationale**: Git's distributed nature and project history requirements.
 
-**Retention: 180 days**
+### Temporary Files
 
-Metadata includes:
-- Scan timestamps
-- File hashes (not content)
-- Severity counts
-- Configuration used
+**Retention: 24-48 hours**
 
-**Purpose:**
-- Historical analysis
-- Pattern detection
-- Performance metrics
+Temporary processing files:
 
-## Redaction and Hashing
+- Cache directories
+- Intermediate build files
+- Temporary scan results
+- Session data
 
-### Private Keys
+**Rationale**: Cleanup to manage storage and security.
 
-**Retention: NEVER**
+## Storage Locations
 
-- Private keys are never stored in any form
-- Detected keys are immediately redacted
-- Only cryptographic hashes retained for future detection
-- Hashes retained for 1 year to prevent resubmission
+Data is stored in:
 
-### Secrets and Credentials
+- **GitHub**: Repository, issues, PRs, artifacts, workflows
+- **GitHub Actions**: Workflow logs and artifacts (per GitHub's retention policy)
+- **Local Caches**: Temporary files in CI/CD runners (ephemeral)
 
-**Retention: Hashes only, 1 year**
+## Deletion Request Process
 
-- Plaintext never stored
-- Hash stored for detection purposes
-- Original secret cannot be recovered
-- User notified for remediation
+### How to Request Deletion
 
-### Personal Identifiable Information (PII)
+1. **Submit Request**
+   - Email: privacy@cuberai.example
+   - Subject: "Data Deletion Request - [Your Name/Handle]"
 
-**Retention: Minimal, user-controlled**
+2. **Provide Details**
+   - Specific data to be deleted
+   - Location/URLs of the data
+   - Reason for deletion (optional)
+   - Proof of ownership/authorization
 
-- Email addresses: Until account deletion
-- Names: Optional, user-controlled
-- Contact info: Deletable on request
-- No unnecessary PII collected
+3. **Verification**
+   - We verify the request is legitimate
+   - May require confirmation from the GitHub account owner
+   - Processing time: 14 business days
 
-## Deletion Procedures
+4. **Deletion**
+   - We delete what is technically and legally feasible
+   - Provide confirmation of deletion
+   - Explain any data that cannot be deleted and why
 
-### Automatic Deletion
+### What Can Be Deleted
 
-Automated processes run:
-- **Daily**: Log rotation and compression
-- **Weekly**: Expired quarantine purge
-- **Monthly**: Artifact cleanup based on retention policy
+✅ **Can Usually Be Deleted:**
+- Personally identifiable information in documentation
+- Your email from git history (replaced with GitHub noreply)
+- Specific comments or discussion posts
+- Workflow artifacts (if not yet expired)
+- Temporary caches and logs
 
-### User-Requested Deletion
+### What Cannot Be Deleted
 
-Users can request deletion of:
+❌ **Cannot Be Deleted:**
+- Git commit hashes and metadata (distributed across forks)
+- Code contributions (part of permanent history)
+- Public release artifacts
+- Data required for legal/compliance purposes
+- Data in third-party forks (outside our control)
 
-1. **Immediate deletion** (within 24 hours):
-   - Submitted code
-   - Audit reports (unpublished)
-   - User account data
+### Redaction Alternative
 
-2. **Verification required** (within 7 days):
-   - Published reports
-   - Shared artifacts
-   - Collaborative submissions
+For data that cannot be deleted:
 
-3. **Cannot delete**:
-   - Anonymized aggregate statistics
-   - Public security findings (already disclosed)
-   - Legal compliance records
+- **Redaction**: Replace sensitive data with `[REDACTED]`
+- **Anonymization**: Replace identifying information with pseudonyms
+- **History Rewrite**: Use `git filter-repo` for severe cases (disruptive)
 
-### Deletion Request Process
+## Automated Cleanup
 
-To request deletion:
+### Scheduled Cleanup Tasks
 
-1. **Submit request**: Email security@cuberai.example
-2. **Verify identity**: Confirm ownership of data
-3. **Specify scope**: What data to delete
-4. **Receive confirmation**: Deletion confirmed within stated timeframe
+- **Daily**: Remove temp files older than 48 hours
+- **Weekly**: Archive logs older than retention period
+- **Monthly**: Clean up expired workflow artifacts
+- **Quarterly**: Review and archive old closed issues
 
-## Data Archival
+### Configuration
 
-### Long-Term Archival
-
-Some data may be archived beyond retention periods:
-
-**Anonymized Research Data:**
-- No personally identifiable information
-- No reversible sensitive data
-- Only statistical patterns
-- Opt-in only
-
-**Public Security Findings:**
-- Publicly disclosed vulnerabilities
-- CVE records
-- Advisory publications
-- Required for historical reference
-
-**Legal Compliance:**
-- Records required by law
-- Audit trails for security incidents
-- Minimal retention period required
-
-## Exceptions and Extensions
-
-### User-Requested Extension
-
-Users can request extended retention for:
-- Ongoing investigations
-- Legal compliance
-- Business requirements
-
-**Process:**
-- Submit extension request
-- Specify duration needed
-- Automatic expiry after extension period
-
-### Regulatory Requirements
-
-Some data may be retained longer when:
-- Required by law
-- Part of legal proceedings
-- Security incident under investigation
-- Regulatory audit in progress
-
-## Geographic Considerations
-
-Data retention may vary by region based on:
-- Local data protection laws
-- Regulatory requirements
-- User location and preferences
-
-## Backup and Recovery
-
-### Backup Retention
-
-- **Daily backups**: Retained 7 days
-- **Weekly backups**: Retained 4 weeks
-- **Monthly backups**: Retained 12 months
-
-**Note:** Backups follow same retention and deletion policies as primary data.
-
-### Recovery Process
-
-In case of data loss:
-- Recovery from most recent backup
-- Retention policies apply to recovered data
-- Users notified of any recovery events
-
-## Transparency and Verification
-
-### Audit Trail
-
-All data operations logged:
-- Creation timestamp
-- Access history
-- Modification events
-- Deletion timestamp
-
-### User Access
-
-Users can:
-- View retention status of their data
-- Request data export before deletion
-- Verify deletion completion
-- Review access logs
-
-## Configuration
-
-### Default Configuration (config/repair.json)
+Retention periods can be configured in `config/repair.json`:
 
 ```json
 {
-  "auto_apply": false,
-  "dry_run_default": true,
-  "allowlist_orgs": [],
-  "max_prs_per_run": 3,
-  "pings_enabled": false
+  "artifact_retention_days": 90,
+  "log_retention_days": 30,
+  "security_log_retention_days": 180
 }
 ```
 
-**Note**: Retention settings can be added to this configuration file as needed.
+## Exceptions and Overrides
 
-### Custom Retention
+### Legal Hold
 
-Organizations can configure custom retention periods:
-- Longer retention for compliance
-- Shorter retention for privacy
-- Per-artifact-type policies
-- Geographic-specific rules
+Data may be retained beyond standard periods if:
 
-## Updates to Policy
+- Required by law or legal process
+- Part of ongoing investigation
+- Subject to regulatory requirements
+- Necessary for litigation
 
-This retention policy may be updated to:
-- Comply with new regulations
-- Improve privacy protection
-- Reflect technical changes
-- Address user feedback
+### User-Requested Extension
 
-**Notification:**
-- Users notified 30 days before changes
-- Opt-out options provided
-- Changes logged in repository
+Users may request extended retention:
+
+- Contact privacy@cuberai.example
+- Provide justification
+- Maximum extension: 1 year beyond standard period
+
+## Data Minimization
+
+We practice data minimization:
+
+- Collect only necessary data
+- Anonymize where possible
+- Redact sensitive information automatically
+- Delete data proactively when no longer needed
+
+## Backup Retention
+
+Backups follow retention policies:
+
+- **Incremental Backups**: 30 days
+- **Monthly Backups**: 1 year
+- **Annual Backups**: 3 years
+
+Deleted data is purged from backups during the next backup cycle.
+
+## Third-Party Retention
+
+Third-party services have their own policies:
+
+- **GitHub**: See [GitHub's data retention policy](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement)
+- **npm/PyPI**: Package metadata retained indefinitely
+- **CDNs**: Cached data typically 24-48 hours
+
+## Audit Trail
+
+We maintain audit trails for:
+
+- Data deletion requests (5 years)
+- Security incidents (7 years)
+- Access logs (180 days)
+- Retention policy changes (permanent)
+
+## Policy Updates
+
+This policy may be updated:
+
+- Changes announced via GitHub
+- 30-day notice for significant changes
+- Previous versions available in git history
 
 ## Contact
 
-Questions about data retention:
+For data retention questions or deletion requests:
 
-- **Email**: security@cuberai.example
-- **Documentation**: See [PRIVACY.md](PRIVACY.md)
-- **Issues**: GitHub issue tracker
+**Email**: privacy@cuberai.example
 
-Last updated: 2025-12-31
+**Response Time**: 5-7 business days
 
-## Summary Table
+For urgent security-related deletion:
 
-| Data Type | Default Retention | Auto-Delete | User-Deletable |
-|-----------|------------------|-------------|----------------|
-| Private Keys | NEVER STORED | N/A | N/A |
-| Secrets (hash) | 1 year | Yes | No |
-| Audit Artifacts | 90 days | Yes | Yes |
-| System Logs | 30 days | Yes | Request |
-| Quarantine Files | 30 days | Yes | Yes |
-| Audit Reports | 1 year | No | Yes |
-| User Submissions | 7 days | Yes | Yes |
-| Metadata | 180 days | Yes | Request |
-| Backups | Up to 12 months | Yes | With primary data |
+**Email**: security@cuberai.example
+
+**Response Time**: 24-48 hours
+
+## Related Documents
+
+- [PRIVACY.md](PRIVACY.md) - Overall privacy policy
+- [SECURITY.md](SECURITY.md) - Security policies
+- [GOVERNANCE.md](GOVERNANCE.md) - Project governance
+
+---
+
+**Last Updated**: 2026-01-01
+
+**Next Review**: 2026-07-01
+
+## Data Deletion Requests
+
+### How to Request Deletion
+
+To request deletion of your data:
+
+1. **Email**: privacy@cuberai.example (placeholder contact)
+2. **Subject**: Data Deletion Request - [Your GitHub Username]
+3. **Include**:
+   - Your GitHub username
+   - Type of data to delete
+   - Reason for deletion (optional)
+   - Verification of your identity
+
+### What Can Be Deleted
+
+✅ **Can be deleted**:
+- Workflow artifacts (before retention expires)
+- Scan logs and reports
+- Quarantine files
+- Cached data
+- Session data
+
+❌ **Cannot be deleted** (or requires special handling):
+- Git commit history (immutable by design)
+- Merged pull requests (GitHub retention policy)
+- Signed-off commits (legal DCO requirement)
+- Data required for legal/compliance purposes
+
+### Deletion Process
+
+1. **Request received** - We acknowledge within 2 business days
+2. **Verification** - We verify your identity (typically via GitHub)
+3. **Review** - We review what data can be deleted
+4. **Deletion** - We delete eligible data within 14 days
+5. **Confirmation** - We confirm completion via email
+
+### Special Cases
+
+#### Git History
+
+Removing data from git history requires:
+- Force-push capabilities (destructive operation)
+- Coordination with all repository clones
+- May not be possible for merged/public code
+
+We can:
+- Add data to .gitignore for future
+- Redact secrets from logs
+- Remove from active branches
+
+#### Legal Holds
+
+Some data may be retained longer if:
+- Required by law or regulation
+- Subject to legal proceedings
+- Needed for security investigations
+- Part of audit trails
+
+## Automatic Cleanup
+
+### Scheduled Cleanup
+
+We automatically clean up:
+- Expired artifacts (daily)
+- Old temporary files (daily)
+- Completed workflow logs (after retention period)
+- Unused caches (weekly)
+
+### Manual Cleanup
+
+Repository maintainers can manually trigger cleanup:
+
+```bash
+# Clean old artifacts
+gh api repos/:owner/:repo/actions/artifacts --paginate \
+  | jq -r '.artifacts[] | select(.expired == true) | .id' \
+  | xargs -I {} gh api -X DELETE repos/:owner/:repo/actions/artifacts/{}
+
+# Clean local caches
+rm -rf .cache/
+rm -rf /tmp/smartcontract-*
+```
+
+## Data Export
+
+### Requesting Your Data
+
+To export your data:
+
+1. **Email**: privacy@cuberai.example
+2. **Subject**: Data Export Request - [Your GitHub Username]
+3. **Include**: Specific data you want exported
+
+We will provide:
+- Machine-readable format (JSON/CSV)
+- Within 30 days of request
+- Via secure download link
+
+### Self-Service Export
+
+You can export some data yourself:
+- Git repository: `git clone` or GitHub export
+- Artifacts: Download from GitHub Actions UI
+- Reports: Download from workflow runs
+
+## Compliance
+
+This retention policy complies with:
+- GDPR (Right to erasure)
+- CCPA (Right to deletion)
+- GitHub Terms of Service
+- Apache 2.0 License requirements
+
+## Exceptions
+
+Data retention may be extended for:
+- Active security investigations
+- Ongoing legal proceedings
+- Regulatory compliance requirements
+- With your explicit consent
+
+## Updates to This Policy
+
+We may update this policy to:
+- Reflect new features
+- Comply with regulations
+- Improve data handling
+
+Changes are effective 30 days after posting, unless:
+- Required immediately by law
+- Needed for security reasons
+
+## Contact
+
+For questions or requests regarding data retention:
+
+- **Email**: privacy@cuberai.example (placeholder contact)
+- **Response time**: Within 7 business days
+- **Deletion requests**: Acknowledged within 2 business days
+
+For security-related data inquiries, see [SECURITY.md](SECURITY.md).
+
+---
+
+Last updated: 2026-01-01

@@ -2,19 +2,13 @@
 set -euo pipefail
 
 # ============================================================
-<<<<<<< HEAD
 # CASTQUEST-MEGA-SELFHEAL.SH — CastQuest Auto-Heal
 # Placeholder for CastQuest-specific healing logic
-=======
-# CASTQUEST-MEGA-SELFHEAL.SH — CastQuest Component Healer
-# Non-destructive self-healing for CastQuest components
->>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 # ============================================================
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
-<<<<<<< HEAD
 DRY_RUN=${DRY_RUN:-true}
 
 echo "[castquest-healer] Starting CastQuest healing sequence..."
@@ -38,24 +32,4 @@ fi
 
 echo "[castquest-healer] CastQuest healing sequence complete."
 
-=======
-# Default to dry-run mode
-DRY_RUN="${DRY_RUN:-true}"
-
-log() { printf "\n[castquest-healer] %s\n" "$*" >&2; }
-warn() { printf "\n[castquest-healer][WARN] %s\n" "$*" >&2; }
-
-log "Starting CastQuest self-healing (DRY_RUN=${DRY_RUN})..."
-
-# Placeholder for CastQuest healing logic
-log "Checking component integrity..."
-log "Validating state management..."
-log "Scanning for recovery patterns..."
-
-if [[ "$DRY_RUN" == "true" ]]; then
-  log "DRY_RUN mode: No changes will be made."
-fi
-
-log "CastQuest healing completed successfully."
->>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 exit 0

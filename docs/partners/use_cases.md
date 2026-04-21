@@ -1,415 +1,424 @@
 ---
-title: Use Cases and Success Stories
-description: Real-world applications and partner success stories
-keywords: use cases, case studies, success stories, examples, applications
+title: Partner Use Cases
+description: Real-world applications of SmartContractAudit
+keywords: use cases, examples, applications, integrations
 ---
 
-# Use Cases and Success Stories
+# Partner Use Cases
 
-Discover how partners are using SmartContractAudit to secure their blockchain applications and smart contracts.
+## Overview
 
-## Industry Applications
+Discover how different types of organizations leverage SmartContractAudit to enhance smart contract security and development workflows.
+
+## By Industry
 
 ### DeFi Protocols
 
-**Challenge**: Securing decentralized finance protocols against vulnerabilities that could lead to exploits and loss of user funds.
+#### Use Case: Continuous Contract Auditing
 
-**Solution**: Integrate SmartContractAudit into CI/CD pipeline for continuous security scanning of smart contracts before deployment.
+**Profile**: DeFi protocol with multiple smart contracts
 
-**Results**:
-- 100% pre-deployment scanning coverage
-- Average 12 high-severity issues caught per release
-- Zero production exploits since integration
-- 40% faster security review cycle
+**Challenge**: Ensure security across frequent updates and deployments
 
-**Partner Quote**: *"SmartContractAudit has become an essential part of our security stack. It catches issues early when they're cheap to fix."* - DeFi Protocol CTO
-
-### NFT Marketplaces
-
-**Challenge**: Protecting NFT smart contracts from minting vulnerabilities, access control issues, and reentrancy attacks.
-
-**Solution**: Real-time scanning of user-submitted contracts before deployment, with automated flagging of suspicious patterns.
+**Solution**:
+- Integrated SmartContractAudit into CI/CD pipeline
+- Automated security checks on every PR
+- Pre-deployment validation
+- Continuous monitoring of deployed contracts
 
 **Results**:
-- 10,000+ contracts scanned monthly
-- 95% of malicious contracts blocked pre-deployment
-- Significant reduction in user support tickets
-- Enhanced platform reputation
-
-**Use Case**: Automated scanning API integrated into marketplace deployment flow
-
-### Enterprise Blockchain
-
-**Challenge**: Meeting compliance requirements for financial institution's permissioned blockchain application.
-
-**Solution**: Private deployment with custom rule sets for financial compliance, automated audit trails, and regulatory reporting.
-
-**Results**:
-- Passed SOC 2 audit with security scanning evidence
-- Automated compliance documentation
-- 60% reduction in audit preparation time
-- Satisfies regulatory requirements
-
-**Deployment**: On-premise installation with air-gapped environment
-
-### DAO Governance
-
-**Challenge**: Securing complex governance smart contracts managing millions in treasury funds.
-
-**Solution**: Pre-deployment deep analysis, continuous monitoring post-deployment, and automated alerts for suspicious transactions.
-
-**Results**:
-- Treasury protected from known vulnerabilities
-- Real-time alerts prevented 2 potential exploits
-- Governance upgrades verified before execution
-- Community confidence increased
-
-**Integration**: GitHub Actions + webhook alerts to Discord
-
-### Blockchain Gaming
-
-**Challenge**: Rapid iteration on game mechanics requires frequent smart contract updates while maintaining security.
-
-**Solution**: IDE integration for real-time feedback during development, with CI/CD integration for pre-merge scanning.
-
-**Results**:
-- Developers catch 80% of issues before committing code
-- 3x faster development cycle
-- Zero security-related rollbacks in 6 months
-- Player assets remain secure
-
-**Tools Used**: VS Code extension + GitHub Actions
-
-## Partner Success Stories
-
-### Case Study 1: Major DeFi Protocol
-
-**Partner**: [Anonymized] - Top 10 DeFi protocol by TVL
-
-**Background**:
-- $500M+ TVL
-- Complex yield optimization strategies
-- Frequent contract updates
-- Previous security incidents
-
-**Implementation**:
-- Gold tier sponsorship
-- Full CI/CD integration
-- Custom rule sets for their specific patterns
-- Dedicated security advisory
-
-**Timeline**:
-- Week 1: Integration and training
-- Week 2: First production scans
-- Month 1: Caught 15 critical issues
-- Month 3: Zero production incidents
-- Month 6: 50% faster release cycle
-
-**Metrics**:
-- **Before**: 3-4 weeks per security review cycle
-- **After**: 1-2 weeks with higher confidence
-- **Issues Prevented**: 47 high/critical in 6 months
-- **ROI**: 15x (based on prevented exploits)
-
-**Quote**: *"The integration paid for itself in the first month by catching a critical reentrancy bug that could have cost us millions."*
-
-### Case Study 2: Blockchain Development Agency
-
-**Partner**: [Anonymized] - Full-service blockchain consultancy
-
-**Background**:
-- 50+ clients
-- Diverse contract types
-- Multi-chain deployments
-- High client security expectations
-
-**Implementation**:
-- Reseller partnership
-- White-label integration
-- Revenue share model
-- Joint marketing
-
-**Benefits**:
-- Added value service for clients
-- Differentiation from competitors
-- Additional revenue stream (30% share)
-- Enhanced client satisfaction
-
-**Growth**:
-- 200+ contracts scanned monthly
-- 85% client retention increase
-- $50k+ monthly recurring revenue
-- 3 new enterprise clients directly attributed
-
-**Quote**: *"Offering SmartContractAudit as part of our service package has been a game-changer for client acquisition and retention."*
-
-### Case Study 3: Layer 1 Blockchain
-
-**Partner**: [Anonymized] - Emerging Layer 1 platform
-
-**Background**:
-- New blockchain ecosystem
-- Growing developer community
-- Need for security tooling
-- Competitive differentiation
-
-**Implementation**:
-- Ecosystem partnership
-- Custom blockchain support added
-- Developer grants program
-- Free tier for ecosystem projects
-
-**Impact**:
-- 500+ ecosystem contracts scanned
-- Developer satisfaction scores increased 40%
-- Fewer exploits than competing chains
-- Marketing advantage in security positioning
-
-**Ecosystem Growth**:
-- 25% more developers onboarded
-- Security as key differentiator
-- TVL growth accelerated
-- Enhanced platform reputation
-
-**Quote**: *"Providing SmartContractAudit to our ecosystem developers has accelerated adoption and built trust in our platform."*
-
-### Case Study 4: Security Audit Firm
-
-**Partner**: [Anonymized] - Traditional security auditing firm
-
-**Background**:
-- Manual audit processes
-- High per-audit costs
-- Limited scalability
-- Long turnaround times
-
-**Implementation**:
-- Technology partnership
-- Augment manual audits with automated scanning
-- Hybrid audit model
-- Training for audit team
-
-**Transformation**:
-- **Pre-Scan**: Automated scan identifies obvious issues
-- **Focus**: Auditors focus on complex logic and business rules
-- **Efficiency**: 50% faster audit completion
-- **Quality**: More thorough coverage
-
-**Results**:
-- 3x audit throughput
-- Maintained audit quality
-- Expanded client base
-- Improved profit margins
-
-**Quote**: *"Automation handles the routine checks, letting our experts focus on what they do best - deep security analysis."*
-
-## Implementation Patterns
-
-### Pattern 1: CI/CD Integration
-
-**When**: Automated development workflows
-
-**Setup**:
-```yaml
-# GitHub Actions workflow
-- name: Security Scan
-  uses: smartcontractaudit/scan-action@v1
-  with:
-    fail-on: high
-```
-
-**Benefits**:
-- Early detection
-- Automated enforcement
-- Developer feedback
-- Prevents merging vulnerable code
-
-**Adoption**: 60% of partners
-
-### Pattern 2: IDE Real-Time Scanning
-
-**When**: During active development
-
-**Setup**: VS Code or IntelliJ plugin
-
-**Benefits**:
-- Immediate feedback
-- Learning opportunity
-- Faster iterations
-- Reduced technical debt
-
-**Adoption**: 40% of partners
-
-### Pattern 3: Pre-Deployment Gate
-
-**When**: Before mainnet deployment
-
-**Setup**: API integration in deployment script
-
-**Benefits**:
-- Final safety check
-- Compliance documentation
-- Audit trail
-- Risk mitigation
-
-**Adoption**: 80% of partners
-
-### Pattern 4: Continuous Monitoring
-
-**When**: Post-deployment surveillance
-
-**Setup**: Webhook integration for on-chain events
-
-**Benefits**:
-- Real-time alerts
-- Incident response
-- Trend analysis
-- Proactive security
-
-**Adoption**: 25% of partners (growing)
-
-## By Industry Vertical
-
-### Financial Services
-- Compliance requirements
-- Audit trail generation
-- Risk management
-- Regulatory reporting
-
-**Typical Tier**: Gold or Platinum
-**Key Features**: On-premise, custom rules, audit logs
-
-### Gaming and Metaverse
-- Rapid iteration
-- Asset protection
-- User trust
-- Platform security
-
-**Typical Tier**: Silver or Gold
-**Key Features**: IDE integration, fast scans
-
-### Enterprise
-- Internal blockchains
-- Consortium networks
-- Supply chain
-- Data integrity
-
-**Typical Tier**: Gold or Platinum
-**Key Features**: Private deployment, custom SLAs
-
-### Startups and Scale-ups
-- Limited security resources
-- Fast-paced development
-- Budget constraints
-- Growth focus
-
-**Typical Tier**: Bronze or Silver
-**Key Features**: CI/CD integration, community support
-
-## ROI Examples
-
-### Prevented Exploit
-
-**Scenario**: Critical bug caught pre-deployment
-**Potential Loss**: $2M (estimated)
-**Annual Cost**: $60k (Gold tier)
-**ROI**: 33x
-
-### Faster Audits
-
-**Scenario**: Reduced audit time from 4 weeks to 2 weeks
-**Developer Cost Savings**: $50k per audit
-**Audits per Year**: 6
-**Savings**: $300k
-**ROI**: 5x (for $60k investment)
-
-### Reduced Incidents
-
-**Scenario**: 90% reduction in security incidents
-**Previous Incident Cost**: $100k average (support, reputation, fixes)
-**Previous Incidents per Year**: 4
-**Cost Savings**: $360k
-**ROI**: 6x
-
-### Competitive Advantage
-
-**Scenario**: Win contracts due to superior security posture
-**Contract Value**: $500k
-**Attribution**: 20% (security as key factor)
-**Value**: $100k
-**ROI**: 1.7x (plus strategic value)
-
-## Getting Started
-
-### Choose Your Use Case
-
-1. **Development Integration**: Start with CI/CD or IDE
-2. **Pre-Deployment**: Gate deployment pipeline
-3. **Continuous Security**: Monitor live contracts
-4. **Compliance**: Generate audit documentation
-5. **Hybrid**: Combine automated + manual audits
-
-### Implementation Steps
-
-1. **Assess Needs**: Identify primary use case
-2. **Select Tier**: Match tier to requirements
-3. **Pilot**: Small-scale proof of concept
-4. **Integrate**: Full deployment
-5. **Optimize**: Refine based on usage
-6. **Scale**: Expand to additional use cases
-
-### Success Factors
-
-**Technical**:
-- Clear integration points
-- Proper API key management
-- Webhook configuration
-- Error handling
-
-**Organizational**:
-- Developer training
-- Process integration
-- Stakeholder buy-in
-- Success metrics
-
-**Ongoing**:
-- Regular reviews
-- Optimization
-- Feedback loops
-- Team enablement
-
-## Testimonials
-
-> *"SmartContractAudit caught a critical vulnerability that would have cost us millions. It paid for itself immediately."*  
-> — CTO, DeFi Protocol
-
-> *"The IDE integration has made our developers more security-conscious. They catch issues before they even commit code."*  
-> — Engineering Lead, NFT Marketplace
-
-> *"We've gone from reactive to proactive security. SmartContractAudit is now an essential part of our stack."*  
-> — CISO, Enterprise Blockchain
-
-> *"Our clients love that we include automated security scanning. It's become a key differentiator."*  
-> — Founder, Blockchain Agency
-
-> *"The partnership has been transformative. We've 3x'd our audit throughput while improving quality."*  
-> — Principal, Security Audit Firm
-
-## Request a Custom Case Study
-
-Interested in how SmartContractAudit can work for your specific use case?
-
-**Contact us**:
-- Email: partners@cuberai.example
-- Schedule consultation: [Calendar link]
-- Request custom demo: [Form link]
-
-We can provide:
-- Industry-specific examples
-- ROI calculations for your scenario
-- Technical feasibility assessment
-- Pilot program design
+- 85% reduction in security issues reaching production
+- Faster deployment cycles with confidence
+- Early detection of vulnerabilities
+- Complement to manual security audits
+
+**Tools Used**:
+- GitHub Actions workflow
+- Pre-commit hooks
+- Automated reporting
 
 ---
 
-*Success stories updated regularly. Have a story to share? Contact us at partners@cuberai.example to be featured.*
+#### Use Case: Multi-Chain Security
+
+**Profile**: Cross-chain DeFi platform (Ethereum, Solana, BSC)
+
+**Challenge**: Maintain security standards across multiple chains
+
+**Solution**:
+- Unified security scanning across all chains
+- Chain-specific rule sets
+- Centralized audit reporting
+- Cross-chain vulnerability detection
+
+**Results**:
+- Consistent security posture across chains
+- Reduced audit costs
+- Faster time to market on new chains
+- Improved developer confidence
+
+---
+
+### Blockchain Platforms
+
+#### Use Case: Developer Platform Integration
+
+**Profile**: Layer 1 blockchain platform
+
+**Challenge**: Help developers build secure smart contracts on the platform
+
+**Solution**:
+- Integrated SmartContractAudit into platform IDE
+- Provided default security templates
+- Built-in scanning before deployment
+- Developer education on security best practices
+
+**Results**:
+- Higher quality dApps on platform
+- Reduced security incidents ecosystem-wide
+- Improved platform reputation
+- Increased developer adoption
+
+**Tools Used**:
+- IDE plugin integration
+- API access for real-time scanning
+- Custom rule sets for platform-specific patterns
+
+---
+
+#### Use Case: Ecosystem Security Program
+
+**Profile**: Smart contract platform with grant program
+
+**Challenge**: Ensure grant recipients build secure applications
+
+**Solution**:
+- Mandatory security audits for grant projects
+- SmartContractAudit as first-pass screening
+- Automated compliance checking
+- Continuous monitoring post-grant
+
+**Results**:
+- 95% of grant projects meet security baseline
+- Reduced grant review time by 40%
+- Fewer post-deployment security issues
+- Strengthened ecosystem security
+
+---
+
+### Enterprise Blockchain
+
+#### Use Case: Internal Smart Contract Development
+
+**Profile**: Enterprise with private blockchain implementation
+
+**Challenge**: Ensure corporate security standards for internal contracts
+
+**Solution**:
+- Private deployment of SmartContractAudit
+- Custom rules aligned with corporate policies
+- Integration with enterprise DevOps pipeline
+- Compliance reporting for auditors
+
+**Results**:
+- 100% contract security coverage
+- Automated compliance documentation
+- Reduced audit preparation time
+- Improved internal security culture
+
+**Features Used**:
+- On-premise deployment
+- Custom rule development
+- Enterprise SSO integration
+- Advanced reporting
+
+---
+
+### Security Firms
+
+#### Use Case: Augment Manual Audits
+
+**Profile**: Smart contract security auditing firm
+
+**Challenge**: Scale audit capacity without sacrificing quality
+
+**Solution**:
+- Use SmartContractAudit for initial automated scan
+- Focus manual audits on complex logic
+- Standardize initial assessment phase
+- Continuous monitoring post-audit
+
+**Results**:
+- 3x increase in audit throughput
+- More time for deep security analysis
+- Consistent baseline quality
+- Additional revenue stream (continuous monitoring)
+
+**Integration**:
+- Custom API integration
+- White-label reporting
+- Client portal integration
+- Automated ticketing
+
+---
+
+#### Use Case: Continuous Security Monitoring
+
+**Profile**: Security firm offering ongoing monitoring
+
+**Challenge**: Monitor client contracts 24/7 for emerging threats
+
+**Solution**:
+- Automated continuous scanning
+- Real-time alert system
+- Integration with client systems
+- Threat intelligence updates
+
+**Results**:
+- Early detection of zero-day vulnerabilities
+- 24/7 coverage without manual intervention
+- Scalable monitoring service
+- Differentiated service offering
+
+---
+
+### Educational Institutions
+
+#### Use Case: Smart Contract Security Course
+
+**Profile**: University computer science program
+
+**Challenge**: Teach secure smart contract development
+
+**Solution**:
+- Integrated SmartContractAudit into coursework
+- Students scan their assignments
+- Learn from automated feedback
+- Hands-on security education
+
+**Results**:
+- Students learn security best practices
+- Immediate feedback on code quality
+- Practical hands-on experience
+- Industry-ready graduates
+
+**Benefits**:
+- Free for educational use
+- Student accounts
+- Educational materials
+- Teacher dashboards
+
+---
+
+### Development Teams
+
+#### Use Case: Pre-Deployment Validation
+
+**Profile**: Smart contract development team
+
+**Challenge**: Catch security issues before production
+
+**Solution**:
+- Required security scan before mainnet deployment
+- Automated checks in staging environment
+- Team review of findings
+- Documentation of remediation
+
+**Results**:
+- Zero critical vulnerabilities in production
+- Faster review cycles
+- Improved code quality
+- Team security awareness
+
+---
+
+#### Use Case: Open Source Project Security
+
+**Profile**: Open source DeFi protocol
+
+**Challenge**: Maintain security with community contributions
+
+**Solution**:
+- Automated security checks on all PRs
+- Public audit reports
+- Contributor education
+- Transparent security process
+
+**Results**:
+- Community confidence in security
+- Higher quality contributions
+- Reduced maintainer burden
+- Faster PR review process
+
+---
+
+## By Use Case Type
+
+### CI/CD Integration
+
+**Scenario**: Automated security in development pipeline
+
+**Implementation**:
+```yaml
+# .github/workflows/security.yml
+name: Security Audit
+on: [pull_request, push]
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Security Audit
+        run: ./scripts/audit.sh
+      - name: Upload Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: audit-report
+          path: AUDIT-REPORT.md
+```
+
+**Best For**: Any team with CI/CD pipeline
+
+---
+
+### Pre-Commit Validation
+
+**Scenario**: Catch issues before committing
+
+**Implementation**:
+```bash
+# .git/hooks/pre-commit
+#!/bin/bash
+./scripts/audit.sh --fast --fail-on-high
+```
+
+**Best For**: Individual developers, small teams
+
+---
+
+### Scheduled Monitoring
+
+**Scenario**: Regular security audits
+
+**Implementation**:
+```yaml
+# .github/workflows/scheduled-audit.yml
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Daily
+jobs:
+  audit:
+    # ... audit steps
+```
+
+**Best For**: Production deployments, monitoring
+
+---
+
+### API Integration
+
+**Scenario**: Custom integration into existing tools
+
+**Implementation**:
+```javascript
+const { SmartContractAudit } = require('@scaudit/sdk');
+const audit = new SmartContractAudit({ apiKey: API_KEY });
+const results = await audit.scan({ files: ['contracts/'] });
+```
+
+**Best For**: Enterprise platforms, custom tooling
+
+---
+
+## Success Metrics
+
+### Common Improvements
+
+Partners typically report:
+
+- **60-85%** reduction in security issues reaching production
+- **40-50%** faster security review cycles
+- **3-5x** increase in audit throughput
+- **50-70%** reduction in manual audit time
+- **90%+** developer satisfaction with workflow
+
+### ROI Examples
+
+**Small Team** (5 developers):
+- **Cost**: Bronze tier ($5,000/year)
+- **Savings**: 10 hours/month × 5 devs × $100/hour = $60,000/year
+- **ROI**: 12x
+
+**Enterprise** (50 developers):
+- **Cost**: Gold tier ($50,000/year)
+- **Savings**: 5 hours/month × 50 devs × $150/hour = $450,000/year
+- **ROI**: 9x
+- **Additional**: Reduced security incidents, faster deployment
+
+---
+
+## Getting Started
+
+### Step 1: Identify Your Use Case
+
+Review the examples above and identify which matches your needs.
+
+### Step 2: Choose Integration Type
+
+- **Simple**: GitHub Actions workflow
+- **Advanced**: API integration
+- **Enterprise**: Private deployment
+
+### Step 3: Select Partnership Tier
+
+See [sponsorship_tiers.md](sponsorship_tiers.md) for details.
+
+### Step 4: Implement
+
+Follow [technical_onboarding.md](technical_onboarding.md) to get started.
+
+### Step 5: Optimize
+
+Refine configuration based on your workflow and feedback.
+
+---
+
+## Custom Use Cases
+
+Don't see your use case? We can help!
+
+**Contact**: partners@cuberai.example
+
+**We can assist with**:
+- Custom integrations
+- Unique workflows
+- Specific industry requirements
+- Complex enterprise needs
+
+---
+
+## Partner Testimonials
+
+*"SmartContractAudit has become an essential part of our security workflow. We catch vulnerabilities early and deploy with confidence."*  
+— Security Lead, DeFi Protocol
+
+*"The integration was seamless. Within a week, we had automated security checks on every PR."*  
+— CTO, Blockchain Startup
+
+*"Using SmartContractAudit lets us focus manual audits on complex business logic while automated scanning handles common issues."*  
+— Senior Auditor, Security Firm
+
+---
+
+## Additional Resources
+
+- [Technical Onboarding](technical_onboarding.md)
+- [Sponsorship Tiers](sponsorship_tiers.md)
+- [SLA and Support](sla_and_support.md)
+- [Contact Us](contact.md)
+
+---
+
+**Last Updated**: 2026-01-01
+
+*Your success story could be here! Contact us to share how you use SmartContractAudit.*

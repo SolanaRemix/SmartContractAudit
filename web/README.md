@@ -1,111 +1,270 @@
 # Web Control Panel
 
-This directory contains the GitHub Pages scaffold for the SmartContractAudit control panel and dashboard.
+## Overview
 
-## Contents
+This directory contains a lightweight GitHub Pages scaffold for the SmartContractAudit control panel and billing interface.
 
-- **index.html** - Main dashboard showing recent scan runs, statistics, and artifacts
-- **billing.html** - Sponsorship tiers and billing/payment page
-- **README.md** - This file
+## Files
 
-## Setup Instructions
-
-### Enable GitHub Pages
-
-1. Go to your repository Settings
-2. Navigate to "Pages" in the left sidebar
-3. Under "Source", select:
-   - Branch: `main` (or `cuberai-init` for testing)
-   - Folder: `/web`
-4. Click "Save"
-5. GitHub will provide your site URL (e.g., `https://solanaremix.github.io/SmartContractAudit/`)
-
-### Configuration
-
-The web interface uses:
-
-- **Tailwind CSS CDN** - For styling (no build step required)
-- **Vanilla JavaScript** - No framework dependencies
-- **Static HTML** - Can be hosted anywhere
-
-### Integration with GitHub Actions
-
-The dashboard is designed to display results from the GitAntivirus workflow:
-
-1. Workflow runs create artifacts (SMARTBRAIN.log, AUDIT-REPORT.md, .quarantine/)
-2. Artifacts are uploaded to GitHub Actions
-3. Dashboard can fetch and display these artifacts via GitHub API
-
-To integrate:
-
-```javascript
-// Example: Fetch workflow runs
-const response = await fetch(
-  'https://api.github.com/repos/OWNER/REPO/actions/runs',
-  {
-    headers: {
-      'Accept': 'application/vnd.github.v3+json'
-    }
-  }
-);
-const data = await response.json();
-// Process and display workflow runs
-```
-
-### Billing Integration
-
-The billing.html page includes placeholders for payment integration:
-
-#### Stripe Checkout
-
-1. Sign up at [stripe.com](https://stripe.com)
-2. Create products for each sponsorship tier
-3. Get your API keys (test keys first)
-4. Update the `STRIPE_TEST_KEY` in billing.html
-5. Implement server-side checkout session creation
-6. Test with Stripe test cards
-7. Replace with production keys when ready
-
-**Test Card**: 4242 4242 4242 4242 (any future expiry, any CVC)
-
-#### Cash App
-
-For Cash App payments:
-
-1. Set up a Cash App business account
-2. Share your $cashtag
-3. Manual invoice and confirmation process
-
-### Sponsor Links
-
-The web interface is complementary to the `.github/FUNDING.yml` file:
-
-- **FUNDING.yml** - Shows up in GitHub UI ("Sponsor this project")
-- **Web Interface** - Full-featured sponsorship and dashboard experience
-- **Both** - Can link to each other for seamless experience
-
-Update `.github/FUNDING.yml`:
-
-```yaml
-github: [your-github-username]
-custom: ["https://solanaremix.github.io/SmartContractAudit/billing.html"]
-```
+- **index.html**: Main dashboard displaying scan results, artifacts, and project information
+- **billing.html**: Sponsorship tiers and payment integration placeholder
+- **README.md**: This file
 
 ## Features
 
 ### Dashboard (index.html)
 
-- **Stats Overview**: Total scans, high severity issues, success rate
-- **Recent Runs**: Table of recent security scans
-- **Artifacts**: Links to download SMARTBRAIN.log, AUDIT-REPORT.md, .quarantine/
+- **Statistics Overview**: Total scans, issues found, fixes applied
+- **Recent Runs**: Display of recent scan executions (placeholder)
+- **Artifacts**: Links to scan artifacts and reports
+- **Quick Links**: Navigation to documentation and community resources
 - **Sponsor CTA**: Call-to-action for sponsorship
 
 ### Billing (billing.html)
 
-- **Sponsorship Tiers**: Bronze, Silver, Gold, Platinum
-- **Pricing Details**: Monthly and annual pricing with savings
-- **Payment Options**: Stripe, cryptocurrency, Cash App
-- **Integration Instructions**: How to set up real payments
+- **Sponsorship Tiers**: Display of all 5 sponsorship tiers
+- **Payment Integration**: Stripe Checkout placeholder
+- **Alternative Payment**: Cash App, cryptocurrency, GitHub Sponsors, OpenCollective
+- **Integration Instructions**: Step-by-step guide to enable live payments
+
+## Publishing to GitHub Pages
+
+### Option 1: Repository Settings
+
+1. Go to repository **Settings** > **Pages**
+2. Set source to **main branch** and **/web** folder (or root with web/ symlink)
+3. Save and wait for deployment
+4. Access at: `https://[username].github.io/SmartContractAudit/`
+
+### Option 2: Custom Domain
+
+1. Add `CNAME` file with your domain:
+   ```
+   audit.yourdomain.com
+   ```
+2. Configure DNS with your domain provider:
+   ```
+   Type: CNAME
+   Name: audit (or @)
+   Value: [username].github.io
+   ```
+3. Enable HTTPS in GitHub Pages settings
+
+### Option 3: GitHub Actions Deployment
+
+Create `.github/workflows/deploy-pages.yml`:
+
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'web/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'web'
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+## Integration with Backend
+
+### Connect to Real Data
+
+To display real scan data, integrate with GitHub API or backend:
+
+```javascript
+// In index.html, add:
+async function loadScanData() {
+    const response = await fetch('https://api.github.com/repos/OWNER/REPO/actions/runs');
+    const data = await response.json();
+    
+    // Update dashboard with real data
+    document.querySelector('.total-scans').textContent = data.total_count;
+    // ... etc
+}
+
+document.addEventListener('DOMContentLoaded', loadScanData);
+```
+
+### GitHub Actions Integration
+
+Update workflow to post results:
+
+```yaml
+- name: Post results to dashboard
+  run: |
+    curl -X POST https://yourdomain.com/api/scan-results \
+      -H "Content-Type: application/json" \
+      -d '{"status": "success", "issues": 5}'
+```
+
+## Stripe Integration
+
+### Setup
+
+1. **Create Stripe Account**: https://dashboard.stripe.com/register
+
+2. **Get API Keys**:
+   - Test mode: `pk_test_...` and `sk_test_...`
+   - Production: `pk_live_...` and `sk_live_...`
+
+3. **Configure Environment Variables**:
+   ```bash
+   export STRIPE_SECRET_KEY=sk_test_...
+   export STRIPE_WEBHOOK_SECRET=whsec_...
+   ```
+
+### Create Checkout Session Endpoint
+
+```javascript
+// Backend API endpoint
+app.post('/api/create-checkout-session', async (req, res) => {
+    const { tier, price } = req.body;
+    
+    const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: [{
+            price_data: {
+                currency: 'usd',
+                product_data: {
+                    name: `${tier} Sponsorship`,
+                    description: `Monthly ${tier} tier sponsorship`,
+                },
+                unit_amount: price * 100,
+                recurring: {
+                    interval: 'month',
+                },
+            },
+            quantity: 1,
+        }],
+        mode: 'subscription',
+        success_url: 'https://yourdomain.com/success',
+        cancel_url: 'https://yourdomain.com/billing',
+    });
+    
+    res.json({ sessionId: session.id });
+});
+```
+
+### Update billing.html
+
+```javascript
+// Replace placeholder button with:
+const stripe = Stripe('pk_test_YOUR_KEY');
+
+async function checkout(tier, price) {
+    const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier, price })
+    });
+    
+    const session = await response.json();
+    const result = await stripe.redirectToCheckout({
+        sessionId: session.sessionId
+    });
+    
+    if (result.error) {
+        alert(result.error.message);
+    }
+}
+```
+
+### Webhook Handler
+
+```javascript
+// Backend webhook endpoint
+app.post('/api/stripe-webhook', async (req, res) => {
+    const sig = req.headers['stripe-signature'];
+    
+    let event;
+    try {
+        event = stripe.webhooks.constructEvent(
+            req.body,
+            sig,
+            process.env.STRIPE_WEBHOOK_SECRET
+        );
+    } catch (err) {
+        return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+    
+    if (event.type === 'checkout.session.completed') {
+        const session = event.data.object;
+        // Provision access, send confirmation email, etc.
+        await provisionAccess(session);
+    }
+    
+    res.json({ received: true });
+});
+```
+
+## Cash App Integration
+
+To accept Cash App payments:
+
+1. **Set your Cash App handle** in `billing.html`:
+   ```html
+   <p class="text-sm font-mono bg-gray-100 p-2 rounded">$YourCashAppHandle</p>
+   ```
+
+2. **Instructions for users**:
+   - Send payment to your Cash App handle
+   - Include email in note
+   - Email confirmation to you
+   - You manually provision access
+
+3. **Automate (optional)**:
+   - Cash App doesn't have official API
+   - Can use third-party services or manual processing
+
+## Cryptocurrency Integration
+
+For crypto payments:
+
+1. **Set up wallets** for BTC, ETH, USDC, etc.
+
+2. **Display addresses** in `billing.html`
+
+3. **Verify payments**:
+   - Monitor blockchain for transactions
+   - Use services like BlockCypher or Etherscan API
+   - Manual verification for simplicity
+
+4. **Example verification**:
+   ```javascript
+   async function verifyEthPayment(txHash, expectedAmount) {
+       const response = await fetch(
+           `https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=${txHash}`
+       );
+       const data = await response.json();
+       // Verify amount and recipient
+   }
+   ```
 
 ## Customization
 
@@ -113,153 +272,215 @@ custom: ["https://solanaremix.github.io/SmartContractAudit/billing.html"]
 
 Update colors in both HTML files:
 
-```javascript
-// Current gradient
-background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-
-// Change to your brand colors
-background: linear-gradient(135deg, #YOUR_COLOR_1 0%, #YOUR_COLOR_2 100%);
+```css
+.gradient-bg {
+    background: linear-gradient(135deg, #YOUR_COLOR1 0%, #YOUR_COLOR2 100%);
+}
 ```
 
-### Content
+### Add Your Logo
 
-- Update sponsor tier prices in billing.html
-- Modify dashboard stats and layout in index.html
-- Add custom sections as needed
-- Update footer links
-
-### Analytics
-
-Add analytics tracking:
+Replace the emoji (🔒) with your logo:
 
 ```html
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_ID"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'YOUR_ID');
-</script>
+<img src="logo.svg" alt="SmartContractAudit" class="h-8">
+```
+
+### Custom Sections
+
+Add new sections following the existing pattern:
+
+```html
+<div class="bg-white rounded-lg shadow p-6">
+    <h3 class="font-bold text-lg mb-3">Your Section</h3>
+    <!-- Your content -->
+</div>
 ```
 
 ## Security Notes
 
-⚠️ **Important Security Considerations**:
+### ⚠️ Important
 
-1. **No Secrets**: Never commit API keys or secrets to HTML files
-2. **Server-Side**: Payment processing must be server-side
-3. **HTTPS**: Always use HTTPS for payment pages
-4. **Validation**: Validate all user input server-side
-5. **PCI Compliance**: Use Stripe Checkout (PCI compliant) rather than custom forms
+- **Never commit API keys** to the repository
+- Use **environment variables** or **GitHub Secrets**
+- Always use **test keys** during development
+- Enable **webhook signature verification**
+- Implement **rate limiting** on backend endpoints
+- Use **HTTPS only** for payment pages
+- **Sanitize all user inputs**
+
+### FUNDING.yml Integration
+
+The billing page integrates with the repository's `FUNDING.yml`:
+
+```yaml
+# .github/FUNDING.yml
+github: [YOUR_GITHUB_HANDLE]
+open_collective: YOUR_PROJECT
+custom: ["https://yourdomain.com/web/billing.html"]
+```
+
+This makes the "Sponsor" button on GitHub link to your billing page.
+
+## Testing
+
+### Local Testing
+
+1. **Simple HTTP Server**:
+   ```bash
+   cd web
+   python -m http.server 8000
+   # Visit http://localhost:8000
+   ```
+
+2. **Node.js Server**:
+   ```bash
+   npx serve .
+   ```
+
+3. **Live Server** (VS Code extension):
+   - Install "Live Server" extension
+   - Right-click index.html > "Open with Live Server"
+
+### Test Stripe Integration
+
+1. Use **test mode** API keys
+2. Use **test card numbers**:
+   - Success: `4242 4242 4242 4242`
+   - Decline: `4000 0000 0000 0002`
+3. Test webhook with **Stripe CLI**:
+   ```bash
+   stripe listen --forward-to localhost:3000/api/stripe-webhook
+   ```
+
+## Analytics (Optional)
+
+Add analytics to track usage:
+
+### Google Analytics
+
+```html
+<!-- Add to <head> -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+</script>
+```
+
+### Plausible (Privacy-friendly)
+
+```html
+<script defer data-domain="yourdomain.com" src="https://plausible.io/js/script.js"></script>
+```
+
+## Support
+
+For questions about the web control panel:
+
+- **General**: hello@cuberai.example
+- **Technical**: support@cuberai.example
+- **Billing**: billing@cuberai.example
+
+## Related Documentation
+
+- [Sponsorship Tiers](../docs/partners/sponsorship_tiers.md)
+- [Partner Program](../docs/partners/README.md)
+- [FUNDING.yml](../FUNDING.yml)
+
+---
+
+**Last Updated**: 2026-01-01
+
+**Status**: Scaffold ready, payment integration pending
 
 ## Development
 
 ### Local Testing
 
-Serve locally for development:
+```bash
+# Simple HTTP server
+python -m http.server 8000
+# or
+npx serve web/
+
+# Visit http://localhost:8000
+```
+
+### With Backend
+
+If integrating with backend:
 
 ```bash
-# Python 3
-python -m http.server 8000
+# Start your backend
+npm start
 
-# Node.js
-npx http-server
-
-# Then visit http://localhost:8000
+# Open web files
+# Update API endpoints in HTML
 ```
 
-### Production Deployment
+## Dynamic Data
 
-For production:
-
-1. Test thoroughly with Stripe test mode
-2. Replace test keys with production keys
-3. Implement proper backend API for checkout
-4. Add error handling and logging
-5. Set up monitoring and alerts
-
-## API Integration
-
-To connect the dashboard to real scan data:
+To make dashboard dynamic, connect to your API:
 
 ```javascript
-// Fetch workflow runs from GitHub API
-async function fetchWorkflowRuns() {
-  const response = await fetch(
-    'https://api.github.com/repos/SolanaRemix/SmartContractAudit/actions/runs',
-    {
-      headers: {
-        'Accept': 'application/vnd.github.v3+json',
-        // Add authentication if needed for private repos
-        // 'Authorization': 'token YOUR_TOKEN'
-      }
-    }
-  );
-  
-  if (!response.ok) {
-    throw new Error('Failed to fetch workflow runs');
+// Example: Fetch scan data
+async function loadScans() {
+  try {
+    const response = await fetch('/api/scans');
+    const scans = await response.json();
+    
+    // Update dashboard
+    displayScans(scans);
+  } catch (error) {
+    console.error('Failed to load scans:', error);
   }
-  
-  const data = await response.json();
-  return data.workflow_runs;
-}
-
-// Fetch artifacts for a run
-async function fetchArtifacts(runId) {
-  const response = await fetch(
-    `https://api.github.com/repos/SolanaRemix/SmartContractAudit/actions/runs/${runId}/artifacts`,
-    {
-      headers: {
-        'Accept': 'application/vnd.github.v3+json'
-      }
-    }
-  );
-  
-  if (!response.ok) {
-    throw new Error('Failed to fetch artifacts');
-  }
-  
-  const data = await response.json();
-  return data.artifacts;
 }
 ```
 
-## Troubleshooting
+## Monitoring
 
-### GitHub Pages Not Working
+### Analytics
 
-- Check that Pages is enabled in repository settings
-- Verify the correct branch and folder are selected
-- Wait a few minutes for initial deployment
-- Check the Actions tab for Pages build errors
+Add Google Analytics or similar:
 
-### Stripe Integration Issues
+```html
+<!-- Add before </head> -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+```
 
-- Verify API keys are correct (test vs production)
-- Check browser console for errors
-- Ensure server-side endpoint is accessible
-- Test with Stripe test cards first
+### Error Tracking
 
-### Dashboard Not Loading Data
+Add Sentry or similar:
 
-- Check GitHub API rate limits
-- Verify repository name and owner are correct
-- Ensure workflow has run at least once
-- Check browser console for errors
+```html
+<script src="https://browser.sentry-cdn.com/7.x.x/bundle.min.js"></script>
+<script>
+  Sentry.init({ dsn: 'your-dsn' });
+</script>
+```
+
+## Resources
+
+- [GitHub Pages Documentation](https://docs.github.com/pages)
+- [Stripe Documentation](https://stripe.com/docs)
+- [Tailwind CSS](https://tailwindcss.com)
+- [Cash App](https://cash.app)
 
 ## Support
 
-For questions about the web interface:
-
-- Open an issue on GitHub
-- See main documentation in repository root
-- Contact: sponsors@cuberai.example
-
-## License
-
-This web interface is part of the SmartContractAudit project and is licensed under Apache 2.0.
+For questions about the web dashboard:
+- GitHub Issues
+- Email: support@cuberai.example
 
 ---
 
-**Note**: This is a static site scaffold. Implement proper backend services for production use, especially for payment processing.
+*Last updated: 2026-01-01*

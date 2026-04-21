@@ -1,298 +1,293 @@
 ---
-title: Partnership Opportunities
-description: Learn about partnership models and collaboration opportunities
-keywords: partnerships, collaboration, integration, business development
+title: Partnership Agreements
+description: Terms and structure for SmartContractAudit partnerships
+keywords: partnership, agreements, terms, collaboration
 ---
 
-# Partnership Opportunities
+# Partnership Agreements
 
-SmartContractAudit offers various partnership models to suit different organizational needs and goals.
+## Overview
 
-## Partnership Models
+This document outlines the standard partnership terms and agreement structure for SmartContractAudit collaborations.
 
-### 1. Technology Partners
+## Types of Agreements
 
-**Overview**: Integrate SmartContractAudit into your platform, toolchain, or workflow.
+### 1. Memorandum of Understanding (MOU)
 
-**Ideal For**:
-- Developer tool providers
-- Blockchain platforms
-- IDE integrations
-- CI/CD platforms
-- Security tool vendors
+**Purpose**: Non-binding agreement establishing intent to collaborate
 
-**Benefits**:
-- Technical integration support
-- API access and documentation
-- Co-marketing opportunities
-- Joint webinars and content
-- Early access to new features
-- Technical account manager
+**Typical Use**: Ecosystem partnerships, research collaborations
 
-**Requirements**:
-- Active development commitment
-- Public integration announcement
-- Joint case study (optional)
+**Key Elements**:
+- Partnership objectives
+- Roles and responsibilities
+- Term and renewal
+- Termination conditions
+- No financial obligations
 
-**Examples**:
-- IDE plugin integration
-- CI/CD pipeline integration
-- Blockchain explorer integration
-- Wallet security checks
+**Timeline**: 1-2 weeks to execute
 
-### 2. Enterprise Partners
+### 2. Sponsorship Agreement
 
-**Overview**: Large-scale deployments with custom requirements and dedicated support.
+**Purpose**: Financial support with defined benefits
 
-**Ideal For**:
-- Fortune 500 companies
-- Financial institutions
-- Government agencies
-- Large blockchain projects
-- Enterprise software vendors
+**Typical Use**: Corporate sponsors, financial backers
 
-**Benefits**:
-- Dedicated account team
-- Custom SLA agreements
-- On-premise deployment options
-- White-label capabilities
-- Custom feature development
-- 24/7 priority support
-- Compliance assistance
-- Training and workshops
+**Key Elements**:
+- Sponsorship tier and amount
+- Payment terms
+- Benefits and deliverables
+- Recognition and branding rights
+- Term and renewal options
+- Termination and refund policy
 
-**Requirements**:
-- Minimum commitment (annual contract)
-- Security and compliance requirements met
-- Integration planning session
+**Timeline**: 2-4 weeks to execute
 
-**Customizations**:
-- Private instance deployment
-- Custom branding
-- Specific compliance frameworks
-- Industry-specific rules
-- Air-gapped environments
+### 3. Technology Partnership Agreement
 
-### 3. Strategic Sponsors
+**Purpose**: Technical integration and collaboration
 
-**Overview**: Financial support with strategic advisory input.
+**Typical Use**: Platform integrations, API partnerships
 
-**Ideal For**:
-- Venture capital firms
-- Blockchain foundations
-- Industry consortiums
-- Corporate innovation labs
-- Ecosystem funds
+**Key Elements**:
+- Integration scope
+- Technical responsibilities
+- Support commitments
+- Intellectual property rights
+- Data handling provisions
+- Liability and warranties
+- Term and termination
 
-**Benefits**:
-- Advisory board participation
-- Roadmap influence
-- Investment updates and metrics
-- Co-branding opportunities
-- Speaking slots at events
-- Preferred partner status
-- Logo placement
-- Public recognition
+**Timeline**: 3-6 weeks to execute
 
-**Tiers**: See [sponsorship_tiers.md](sponsorship_tiers.md)
+### 4. Commercial License Agreement
 
-### 4. Reseller Partners
+**Purpose**: Commercial use or white-label deployment
 
-**Overview**: Offer SmartContractAudit services to your clients with revenue sharing.
+**Typical Use**: Enterprise deployments, resellers
 
-**Ideal For**:
-- Security consultancies
-- Blockchain development agencies
-- Managed service providers
-- System integrators
-- Audit firms
+**Key Elements**:
+- License scope and restrictions
+- Fees and payment terms
+- Support and maintenance
+- Updates and upgrades
+- Intellectual property
+- Confidentiality
+- Term and renewal
 
-**Benefits**:
-- Revenue share model (30-40% typical)
-- White-label options
-- Sales and marketing materials
-- Lead sharing
-- Partner portal access
-- Joint proposals
-- Technical presales support
+**Timeline**: 4-8 weeks to execute
 
-**Requirements**:
-- Proven sales capability
-- Technical competency certification
-- Minimum quarterly quota
-- Client support capability
+## Standard Terms
 
-### 5. Academic Partners
+### Partnership Duration
 
-**Overview**: Research collaborations and educational programs.
+- **Initial Term**: Typically 12 months
+- **Renewal**: Automatic renewal unless notice given
+- **Notice Period**: 30-60 days before term end
+- **Early Termination**: Possible with 30 days notice (terms vary)
 
-**Ideal For**:
-- Universities and research institutions
-- Security research labs
-- Blockchain education programs
-- Computer science departments
+### Financial Terms (Sponsorships)
 
-**Benefits**:
-- Research collaboration
-- Access to datasets (anonymized)
-- Co-authored publications
-- Student internships
-- Grant opportunities
-- Academic licensing
-- Conference sponsorship
+- **Payment Schedule**: Annual, semi-annual, or monthly
+- **Payment Method**: Invoice, credit card, cryptocurrency, wire transfer
+- **Refund Policy**: Pro-rated refund for early termination (first 90 days)
+- **Price Changes**: 30 days notice for tier changes
 
-**Opportunities**:
-- Novel algorithm research
-- Machine learning improvements
-- Vulnerability pattern analysis
-- Blockchain security research
+### Intellectual Property
 
-### 6. Ecosystem Partners
+- **Project IP**: Remains open source under Apache-2.0
+- **Partner IP**: Partners retain ownership of their IP
+- **Contributions**: Contributor License Agreement (CLA) or DCO
+- **Trademarks**: Mutual respect of trademarks and brands
+- **White-Label**: Custom terms for enterprise partnerships
 
-**Overview**: Blockchain ecosystem integration and support.
+### Data and Privacy
 
-**Ideal For**:
-- Layer 1 blockchain projects
-- Layer 2 solutions
-- DeFi protocols
-- NFT platforms
-- DAO tools
+- **Data Handling**: Per [data_privacy.md](data_privacy.md)
+- **Confidentiality**: Standard NDA provisions
+- **Security**: Industry-standard security practices
+- **Compliance**: GDPR, CCPA, and applicable regulations
 
-**Benefits**:
-- Native blockchain support
-- Ecosystem-specific rules
-- Joint security initiatives
-- Developer grants
-- Community collaboration
-- Event participation
+### Support and SLA
 
-**Integration Areas**:
-- Pre-deployment scanning
-- Continuous monitoring
-- Governance integration
-- Treasury protection
+- **Support Tiers**: Based on partnership level
+- **Response Times**: See [sla_and_support.md](sla_and_support.md)
+- **Escalation**: Defined escalation paths
+- **Availability**: Business hours vs. 24/7 (tier dependent)
+
+### Liability and Warranties
+
+- **Open Source Disclaimer**: Provided "as is" per Apache-2.0
+- **Liability Limits**: Standard limitation provisions
+- **Indemnification**: Mutual indemnification
+- **Insurance**: Required for enterprise partnerships
+
+### Marketing and Communication
+
+- **Announcements**: Mutual approval for press releases
+- **Logo Use**: License to use each other's logos
+- **Case Studies**: Approval required for public case studies
+- **Confidentiality**: Option for confidential partnerships
+
+### Termination
+
+- **For Convenience**: Either party with notice
+- **For Cause**: Immediate for material breach
+- **Effect**: Wind-down period, final deliverables
+- **Survival**: IP, confidentiality, liability provisions survive
 
 ## Partnership Process
 
-### Step 1: Initial Contact
+### Phase 1: Discovery (1-2 weeks)
 
-- Submit partnership inquiry via [contact.md](contact.md)
-- Initial call to discuss objectives and fit
-- NDA signing (if needed for sensitive discussions)
+1. **Initial Contact**: Inquiry via email or GitHub
+2. **Information Exchange**: Discuss goals and needs
+3. **Alignment Check**: Verify mutual fit
+4. **Preliminary Terms**: Outline proposed partnership
 
-### Step 2: Discovery
+### Phase 2: Proposal (1-2 weeks)
 
-- Detailed needs assessment
-- Technical requirements gathering
-- Use case validation
-- ROI projection
-- Timeline definition
+1. **Draft Proposal**: Partnership type and benefits
+2. **Terms Discussion**: Review and negotiate terms
+3. **Approval**: Internal review by both parties
+4. **Agreement**: Reach verbal agreement on terms
 
-### Step 3: Proposal
+### Phase 3: Contracting (1-4 weeks)
 
-- Custom partnership proposal
-- Pricing and terms
-- Success metrics definition
-- Legal review
+1. **Draft Agreement**: Prepare formal agreement
+2. **Legal Review**: Both parties review terms
+3. **Negotiate**: Address concerns and questions
+4. **Execute**: Sign agreement
 
-### Step 4: Agreement
+### Phase 4: Onboarding (2-4 weeks)
 
-- Contract negotiation
-- Security and compliance review
-- Integration planning
-- Kick-off meeting
+1. **Kickoff Meeting**: Introduction and planning
+2. **Technical Setup**: Integration and access
+3. **Asset Exchange**: Logos, documentation, etc.
+4. **Launch**: Public announcement (if applicable)
 
-### Step 5: Onboarding
+### Phase 5: Ongoing
 
-- Technical onboarding (see [technical_onboarding.md](technical_onboarding.md))
-- Account setup
-- Training sessions
-- Integration support
-- Go-live planning
+1. **Regular Check-ins**: Quarterly business reviews
+2. **Support**: Ongoing technical and partnership support
+3. **Optimization**: Refine and improve partnership
+4. **Renewal**: Discuss renewal 60 days before term end
 
-### Step 6: Launch
+## Custom Partnerships
 
-- Integration deployment
-- Testing and validation
-- Public announcement (if agreed)
-- Marketing campaign
+We understand every organization is unique. We're open to:
 
-### Step 7: Ongoing
+- **Custom Terms**: Tailored agreements
+- **Hybrid Models**: Combination of partnership types
+- **Pilot Programs**: Trial periods before commitment
+- **Non-Profit Discounts**: Special terms for non-profits and educational institutions
 
-- Regular business reviews
-- Support and optimization
-- Roadmap discussions
-- Success measurement
+**Contact**: partners@cuberai.example
 
-## Partner Expectations
+## Governance and Independence
 
-### From Partners
+**Important Note**: Per our governance model:
 
-We expect partners to:
-- Maintain active communication
-- Provide feedback on product and process
-- Meet agreed-upon commitments
-- Maintain security and quality standards
-- Promote collaboration opportunities
-- Share success stories (when appropriate)
+- Financial sponsors do not receive voting rights
+- Technical decisions remain community-driven
+- Partnerships don't grant special project privileges
+- All partners subject to Code of Conduct
 
-### From SmartContractAudit
+See [GOVERNANCE.md](../../GOVERNANCE.md) for details.
 
-Partners can expect us to:
-- Deliver on SLA commitments
-- Provide responsive support
-- Maintain product quality and security
-- Communicate roadmap changes
-- Honor partnership agreements
-- Protect partner data and confidentiality
+## Legal Entities
 
-## Partner Success Team
+### Project Structure
 
-Our partner success team includes:
+SmartContractAudit is an open-source project:
 
-- **Partnership Manager**: Overall relationship and business outcomes
-- **Technical Account Manager**: Integration and technical support
-- **Customer Success Manager**: Adoption and value realization
-- **Solutions Architect**: Custom implementations and best practices
+- **License**: Apache-2.0
+- **Repository**: GitHub
+- **Legal Entity**: [To be established - Foundation/DAO]
 
-## Metrics and Reporting
+### Contracting Party
 
-Partners receive:
+For formal agreements:
 
-- Monthly/quarterly business reviews
-- Usage analytics and insights
-- Security findings summaries
-- Performance metrics
-- ROI tracking
-- Health scores
+- **Entity Name**: [To be confirmed]
+- **Jurisdiction**: [To be confirmed]
+- **Tax Status**: [To be confirmed]
 
-## Termination and Changes
+**Note**: Formal entity structure in development. Contact us for current status.
 
-Partnerships can be:
+## Compliance
 
-- **Modified**: By mutual agreement at any time
-- **Renewed**: Annually or per contract terms
-- **Terminated**: With 30-90 day notice (per agreement)
-- **Transitioned**: To different tier or model
+### Export Control
 
-## Competitive Partners
+SmartContractAudit is open source and publicly available. Partners must comply with applicable export control laws.
 
-We maintain strict confidentiality:
+### Anti-Corruption
 
-- Separate account teams for competitors
-- Information barriers in place
-- No sharing of proprietary information
-- Transparent conflict management
+Partners must comply with anti-corruption laws including FCPA and UK Bribery Act.
 
-## Next Steps
+### Sanctions
 
-Ready to become a partner?
+Partners must not be subject to sanctions or operate in sanctioned jurisdictions.
 
-1. Read [sponsorship_tiers.md](sponsorship_tiers.md) for financial sponsorship
-2. Review [technical_onboarding.md](technical_onboarding.md) for technical requirements
-3. Check [data_privacy.md](data_privacy.md) for security and privacy details
-4. Contact us via [contact.md](contact.md) to start the conversation
+### Data Protection
+
+Partnerships must comply with GDPR, CCPA, and applicable privacy laws.
+
+## Amendment Process
+
+Agreements may be amended:
+
+- **Mutual Consent**: Changes require both parties' agreement
+- **Written Amendment**: Amendments must be in writing
+- **Notice**: Major changes require 30 days notice
+- **Version Control**: Amendments tracked and versioned
+
+## Dispute Resolution
+
+In the event of disputes:
+
+1. **Good Faith Negotiation**: 30 days to resolve informally
+2. **Mediation**: Neutral third-party mediation
+3. **Arbitration**: Binding arbitration (jurisdiction TBD)
+4. **Governing Law**: [To be specified per agreement]
+
+## FAQs
+
+**Q: Do I need a lawyer to review the agreement?**  
+A: We recommend legal review for formal agreements. MOUs are typically simpler.
+
+**Q: Can we negotiate terms?**  
+A: Yes, we're flexible and open to reasonable modifications.
+
+**Q: How long does the process take?**  
+A: 2-8 weeks depending on partnership type and complexity.
+
+**Q: Are there templates available?**  
+A: We provide standard templates that can be customized.
+
+**Q: What if we need to terminate early?**  
+A: Early termination is possible with notice. See specific agreement for terms.
+
+## Contact
+
+**Partnership Inquiries**: partners@cuberai.example  
+**Legal Questions**: legal@cuberai.example (placeholder)  
+**Sponsorships**: sponsors@cuberai.example
+
+**Response Time**: 3-5 business days
+
+## Resources
+
+- [Sponsorship Tiers](sponsorship_tiers.md)
+- [Technical Onboarding](technical_onboarding.md)
+- [SLA and Support](sla_and_support.md)
+- [Data Privacy](data_privacy.md)
+- [Press Kit](press_kit.md)
 
 ---
 
-*Partnership terms and availability subject to change. Contact us for the most current information and custom arrangements.*
+**Document Version**: 1.0  
+**Last Updated**: 2026-01-01  
+**Next Review**: 2026-07-01
+
+**Note**: This document provides general information. Specific agreements will contain complete terms and conditions.

@@ -1,113 +1,148 @@
-# Pull Request Template
+## 📋 Pull Request Summary
 
-## Description
+<!-- Provide a brief description of your changes -->
 
-Brief description of the changes in this PR.
+## 🎯 Changes Made
 
-## Type of Change
+<!-- List the key changes in this PR -->
+- 
+- 
+- 
 
-Please check the relevant option:
+## 🤖 Bot Metadata
 
-- [ ] Bug fix (non-breaking change fixing an issue)
-- [ ] New feature (non-breaking change adding functionality)
-- [ ] Breaking change (fix or feature causing existing functionality to change)
-- [ ] Documentation update
-- [ ] Code refactoring
-- [ ] Performance improvement
-- [ ] Test improvement
+<!-- Auto-generated bot information (if applicable) -->
+- **Bot Version**: 1.0.0
+- **Execution Mode**: 🔒 DRY_RUN / 🚀 LIVE
+- **Scan Type**: Security / Audit / Health / Full
+- **Timestamp**: YYYY-MM-DD HH:MM:SS UTC
 
-## Safety Checklist
+## ✅ Safety Checklist
 
-**IMPORTANT**: Please verify before submitting:
-
-- [ ] **DRY_RUN verified**: All potentially destructive operations default to DRY_RUN=true
-- [ ] **No secrets committed**: No API keys, private keys, passwords, or sensitive data in code
-- [ ] **No hardcoded credentials**: All credentials use environment variables or secure secrets
-- [ ] **Artifacts reviewed**: All generated artifacts (logs, reports) reviewed and safe to commit
-- [ ] **Non-destructive by default**: Auto-apply and auto-merge features disabled by default
-- [ ] **Permissions reviewed**: Required permissions are minimal and explicitly documented
-
-## Audit Artifacts Section
-
-If this PR includes security scanning or audit features:
-
-### Artifacts Generated
-- [ ] SMARTBRAIN.log
-- [ ] AUDIT-REPORT.md
-- [ ] .quarantine/ directory
-- [ ] Other (specify):
-
-### Artifact Safety
-- [ ] Artifacts do not contain secrets or sensitive data
-- [ ] Artifacts are properly gitignored or sanitized
-- [ ] Redaction policy followed for any included artifacts
-
-## Testing
-
+<!-- Check all that apply -->
+- [ ] All changes reviewed and tested
+- [ ] No secrets or credentials included in code
+- [ ] All scripts default to safe, non-destructive mode (DRY_RUN=true)
+- [ ] Documentation updated to reflect changes
+- [ ] Workflow permissions are minimal and appropriate
+- [ ] Bot pings disabled by default (opt-in only)
+- [ ] Changes are backward compatible
 - [ ] Tests pass locally
-- [ ] New tests added for new functionality
-- [ ] Existing tests updated if needed
-- [ ] Manual testing completed
+- [ ] No breaking changes introduced
 
-### Test Commands Run
-```bash
-# List commands you ran to test
-```
+## 🔍 Testing Evidence
 
-## Changes Made
+<!-- Describe how you tested your changes -->
+- **Test Environment**: Local / CI / Staging
+- **Test Results**: 
+- **Manual Testing**: 
 
-### Files Changed
-- List key files and why they were changed
+### Security Scan Results
+<!-- If security scan was run -->
+- 🔒 Hardcoded secrets detection: ✅ Pass / ⚠️ Review needed
+- 🔐 Vulnerability scanning: ✅ Pass / ⚠️ Review needed
+- 📊 Code quality checks: ✅ Pass / ⚠️ Review needed
 
-### Configuration Changes
-- Any new environment variables?
-- Any new dependencies?
-- Any configuration file changes?
+### Audit Results
+<!-- If code audit was run -->
+- 📁 Repository structure: ✅ Valid
+- 📈 Code metrics: 
+- 🧾 Compliance: ✅ Pass / ⚠️ Review needed
 
-## Security Considerations
+### Health Check
+<!-- If health check was run -->
+- ❤️ Configuration validation: ✅ Pass
+- 🩺 Dependency health: ✅ Pass / ⚠️ Needs attention
+- 📋 Status: 🟢 Healthy / 🟡 Warning / 🔴 Critical
 
-- [ ] No new security vulnerabilities introduced
-- [ ] Security best practices followed
-- [ ] Input validation added where necessary
-- [ ] Output sanitization applied where necessary
+## 🛡️ Security Notes
 
-## Documentation
+<!-- Security-related information -->
+- **Secrets Required**: Yes / No
+  - If yes, list required secrets (but NOT the actual values!)
+- **Permissions Changed**: Yes / No
+  - If yes, describe the changes
+- **External Dependencies**: Yes / No
+  - If yes, list new dependencies
 
-- [ ] README updated (if needed)
-- [ ] Code comments added for complex logic
-- [ ] API documentation updated (if applicable)
-- [ ] CHANGELOG updated (for releases)
+### Security Review
+- [ ] No new secrets introduced in code
+- [ ] All credentials managed via environment variables
+- [ ] Third-party dependencies audited
+- [ ] No suspicious network calls
+- [ ] Input validation implemented
+- [ ] Error handling appropriate
 
-## Checklist
+## 📊 Audit Artifacts
 
-- [ ] Code follows project style guidelines
-- [ ] Self-review completed
-- [ ] Commits are signed off (DCO)
-- [ ] PR title is clear and descriptive
-- [ ] Linked related issues (closes #123, relates to #456)
+<!-- Links to generated reports and artifacts -->
+- Security Scan Report: [Link or "See workflow artifacts"]
+- Audit Report: [Link or "See workflow artifacts"]
+- Health Check Report: [Link or "See workflow artifacts"]
+- Bot Logs: [Link or "See workflow artifacts"]
 
-## Additional Notes
+### Workflow Run
+- **Workflow**: [Link to GitHub Actions run]
+- **Status**: ✅ Success / ⚠️ Warning / ❌ Failed
+- **Duration**: X minutes
+- **Artifacts**: [Link to downloadable artifacts]
 
-Any additional context, decisions, or considerations for reviewers.
+## 🔗 Related Issues
 
-## Screenshots (if applicable)
+<!-- Link related issues or PRs -->
+Closes #
+Related to #
 
-Add screenshots for UI changes or visual features.
+## 📚 Documentation
 
-## Rollback Plan
+<!-- Links to relevant documentation -->
+- Architecture changes documented in: 
+- Usage guide updated: 
+- Security implications documented: 
 
-If this is a significant change, describe how to roll back if issues arise:
+## 🚀 Deployment Notes
 
-```
-Steps to rollback:
-1. 
-2. 
+<!-- If this PR includes deployment changes -->
+- **Deployment Target**: Testnet / Mainnet
+- **Network**: Base / Solana / Other
+- **Pre-deployment Steps**: 
+- **Post-deployment Verification**: 
+- **Rollback Plan**: 
+
+## 💬 Additional Context
+
+<!-- Any other information reviewers should know -->
+
+## 👥 Reviewers
+
+<!-- Tag specific people for review -->
+@SolanaRemix @smsdao @SmartBrain
+
+---
+
+## 🤖 Automated PR Information
+
+<!-- This section can be populated by automation -->
+
+### GitAntivirus Bot Activity
+- **Repositories Scanned**: N/A
+- **PRs Created**: 0
+- **Pings Sent**: 0 (disabled by default)
+- **Errors**: None
+
+### Configuration Used
+```json
+{
+  "dry_run": true,
+  "bot_pings_enabled": false,
+  "allowlist_orgs": [],
+  "max_prs_per_run": 3
+}
 ```
 
 ---
 
-**For Reviewers:**
-- [ ] Code quality approved
-- [ ] Security implications reviewed
-- [ ] Tests are adequate
-- [ ] Documentation is clear
+**🔒 Security First**: This PR follows security best practices with conservative defaults and dry-run mode enabled.
+
+**✨ Created**: YYYY-MM-DD  
+**🧠 Powered by**: SmartBrain / SMSDAO / GitAntivirus
