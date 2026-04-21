@@ -2,19 +2,13 @@
 set -euo pipefail
 
 # ============================================================
-<<<<<<< HEAD
 # AUDIT.SH — Code Audit Script
 # Placeholder for custom audit logic
-=======
-# AUDIT.SH — Smart Contract Audit Script
-# Non-destructive audit of smart contracts and code
->>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 # ============================================================
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
-<<<<<<< HEAD
 echo "[audit.sh] Starting code audit..."
 
 # Add your custom audit logic here
@@ -42,24 +36,4 @@ fi
 
 echo "[audit.sh] Audit complete. Review findings above."
 
-=======
-# Default to dry-run mode
-DRY_RUN="${DRY_RUN:-true}"
-
-log() { printf "\n[audit.sh] %s\n" "$*" >&2; }
-warn() { printf "\n[audit.sh][WARN] %s\n" "$*" >&2; }
-
-log "Starting audit process (DRY_RUN=${DRY_RUN})..."
-
-# Placeholder for contract auditing logic
-log "Auditing smart contracts..."
-log "Checking for common vulnerabilities..."
-log "Validating contract structure..."
-
-if [[ "$DRY_RUN" == "true" ]]; then
-  log "DRY_RUN mode: No changes will be made."
-fi
-
-log "Audit completed successfully."
->>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 exit 0

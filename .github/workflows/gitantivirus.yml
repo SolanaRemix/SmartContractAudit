@@ -1,6 +1,8 @@
 name: GitAntivirus - Smart Contract Security Scanner
 
 on:
+  push:
+    branches: [main, develop]
   pull_request:
     types: [opened, synchronize, reopened]
   push:
@@ -22,7 +24,7 @@ on:
         default: 'false'
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
   issues: write
 
@@ -138,6 +140,7 @@ jobs:
       - name: 🏷️ Add Labels to PR
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
+        continue-on-error: true
         with:
           script: |
             const labels = ['security-scan', 'gitantivirus'];
@@ -156,6 +159,7 @@ jobs:
       - name: 💬 Sticky PR Comment
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
+        continue-on-error: true
         with:
           script: |
             const fs = require('fs');

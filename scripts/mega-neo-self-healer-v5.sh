@@ -2,19 +2,13 @@
 set -euo pipefail
 
 # ============================================================
-<<<<<<< HEAD
 # MEGA-NEO-SELF-HEALER-V5.SH — UI/UX Auto-Heal
 # Placeholder for UI/UX healing logic
-=======
-# MEGA-NEO-SELF-HEALER-V5.SH — Neo-Glow UI Auto-Healer
-# Non-destructive self-healing for UI components
->>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 # ============================================================
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
-<<<<<<< HEAD
 DRY_RUN=${DRY_RUN:-true}
 
 echo "[neo-healer] Starting Neo UI/UX healing sequence..."
@@ -38,24 +32,4 @@ fi
 
 echo "[neo-healer] Neo healing sequence complete."
 
-=======
-# Default to dry-run mode
-DRY_RUN="${DRY_RUN:-true}"
-
-log() { printf "\n[neo-healer] %s\n" "$*" >&2; }
-warn() { printf "\n[neo-healer][WARN] %s\n" "$*" >&2; }
-
-log "Starting Neo-Glow UI self-healing (DRY_RUN=${DRY_RUN})..."
-
-# Placeholder for UI healing logic
-log "Checking error boundaries..."
-log "Validating component props..."
-log "Scanning for fallback UI patterns..."
-
-if [[ "$DRY_RUN" == "true" ]]; then
-  log "DRY_RUN mode: No changes will be made."
-fi
-
-log "Neo-Glow healing completed successfully."
->>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
 exit 0

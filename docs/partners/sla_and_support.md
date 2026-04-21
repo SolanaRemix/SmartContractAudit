@@ -1,497 +1,476 @@
 ---
 title: SLA and Support
-description: Service level agreements and support options for partners
-keywords: SLA, support, uptime, response time, service level agreement
+description: Service level agreements and support for SmartContractAudit partners
+keywords: SLA, support, response time, uptime, service level
 ---
 
 # SLA and Support
 
-This document outlines service level agreements (SLAs) and support commitments for SmartContractAudit partners.
+## Overview
 
-## Service Level Agreements
+This document outlines service level agreements (SLAs) and support policies for SmartContractAudit partners.
 
-### Uptime Commitments
+## Support Tiers by Partnership Level
 
-| Tier | Monthly Uptime | Downtime Allowance | Credits |
-|------|---------------|-------------------|---------|
-| Bronze | 99.0% | ~7.2 hours | 10% |
-| Silver | 99.5% | ~3.6 hours | 25% |
-| Gold | 99.9% | ~43 minutes | 50% |
-| Platinum | 99.95% | ~21 minutes | 100% |
+| Tier | Response Time | Support Channels | Hours | Uptime SLA |
+|------|---------------|------------------|-------|------------|
+| **Community** | Best effort | GitHub Issues | Business hours | None |
+| **Supporter** | 5 business days | GitHub Issues, Email | Business hours | None |
+| **Bronze** | 48 hours | Email, GitHub | Business hours | None |
+| **Silver** | 24 hours | Email, Video | Business + extended | 99% |
+| **Gold** | 12 hours | Email, Video, Slack | 12×6 | 99.5% |
+| **Platinum** | 4 hours | All channels, dedicated | 24×7 | 99.9% |
 
-**Measured**: Based on API availability monitoring
-**Exclusions**: Scheduled maintenance (with 7-day notice)
-**Credits**: Applied to next billing cycle
-
-### Response Time SLAs
-
-#### Critical Issues
-*Service completely unavailable, data loss, security breach*
-
-| Tier | Acknowledgment | First Response | Resolution Target |
-|------|---------------|----------------|------------------|
-| Bronze | 4 hours | 8 hours | 24 hours |
-| Silver | 2 hours | 4 hours | 12 hours |
-| Gold | 1 hour | 2 hours | 8 hours |
-| Platinum | 30 minutes | 1 hour | 4 hours |
-
-#### High Priority
-*Major functionality impaired, significant performance degradation*
-
-| Tier | Acknowledgment | First Response | Resolution Target |
-|------|---------------|----------------|------------------|
-| Bronze | 8 hours | 1 business day | 3 business days |
-| Silver | 4 hours | 12 hours | 2 business days |
-| Gold | 2 hours | 4 hours | 1 business day |
-| Platinum | 1 hour | 2 hours | 12 hours |
-
-#### Medium Priority
-*Partial functionality affected, workarounds available*
-
-| Tier | Acknowledgment | First Response | Resolution Target |
-|------|---------------|----------------|------------------|
-| Bronze | 1 business day | 2 business days | 5 business days |
-| Silver | 12 hours | 1 business day | 3 business days |
-| Gold | 4 hours | 8 hours | 2 business days |
-| Platinum | 2 hours | 4 hours | 1 business day |
-
-#### Low Priority
-*Minor issues, feature requests, questions*
-
-| Tier | Acknowledgment | First Response | Resolution Target |
-|------|---------------|----------------|------------------|
-| Bronze | 2 business days | 3 business days | Best effort |
-| Silver | 1 business day | 2 business days | 7 business days |
-| Gold | 8 hours | 1 business day | 5 business days |
-| Platinum | 4 hours | 8 hours | 3 business days |
-
-**Business Hours**: Monday-Friday, 9 AM - 5 PM PT (except holidays)
-**24/7 Coverage**: Platinum tier only (for critical issues)
-
-### Performance SLAs
-
-#### API Response Times (95th percentile)
-
-| Tier | Scan Request | Result Retrieval | Other Endpoints |
-|------|-------------|------------------|----------------|
-| Bronze | < 5 seconds | < 2 seconds | < 1 second |
-| Silver | < 3 seconds | < 1 second | < 500ms |
-| Gold | < 2 seconds | < 500ms | < 250ms |
-| Platinum | < 1 second | < 250ms | < 100ms |
-
-#### Scan Completion Times
-
-| Contract Size | Target Time | SLA |
-|--------------|------------|-----|
-| < 100 lines | 30 seconds | 2 minutes |
-| 100-500 lines | 2 minutes | 5 minutes |
-| 500-1000 lines | 5 minutes | 15 minutes |
-| 1000-5000 lines | 15 minutes | 45 minutes |
-| > 5000 lines | 60 minutes | 3 hours |
-
-**Note**: Complex contracts may take longer; estimates provided during submission
+**Business Hours**: Monday-Friday, 9 AM - 5 PM UTC  
+**Extended Hours**: Monday-Friday, 6 AM - 10 PM UTC  
+**24×7**: Around the clock, including weekends and holidays
 
 ## Support Channels
 
-### Email Support
+### GitHub Issues (All Users)
 
-**Available to**: All tiers
+**Purpose**: Bug reports, feature requests, general questions
 
-**Email addresses**:
-- General: support@cuberai.example
-- Technical: technical-support@cuberai.example
-- Security: security@cuberai.example
+**How to Use**:
+1. Search existing issues first
+2. Use issue templates
+3. Provide reproduction steps
+4. Include relevant logs/screenshots
 
-**Response times**: Per SLA table above
+**Response Time**: Varies by tier (see table above)
 
-### Partner Portal
+**Best For**:
+- Bug reports
+- Feature requests
+- Public discussions
+- Community help
 
-**Available to**: All tiers
+### Email Support (Bronze+)
+
+**Email**: support@cuberai.example
+
+**Include in Request**:
+- Partnership tier
+- Organization name
+- Detailed description
+- Steps to reproduce
+- Expected vs. actual behavior
+- Relevant logs (sanitized)
+
+**Response Time**: Per tier SLA
+
+**Best For**:
+- Private issues
+- Account questions
+- Billing inquiries
+- Security concerns (use security@cuberai.example)
+
+### Video Call Support (Silver+)
+
+**Scheduling**: Via email or partner portal
+
+**Duration**: 30-60 minutes per session
+
+**Frequency**:
+- **Silver**: Monthly check-ins available
+- **Gold**: Bi-weekly check-ins
+- **Platinum**: Weekly + on-demand
+
+**Best For**:
+- Complex troubleshooting
+- Integration planning
+- Training sessions
+- Strategic discussions
+
+### Private Slack/Discord (Silver+)
+
+**Access**: Provided upon partnership activation
 
 **Features**:
-- Ticket submission and tracking
-- Knowledge base access
-- Documentation
-- API key management
-- Usage dashboards
-- Billing information
+- Direct messaging with support team
+- File sharing
+- Screen sharing
+- Channel for your organization
 
-**URL**: https://partners.smartcontractaudit.example
+**Response Time**: Per tier SLA during support hours
 
-### Chat Support
+**Best For**:
+- Quick questions
+- Real-time collaboration
+- Ongoing projects
+- Team coordination
 
-**Available to**: Silver tier and above
+### Dedicated Support Engineer (Platinum)
 
-**Platforms**:
-- Slack Connect (preferred)
-- Discord (for open source partners)
-- Microsoft Teams (enterprise)
+**Features**:
+- Named engineer assigned to your account
+- Proactive monitoring
+- Regular check-ins
+- Priority for all requests
+- Direct phone/SMS (critical issues)
 
-**Hours**:
-- Silver: Business hours
-- Gold: Extended hours (6 AM - 8 PM PT)
-- Platinum: 24/7
+**Availability**: 24×7 for critical issues
 
-### Phone Support
+**Best For**:
+- Enterprise deployments
+- Mission-critical integrations
+- Custom development
+- Strategic partnerships
 
-**Available to**: Gold and Platinum tiers
+## Response Time SLAs
 
-**Numbers**:
-- US: [To be provided]
-- EU: [To be provided]
-- APAC: [To be provided]
+### Definitions
 
-**Hours**:
-- Gold: Business hours
-- Platinum: 24/7 emergency hotline
+**Response Time**: Time from ticket submission to first substantive response
 
-### Dedicated Account Manager
+**Resolution Time**: Time from submission to issue resolution (not covered by SLA, but tracked)
 
-**Available to**: Gold and Platinum tiers
+**Business Hours**: Monday-Friday, 9 AM - 5 PM UTC (excluding holidays)
 
-**Responsibilities**:
-- Strategic relationship management
-- Quarterly business reviews
-- Escalation point
-- Roadmap discussions
-- Success planning
+### Severity Levels
 
-**Contact**: Direct email and phone
+#### Critical (P1)
 
-### Technical Account Manager
+**Definition**: System down, major security vulnerability, blocking production deployment
 
-**Available to**: Platinum tier
-
-**Responsibilities**:
-- Integration support
-- Architecture guidance
-- Performance optimization
-- Custom development coordination
-- Technical escalations
-
-**Contact**: Direct access via Slack/Teams
-
-## Support Scope
-
-### Included Support
-
-✅ **In Scope**:
-- Product functionality questions
-- API usage guidance
-- Integration troubleshooting
-- Bug reports and fixes
-- Performance issues
-- Security concerns
-- Account management
-- Billing questions
-
-### Excluded Support
-
-❌ **Out of Scope**:
-- Custom development (billable)
-- Third-party integrations (unless documented)
-- Smart contract development advice
-- General blockchain education
-- Partner's internal infrastructure
-- End-user support (partner's users)
-- Code review (outside scanning)
-
-**Note**: Out-of-scope items may be available as paid services
-
-## Incident Management
-
-### Severity Definitions
-
-**Critical (P0)**:
+**Examples**:
+- Core functionality unavailable
+- Data loss or corruption
+- Security breach or vulnerability
 - Complete service outage
-- Data breach or loss
-- Security vulnerability
-- Affects all users
 
-**High (P1)**:
-- Major functionality unavailable
-- Significant performance degradation
-- Affects multiple partners
-- Revenue impact
+**Response Times**:
+- **Silver**: 4 hours
+- **Gold**: 2 hours
+- **Platinum**: 1 hour
 
-**Medium (P2)**:
-- Partial functionality impaired
-- Workarounds available
-- Limited user impact
-- Minor performance issues
+**Updates**: Every 4 hours until resolved
 
-**Low (P3)**:
-- Cosmetic issues
-- Feature requests
+#### High (P2)
+
+**Definition**: Significant feature impairment, workaround available
+
+**Examples**:
+- Major feature not working
+- Performance degradation
+- Integration failures
+- Incorrect results
+
+**Response Times**:
+- **Silver**: 12 hours
+- **Gold**: 6 hours
+- **Platinum**: 2 hours
+
+**Updates**: Daily until resolved
+
+#### Medium (P3)
+
+**Definition**: Minor feature issues, cosmetic problems
+
+**Examples**:
+- UI/UX issues
 - Documentation errors
-- Minor bugs
+- Minor bugs with workarounds
+- Feature enhancements
 
-### Escalation Process
+**Response Times**:
+- **Silver**: 24 hours
+- **Gold**: 12 hours
+- **Platinum**: 4 hours
 
-**Level 1**: Support Engineer
-- Initial triage and troubleshooting
-- Resolution of common issues
-- Documentation of complex issues
+**Updates**: Every 3 business days
 
-**Level 2**: Senior Engineer
-- Complex technical issues
-- Integration problems
+#### Low (P4)
+
+**Definition**: Questions, minor issues, feature requests
+
+**Examples**:
+- General questions
+- Documentation requests
+- Nice-to-have features
+- Best practice advice
+
+**Response Times**:
+- **Bronze**: 48 hours
+- **Silver**: 24 hours
+- **Gold**: 12 hours
+- **Platinum**: 4 hours
+
+**Updates**: As needed
+
+## Uptime SLAs
+
+### Service Availability
+
+**Measured**: Monthly uptime percentage for core services
+
+**Core Services**:
+- GitHub Actions workflows
+- API endpoints (if applicable)
+- Documentation site
+- Partner portal
+
+### SLA Commitments
+
+#### Silver Tier: 99% Uptime
+
+**Allows**: ~7.3 hours downtime per month
+
+**Excludes**: Scheduled maintenance (with notice)
+
+**Credits**: None (open source project)
+
+#### Gold Tier: 99.5% Uptime
+
+**Allows**: ~3.6 hours downtime per month
+
+**Excludes**: Scheduled maintenance (with notice)
+
+**Credits**: Service credits available (negotiated)
+
+#### Platinum Tier: 99.9% Uptime
+
+**Allows**: ~43 minutes downtime per month
+
+**Excludes**: Emergency maintenance only
+
+**Credits**: Service credits per agreement
+
+### Planned Maintenance
+
+**Notice Period**:
+- **Standard Maintenance**: 7 days advance notice
+- **Emergency Maintenance**: As soon as possible
+
+**Windows**:
+- **Preferred**: Weekends, outside business hours
+- **Duration**: Typically 1-4 hours
+- **Frequency**: Monthly or as needed
+
+**Notification Channels**:
+- Email to partners
+- Status page updates
+- Slack/Discord announcements (if applicable)
+
+### Incident Response
+
+**Monitoring**: 24/7 automated monitoring
+
+**Response Process**:
+1. **Detection**: Automated or reported
+2. **Triage**: Assess severity and impact
+3. **Communication**: Notify affected partners
+4. **Resolution**: Fix and verify
+5. **Post-Mortem**: Document and prevent recurrence
+
+**Status Updates**:
+- **Status Page**: Real-time status
+- **Email**: For affected partners
+- **Social**: Major incidents only
+
+## Support Best Practices
+
+### For Efficient Support
+
+**Do**:
+✅ Search documentation first  
+✅ Check existing issues/tickets  
+✅ Provide complete information  
+✅ Include reproduction steps  
+✅ Sanitize sensitive data  
+✅ Use appropriate severity level  
+✅ Follow up when asked  
+
+**Don't**:
+❌ Open duplicate tickets  
+❌ Mark everything as critical  
+❌ Share private keys/secrets  
+❌ Expect immediate responses for low priority  
+❌ Use multiple channels simultaneously  
+
+### Information to Include
+
+**For Bug Reports**:
+- Steps to reproduce
+- Expected behavior
+- Actual behavior
+- Environment details
+- Error messages
+- Screenshots/logs
+
+**For Integration Issues**:
+- Integration type
+- Configuration files (sanitized)
+- Error logs
+- Network details
+- Attempted solutions
+
+**For Performance Issues**:
+- Specific operation
+- Performance metrics
+- Comparison (before/after)
+- Resource usage
+- Timing information
+
+## Escalation Process
+
+### When to Escalate
+
+- No response within SLA window
+- Issue severity increased
+- Critical business impact
+- Inadequate resolution
+- Urgent business need
+
+### How to Escalate
+
+**Level 1**: Standard support contact  
+**Level 2**: support-manager@cuberai.example  
+**Level 3**: partners@cuberai.example  
+**Level 4**: Executive contact (Platinum only)
+
+**Include**:
+- Original ticket number
+- Timeline of issue
+- Business impact
+- Required resolution timeline
+
+## Additional Support Services
+
+### Training (All Tiers, Fee-Based)
+
+**Team Training**: $2,000 per session
+- 2-hour interactive training
+- Up to 20 participants
+- Custom curriculum
+- Q&A session
+- Recording provided
+
+**Workshops**: $5,000 per day
+- Full-day intensive workshop
+- Hands-on exercises
+- Custom to your use case
+- Follow-up support included
+
+### Professional Services (Gold+)
+
+**Integration Assistance**: $200/hour
+- Custom integration help
+- Code review
+- Best practices guidance
 - Performance optimization
-- Escalations from Level 1
 
-**Level 3**: Engineering Team
-- Product bugs
-- Architecture issues
-- Security concerns
-- Code-level fixes
+**Custom Development**: Starting at $10,000
+- Custom features
+- Plugin development
+- Workflow customization
+- Ongoing maintenance
 
-**Level 4**: Leadership
-- Service outages
-- Major incidents
-- Business-critical issues
-- Emergency escalations
+### On-Site Support (Platinum)
 
-### Partner Escalation
+**Availability**: By arrangement
 
-Partners can escalate via:
+**Cost**: Travel + daily rate
 
-1. **Account Manager** (Gold/Platinum)
-2. **Email**: escalations@cuberai.example
-3. **Emergency Hotline** (Platinum, critical only)
-4. **Partner Portal** (mark as urgent)
+**Includes**:
+- In-person technical support
+- Training and workshops
+- Integration assistance
+- Strategic planning
 
-**When to escalate**:
-- SLA at risk
-- Inadequate response
-- Business-critical impact
-- Urgent security concerns
+## Exclusions
 
-## Maintenance Windows
+SLAs do not cover:
 
-### Scheduled Maintenance
+- Issues caused by partner's environment
+- Third-party service failures
+- Network/connectivity issues outside our control
+- Customizations not supported by us
+- Beta/experimental features
+- Scheduled maintenance (with notice)
 
-**Frequency**: Monthly (typically)
-**Duration**: 1-4 hours
-**Notice**: 7 days advance
-**Window**: Sundays, 2-6 AM PT
+## Partner Responsibilities
 
-**Communication**:
-- Email notification
-- Status page update
-- In-app notification
-- API headers (upcoming maintenance)
+To receive full SLA benefits:
 
-### Emergency Maintenance
+✅ **Maintain Current Tier**: Active partnership in good standing  
+✅ **Use Supported Versions**: Latest stable releases  
+✅ **Follow Best Practices**: Per our documentation  
+✅ **Provide Information**: Complete details for support requests  
+✅ **Respond Timely**: To our questions and requests  
+✅ **Test Updates**: In non-production first  
 
-**When**: Critical security or stability issues
-**Notice**: As much as possible (minimum 2 hours)
-**Duration**: Minimized
-**Communication**: Real-time updates
-
-### Zero-Downtime Deployments
-
-Most updates deployed without downtime:
-- Feature releases
-- Bug fixes
-- Performance improvements
-- Minor updates
-
-## Status and Monitoring
+## Monitoring and Reporting
 
 ### Status Page
 
-**URL**: https://status.smartcontractaudit.example
+**URL**: [TO BE ANNOUNCED]
 
-**Information**:
+**Shows**:
 - Current system status
 - Incident history
 - Scheduled maintenance
 - Performance metrics
-- Subscribe for alerts
 
-**Components Monitored**:
-- API endpoints
-- Web interface
-- Scanning service
-- Authentication service
-- Webhook delivery
+**Subscribe**: Email/SMS/Slack notifications
 
-### Monitoring and Alerts
+### Monthly Reports (Silver+)
 
-**Real-time Monitoring**:
-- Uptime (1-minute intervals)
+**Includes**:
+- Uptime statistics
+- Support ticket summary
+- Resolution times
+- Usage metrics (if applicable)
+- Recommendations
+
+**Delivery**: First week of each month
+
+### Quarterly Business Reviews (Gold+)
+
+**Agenda**:
+- Partnership performance
+- Usage analysis
+- Support review
+- Roadmap discussion
+- Feedback session
+
+**Duration**: 60 minutes
+
+**Attendees**: Technical and business stakeholders
+
+## Feedback and Improvements
+
+We continuously improve our support:
+
+**Surveys**: Post-resolution satisfaction surveys  
+**Reviews**: Quarterly support quality reviews  
+**Feedback**: Always welcome via partners@cuberai.example
+
+**We track**:
 - Response times
-- Error rates
-- Queue depths
-- Resource utilization
-
-**Alerting**:
-- Partners notified of issues affecting them
-- Status page updates
-- Email notifications
-- Slack/Discord updates (if configured)
-
-## Credits and Refunds
-
-### Service Credits
-
-**Calculation**:
-```
-Credit = (Monthly Fee / 30 / 24) × Hours Down
-```
-
-**Example**:
-- Gold tier: $5,000/month
-- Outage: 2 hours
-- Credit: ($5,000 / 30 / 24) × 2 = $13.89
-
-**Application**:
-- Automatically calculated
-- Applied to next invoice
-- Must request within 30 days
-- Maximum: 100% of monthly fee
-
-### Refund Policy
-
-**Pro-rated Refunds**:
-- Annual plans: Unused months refunded
-- Cancellation: 30-day notice required
-- First month: Full refund if < 14 days
-
-**No Refunds**:
-- Service credits (in lieu of refunds)
-- Monthly subscriptions
-- Usage-based charges already incurred
-
-## Support Best Practices
-
-### For Partners
-
-**Effective Support Requests**:
-- Clear description of issue
-- Steps to reproduce
-- Expected vs actual behavior
-- Environment details
-- Error messages/logs
-- Impact assessment
-- Urgency justification
-
-**Example Good Request**:
-```
-Subject: [Critical] API 500 errors on scan submission
-
-Description: Receiving consistent 500 errors when submitting 
-scans via API since 2025-12-31 10:00 AM PT.
-
-Impact: All production scans failing. ~50 customers affected.
-
-Reproduction:
-1. POST to /v1/scan
-2. Sample payload: {...}
-3. Response: 500 Internal Server Error
-
-Environment:
-- API Key: pk_test_EXAMPLE_NOT_A_REAL_KEY
-- Endpoint: api.smartcontractaudit.example
-- Request ID: req_xyz123
-
-Urgency: Critical - production down, revenue impact
-```
-
-### Response Expectations
-
-**What We Provide**:
-- Acknowledgment within SLA
-- Regular status updates
-- Clear communication
-- Root cause analysis (post-mortem)
-- Prevention steps
-
-**What We Need**:
-- Accurate information
-- Timely responses
-- Testing cooperation
-- Feedback on resolutions
-
-## Training and Onboarding
-
-### Included Training
-
-**All Tiers**:
-- Self-service documentation
-- Video tutorials
-- Webinar recordings
-
-**Silver and Above**:
-- Live onboarding session (1 hour)
-- Q&A sessions (monthly)
-
-**Gold and Above**:
-- Custom training sessions (2/year)
-- Dedicated onboarding (4 hours)
-- Best practices workshop
-
-**Platinum**:
-- On-site training (2/year)
-- Custom curriculum
-- Executive briefings
-- Ongoing education program
-
-### Additional Training
-
-**Available as Add-on**:
-- Advanced technical training
-- Security best practices
-- Integration workshops
-- Team enablement
-
-**Pricing**: $2,000-$5,000 per day
-
-## Feedback and Improvement
-
-### Satisfaction Surveys
-
-**After Each Ticket**:
-- Resolution satisfaction
-- Response time
-- Support quality
-
-**Quarterly**:
-- Overall satisfaction
-- Product feedback
-- Feature requests
-- Improvement suggestions
-
-### Continuous Improvement
-
-**We Use Feedback To**:
-- Improve support processes
-- Enhance documentation
-- Prioritize features
-- Train support team
-- Refine SLAs
-
-**Partner Advisory Board**:
-- Quarterly meetings
-- Gold and Platinum partners
-- Product direction input
-- Support policy feedback
+- Resolution times
+- Customer satisfaction
+- First-contact resolution
 
 ## Contact
 
-### Support Contacts
+**General Support**: support@cuberai.example  
+**Partner Success**: partners@cuberai.example  
+**Security Issues**: security@cuberai.example  
+**Billing**: billing@cuberai.example  
+**Escalations**: support-manager@cuberai.example
 
-- **General Support**: support@cuberai.example
-- **Technical**: technical-support@cuberai.example
-- **Escalations**: escalations@cuberai.example
-- **Account Management**: accounts@cuberai.example
+## Related Documents
 
-### Emergency Contacts
-
-- **Critical Issues**: [Phone number - Platinum only]
-- **Security Incidents**: security@cuberai.example (monitored 24/7)
-- **Status Page**: https://status.smartcontractaudit.example
+- [Sponsorship Tiers](sponsorship_tiers.md)
+- [Technical Onboarding](technical_onboarding.md)
+- [Partnership Agreement](partnerships.md)
+- [Data Privacy](data_privacy.md)
 
 ---
 
-*SLAs and support terms effective 2025-12-31. Subject to partnership agreement. For questions, contact your account manager or support@cuberai.example.*
+**Last Updated**: 2026-01-01  
+**Version**: 1.0  
+**Next Review**: 2026-04-01
+
+We're committed to your success! 🚀

@@ -29,7 +29,7 @@ This automated scanner identifies:
 ./scripts/scan-cyberai-prs.sh
 ```
 
-**Note**: Run the scanner to see current counts; results will vary as branches and files change.
+**Current findings**: 10 files with 244+ CyberAi references
 
 ### 2. Comprehensive Architecture Documentation ✅
 

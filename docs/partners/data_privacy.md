@@ -1,436 +1,582 @@
 ---
 title: Data Privacy for Partners
-description: Privacy and security practices for partner integrations
-keywords: privacy, security, compliance, data protection, GDPR
+description: Data handling and privacy practices for SmartContractAudit partners
+keywords: privacy, data protection, GDPR, security, compliance
 ---
 
-# Data Privacy for Partners
-
-This document outlines data privacy and security practices for SmartContractAudit partners.
+# Partner Data Privacy
 
 ## Overview
 
-We take data privacy seriously and maintain strict policies to protect partner and user data. This document details how data is collected, processed, stored, and protected in partner integrations.
+This document explains how we handle partner data and our privacy practices. We take data protection seriously and comply with applicable regulations.
+
+## Data We Collect
+
+### From All Partners
+
+**Public Information**:
+- Organization name and website
+- Public contact information
+- Logo and branding assets
+- Public GitHub activity
+
+**Partnership Data**:
+- Partnership tier and agreement
+- Communication history
+- Support requests and tickets
+- Technical integration details
+
+### From Paying Sponsors
+
+**Billing Information**:
+- Organization legal name
+- Billing address
+- Payment method details (tokenized)
+- Invoice history
+- Tax information (if applicable)
+
+### From Technical Integrations
+
+**Usage Data**:
+- API call logs (anonymized)
+- Integration health metrics
+- Error logs (sanitized)
+- Performance statistics
+
+### What We DON'T Collect
+
+❌ We never collect:
+- Private keys or seed phrases
+- Passwords or credentials
+- Source code (unless explicitly shared)
+- Personal financial information beyond billing
+- Unnecessary personal data
+
+## How We Use Partner Data
+
+### Primary Uses
+
+**Partnership Management**:
+- Deliver agreed-upon benefits
+- Provide technical support
+- Process payments
+- Track partnership status
+
+**Communication**:
+- Respond to inquiries
+- Share updates and announcements
+- Coordinate co-marketing activities
+- Schedule check-in calls
+
+**Service Improvement**:
+- Analyze usage patterns
+- Improve integrations
+- Enhance features
+- Optimize performance
+
+**Legal and Compliance**:
+- Meet contractual obligations
+- Comply with applicable laws
+- Resolve disputes
+- Maintain audit trails
+
+### We Do NOT
+
+❌ **Never**:
+- Sell partner data to third parties
+- Share data without permission
+- Use data for unrelated marketing
+- Expose confidential information
+
+## Data Protection Measures
+
+### Security Practices
+
+**Technical Controls**:
+- Encryption at rest and in transit (TLS 1.3)
+- Access controls and authentication
+- Regular security audits
+- Vulnerability scanning
+- Secure backup procedures
+
+**Operational Controls**:
+- Need-to-know access principle
+- Background checks for team members
+- Confidentiality agreements
+- Security awareness training
+- Incident response procedures
+
+**Physical Controls**:
+- Secure data center facilities
+- Environmental controls
+- Access logging and monitoring
+- Redundancy and disaster recovery
+
+### Data Handling
+
+**Storage**:
+- Encrypted databases
+- Secure cloud infrastructure
+- Geographic redundancy
+- Regular backups
+
+**Transmission**:
+- TLS encryption for all communications
+- Secure APIs with authentication
+- VPN for sensitive integrations
+- Sanitization of logs
+
+**Access**:
+- Multi-factor authentication
+- Role-based access control
+- Audit logging
+- Annual access reviews
+
+## Third-Party Services
+
+### Services We Use
+
+**Infrastructure**:
+- **GitHub**: Code hosting and CI/CD
+- **Cloud Providers**: Compute and storage
+- **CDN**: Content delivery
+
+**Business Operations**:
+- **Stripe**: Payment processing
+- **Email Service**: Communication
+- **Analytics**: Anonymized usage data
+
+**Each service**:
+- Has been vetted for security
+- Complies with applicable regulations
+- Has a data processing agreement
+- Provides encryption and security
+
+### Data Sharing
+
+We share limited data with third parties only:
+
+**Payment Processors**:
+- Billing information (securely transmitted)
+- Transaction details
+- Tax information (if required)
+
+**Cloud Providers**:
+- Encrypted data storage
+- Compute resources
+- Backup services
+
+**Analytics**:
+- Anonymized usage statistics
+- No personally identifiable information
+- Aggregate data only
+
+## Partner Rights
+
+### Your Rights (GDPR/CCPA)
+
+**Access**: Request copy of your data  
+**Rectification**: Correct inaccurate data  
+**Erasure**: Request deletion (where feasible)  
+**Portability**: Receive data in portable format  
+**Objection**: Object to certain processing  
+**Restriction**: Limit processing in some cases
+
+### How to Exercise Rights
+
+**Email**: privacy@cuberai.example  
+**Subject**: "Data Request - [Your Organization]"  
+**Include**:
+- Organization name
+- Specific request
+- Verification information
+- Preferred response format
+
+**Response Time**: 30 days maximum
+
+## Data Retention
+
+### Retention Periods
+
+**Active Partnerships**:
+- Retained for duration of partnership
+- Plus 12 months after termination
+
+**Billing Records**:
+- 7 years (tax and legal requirements)
+
+**Support Tickets**:
+- 3 years after resolution
+
+**Usage Logs**:
+- 90 days (anonymized aggregates kept longer)
+
+**Marketing Communications**:
+- Until unsubscribe or objection
+
+### Deletion Process
+
+**Upon Request**:
+1. Verify identity and authority
+2. Assess legal obligations to retain
+3. Delete data where possible
+4. Anonymize where deletion not feasible
+5. Confirm completion
+
+**Note**: Some data must be retained for legal/compliance reasons.
+
+## Confidentiality
+
+### Confidential Information
+
+We treat as confidential:
+- Partnership terms and pricing
+- Technical integration details
+- Private communications
+- Strategic information
+- Non-public product details
+
+### Non-Disclosure
+
+**Standard NDA Terms**:
+- Information marked confidential
+- Information reasonably confidential
+- Exceptions: public domain, required by law
+- Duration: Term + 3 years
+
+**Mutual NDA**: Available upon request
+# Data Privacy for Partners
+
+## Overview
+
+SmartContractAudit is committed to protecting the privacy of our partners and their users. This document outlines our data practices for partner integrations.
 
 ## Data Collection
 
 ### What We Collect
 
-From partner integrations:
+**From Partner Integration**:
+- Repository URLs and metadata
+- Scan configurations
+- API usage statistics
+- Integration performance metrics
+- Error logs (no sensitive data)
 
-**Technical Data**:
-- Smart contract source code (temporarily, for scanning)
-- API request metadata (timestamps, endpoints, parameters)
-- Scan results and findings
-- Usage metrics (aggregated)
+**From End Users** (via partner integration):
+- GitHub usernames (public)
+- Scan results
+- Security findings
+- Usage patterns
 
-**Account Data**:
-- Partner organization information
-- Technical contact details
-- Billing information
-- API keys and access tokens (hashed)
+### What We DON'T Collect
 
-### What We Never Collect
+- ❌ Private keys or credentials
+- ❌ User passwords
+- ❌ Financial information
+- ❌ Personal identifiable information (beyond GitHub username)
+- ❌ Private repository code (unless authorized)
 
-**Absolutely prohibited**:
-- Private keys or mnemonics (in any form)
-- Wallet passwords or credentials
-- User personal data (unless explicitly needed and authorized)
-- Sensitive business information beyond scope
-- Data from unauthorized sources
+## Data Usage
 
-## Data Processing
+### How We Use Data
 
-### Scanning Process
+1. **Service Delivery**
+   - Perform security scans
+   - Generate reports
+   - Provide recommendations
 
-1. **Submission**: Contract code sent via API
-2. **Scanning**: Analyzed in isolated environment
-3. **Results**: Findings generated and stored
-4. **Cleanup**: Source code deleted after processing
-5. **Retention**: Results retained per agreement (default 90 days)
+2. **Service Improvement**
+   - Improve scan accuracy
+   - Optimize performance
+   - Develop new features
 
-### Processing Location
+3. **Analytics**
+   - Aggregated usage statistics
+   - Performance metrics
+   - Anonymized trend analysis
 
-- **Primary**: [Region to be specified, e.g., US-East]
-- **Backup**: [Backup region to be specified]
-- **On-Premise**: Available for enterprise partners
-- **Data Residency**: Configurable for compliance
+4. **Communication**
+   - Service notifications
+   - Security alerts
+   - Product updates
 
-### Third-Party Processing
+### How We DON'T Use Data
 
-We may use third-party services for:
-
-- Cloud hosting (AWS/GCP/Azure)
-- CDN services
-- Analytics (anonymized only)
-- Support ticketing
-
-All third parties are vetted and contractually bound to our privacy standards.
+- ❌ Sell to third parties
+- ❌ Train AI models (without permission)
+- ❌ Share publicly (unless findings require disclosure)
+- ❌ Use for advertising
+- ❌ Share with competitors
 
 ## Data Storage
 
-### Storage Duration
+### Where Data is Stored
 
-| Data Type | Default Retention | Configurable |
-|-----------|------------------|--------------|
-| Source Code | 24 hours | Yes (0-7 days) |
-| Scan Results | 90 days | Yes (30-365 days) |
-| API Logs | 30 days | Yes (7-90 days) |
-| Audit Reports | 1 year | Yes |
-| Account Data | Active + 30 days | No |
-| Billing Records | 7 years | No (legal requirement) |
+- **Primary**: AWS (US-East-1)
+- **Backup**: AWS (EU-West-1)
+- **Logs**: Encrypted cloud storage
+- **Artifacts**: GitHub Actions (90-day retention)
 
-### Storage Security
+### Security Measures
 
-**Encryption**:
-- **At Rest**: AES-256 encryption
-- **In Transit**: TLS 1.3
-- **Key Management**: HSM-backed key storage
-- **Access Control**: Role-based with MFA
-
-**Infrastructure**:
-- SOC 2 Type II certified facilities
-- Physical security controls
-- Network segmentation
-- DDoS protection
+- Encryption at rest (AES-256)
+- Encryption in transit (TLS 1.3)
+- Access controls (RBAC)
 - Regular security audits
+- SOC 2 compliance (in progress)
+
+### Retention Periods
+
+| Data Type | Retention | Notes |
+|-----------|-----------|-------|
+| Scan results | 90 days | Configurable |
+| API logs | 30 days | Aggregated after |
+| Metrics | 1 year | Anonymized |
+| Security findings | Until resolved | Critical data |
+| User accounts | Active + 30 days | After deletion request |
 
 ## Data Sharing
 
-### What We Share
+### When We Share Data
 
-**With Partners** (your data only):
-- Scan results for your contracts
-- Usage analytics for your account
-- Billing information
-- Support interactions
+**With Partners**:
+- You receive your integration's data
+- Aggregated metrics (anonymized)
+- Security findings for your users
 
-**Aggregate Data** (anonymized):
-- Industry benchmarks
-- Vulnerability trends
-- Performance metrics
+**With Third Parties**:
+- Infrastructure providers (AWS, GitHub)
+- Analytics tools (anonymized)
+- Security tools (hashed data)
 
-### What We Never Share
+**Legal Requirements**:
+- Court orders
+- Law enforcement (valid warrants)
+- Regulatory compliance
 
-- Individual partner data with other partners
-- Competitive intelligence
-- Unaggregated user data
-- Source code (except back to submitter)
-- Any data without authorization
+### When We DON'T Share
 
-### Legal Disclosure
-
-We may disclose data when:
-- Required by law or legal process
-- Necessary to protect rights or safety
-- Part of business transfer (with notice)
-- With explicit partner consent
-
-We will:
-- Challenge overbroad requests
-- Notify partners when legally permitted
-- Minimize disclosure scope
-- Document all disclosures
-
-## Privacy by Design
-
-### Principles
-
-1. **Minimize Collection**: Only collect necessary data
-2. **Purpose Limitation**: Use data only for stated purposes
-3. **Access Control**: Restrict access to need-to-know basis
-4. **Transparency**: Clear communication about practices
-5. **User Control**: Partners control their data
-6. **Security**: Protect data with appropriate measures
-7. **Accountability**: Regular audits and compliance checks
-
-### Implementation
-
-**Pseudonymization**:
-- Internal IDs instead of identifying information
-- Separate storage of identifying data
-- Limited access to mapping tables
-
-**Aggregation**:
-- Statistical analysis on aggregated data
-- Individual records not identifiable
-- K-anonymity for datasets
-
-**Redaction**:
-- Automatic secret detection and redaction
-- Hash-based replacement
-- Irreversible anonymization
-
-## Compliance
-
-### Regulatory Frameworks
-
-We comply with:
-
-**GDPR** (General Data Protection Regulation):
-- Lawful basis for processing
-- Data subject rights
-- Privacy by design and default
-- Data protection impact assessments
-- Breach notification procedures
-
-**CCPA** (California Consumer Privacy Act):
-- Consumer rights to know and delete
-- Opt-out of sale (not applicable - we don't sell)
-- Non-discrimination
-- Disclosure requirements
-
-**SOC 2 Type II**:
-- Security controls
-- Availability guarantees
-- Processing integrity
-- Confidentiality
-- Privacy
-
-**ISO 27001** (in progress):
-- Information security management
-- Risk assessment and treatment
-- Security controls implementation
-
-### Industry Standards
-
-- **PCI DSS**: For payment data handling
-- **NIST Framework**: Cybersecurity best practices
-- **CIS Controls**: Security configuration
-- **OWASP**: Web application security
+- Never sell user data
+- Never share with competitors
+- Never public disclosure without permission
+- Never unauthorized access
 
 ## Partner Responsibilities
 
-### Data Protection Obligations
+### Data Protection
 
 Partners must:
+- ✅ Protect API credentials
+- ✅ Use HTTPS for all communications
+- ✅ Implement access controls
+- ✅ Follow security best practices
+- ✅ Comply with applicable laws (GDPR, CCPA, etc.)
 
-- **Secure API Keys**: Store keys securely, rotate regularly
-- **Authorize Submissions**: Only scan authorized code
-- **Respect User Privacy**: Comply with applicable privacy laws
-- **Report Incidents**: Notify us of any security concerns
-- **Maintain Compliance**: Ensure own compliance with regulations
-- **Limit Access**: Restrict data access to necessary personnel
+### User Privacy
+
+Partners must:
+- ✅ Provide privacy notice to users
+- ✅ Obtain consent for data processing
+- ✅ Honor user data requests
+- ✅ Report data breaches promptly
+- ✅ Implement data minimization
 
 ### Data Processing Agreement
 
-Partners agree to:
+All partners must sign a Data Processing Agreement (DPA) covering:
+- Processing scope and purpose
+- Data subject rights
+- Security measures
+- Sub-processors
+- Breach notification
+- Audit rights
 
-- Process data per our instructions
-- Maintain confidentiality
-- Implement appropriate security
-- Assist with data subject requests
-- Notify of breaches promptly
-- Delete/return data upon termination
+## User Rights
 
-## Data Subject Rights
+### Rights We Support
 
-Users whose data is processed have rights to:
+**Access**: Users can request their data  
+**Correction**: Users can correct inaccurate data  
+**Deletion**: Users can request data deletion  
+**Portability**: Users can export their data  
+**Objection**: Users can object to processing  
 
-### Access
-- Request copy of their data
-- Receive data in portable format
-- Understand how data is used
+### How to Exercise Rights
 
-### Correction
-- Update inaccurate information
-- Complete incomplete data
-- Maintain accuracy
+1. **Via Partner**: Users contact partner directly
+2. **Direct Request**: Email privacy@cuberai.example
+3. **Automated**: Through API (coming soon)
 
-### Deletion ("Right to be Forgotten")
-- Request deletion of data
-- Exceptions: legal obligations, legitimate interests
-- Verification required
+**Response Time**: 30 days maximum
 
-### Restriction
-- Limit processing in certain circumstances
-- Object to processing
-- Opt-out of marketing (not applicable)
+## Compliance
 
-### Portability
-- Receive data in machine-readable format
-- Transfer to another controller
-- Where technically feasible
+### Regulations
 
-Partners must:
-- Forward data subject requests to us within 2 business days
-- Cooperate in fulfilling requests
-- Maintain records of requests
+**GDPR** (EU General Data Protection Regulation):
+- Lawful basis for processing
+- Data minimization
+- User rights respected
+- Data protection by design
 
-## Security Measures
+**CCPA** (California Consumer Privacy Act):
+- Transparency about data collection
+- Right to opt-out
+- Right to deletion
+- Non-discrimination
 
-### Technical Controls
+**Other**: Compliance with applicable local laws
 
-**Access Control**:
-- Multi-factor authentication (MFA)
-- Role-based access control (RBAC)
-- Principle of least privilege
-- Regular access reviews
+### International Transfers
 
-**Network Security**:
-- Firewalls and IDS/IPS
-- Network segmentation
-- VPN for administrative access
-- DDoS mitigation
+**Data Location**:
+- Primary: [Region TBD]
+- Backups: Multiple regions
+- EU partners: EU data residency available (Gold+)
 
-**Application Security**:
-- Secure coding practices
-- Regular security testing
-- Vulnerability management
-- Dependency scanning
-
-**Monitoring**:
-- 24/7 security monitoring
-- Intrusion detection
-- Anomaly detection
-- Incident response procedures
-
-### Organizational Controls
-
-**Personnel**:
-- Background checks
-- Security training
-- Confidentiality agreements
-- Access termination procedures
-
-**Policies**:
-- Information security policy
-- Acceptable use policy
-- Incident response plan
-- Business continuity plan
-
-**Audits**:
-- Annual third-party audits
-- Internal security assessments
-- Penetration testing
-- Compliance reviews
+**Transfer Mechanisms**:
+- Standard Contractual Clauses
+- Adequacy decisions
+- Explicit consent when required
 
 ## Breach Notification
 
 ### Our Commitment
 
-In event of a data breach affecting partner data:
+In the event of a data breach:
 
-**Within 24 hours**:
-- Initial assessment
-- Containment measures
-- Internal notification
+**Timeline**:
+- Internal discovery: Immediate investigation
+- Partner notification: Within 72 hours
+- Regulatory notification: As required by law
 
-**Within 72 hours**:
-- Partner notification
-- Regulatory notification (if required)
-- Public disclosure (if required)
+**Information Provided**:
+- Nature of breach
+- Data affected
+- Likely consequences
+- Mitigation steps taken
+- Recommendations for partners
 
-**Ongoing**:
-- Investigation updates
-- Remediation progress
-- Prevention measures
+**Contact**: security@cuberai.example
 
-### Notification Content
+## Marketing and Communications
 
-Breach notifications include:
+### Partner Communications
 
-- Nature and scope of breach
-- Data types affected
-- Number of affected records
-- Actions taken
-- Recommended partner actions
-- Contact information for questions
+**We May Send**:
+- Partnership updates
+- Product announcements
+- Security alerts
+- Billing notifications
+- Co-marketing opportunities
 
-### Partner Obligations
+**You Control**:
+- Communication preferences
+- Frequency settings
+- Opt-out anytime
+- Channel selection
 
-Partners must:
-- Report suspected breaches to us immediately
-- Cooperate in investigation
-- Take recommended remediation steps
-- Notify their users if required
+### Public Recognition
 
-## Cross-Border Data Transfers
+**By Default**:
+- Logo on sponsors page
+- Mention in announcements
+- Listed in tier
 
-### Mechanisms
+**Opt-Out Available**:
+- Request confidential partnership
+- No public recognition
+- Internal acknowledgment only
 
-For international data transfers:
+### Unsubscribe
 
-**EU-US Data Privacy Framework**: [To be certified]
+**Email**: Include unsubscribe link in footer  
+**Preferences**: Update in partner portal  
+**Note**: Transactional emails still sent (invoices, critical alerts)
 
-**Standard Contractual Clauses**: Available for GDPR compliance
+## Partner-Specific Privacy
 
-**Adequacy Decisions**: Compliant with approved jurisdictions
+### Platinum Partners
 
-**On-Premise Solutions**: Keep data in specific regions
+**Enhanced Privacy**:
+- Dedicated data residency options
+- Custom retention schedules
+- Private communication channels
+- Stricter access controls
 
-### Partner Options
+### Enterprise Deployments
 
-Partners can request:
+**On-Premise/Private Cloud**:
+- You control data storage
+- We provide software only
+- Minimal data transfer
+- Custom privacy terms
 
-- Specific data residency
-- Regional processing only
-- On-premise deployment
-- Data localization
+## Children's Privacy
 
-## Subprocessors
+This service is not directed at children under 13. Partners represent they comply with children's privacy laws (COPPA, etc.) in their use of our services.
 
-We use subprocessors for:
+## Cookie Policy
 
-| Service | Provider | Location | Purpose |
-|---------|----------|----------|---------|
-| Cloud Hosting | [TBD] | [Region] | Infrastructure |
-| CDN | [TBD] | Global | Content delivery |
-| Support | [TBD] | [Region] | Customer service |
-| Analytics | [TBD] | [Region] | Usage metrics |
+**Website Cookies**:
+- Essential: Required for functionality
+- Analytics: Anonymized usage data
+- Preferences: Save your settings
 
-**Notification**: Partners notified 30 days before new subprocessors
+**Control**: Cookie preferences in website footer
 
-**Objection**: Partners may object to new subprocessors
+## Updates to This Policy
 
-**List**: Updated list maintained in partner portal
+**Changes**:
+- Material changes: 30 days advance notice
+- Minor updates: Announced in changelog
+- Continued partnership: Acceptance of updates
 
-## Privacy Impact Assessments
+**History**: Previous versions in git history
 
-We conduct DPIAs for:
+## Contact
 
-- New features with privacy implications
-- Significant processing changes
-- New data types collected
-- Changes in third-party services
+### Privacy Inquiries
 
-Results shared with:
-- Gold and Platinum partners (summary)
-- Enterprise partners (full report)
-- Regulators (as required)
+**Email**: privacy@cuberai.example  
+**Response Time**: 5-7 business days
 
-## Contact and DPO
+### Security Issues
 
-### Data Protection Officer
+**Email**: security@cuberai.example  
+**Response Time**: 24-48 hours
 
-**Email**: dpo@cuberai.example
-**Role**: Privacy compliance and data subject requests
+### General Partnership
 
-### Privacy Questions
+**Email**: partners@cuberai.example  
+**Response Time**: 3-5 business days
 
-**General**: privacy@cuberai.example
-**Partners**: partner-privacy@cuberai.example
-**Security**: security@cuberai.example
+## Related Resources
 
-### Supervisory Authority
+- [Main Privacy Policy](../../PRIVACY.md)
+- [Data Retention Policy](../../DATA_RETENTION.md)
+- [Security Policy](../../SECURITY.md)
+- [Partnership Agreement](partnerships.md)
 
-For EU/EEA partners, supervisory authority:
-[To be specified based on primary establishment]
+## Certifications
 
-## Updates
+**Current**: Working toward standard certifications
 
-This privacy policy updated:
-- As needed for regulatory changes
-- Annually at minimum
-- Before implementing significant changes
+**Planned**:
+- SOC 2 Type II
+- ISO 27001
+- Privacy Shield (if reinstated)
 
-**Partner Notification**:
-- Email notification
-- 30-day notice period
-- Option to terminate if unacceptable
-
-Last updated: 2025-12-31
+**Status**: Contact us for current compliance status
 
 ---
 
-*This document is part of our partnership agreement. Partners should review with legal counsel. For questions, contact partner-privacy@cuberai.example.*
+**Last Updated**: 2026-01-01  
+**Version**: 1.0  
+**Next Review**: 2026-07-01
+
+**DPO Contact**: dpo@cuberai.example (when appointed)
+
+---
+
+Your privacy and security are our priority. Thank you for trusting us with your partnership. 🔒

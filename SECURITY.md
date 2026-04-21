@@ -2,130 +2,124 @@
 
 ## Reporting a Vulnerability
 
-The SmartContractAudit team takes security issues seriously. We appreciate your efforts to responsibly disclose your findings.
+The SmartContractAudit team takes security vulnerabilities seriously. We appreciate your efforts to responsibly disclose your findings.
 
 ### How to Report
 
-To report a security vulnerability, please use one of the following methods:
+**Please do not report security vulnerabilities through public GitHub issues.**
 
-1. **Email**: Send details to **security@cuberai.example**
-2. **PGP Encrypted** (recommended for sensitive issues):
-   - PGP Key ID: [TO BE ADDED]
-   - Fingerprint: [TO BE ADDED]
-   - Key available at: [KEY URL TO BE ADDED]
+Instead, please report security vulnerabilities by emailing:
+
+**security@cuberai.example** (placeholder contact)
+
+You should receive a response within 48 hours. If for some reason you do not, please follow up via email to ensure we received your original message.
 
 ### What to Include
 
-When reporting a vulnerability, please include:
+Please include the following information in your report:
 
-- **Description**: Clear description of the vulnerability
-- **Impact**: Potential impact and attack scenarios
-- **Reproduction**: Step-by-step instructions to reproduce the issue
-- **Proof of Concept**: Code, screenshots, or logs demonstrating the issue
-- **Environment**: Relevant version numbers, configurations, etc.
-- **Suggested Fix**: If you have ideas for remediation (optional)
+- Type of vulnerability (e.g., buffer overflow, SQL injection, cross-site scripting, etc.)
+- Full paths of source file(s) related to the manifestation of the vulnerability
+- The location of the affected source code (tag/branch/commit or direct URL)
+- Any special configuration required to reproduce the issue
+- Step-by-step instructions to reproduce the issue
+- Proof-of-concept or exploit code (if possible)
+- Impact of the issue, including how an attacker might exploit it
 
-### Reporting Process
+This information will help us triage your report more quickly.
 
-1. **Initial Report**: Submit your report via email
-2. **Acknowledgment**: We will acknowledge receipt within **48 hours**
-3. **Triage**: We will assess the severity and validity within **5 business days**
-4. **Updates**: We will provide status updates every **7 days** during investigation
-5. **Resolution**: We will work on a fix and coordinate disclosure timing with you
-6. **Credit**: With your permission, we will credit you in our security advisory
+## PGP Key
 
-### Response Timeline (SLA)
+For sensitive security reports, you may encrypt your message using our PGP key:
 
-- **Critical vulnerabilities**: Response within 24 hours, fix within 7 days
-- **High severity**: Response within 48 hours, fix within 14 days
-- **Medium severity**: Response within 5 days, fix within 30 days
-- **Low severity**: Response within 7 days, fix within 60 days
+```
+[PGP KEY PLACEHOLDER - To be provided]
+```
 
-## Security Disclosure Policy
+## Disclosure Process
 
-### Coordinated Disclosure
+1. **Report Received**: Security reports are acknowledged within 48 hours
+2. **Initial Triage**: We assess the severity and scope within 5 business days
+3. **Investigation**: The security team investigates and develops a fix
+4. **Coordinated Disclosure**: We work with you on disclosure timeline
+5. **Release**: Security patches are released and vulnerabilities disclosed
 
-We follow a coordinated disclosure process:
+### Triage SLA
 
-1. Security researchers report vulnerabilities privately
-2. We work with researchers to understand and fix issues
-3. We coordinate on appropriate disclosure timing
-4. Public disclosure occurs after fixes are deployed
-
-### Public Disclosure
-
-- We will publish security advisories for all confirmed vulnerabilities
-- Advisories include severity rating, affected versions, and mitigation steps
-- We credit researchers who report issues (unless they request anonymity)
+- **Critical vulnerabilities**: Initial response within 24 hours, fix target within 7 days
+- **High severity**: Initial response within 48 hours, fix target within 14 days
+- **Medium severity**: Initial response within 5 days, fix target within 30 days
+- **Low severity**: Initial response within 7 days, fix target within 60 days
 
 ## Scope
 
 ### In Scope
 
-- All code in this repository
-- Smart contract vulnerabilities
 - Authentication and authorization issues
-- Injection vulnerabilities (SQL, command, etc.)
-- Cryptographic weaknesses
-- Information disclosure
-- Denial of service issues
-- Configuration vulnerabilities
+- Code injection vulnerabilities
+- Exposure of sensitive data or credentials
+- Insecure cryptographic implementations
+- Privilege escalation
+- Remote code execution
+- Cross-site scripting (XSS) or similar web vulnerabilities
+- Supply chain vulnerabilities in dependencies
 
 ### Out of Scope
 
+- Issues affecting outdated or unsupported versions
+- Vulnerabilities requiring physical access to a user's device
 - Social engineering attacks
-- Physical attacks
-- Denial of service through resource exhaustion
-- Issues in third-party dependencies (report to those projects)
-- Issues requiring physical access to systems
+- Denial of Service (DoS) attacks without proven impact
+- Issues that have already been reported or are known
 
 ## Security Best Practices
 
-### For Contributors
+This project follows these security practices:
 
-- Never commit secrets, private keys, or credentials
-- Use environment variables for configuration
-- Run security checks before submitting PRs
-- Follow secure coding guidelines
-- Use DRY_RUN mode for testing potentially destructive operations
+- **No Secrets in Code**: Never commit API keys, passwords, or private keys
+- **Dependency Scanning**: Regular audits of dependencies for known vulnerabilities
+- **Code Review**: All changes require review before merging
+- **Least Privilege**: Services run with minimal required permissions
+- **Dry-Run Defaults**: Destructive operations default to dry-run mode
+- **Input Validation**: All user inputs are validated and sanitized
 
-### For Users
+## Security Contacts
 
-- Keep dependencies up to date
-- Use strong authentication
-- Enable all security features
-- Monitor security advisories
-- Report suspicious activity
+- **Primary Contact**: security@cuberai.example
+- **Backup Contact**: [To be specified]
 
-## Security Features
+## Supported Versions
 
-This project includes:
+| Version | Supported          |
+| ------- | ------------------ |
+| Latest  | :white_check_mark: |
+| < Latest| :x:                |
 
-- **GitAntivirus Workflow**: Automated security scanning (dry-run by default)
-- **Secret Detection**: Prevents accidental commit of sensitive data
-- **Code Review**: All changes reviewed for security implications
-- **Dependency Scanning**: Regular checks for vulnerable dependencies
-- **Conservative Defaults**: DRY_RUN=true, auto_apply=false
+We recommend always using the latest version to ensure you have all security updates.
 
-## PGP Key
+## Recognition
 
-For sensitive security reports, please use PGP encryption:
+We appreciate and recognize security researchers who help keep our project secure:
 
-```
-[PGP PUBLIC KEY BLOCK TO BE ADDED]
-```
+- Responsible disclosures will be credited in release notes (if desired)
+- We may acknowledge security researchers in our documentation
+- Critical vulnerability reports may qualify for recognition in our Hall of Fame
 
-## Contact
+## Safe Harbor
 
-- **Security Email**: security@cuberai.example
-- **General Contact**: See [GOVERNANCE.md](GOVERNANCE.md) for maintainer contacts
+We support safe harbor for security researchers who:
 
-## Acknowledgments
+- Make a good faith effort to avoid privacy violations, destruction of data, and interruption or degradation of our services
+- Only interact with accounts you own or with explicit permission of the account holder
+- Do not exploit a security issue beyond what is necessary to demonstrate it
+- Do not access, modify, or delete data belonging to others
+- Give us reasonable time to fix the issue before public disclosure
 
-We thank the security researchers who have helped make this project more secure:
+## Additional Information
 
-- [List of credited researchers to be maintained here]
+For more information about our security practices:
+- Review our [GOVERNANCE.md](GOVERNANCE.md) for security roles and responsibilities
+- See [PRIVACY.md](PRIVACY.md) for data handling policies
+- Check [CONTRIBUTING.md](CONTRIBUTING.md) for secure development practices
 
-## Updates
-
-This security policy was last updated on 2025-12-31.
+Thank you for helping keep SmartContractAudit and our community safe!

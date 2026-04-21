@@ -1,543 +1,470 @@
 ---
 title: Technical Onboarding
-description: Getting started with SmartContractAudit integration
-keywords: onboarding, integration, API, setup, technical, development
+description: Get started with SmartContractAudit integration
+keywords: onboarding, integration, setup, technical documentation
 ---
 
-# Technical Onboarding
+# Technical Onboarding Guide
 
-This guide helps partners integrate SmartContractAudit into their workflows, platforms, and products.
-
-## Prerequisites
-
-Before starting, ensure you have:
-
-- [ ] Partnership agreement signed
-- [ ] Account credentials received
-- [ ] API keys generated (if applicable)
-- [ ] Access to partner portal
-- [ ] Technical point of contact designated
+Welcome! This guide will help you integrate SmartContractAudit into your development workflow.
 
 ## Quick Start
 
-### 1. Access Setup
+### 1. Prerequisites
 
-**Partner Portal**: https://partners.smartcontractaudit.example
+- Git version 2.x+
+- Node.js 20+ (for JavaScript tools)
+- GitHub account
+- Basic command-line knowledge
 
-1. Log in with provided credentials
-2. Generate API keys
-3. Configure webhooks (optional)
-4. Set up team access
+### 2. Repository Access
 
-### 2. Environment Setup
-
-```bash
-# Install CLI tool
-npm install -g @smartcontractaudit/cli
-
-# Authenticate
-smartcontractaudit login --api-key YOUR_API_KEY
-
-# Verify connection
-smartcontractaudit status
-```
-
-### 3. First Scan
+**Public Repository**: https://github.com/SolanaRemix/SmartContractAudit
 
 ```bash
-# Scan a smart contract
-smartcontractaudit scan ./contracts/Token.sol
-
-# View results
-smartcontractaudit results --latest
+# Clone the repository
+git clone https://github.com/SolanaRemix/SmartContractAudit.git
+cd SmartContractAudit
 ```
 
-## Integration Paths
+### 3. Basic Setup
 
-### Path A: CI/CD Integration
+```bash
+# Review the README
+cat README.md
 
-**Ideal for**: Automated scanning in development pipeline
+# Check available scripts
+ls -la scripts/
 
-**Steps**:
+# Review configuration examples
+cat .env.example
+```
 
-1. **Add GitHub Action** (or equivalent):
+## Integration Options
+
+### Option 1: GitHub Actions Workflow
+
+Add SmartContractAudit to your CI/CD:
 
 ```yaml
-# .github/workflows/security-scan.yml
-name: Smart Contract Security Scan
+# .github/workflows/security-audit.yml
+name: Smart Contract Audit
 
 on:
   pull_request:
-    paths:
-      - 'contracts/**'
+    branches: [main]
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  scan:
+  audit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
-      - name: SmartContractAudit Scan
-        uses: smartcontractaudit/scan-action@v1
-        with:
-          api-key: ${{ secrets.SCA_API_KEY }}
-          path: './contracts'
-          fail-on: 'high'
-          
-      - name: Upload Results
-        uses: actions/upload-artifact@v3
-        with:
-          name: audit-report
-          path: audit-report.md
+      - name: Run SmartContractAudit
+        run: |
+          curl -sSL https://raw.githubusercontent.com/SolanaRemix/SmartContractAudit/main/scripts/audit.sh | bash
 ```
 
-2. **Configure secrets** in repository settings
+**Features**:
+- Automated auditing on every PR
+- Results posted as PR comments
+- Artifacts uploaded for review
+- Dry-run mode by default
 
-3. **Test workflow** with a PR
+### Option 2: Pre-commit Hook
 
-**Supported CI/CD Platforms**:
-- GitHub Actions
-- GitLab CI
-- Jenkins
-- CircleCI
-- Travis CI
-- Azure DevOps
-- Bitbucket Pipelines
-
-### Path B: API Integration
-
-**Ideal for**: Custom tools, platforms, and services
-
-**API Endpoint**: `https://api.smartcontractaudit.example/v1`
-
-**Authentication**: Bearer token in Authorization header
-
-**Example Request**:
+Run checks before committing:
 
 ```bash
-curl -X POST https://api.smartcontractaudit.example/v1/scan \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "source_code": "contract Token { ... }",
-    "language": "solidity",
-    "options": {
-      "severity_threshold": "medium",
-      "dry_run": false
-    }
-  }'
+# Install pre-commit hook
+cat > .git/hooks/pre-commit << 'EOF'
+#!/bin/bash
+./scripts/audit.sh --fast
+EOF
+
+chmod +x .git/hooks/pre-commit
 ```
 
-**Response**:
+### Option 3: Manual Command Line
 
-```json
-{
-  "scan_id": "scan_abc123",
-  "status": "completed",
-  "findings": [
-    {
-      "id": "finding_001",
-      "severity": "high",
-      "type": "reentrancy",
-      "location": "Token.sol:45",
-      "description": "Potential reentrancy vulnerability",
-      "recommendation": "Use ReentrancyGuard pattern"
-    }
-  ],
-  "summary": {
-    "high": 1,
-    "medium": 3,
-    "low": 5
-  }
-}
-```
-
-**API Documentation**: [Full API docs to be provided]
-
-### Path C: Web Interface Embed
-
-**Ideal for**: Embedding audit functionality in web apps
-
-**Widget Code**:
-
-```html
-<script src="https://cdn.smartcontractaudit.example/widget.js"></script>
-<div id="sca-widget" data-api-key="YOUR_API_KEY"></div>
-<script>
-  SmartContractAudit.init({
-    element: '#sca-widget',
-    apiKey: 'YOUR_API_KEY',
-    theme: 'dark'
-  });
-</script>
-```
-
-**Configuration Options**:
-- Theme (light/dark)
-- Language support
-- Severity filters
-- Custom branding (enterprise)
-
-### Path D: CLI Integration
-
-**Ideal for**: Developer tools, local development
-
-**Installation**:
+Run audits manually:
 
 ```bash
-npm install -g @smartcontractaudit/cli
-# or
-pip install smartcontractaudit-cli
-# or
-brew install smartcontractaudit
+# Basic audit
+./scripts/audit.sh
+
+# With specific options
+./scripts/master.sh scan --dry-run
 ```
 
-**Usage**:
+### Option 4: API Integration (Enterprise)
 
-```bash
-# Scan contracts
-sca scan ./contracts
+For enterprise partners with API access:
 
-# Watch for changes
-sca watch ./contracts
+```javascript
+const { SmartContractAudit } = require('@smartcontractaudit/sdk');
 
-# Generate report
-sca report --format pdf --output audit.pdf
+const audit = new SmartContractAudit({
+  apiKey: process.env.SCAUDIT_API_KEY
+});
 
-# Configure
-sca config set api-key YOUR_KEY
-sca config set severity-threshold high
+const results = await audit.scan({
+  repository: 'owner/repo',
+  branch: 'main'
+});
 ```
 
-### Path E: IDE Plugin
-
-**Ideal for**: Real-time feedback during development
-
-**Supported IDEs**:
-- VS Code
-- IntelliJ IDEA
-- Vim/Neovim
-- Sublime Text
-
-**VS Code Example**:
-
-1. Install extension: "SmartContractAudit"
-2. Configure API key in settings
-3. Open `.sol` file
-4. Automatic scanning on save
-5. Inline warnings and suggestions
+**Note**: API access requires Silver tier or higher.
 
 ## Configuration
 
-### API Keys
+### Environment Variables
 
-**Generation**:
-1. Log in to partner portal
-2. Navigate to API Keys
-3. Create new key with appropriate scope
-4. Store securely (never commit to code)
+Create a `.env` file:
 
-**Key Types**:
-- **Read-only**: View reports, no scanning
-- **Scan**: Perform scans, view results
-- **Admin**: Full account access
+```bash
+# Dry-run mode (recommended for initial setup)
+DRY_RUN=true
 
-**Security Best Practices**:
-- Rotate keys every 90 days
-- Use environment variables
-- Separate keys per environment
-- Monitor usage for anomalies
+# Bot pings (disable for quiet mode)
+BOT_PINGS_ENABLED=false
 
-### Webhooks
+# Organization allowlist (empty = restrictive)
+ALLOWLIST_ORGS=""
 
-**Setup**:
-1. Configure webhook URL in partner portal
-2. Choose events to receive:
-   - `scan.completed`
-   - `scan.failed`
-   - `finding.critical`
-   - `report.generated`
+# Maximum PRs per run
+MAX_PRS_PER_RUN=3
 
-3. Verify webhook signature
+# GitHub token (optional, for private repos)
+# GITHUB_TOKEN=your_token_here
+```
 
-**Webhook Payload Example**:
+### Configuration File
+
+Create `config/audit.json`:
 
 ```json
 {
-  "event": "scan.completed",
-  "timestamp": "2025-12-31T12:00:00Z",
-  "data": {
-    "scan_id": "scan_abc123",
-    "status": "completed",
-    "findings_count": {
-      "high": 1,
-      "medium": 3,
-      "low": 5
-    },
-    "report_url": "https://api.../reports/scan_abc123"
-  },
-  "signature": "sha256=..."
+  "enabled": true,
+  "dry_run": true,
+  "scan_patterns": [
+    "**/*.sol",
+    "**/*.rs",
+    "**/*.move"
+  ],
+  "exclude_patterns": [
+    "node_modules/**",
+    "test/**",
+    ".git/**"
+  ],
+  "severity_threshold": "medium",
+  "auto_fix": false
 }
 ```
 
-**Signature Verification**:
+## Workflow Examples
 
-```javascript
-const crypto = require('crypto');
+### Example 1: DeFi Protocol
 
-function verifyWebhook(payload, signature, secret) {
-  const hmac = crypto.createHmac('sha256', secret);
-  const digest = 'sha256=' + hmac.update(payload).digest('hex');
-  return crypto.timingSafeEqual(
-    Buffer.from(signature),
-    Buffer.from(digest)
-  );
-}
+**Use Case**: Audit Solidity contracts before deployment
+
+```yaml
+name: Contract Audit
+
+on:
+  push:
+    paths:
+      - 'contracts/**/*.sol'
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Audit Contracts
+        run: ./scripts/audit.sh contracts/
+        
+      - name: Check Results
+        run: |
+          if [ -f AUDIT-REPORT.md ]; then
+            cat AUDIT-REPORT.md
+          fi
 ```
 
-## Testing
+### Example 2: Multi-Chain Project
 
-### Sandbox Environment
+**Use Case**: Audit contracts across multiple blockchains
 
-**Endpoint**: `https://sandbox.smartcontractaudit.example`
+```yaml
+jobs:
+  audit-solana:
+    steps:
+      - name: Audit Solana Contracts
+        run: ./scripts/audit.sh --chain solana programs/
+        
+  audit-ethereum:
+    steps:
+      - name: Audit Ethereum Contracts
+        run: ./scripts/audit.sh --chain ethereum contracts/
+```
 
-**Characteristics**:
-- Free for partners
-- No rate limits
-- Test data only
-- Identical API to production
+### Example 3: Continuous Monitoring
 
-**Usage**:
+**Use Case**: Daily automated audits
+
+```yaml
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Daily at midnight
+
+jobs:
+  scheduled-audit:
+    steps:
+      - name: Full Audit
+        run: ./scripts/master.sh scan --full
+```
+
+## Security Best Practices
+
+### 1. Secrets Management
+
+**Never commit secrets**:
 
 ```bash
-# Set environment
-export SCA_ENV=sandbox
-export SCA_API_KEY=sandbox_key_...
-
-# Run tests
-npm test
+# Use GitHub Secrets for sensitive data
+# Access in workflow:
+env:
+  API_KEY: ${{ secrets.API_KEY }}
 ```
 
-### Test Contracts
+### 2. Dry-Run First
 
-Sample contracts provided for testing:
+**Always test in dry-run mode**:
 
 ```bash
-# Clone test repository
-git clone https://github.com/SmartContractAudit/test-contracts.git
-
-# Scan test contracts
-sca scan test-contracts/vulnerable/
-sca scan test-contracts/secure/
+# Test without making changes
+DRY_RUN=true ./scripts/master.sh scan
 ```
 
-**Test Scenarios**:
-- Reentrancy vulnerabilities
-- Integer overflow/underflow
-- Access control issues
-- Unprotected self-destruct
-- Delegatecall issues
+### 3. Review Before Deploy
 
-## Rate Limits
+**Manual review of findings**:
 
-### By Tier
+```bash
+# Generate report
+./scripts/audit.sh > audit-report.txt
 
-| Tier | Scans/day | API Calls/min | Concurrent Scans |
-|------|-----------|---------------|------------------|
-| Bronze | 100 | 10 | 2 |
-| Silver | 500 | 30 | 5 |
-| Gold | 2,000 | 100 | 10 |
-| Platinum | 10,000 | 500 | 50 |
-| Custom | Custom | Custom | Custom |
+# Review findings
+cat audit-report.txt
 
-### Rate Limit Headers
-
-```
-X-RateLimit-Limit: 100
-X-RateLimit-Remaining: 87
-X-RateLimit-Reset: 1672531200
+# Address issues before proceeding
 ```
 
-### Handling Rate Limits
+### 4. Least Privilege
 
-```javascript
-async function scanWithRetry(contract, maxRetries = 3) {
-  for (let i = 0; i < maxRetries; i++) {
-    try {
-      return await scan(contract);
-    } catch (error) {
-      if (error.status === 429) {
-        const resetTime = error.headers['x-ratelimit-reset'];
-        const waitTime = resetTime - Date.now()/1000;
-        await sleep(waitTime * 1000);
-      } else {
-        throw error;
-      }
-    }
-  }
-}
+**Minimal permissions in workflows**:
+
+```yaml
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
 ```
 
-## Support During Onboarding
+## Testing Your Integration
 
-### Dedicated Support
+### 1. Validate Configuration
 
-Partners receive:
+```bash
+# Check configuration
+./scripts/audit.sh --validate-config
 
-- **Kick-off call**: 60-minute technical overview
-- **Slack/Discord channel**: Direct access to engineering team
-- **Documentation**: Private technical docs
-- **Code reviews**: Review of integration code
-- **Pair programming**: Available for complex integrations
+# Test dry-run mode
+DRY_RUN=true ./scripts/audit.sh
+```
 
-### Timeline
+### 2. Test with Sample Contracts
 
-Typical onboarding timeline:
+```bash
+# Use test contracts
+./scripts/audit.sh test/contracts/
 
-| Week | Activity |
-|------|----------|
-| 1 | Account setup, API key generation, kick-off call |
-| 2 | Development environment setup, first test scan |
-| 3 | Integration development, testing |
-| 4 | Staging deployment, validation |
-| 5 | Production deployment, monitoring |
-| 6 | Optimization, training, go-live |
+# Verify results
+ls -la AUDIT-REPORT.md
+```
 
-### Checkpoints
+### 3. Verify CI/CD Integration
 
-- [ ] Week 1: Kick-off completed, access granted
-- [ ] Week 2: First successful test scan
-- [ ] Week 3: Integration code reviewed
-- [ ] Week 4: Staging tests passing
-- [ ] Week 5: Production deployment
-- [ ] Week 6: Go-live and monitoring
+```bash
+# Create test PR
+git checkout -b test-audit
+git commit --allow-empty -m "Test audit workflow"
+git push origin test-audit
 
-## Monitoring and Observability
-
-### Dashboards
-
-Partners have access to:
-
-- **Usage Dashboard**: API calls, scans, quota
-- **Performance Metrics**: Response times, success rates
-- **Security Dashboard**: Findings trends, severity distribution
-- **Billing Dashboard**: Usage-based billing details
-
-### Alerts
-
-Configure alerts for:
-
-- High-severity findings
-- API errors or downtime
-- Rate limit warnings
-- Unusual activity patterns
-- Integration failures
-
-### Logs
-
-Access to:
-
-- API request logs (30-day retention)
-- Scan history
-- Webhook delivery logs
-- Error logs and stack traces
+# Check GitHub Actions for workflow run
+```
 
 ## Troubleshooting
 
 ### Common Issues
 
-**Authentication Errors**:
-```
-Error: 401 Unauthorized
-Solution: Verify API key is correct and not expired
-```
-
-**Rate Limit Exceeded**:
-```
-Error: 429 Too Many Requests
-Solution: Implement exponential backoff, upgrade tier
+**Issue**: Script permission denied
+```bash
+# Solution: Make scripts executable
+chmod +x scripts/*.sh
 ```
 
-**Scan Timeouts**:
-```
-Error: 504 Gateway Timeout
-Solution: Break large contracts into smaller chunks
+**Issue**: Missing dependencies
+```bash
+# Solution: Install required tools
+npm install   # If using Node.js tools
 ```
 
-### Debug Mode
+**Issue**: API rate limits
+```bash
+# Solution: Add GitHub token
+export GITHUB_TOKEN=your_token
+```
 
-Enable verbose logging:
+**Issue**: False positives
+```bash
+# Solution: Configure exclusions
+# Add to config/audit.json:
+{
+  "exclude_patterns": ["path/to/exclude/**"]
+}
+```
+
+### Getting Help
+
+- **Documentation**: Check /docs directory
+- **GitHub Issues**: Report problems
+- **Partner Support**: Email support@cuberai.example (partners only)
+- **Community**: GitHub Discussions
+
+## Advanced Configuration
+
+### Custom Scanning Rules
+
+Create `config/custom-rules.json`:
+
+```json
+{
+  "rules": [
+    {
+      "id": "no-hardcoded-addresses",
+      "pattern": "0x[a-fA-F0-9]{40}",
+      "severity": "high",
+      "message": "Hardcoded address detected"
+    }
+  ]
+}
+```
+
+### Integration with Other Tools
+
+**Combine with existing security tools**:
+
+```yaml
+- name: Run Slither
+  run: slither .
+  
+- name: Run SmartContractAudit
+  run: ./scripts/audit.sh
+  
+- name: Run Custom Checks
+  run: npm run security-check
+```
+
+## Performance Optimization
+
+### For Large Repositories
 
 ```bash
-# CLI
-sca scan --debug ./contracts
+# Scan specific paths only
+./scripts/audit.sh contracts/
 
-# API
-curl ... -H "X-Debug: true"
+# Use parallel scanning (if supported)
+PARALLEL=true ./scripts/audit.sh
+
+# Cache results
+CACHE_ENABLED=true ./scripts/audit.sh
 ```
 
-### Support Channels
+### For CI/CD
 
-- **Slack/Discord**: Real-time help during onboarding
-- **Email**: technical-support@cuberai.example
-- **Portal**: Submit tickets with priority queue
-- **Office Hours**: Weekly Q&A sessions for partners
-
-## Best Practices
-
-### Security
-
-- Never commit API keys to repositories
-- Use environment variables or secret management
-- Rotate keys regularly
-- Monitor usage for anomalies
-- Enable IP whitelisting (enterprise)
-
-### Performance
-
-- Cache scan results where appropriate
-- Use webhooks instead of polling
-- Batch similar scans
-- Implement exponential backoff for retries
-- Monitor rate limits proactively
-
-### Integration Quality
-
-- Handle all error cases gracefully
-- Provide clear feedback to users
-- Log errors for debugging
-- Test in sandbox first
-- Validate before production deployment
+```yaml
+# Cache dependencies
+- uses: actions/cache@v3
+  with:
+    path: ~/.cache
+    key: audit-cache-${{ hashFiles('**/*.sol') }}
+```
 
 ## Next Steps
 
-After technical onboarding:
+1. **Complete Setup**: Finalize configuration
+2. **Run First Audit**: Execute audit in dry-run mode
+3. **Review Results**: Analyze findings
+4. **Integrate**: Add to CI/CD pipeline
+5. **Monitor**: Set up continuous auditing
+6. **Optimize**: Fine-tune configuration
 
-1. **Production Deployment**: Move from sandbox to production
-2. **Training**: Schedule team training sessions
-3. **Marketing**: Plan co-marketing announcements
-4. **Feedback**: Provide integration feedback
-5. **Optimization**: Iterate based on usage patterns
+## Partner-Specific Features
+
+### Silver+ Partners
+
+- **Priority Support**: Dedicated technical contact
+- **Custom Rules**: Tailored scanning rules
+- **Integration Assistance**: Hands-on setup help
+
+### Gold+ Partners
+
+- **Custom Workflows**: Bespoke CI/CD integration
+- **Private Deployments**: On-premise options
+- **Training Sessions**: Team onboarding
+
+### Platinum Partners
+
+- **Dedicated Engineer**: Named technical resource
+- **Custom Development**: Feature development
+- **24/7 Support**: Round-the-clock assistance
 
 ## Resources
 
-- **API Documentation**: [Link to be provided]
-- **SDK Libraries**: GitHub repositories
-- **Sample Code**: Integration examples
-- **Video Tutorials**: Onboarding videos
-- **Changelog**: API and feature updates
+### Documentation
 
-## Contact
+- [README.md](../../README.md) - Project overview
+- [CONTRIBUTING.md](../../CONTRIBUTING.md) - Contribution guide
+- [SECURITY.md](../../SECURITY.md) - Security policy
 
-Technical onboarding questions:
+### Partner Resources
 
-- **Email**: technical-onboarding@cuberai.example
-- **Slack**: #partner-onboarding channel
-- **Schedule**: [Calendar link for technical calls]
+- [SLA and Support](sla_and_support.md)
+- [Data Privacy](data_privacy.md)
+- [Use Cases](use_cases.md)
+
+### External Resources
+
+- GitHub Actions Documentation
+- Smart Contract Security Best Practices
+- Blockchain Development Guides
+
+## Feedback
+
+We value your feedback:
+
+- **Technical Issues**: GitHub Issues
+- **Feature Requests**: GitHub Discussions
+- **Partner Support**: support@cuberai.example
+- **General Feedback**: partners@cuberai.example
 
 ---
 
-*Technical documentation updated regularly. Check partner portal for latest API versions and features.*
+**Last Updated**: 2026-01-01  
+**Version**: 1.0
+
+Welcome aboard! We're excited to have you as a partner. 🎉

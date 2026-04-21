@@ -2,205 +2,240 @@
 
 ## Overview
 
-SmartContractAudit is committed to protecting privacy and handling data responsibly. This document outlines our data handling practices.
+This document outlines the privacy and data handling practices for the SmartContractAudit project. We are committed to protecting privacy and handling data responsibly.
 
-## Data Collection
+## Data Collection and Usage
 
-### What We Don't Collect
+### What We Collect
 
-We do **NOT** collect, store, or transmit:
+This project may collect:
 
-- Private keys (never in plaintext or any form)
-- Wallet mnemonics or seed phrases
+- **Public Repository Data**: Information visible in public GitHub repositories
+- **Issue and PR Data**: Publicly submitted issues and pull requests
+- **Usage Statistics**: Anonymous analytics about tool usage (when applicable)
+- **Error Reports**: Diagnostic information from failures (sanitized)
+
+### What We DO NOT Collect
+
+We **never** collect or store:
+
+- Private keys or seed phrases
+- API keys or authentication tokens
 - Passwords or credentials
-- Personal identifying information without consent
-- Sensitive smart contract details without authorization
+- Personal financial information
+- Personally identifiable information (PII) without consent
 
-### What We May Collect
+## Critical Security Policy: No Plaintext Private Keys
 
-When using the service, we may process:
+### Absolute Prohibition
 
-- **Public blockchain data**: Publicly available on-chain information
-- **Code submissions**: Smart contracts submitted for audit (with user consent)
-- **Audit results**: Security findings and reports
-- **Usage metrics**: Anonymous usage statistics for improvement
-- **Logs**: System logs for debugging (sanitized, see below)
+**We never store, log, or transmit plaintext private keys or sensitive cryptographic material.**
 
-## Public Redaction Policy
+This policy applies to:
 
-### Private Key Protection
+- Source code and configuration files
+- Log files and error messages
+- Audit reports and artifacts
+- Temporary files and caches
+- Database storage
+- Network transmissions
+- Memory dumps or debugging output
 
-**Absolute Rule**: Private keys are NEVER stored in any form.
+### Redaction Requirements
 
-- Private keys detected in submissions are immediately redacted
-- Only cryptographic hashes stored for detection purposes
-- Original keys are never logged, cached, or transmitted
-- Automated detection flags potential key leaks before storage
+All automation and tooling must:
 
-### Sensitive Data Handling
+- **Detect** potential secrets before storage or transmission
+- **Redact** sensitive data in logs and outputs
+- **Sanitize** all public artifacts
+- **Reject** PRs or commits containing secrets
+- **Alert** on potential exposure incidents
 
-For any sensitive data detected:
+Example redaction patterns:
 
-1. **Immediate Redaction**: Data is redacted at ingestion
-2. **Hash Storage**: Only cryptographic hashes stored for future detection
-3. **Alert Generation**: Security team notified of detection
-4. **User Notification**: Submitter alerted to remediate source
-5. **No Plaintext**: Original sensitive data never persists
+```
+Private Key: [REDACTED]
+API Key: ***************
+Mnemonic: [REDACTED - 12 words]
+Secret: ********
+```
 
-### Log Sanitization
+### Handling Secret Exposure
 
-All logs undergo automatic sanitization:
+If a secret is accidentally exposed:
 
-- Pattern matching for common secret formats
-- Redaction before writing to disk
-- Hash-based replacement for audit trail
-- Regular expression filters for:
-  - Private keys (various formats)
-  - API tokens
-  - Credentials
-  - Email addresses (optional redaction)
-  - IP addresses (optional redaction)
+1. **Immediate Action**: Rotate/revoke the compromised credential
+2. **Notification**: Alert security team at security@cuberai.example
+3. **Remediation**: Remove from git history using git-filter-repo or BFG
+4. **Documentation**: Document incident and prevention measures
+5. **Prevention**: Update detection rules to prevent recurrence
 
 ## Data Retention
 
-See [DATA_RETENTION.md](DATA_RETENTION.md) for detailed retention policies.
+### Artifact Retention
 
-**Summary:**
-- Audit artifacts: 90 days default
-- Logs: 30 days default
-- Reports: Retained with user consent
-- Personal data: Minimal retention, deletable on request
+- **Default Retention**: 90 days for workflow artifacts
+- **Log Files**: 30 days for standard logs
+- **Security Logs**: 180 days for security-related logs
+- **Release Artifacts**: Indefinite for stable releases
 
-## Data Storage
+### Deletion Requests
 
-### Security Measures
+To request deletion of your data:
 
-- **Encryption at rest**: All stored data encrypted
-- **Encryption in transit**: TLS 1.3 for all communications
-- **Access control**: Role-based access with principle of least privilege
-- **Audit logging**: All data access logged for security
-- **Geographic location**: Data stored in [REGION TO BE SPECIFIED]
+1. Email privacy@cuberai.example
+2. Specify the data to be deleted
+3. Provide verification of ownership
+4. We will respond within 14 days
 
-### Third-Party Services
+Note: Some data (e.g., public git commits) cannot be deleted due to the distributed nature of git.
 
-We may use third-party services for:
+## Third-Party Services
 
-- Code hosting (GitHub)
-- Artifact storage (temporary)
-- Analytics (anonymous only)
+This project may use:
 
-These services have their own privacy policies and data handling practices.
+- **GitHub**: Repository hosting and CI/CD
+  - [GitHub Privacy Policy](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement)
+- **npm/PyPI**: Package distribution
+- **CDNs**: Content delivery for documentation
 
-## User Rights
+Each service has its own privacy policy. We recommend reviewing them.
 
-### Access
+## Contributor Privacy
 
-Users have the right to:
+### Public Contributions
 
-- Request copies of their data
-- Review audit reports
-- Verify redaction of sensitive data
-- Export results in standard formats
+By contributing to this project:
 
-### Deletion
+- Your commits become part of public git history
+- Your GitHub username is visible
+- Contribution statistics may be public
+- Communications in issues/PRs are public
 
-Users may request:
+### Protecting Your Privacy
 
-- Deletion of submitted code
-- Removal of audit reports
-- Purging of associated logs (within retention windows)
+As a contributor, you can:
 
-### Correction
+- Use a pseudonymous GitHub account
+- Use GitHub's private email feature
+- Request removal of specific PII from documentation
+- Opt out of contributor recognition lists
 
-Users may:
+## Transparency Reports
 
-- Update contact information
-- Correct metadata in reports
-- Request re-audit if initial submission contained errors
+We are committed to transparency:
 
-## Data Sharing
-
-### What We Share
-
-- **Public Reports**: Only with explicit user consent
-- **Security Findings**: Aggregate, anonymized statistics
-- **Research Data**: De-identified data for security research (opt-in)
-
-### What We Never Share
-
-- Private keys or credentials (we don't have them)
-- Unapproved audit results
-- User code without permission
-- Personal information without consent
-- Data with third parties for marketing
-
-## Compliance
-
-We aim to comply with:
-
-- GDPR (General Data Protection Regulation)
-- CCPA (California Consumer Privacy Act)
-- Industry best practices for security data handling
-
-## Breach Notification
-
-In the unlikely event of a data breach:
-
-1. **Immediate Response**: Contain and investigate within 24 hours
-2. **User Notification**: Affected users notified within 72 hours
-3. **Authority Notification**: Regulators notified per legal requirements
-4. **Transparency**: Public disclosure of incident and response
-5. **Remediation**: Steps taken to prevent recurrence
-
-## Cookies and Tracking
-
-### GitHub Pages (if used)
-
-The web interface may use:
-
-- **Session cookies**: For functionality only
-- **Analytics**: Optional, anonymous usage data
-- **No tracking**: No cross-site tracking or advertising cookies
-
-Users can disable cookies in browser settings.
-
-## Children's Privacy
-
-This service is not intended for users under 13 years of age. We do not knowingly collect data from children.
-
-## International Data Transfers
-
-Data may be processed in different jurisdictions. We ensure adequate safeguards through:
-
-- Standard contractual clauses
-- Encryption in transit and at rest
-- Compliance with international frameworks
+- Security incidents are disclosed (after remediation)
+- Data breaches are reported promptly
+- Changes to this policy are announced
 
 ## Contact
 
-For privacy questions or requests:
+For privacy concerns or questions:
 
-- **Email**: security@cuberai.example
-- **Issue Tracker**: GitHub Issues (for non-sensitive questions)
-- **Security Reports**: See [SECURITY.md](SECURITY.md)
+**Email**: privacy@cuberai.example
 
-## Changes to Policy
+Response time: 5-7 business days
 
-We may update this policy periodically. Changes will be:
+For security issues, use: security@cuberai.example
 
-- Posted on this page
-- Announced in project updates
-- Effective 30 days after posting
+## Automated Scanning
 
-Last updated: 2025-12-31
+### Secret Detection
+
+Our tools implement:
+
+- Pre-commit hooks for secret detection (recommended)
+- CI/CD scanning for exposed secrets
+- Periodic audits of repository history
+- Automated redaction in logs and artifacts
+
+### Configurable Detection
+
+Pattern detection includes:
+
+- Private keys (RSA, EC, etc.)
+- API keys and tokens
+- Database credentials
+- OAuth tokens
+- JWT tokens
+- Encryption keys
+- Custom patterns (configurable)
+
+## Compliance
+
+This project aims to be compliant with:
+
+- GDPR (for European contributors)
+- CCPA (for California contributors)
+- General data protection best practices
+
+While this is an open-source project and not a commercial service, we strive to respect privacy rights globally.
+
+## Data Minimization
+
+We follow the principle of data minimization:
+
+- Collect only what is necessary
+- Retain data only as long as needed
+- Delete data when no longer required
+- Anonymize data when possible
+
+## User Rights
+
+You have the right to:
+
+- **Access**: Request copies of your data
+- **Rectification**: Request correction of inaccurate data
+- **Erasure**: Request deletion (where technically feasible)
+- **Portability**: Receive data in a portable format
+- **Objection**: Object to processing of your data
+
+To exercise these rights, contact privacy@cuberai.example.
+
+## Children's Privacy
+
+This project is not directed at children under 13. We do not knowingly collect information from children.
+
+## Changes to This Policy
+
+We may update this policy:
+
+- Major changes are announced via GitHub
+- Continued use constitutes acceptance
+- Previous versions available in git history
+
+## Related Policies
+
+- [SECURITY.md](SECURITY.md) - Security and vulnerability disclosure
+- [DATA_RETENTION.md](DATA_RETENTION.md) - Data retention specifics
+- [GOVERNANCE.md](GOVERNANCE.md) - Project governance
+
+---
+
+**Last Updated**: 2026-01-01
+
+**Contact**: privacy@cuberai.example
+
+## Contact
+
+For privacy questions, concerns, or requests:
+- **Email**: privacy@cuberai.example (placeholder contact)
+- **Response time**: Within 7 business days
+
+For security matters, see [SECURITY.md](SECURITY.md).
+
+## Compliance
+
+We strive to comply with:
+- GDPR (European Union)
+- CCPA (California)
+- Other applicable privacy regulations
 
 ## Transparency
 
-This project is open source. You can:
+We believe in transparency. This policy is open source and we welcome feedback through GitHub issues.
 
-- Review our code for data handling
-- Audit our redaction mechanisms
-- Verify our security practices
-- Contribute improvements
+---
 
-We believe in privacy through transparency and technical implementation, not just policy.
+Last updated: 2026-01-01

@@ -1,350 +1,341 @@
 ---
 title: Sponsorship Tiers
-description: Financial sponsorship levels and benefits
-keywords: sponsorship, funding, tiers, benefits, support
+description: Support SmartContractAudit through sponsorship
+keywords: sponsorship, tiers, benefits, support, funding
 ---
 
 # Sponsorship Tiers
 
-Support SmartContractAudit through financial sponsorship and receive benefits based on your commitment level.
+Support the SmartContractAudit project and receive recognition, benefits, and early access to features.
 
-## Overview
+## Why Sponsor?
 
-Sponsorships help us:
-- Maintain and improve the project
-- Provide security updates and patches
-- Develop new features
-- Support the open-source community
-- Cover infrastructure and operational costs
-- Host events and create educational content
+- **Support Open Source**: Fund continued development and maintenance
+- **Security Leadership**: Demonstrate commitment to blockchain security
+- **Community Engagement**: Connect with developers and security researchers
+- **Brand Visibility**: Recognition across project channels
+- **Early Access**: Preview features before public release
 
-## Tier Structure
+## Tier Overview
 
-### 🥉 Bronze Tier
-**$500/month or $5,000/year**
+| Tier | Monthly | Annual | Key Benefits |
+|------|---------|--------|--------------|
+| **Supporter** | $100 | $1,000 | Logo on website, newsletter mention |
+| **Bronze** | $500 | $5,000 | + Priority support, early features |
+| **Silver** | $2,000 | $20,000 | + Dedicated support, co-marketing |
+| **Gold** | $5,000 | $50,000 | + Custom features, strategic input |
+| **Platinum** | $10,000+ | $100,000+ | + Enterprise SLA, white-label options |
+
+## Tier Details
+
+### 🤝 Supporter
+
+**$100/month or $1,000/year**
+
+**Perfect for**: Individual developers, small startups, community supporters
 
 **Benefits**:
-- Logo on README and website (small)
-- Mention in release notes
-- Sponsor badge on GitHub
-- Public thank you on social media
-- Access to sponsor-only updates
-- Community support (public channels)
-- 2 support tickets/month (2-day response)
+- ✅ Logo on sponsors page
+- ✅ Mention in monthly newsletter
+- ✅ Sponsor badge on GitHub
+- ✅ Annual thank you in release notes
+- ✅ Community forum priority (highlighted posts)
 
-**Ideal For**: Small teams, startups, community supporters
+**Support**: Community support via GitHub Issues
 
 ---
 
-### 🥈 Silver Tier
+### 🥉 Bronze
+
+**$500/month or $5,000/year**
+
+**Perfect for**: Growing startups, small blockchain projects
+
+**Benefits**:
+- ✅ All Supporter benefits
+- ✅ Logo on README and documentation
+- ✅ Priority issue triage (24-48 hour response)
+- ✅ Early access to new features (beta releases)
+- ✅ Quarterly partnership check-in call
+- ✅ Access to sponsor-only Slack/Discord channel
+- ✅ Listed in "Powered by" showcases
+
+**Support**: Email support with 48-hour response time
+
+**Custom**: 1 minor feature request per year (subject to approval)
+
+---
+
+### 🥈 Silver
+
 **$2,000/month or $20,000/year**
 
-**All Bronze benefits, plus**:
-- Larger logo placement on website
-- Quarterly sponsor showcase
-- Priority support tickets (4/month, 1-day response)
-- Early access to new features (beta)
-- Invitation to quarterly roadmap discussions
-- Co-marketing opportunity (1 blog post/year)
-- Listed as Silver Sponsor in documentation
+**Perfect for**: Established companies, DeFi protocols, blockchain platforms
 
-**Ideal For**: Growing companies, active blockchain projects
+**Benefits**:
+- ✅ All Bronze benefits
+- ✅ Logo on project website homepage
+- ✅ Dedicated technical account manager
+- ✅ Priority bug fixes for reported issues
+- ✅ Co-marketing opportunities (blog posts, case studies)
+- ✅ Mention in major release announcements
+- ✅ Monthly partnership review call
+- ✅ Early input on roadmap (advisory role)
+- ✅ Private security advisory notifications
+
+**Support**: Priority email + video call support, 24-hour response time
+
+**Custom**: 2 feature requests per year, technical consultation (4 hours/quarter)
+
+**SLA**: 99% uptime commitment for core services
 
 ---
 
-### 🥇 Gold Tier
+### 🥇 Gold
+
 **$5,000/month or $50,000/year**
 
-**All Silver benefits, plus**:
-- Premium logo placement (top of page)
-- Dedicated account manager
-- Priority support (10 tickets/month, 4-hour response)
-- Monthly 1:1 check-ins
-- Advisory input on roadmap
-- Early access to all features
-- Custom integration support (up to 40 hours/year)
-- Co-marketing opportunities (quarterly)
-- Case study development
-- Speaking slot at annual event
-- Listed as Gold Sponsor across all materials
+**Perfect for**: Large enterprises, major blockchain platforms, security firms
 
-**Ideal For**: Established companies, major protocols, enterprise users
+**Benefits**:
+- ✅ All Silver benefits
+- ✅ Prominent logo placement (homepage, docs, presentations)
+- ✅ Dedicated engineering support
+- ✅ Custom feature development (within scope)
+- ✅ Strategic roadmap input
+- ✅ Joint webinars and conference presentations
+- ✅ Priority in partnership announcements
+- ✅ Private Slack/Teams channel with core team
+- ✅ Bi-weekly check-in calls
+- ✅ Named sponsor for specific features/releases
 
----
+**Support**: Priority multi-channel support, 12-hour response time, dedicated contact
 
-### 💎 Platinum Tier
-**$10,000/month or $100,000/year**
+**Custom**: 4 feature requests per year, 12 hours/quarter technical consultation
 
-**All Gold benefits, plus**:
-- Exclusive top-tier logo placement
-- Executive sponsor relationship
-- Unlimited priority support (2-hour response)
-- Weekly sync calls (optional)
-- Significant roadmap influence
-- Custom feature development (up to 160 hours/year)
-- Dedicated Slack/Discord channel
-- White-label options
-- Private instance deployment option
-- On-site visits and training (2/year)
-- Prominent brand association
-- Board observer seat (optional)
-- Premier sponsor recognition
+**SLA**: 99.5% uptime, 4-hour response for critical issues
 
-**Ideal For**: Fortune 500, major foundations, strategic investors
+**Exclusive**: Private training sessions for your team
 
 ---
 
-### 🌟 Custom / Strategic
-**Contact for pricing**
+### 💎 Platinum
 
-**Fully customized package** tailored to your:
-- Budget and business needs
-- Technical requirements
-- Marketing objectives
-- Strategic goals
+**$10,000+/month or $100,000+/year**
 
-**May Include**:
-- Joint venture arrangements
-- Equity partnerships
-- Revenue sharing models
-- Exclusive partnerships
-- Custom development contracts
-- Market-specific deployments
+**Perfect for**: Enterprise deployments, strategic partners, foundations
 
-**Contact**: partners@cuberai.example
+**Benefits**:
+- ✅ All Gold benefits
+- ✅ Custom partnership package
+- ✅ White-label deployment options
+- ✅ On-premise/private cloud deployment support
+- ✅ Dedicated engineering resources
+- ✅ Custom SLA negotiation
+- ✅ Board-level partnership
+- ✅ Exclusive partnership events
+- ✅ First access to commercial offerings
+- ✅ Major branding presence across all channels
+- ✅ Key sponsor designation
+
+**Support**: 24/7 support, 4-hour response time, named support engineer
+
+**Custom**: Unlimited feature requests (within reason), dedicated development time
+
+**SLA**: 99.9% uptime, 2-hour response for critical issues, quarterly business reviews
+
+**Exclusive**: Private workshops, custom training, white-glove onboarding
 
 ---
 
-## Comparison Matrix
+## Add-Ons (All Tiers)
 
-| Benefit | Bronze | Silver | Gold | Platinum |
-|---------|--------|--------|------|----------|
-| **Price (monthly)** | $500 | $2,000 | $5,000 | $10,000+ |
-| **Logo Placement** | Small | Medium | Large | Premium |
-| **Support Tickets/month** | 2 | 4 | 10 | Unlimited |
-| **Response Time** | 2 days | 1 day | 4 hours | 2 hours |
-| **Account Manager** | ❌ | ❌ | ✅ | ✅ (Executive) |
-| **Early Access** | ❌ | Beta | All | All + Custom |
-| **Roadmap Input** | ❌ | Quarterly | Monthly | Weekly |
-| **Custom Integration** | ❌ | ❌ | 40h/year | 160h/year |
-| **Co-marketing** | ❌ | 1/year | 4/year | Unlimited |
-| **Private Instance** | ❌ | ❌ | ❌ | ✅ |
-| **On-site Visits** | ❌ | ❌ | ❌ | 2/year |
+Enhance any tier with optional add-ons:
+
+### Training & Onboarding
+
+- **Team Training**: $2,000/session
+  - 2-hour training for up to 20 people
+  - Custom curriculum
+  - Recorded for future reference
+
+- **White-Glove Onboarding**: $5,000
+  - Dedicated onboarding engineer
+  - Custom integration support
+  - 30-day intensive support period
+
+### Custom Development
+
+- **Feature Development**: Starting at $10,000
+  - Custom feature development
+  - Integration into main codebase
+  - Ongoing maintenance included
+
+- **Plugin Development**: Starting at $5,000
+  - Custom plugin or extension
+  - Documentation and support
+  - Open source or proprietary options
+
+### Support Upgrades
+
+- **Extended Support Hours**: $1,000/month
+  - 24/7 support coverage
+  - Weekend and holiday support
+  - Faster response times
+
+- **Dedicated Engineer**: $15,000/month
+  - Named engineer assigned to your account
+  - Priority for all requests
+  - Regular strategic calls
 
 ## Payment Options
 
-### GitHub Sponsors
-- Monthly or annual billing
-- Credit card payments
-- Displayed on GitHub profile
-- Tax receipts available
+### Payment Methods
 
-### OpenCollective
-- Transparent budget
-- Multiple payment methods
-- Non-profit fiscal hosting
-- Public ledger
+- **Credit Card**: Automated monthly billing via Stripe
+- **Invoice**: Net 30 terms for annual agreements
+- **Cryptocurrency**: BTC, ETH, USDC accepted
+- **Wire Transfer**: For international partners
+- **Cash App**: For smaller donations
 
-### Direct Payment
-- Invoice billing (annual only)
-- Wire transfer or ACH
-- Purchase order supported
-- Custom terms available
+### Billing Cycle
 
-### Cryptocurrency
-- Bitcoin, Ethereum accepted
-- Stablecoin options (USDC, USDT)
-- Multi-sig custody
-- Annual commitment required
+- **Monthly**: Billed on signup date each month
+- **Annual**: Single payment with 2-month discount
+- **Quarterly**: Available for Silver+ (on request)
+- **Custom**: Negotiable for Platinum tier
 
-## Enterprise Packages
+### Cancellation & Refunds
 
-Beyond sponsorship, we offer enterprise packages with:
+- **Monthly**: Cancel anytime, no refund for current month
+- **Annual**: Pro-rated refund if canceled within first 90 days
+- **Commitment**: Annual sponsors commit to full term (or pro-rated buyout)
 
-### On-Premise Deployment
-- Self-hosted instance
-- Air-gapped environments
-- Custom security requirements
-- Data residency compliance
+## Non-Profit & Education Discounts
 
-### White Label Solutions
-- Custom branding
-- Private repositories
-- Dedicated infrastructure
-- SLA guarantees
+We support non-profit and educational institutions:
 
-**Pricing**: Custom (typically $50k-$200k/year)
+- **Non-Profit Organizations**: 50% discount on all tiers
+- **Educational Institutions**: 50% discount on all tiers
+- **Open Source Projects**: 75% discount on Bronze and Silver
+- **Students**: Free community support
 
-## Add-Ons
+**Verification Required**: Proof of non-profit or educational status
 
-Available for Silver tier and above:
+## How to Sponsor
 
-| Add-On | Price | Description |
-|--------|-------|-------------|
-| Extra Support Hours | $200/hour | Beyond tier allocation |
-| Custom Development | $250/hour | Bespoke features |
-| Training Workshop | $5,000/day | On-site or virtual |
-| Security Audit | $10,000 | Code review by experts |
-| Dedicated Hosting | $2,000/month | Private infrastructure |
-| Premium Support | $1,000/month | 24/7 coverage |
+### Option 1: GitHub Sponsors
 
-## Non-Profit and Academic
+1. Visit our [GitHub Sponsors page](https://github.com/sponsors/PLACEHOLDER)
+2. Choose your tier
+3. Set up payment
+4. Receive benefits immediately
 
-Special pricing available:
+### Option 2: Direct Contact
 
-### Non-Profit Organizations
-- 50% discount on all tiers
-- Verification required (501(c)(3) or equivalent)
-- Mission-aligned projects prioritized
+1. Email: sponsors@cuberai.example
+2. Include:
+   - Desired tier
+   - Organization name and website
+   - Use case and goals
+   - Any custom requirements
+3. We'll send a proposal within 3-5 business days
 
-### Academic Institutions
-- 60% discount for research use
-- Free for educational programs
-- Student projects eligible for Bronze tier free
-- Must be accredited institution
+### Option 3: OpenCollective
 
-### Open Source Projects
-- Free Bronze tier for qualifying projects
-- 70% discount on Silver/Gold tiers
-- Requirements:
-  - OSI-approved license
-  - Active community
-  - Public repository
-  - Security focus
+1. Visit our [OpenCollective page](https://opencollective.com/PLACEHOLDER)
+2. Choose sponsorship amount
+3. Transparent funding dashboard
+4. Tax-deductible (where applicable)
 
-## Commitment Terms
+## Custom Packages
 
-### Monthly Sponsorship
-- Cancel anytime
-- 30-day notice for tier changes
-- Prorated refunds not available
-- Benefits active while current
+Don't see a tier that fits? We create custom sponsorship packages:
 
-### Annual Sponsorship
-- Save 16-20% vs monthly
-- 12-month commitment
-- Benefits for full year
-- Renewal discount available
+**Contact**: sponsors@cuberai.example
 
-### Multi-Year Deals
-- Contact for pricing
-- Additional discounts
-- Price lock guarantee
-- Priority roadmap consideration
+**Custom packages may include**:
+- Adjusted benefit mix
+- Different payment schedules
+- Specific branding requirements
+- Unique integration needs
+- Multiple-year commitments
 
-## Renewal and Upgrades
+## Sponsor Recognition
 
-### Renewals
-- Automatic renewal by default
-- 60-day notice for cancellation
-- Renewal discount (5-10%)
-- Grandfathered pricing on tier changes
+### Public Recognition
 
-### Upgrades
-- Prorated for remainder of period
-- Immediate benefit activation
-- No penalty fees
-- Anytime during term
+- **Website**: Logo and link on homepage and sponsors page
+- **GitHub**: README badge and sponsors section
+- **Documentation**: Acknowledgment in docs
+- **Releases**: Thank you in release notes
+- **Social Media**: Regular sponsor highlights
+- **Conferences**: Logo on presentation materials (Gold+)
 
-### Downgrades
-- Applied at next renewal
-- Current tier benefits maintained until then
-- No mid-term downgrades
+### Private Recognition
 
-## Brand Usage
-
-Sponsors receive:
-
-### Logo Kit
-- High-resolution logos
-- Multiple formats (PNG, SVG, AI)
-- Light and dark versions
-- Usage guidelines
-
-### Marketing Materials
-- Sponsor badge graphics
-- Social media templates
-- Press release template
-- Approved messaging
-
-### Usage Rights
-- Sponsor may display "Sponsor of SmartContractAudit"
-- Use project logo in sponsor context
-- Subject to brand guidelines
-- No exclusive claims
-
-## Reporting and Transparency
-
-Sponsors receive:
-
-### Financial Transparency
-- Budget reports (OpenCollective)
-- Spending allocation
-- Project milestones
-- Impact metrics
-
-### Technical Metrics
-- Usage statistics (aggregated)
-- Security findings data
-- Performance benchmarks
-- Adoption trends
-
-### Community Health
-- Contributor growth
-- Issue resolution rates
-- Release cadence
-- Satisfaction scores
-
-## Sponsor Showcase
-
-Sponsors featured in:
-
-- **Website**: Sponsor page with logos and descriptions
-- **GitHub**: FUNDING.yml and README badges
-- **Documentation**: Acknowledgments section
-- **Releases**: Special thanks in release notes
-- **Events**: Recognition at sponsored events
-- **Social Media**: Regular sponsor spotlights
+If you prefer low-key support:
+- Receive benefits without public listing
+- Internal acknowledgment only
+- Still receive technical benefits
+- Available for all tiers
 
 ## Frequently Asked Questions
 
-### Can we sponsor specific features?
-Yes! Contact us for custom sponsorship of features, research areas, or initiatives.
+**Q: Can I upgrade or downgrade my tier?**  
+A: Yes! Changes take effect at next billing cycle. Contact us for immediate changes.
 
-### What if we outgrow our tier mid-year?
-You can upgrade anytime with prorated pricing. Benefits activate immediately.
+**Q: Do you offer discounts for long-term commitments?**  
+A: Yes, multi-year commitments receive additional discounts. Contact us to discuss.
 
-### Do you offer quarterly payments?
-Annual sponsorships only. Monthly sponsors billed monthly.
+**Q: Can I sponsor specific features?**  
+A: Yes! We accept feature sponsorships. Minimum $10,000 per feature.
 
-### Can we remain anonymous?
-Yes, though some benefits (logo placement, etc.) require public recognition.
+**Q: Is sponsorship tax-deductible?**  
+A: Depends on jurisdiction and our legal entity status. Consult your tax advisor.
 
-### Are sponsorships tax-deductible?
-Depends on jurisdiction. OpenCollective can provide 501(c)(3) receipts in US.
+**Q: What if I need more than Platinum offers?**  
+A: We create custom enterprise packages. Let's talk!
 
-### What happens if we cancel?
-Benefits end at current period completion. No hard feelings, no penalties.
+**Q: Can I pay in cryptocurrency?**  
+A: Yes! We accept BTC, ETH, and major stablecoins.
 
-## Getting Started
+**Q: Do I get a seat on the governance board?**  
+A: Sponsorship doesn't grant governance rights per our independence policy. You're welcome to participate as a regular community member.
 
-Ready to sponsor?
+## Current Sponsors
 
-1. **Choose your tier** based on needs and budget
-2. **Select payment method** (GitHub Sponsors, OpenCollective, or Direct)
-3. **Complete sign-up** with contact and billing information
-4. **Receive onboarding** materials and account setup
-5. **Start receiving benefits** immediately
+*Thank you to our sponsors! Your support makes this project possible.*
 
-## Contact
+### Platinum Sponsors
 
-Questions about sponsorship?
+[Your logo could be here]
 
-- **Email**: sponsors@cuberai.example
-- **Schedule Call**: [Calendly link to be added]
-- **GitHub Sponsors**: [Link to be added]
-- **OpenCollective**: [Link to be added]
+### Gold Sponsors
+
+[Your logo could be here]
+
+### Silver Sponsors
+
+[Your logo could be here]
+
+### Bronze Sponsors
+
+[Your logo could be here]
 
 ---
 
-*Pricing and terms effective as of 2025-12-31. Subject to change with 60-day notice. Custom arrangements available for unique needs.*
+## Ready to Sponsor?
+
+**Email**: sponsors@cuberai.example  
+**GitHub Sponsors**: https://github.com/sponsors/PLACEHOLDER  
+**OpenCollective**: https://opencollective.com/PLACEHOLDER
+
+We're excited to partner with you! 🚀
+
+---
+
+**Last Updated**: 2026-01-01  
+**Version**: 1.0
+
+**Note**: Prices and benefits subject to change with 30 days notice to existing sponsors.
