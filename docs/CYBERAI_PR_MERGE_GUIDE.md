@@ -327,9 +327,14 @@ When reviewing PRs:
 git checkout -b standardize-cyberai-naming
 
 # Update references (carefully!)
+# Use portable sed syntax that works on both GNU/Linux and macOS/BSD
 find . -type f \( -name "*.md" -o -name "*.sh" \) \
   -not -path "./.git/*" \
-  -exec sed -i 's/CuberAi/CyberAi/g' {} \;
+  -exec sh -c '
+    for file do
+      sed "s/CuberAi/CyberAi/g" "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+    done
+  ' sh {} +
 
 # Review changes
 git diff

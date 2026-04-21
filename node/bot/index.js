@@ -22,9 +22,9 @@ const __dirname = dirname(__filename);
 const CONFIG = {
   dryRun: process.env.DRY_RUN !== 'false',
   botPingsEnabled: process.env.BOT_PINGS_ENABLED === 'true',
-  allowlistOrgs: (process.env.ALLOWLIST_ORGS || '').split(',').filter(Boolean),
+  allowlistOrgs: (process.env.ALLOWLIST_ORGS || '').split(',').map((value) => value.trim()).filter(Boolean),
   maxPRsPerRun: parseInt(process.env.MAX_PRS_PER_RUN || '3', 10),
-  searchKeywords: (process.env.SEARCH_KEYWORDS || 'solana,smart-contract,audit').split(','),
+  searchKeywords: (process.env.SEARCH_KEYWORDS || 'solana,smart-contract,audit').split(',').map((value) => value.trim()).filter(Boolean),
   minStars: parseInt(process.env.MIN_STARS || '10', 10),
   ghToken: process.env.GH_TOKEN || process.env.GITHUB_TOKEN,
 };
@@ -95,9 +95,13 @@ async function searchRepositories(octokit) {
         
         log.debug(`Query: ${query}`);
         
-        if (CONFIG.dryRun || !octokit) {
-          log.warning(`[DRY RUN] Would search for: ${keyword} (language: ${language})`);
+        if (!octokit) {
+          log.warning(`Skipping search for "${keyword}" (language: ${language}) because GitHub client is unavailable`);
           continue;
+        }
+        
+        if (CONFIG.dryRun) {
+          log.info(`[DRY RUN] Searching for: ${keyword} (language: ${language}); write operations remain disabled`);
         }
         
         const response = await octokit.rest.search.repos({

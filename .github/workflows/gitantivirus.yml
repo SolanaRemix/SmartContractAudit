@@ -71,8 +71,12 @@ jobs:
       
       - name: ✅ Make scripts executable
         run: |
-          chmod +x scripts/*.sh
-          ls -la scripts/
+          if [ -d "scripts" ]; then
+            find scripts -maxdepth 1 -type f -name '*.sh' -exec chmod +x {} +
+            ls -la scripts/
+          else
+            echo "No scripts/ directory found, skipping chmod"
+          fi
       
       - name: 🔧 SMSDAO Repair (Dry-run check)
         if: env.DRY_RUN == 'true'
@@ -132,10 +136,7 @@ jobs:
             }
       
       - name: 💬 Sticky PR Comment
-        if: |
-          github.event_name == 'pull_request' && 
-          env.BOT_PINGS_ENABLED == 'true' && 
-          github.repository_owner == 'SolanaRemix'
+        if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
         continue-on-error: true
         with:
