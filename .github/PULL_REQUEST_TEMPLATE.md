@@ -1,124 +1,113 @@
-# Pull Request
+# Pull Request Template
 
 ## Description
 
-<!-- Provide a clear and concise description of your changes -->
+Brief description of the changes in this PR.
 
 ## Type of Change
 
-<!-- Mark relevant options with an 'x' -->
+Please check the relevant option:
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] Bug fix (non-breaking change fixing an issue)
+- [ ] New feature (non-breaking change adding functionality)
+- [ ] Breaking change (fix or feature causing existing functionality to change)
 - [ ] Documentation update
 - [ ] Code refactoring
 - [ ] Performance improvement
-- [ ] Test addition/improvement
-- [ ] CI/CD update
-- [ ] Security fix
+- [ ] Test improvement
 
-## Related Issues
+## Safety Checklist
 
-<!-- Link related issues using #issue-number -->
+**IMPORTANT**: Please verify before submitting:
 
-Fixes #
-Relates to #
+- [ ] **DRY_RUN verified**: All potentially destructive operations default to DRY_RUN=true
+- [ ] **No secrets committed**: No API keys, private keys, passwords, or sensitive data in code
+- [ ] **No hardcoded credentials**: All credentials use environment variables or secure secrets
+- [ ] **Artifacts reviewed**: All generated artifacts (logs, reports) reviewed and safe to commit
+- [ ] **Non-destructive by default**: Auto-apply and auto-merge features disabled by default
+- [ ] **Permissions reviewed**: Required permissions are minimal and explicitly documented
 
-## Changes Made
+## Audit Artifacts Section
 
-<!-- List the main changes in bullet points -->
+If this PR includes security scanning or audit features:
 
-- 
-- 
-- 
+### Artifacts Generated
+- [ ] SMARTBRAIN.log
+- [ ] AUDIT-REPORT.md
+- [ ] .quarantine/ directory
+- [ ] Other (specify):
+
+### Artifact Safety
+- [ ] Artifacts do not contain secrets or sensitive data
+- [ ] Artifacts are properly gitignored or sanitized
+- [ ] Redaction policy followed for any included artifacts
 
 ## Testing
 
-<!-- Describe the testing you've done -->
+- [ ] Tests pass locally
+- [ ] New tests added for new functionality
+- [ ] Existing tests updated if needed
+- [ ] Manual testing completed
 
-- [ ] All existing tests pass
-- [ ] Added new tests for new functionality
-- [ ] Tested manually (describe how)
-- [ ] Tested in development environment
-- [ ] No tests needed (documentation only)
+### Test Commands Run
+```bash
+# List commands you ran to test
+```
 
-**Test Details:**
+## Changes Made
 
+### Files Changed
+- List key files and why they were changed
 
-## Security Checklist
+### Configuration Changes
+- Any new environment variables?
+- Any new dependencies?
+- Any configuration file changes?
 
-<!-- This is required for all PRs -->
+## Security Considerations
 
-- [ ] No secrets, API keys, or credentials committed
-- [ ] All scripts default to DRY_RUN=true or equivalent safe mode
-- [ ] No destructive operations without explicit confirmation
-- [ ] Input validation added where applicable
-- [ ] Security implications considered and documented
-- [ ] Dependencies checked for known vulnerabilities
-- [ ] Code follows secure coding best practices
-
-**DRY_RUN Verification:**
-- [ ] Verified that DRY_RUN=true is the default
-- [ ] Confirmed no auto-apply fixes or auto-merge
-- [ ] BOT_PINGS_ENABLED=false or equivalent
+- [ ] No new security vulnerabilities introduced
+- [ ] Security best practices followed
+- [ ] Input validation added where necessary
+- [ ] Output sanitization applied where necessary
 
 ## Documentation
 
 - [ ] README updated (if needed)
 - [ ] Code comments added for complex logic
 - [ ] API documentation updated (if applicable)
-- [ ] CHANGELOG.md updated (if release-worthy change)
-- [ ] Breaking changes documented
-- [ ] Migration guide provided (if breaking change)
+- [ ] CHANGELOG updated (for releases)
 
-## Code Quality
+## Checklist
 
 - [ ] Code follows project style guidelines
-- [ ] Linting passes (run `npm run lint` or equivalent)
-- [ ] All commits are signed off (DCO: `git commit -s`)
-- [ ] Commit messages are clear and descriptive
-- [ ] No unnecessary console.log or debug code
-- [ ] Code is well-structured and maintainable
+- [ ] Self-review completed
+- [ ] Commits are signed off (DCO)
+- [ ] PR title is clear and descriptive
+- [ ] Linked related issues (closes #123, relates to #456)
 
-## Checklist Before Review
+## Additional Notes
 
-- [ ] Self-reviewed the code
-- [ ] Checked for typos and errors
-- [ ] Verified all CI checks pass
-- [ ] Ready for maintainer review
-
-## Additional Context
-
-<!-- Add any other context, screenshots, or information -->
+Any additional context, decisions, or considerations for reviewers.
 
 ## Screenshots (if applicable)
 
-<!-- Add screenshots for UI changes -->
+Add screenshots for UI changes or visual features.
 
-## Deployment Notes
+## Rollback Plan
 
-<!-- Any special deployment considerations? -->
+If this is a significant change, describe how to roll back if issues arise:
 
-## Reviewer Notes
-
-<!-- Anything specific you want reviewers to focus on? -->
+```
+Steps to rollback:
+1. 
+2. 
+```
 
 ---
 
-## For Maintainers
-
-**Review Checklist:**
-- [ ] Code quality acceptable
-- [ ] Tests adequate
-- [ ] Security considerations addressed
-- [ ] Documentation sufficient
-- [ ] No secrets or credentials
-- [ ] DRY_RUN defaults confirmed
-- [ ] Breaking changes acceptable (if any)
-- [ ] Ready to merge
-
-**Post-Merge:**
-- [ ] Update CHANGELOG if significant
-- [ ] Tag for release (if applicable)
-- [ ] Announce (if major feature)
+**For Reviewers:**
+- [ ] Code quality approved
+- [ ] Security implications reviewed
+- [ ] Tests are adequate
+- [ ] Documentation is clear

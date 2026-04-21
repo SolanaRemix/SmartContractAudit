@@ -1,46 +1,12 @@
-<<<<<<< HEAD
 name: GitAntivirus Security Scan
-
-on:
-  push:
-    branches:
-      - main
-      - gitantivirus-node
-      - 'feature/**'
-  pull_request:
-    branches:
-      - main
-  schedule:
-    # Run daily at 2 AM UTC
-    - cron: '0 2 * * *'
-  workflow_dispatch:
-    inputs:
-      dry_run:
-        description: 'Run in dry-run mode (default: true)'
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-name: GitAntivirus Safe Scan
-=======
-name: GitAntivirus Dry-Run Scan
->>>>>>> origin/pr10
 
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-<<<<<<< HEAD
-=======
-name: GitAntivirus - Safe Dry-Run Mode
-
-on:
-  pull_request:
-    branches: [main, master]
->>>>>>> origin/pr9
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 'Run in dry-run mode (recommended)'
->>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
+        description: 'Run in dry-run mode (no automated changes)'
         required: false
         default: 'true'
         type: choice
@@ -48,229 +14,22 @@ on:
           - 'true'
           - 'false'
 
-<<<<<<< HEAD
-env:
-  DRY_RUN: 'true'
-  NODE_VERSION: '18'
-
-jobs:
-  antivirus-scan:
-    name: Security & Antivirus Scan
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-
-=======
-<<<<<<< HEAD
-# Conservative permissions - read-only by default with write only where needed
 permissions:
   contents: write
   pull-requests: write
   issues: write
 
 env:
-  # SECURITY: Safe defaults - non-destructive by default
-  DRY_RUN: 'true'
-  BOT_PINGS_ENABLED: 'false'
-  ALLOWLIST_ORGS: ''
-  MAX_PRS_PER_RUN: 3
-
-jobs:
-  gitantivirus-scan:
-    name: GitAntivirus Security Scan (Dry-Run)
-=======
-=======
-  workflow_dispatch:
-    inputs:
-      dry_run:
-        description: 'Run in dry-run mode (true/false)'
-        required: false
-        default: 'true'
-      target_pr:
-        description: 'PR number to scan (leave empty for workflow_dispatch runs)'
-        required: false
-
->>>>>>> origin/pr10
-permissions:
-  contents: write
-  pull-requests: write
-
-env:
-  DRY_RUN: true
+  # SAFETY DEFAULTS - Always enabled unless explicitly disabled
+  DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
   BOT_PINGS_ENABLED: false
-  ALLOWLIST_ORGS: ""
+  ALLOWLIST_ORGS: ''
+  AUTO_APPLY: false
+  AUTO_MERGE: false
 
 jobs:
-<<<<<<< HEAD
-  gitantivirus-scan:
-    name: Security Scan (Dry-Run)
->>>>>>> origin/pr9
-    runs-on: ubuntu-latest
-    
->>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-<<<<<<< HEAD
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8.15.0
-
-      - name: Run SmartBrain Antivirus Scan
-        id: scan
-        run: |
-          echo "Running GitAntivirus scan in DRY_RUN mode..."
-          chmod +x scripts/master.sh
-          DRY_RUN=${{ github.event.inputs.dry_run || 'true' }} scripts/master.sh scan
-
-      - name: Upload quarantine report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: quarantine-report
-          path: .quarantine/
-          retention-days: 30
-          if-no-files-found: ignore
-
-      - name: Upload SmartBrain logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: smartbrain-logs
-          path: SMARTBRAIN.log
-          retention-days: 7
-          if-no-files-found: ignore
-
-      - name: Check scan results
-        if: steps.scan.outcome == 'failure'
-        run: |
-          echo "⚠️ Antivirus scan detected potential issues"
-          echo "Please review the quarantine report artifacts"
-          exit 1
-
-  health-check:
-    name: SmartBrain Health Check
-    runs-on: ubuntu-latest
-    if: always()
-    timeout-minutes: 20
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Check if Node.js project
-        id: check_nodejs
-        run: |
-          if [ -f "package.json" ]; then
-            echo "has_package_json=true" >> $GITHUB_OUTPUT
-          else
-            echo "has_package_json=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Setup Node.js
-        if: steps.check_nodejs.outputs.has_package_json == 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install pnpm
-        if: steps.check_nodejs.outputs.has_package_json == 'true'
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8.15.0
-
-      - name: Run SmartBrain Health Check
-        run: |
-          chmod +x scripts/master.sh
-          scripts/master.sh health
-
-      - name: Upload health report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: health-report
-          path: SMARTBRAIN.log
-          retention-days: 7
-          if-no-files-found: ignore
-
-  integrity-check:
-    name: Repository Integrity Check
-    runs-on: ubuntu-latest
-    if: always()
-    timeout-minutes: 15
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Check if Node.js project
-        id: check_nodejs
-        run: |
-          if [ -f "package.json" ]; then
-            echo "has_package_json=true" >> $GITHUB_OUTPUT
-          else
-            echo "has_package_json=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Setup Node.js
-        if: steps.check_nodejs.outputs.has_package_json == 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Install pnpm
-        if: steps.check_nodejs.outputs.has_package_json == 'true'
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8.15.0
-
-      - name: Run Integrity Check
-        run: |
-          chmod +x scripts/master.sh
-          scripts/master.sh integrity
-
-      - name: Upload integrity report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: integrity-report
-          path: SMARTBRAIN.log
-          retention-days: 7
-          if-no-files-found: ignore
-
-  summary:
-    name: Security Summary
-    runs-on: ubuntu-latest
-    needs: [antivirus-scan, health-check, integrity-check]
-    if: always()
-
-    steps:
-      - name: Generate summary
-        run: |
-          echo "## GitAntivirus Security Scan Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Antivirus Scan**: ${{ needs.antivirus-scan.result }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Health Check**: ${{ needs.health-check.result }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Integrity Check**: ${{ needs.integrity-check.result }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "All scans completed in DRY_RUN mode (non-destructive)." >> $GITHUB_STEP_SUMMARY
-=======
-<<<<<<< HEAD
-          fetch-depth: 0  # Full history for comprehensive scanning
-=======
-          fetch-depth: 0
->>>>>>> origin/pr9
-=======
   security-scan:
-    name: Security Scan (Dry-Run)
+    name: SmartBrain Security Scan
     runs-on: ubuntu-latest
     
     steps:
@@ -278,709 +37,241 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
->>>>>>> origin/pr10
-      
+          
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-<<<<<<< HEAD
-<<<<<<< HEAD
           node-version: '20'
-=======
-          node-version: 20
->>>>>>> origin/pr9
-=======
-          node-version: '20'
->>>>>>> origin/pr10
-      
+          
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v2
         with:
           version: 8
-      
-      - name: Install dependencies
+          
+      - name: Display scan configuration
         run: |
-<<<<<<< HEAD
-<<<<<<< HEAD
-          if [ -f package.json ]; then
-            pnpm install --frozen-lockfile || npm install
-          fi
-        continue-on-error: true
-      
-      - name: Make scripts executable
-        run: |
-          if [ -d scripts ]; then
-            chmod +x scripts/*.sh || true
-          fi
-      
-      - name: Run GitAntivirus scan (Dry-Run)
-        id: scan
-        run: |
-          echo "🔍 Running GitAntivirus in DRY-RUN mode..."
-          echo "⚠️  No changes will be made to the repository"
+          echo "==================================="
+          echo "GitAntivirus Security Scan"
+          echo "==================================="
+          echo "Configuration:"
+          echo "  DRY_RUN: ${{ env.DRY_RUN }}"
+          echo "  BOT_PINGS_ENABLED: ${{ env.BOT_PINGS_ENABLED }}"
+          echo "  AUTO_APPLY: ${{ env.AUTO_APPLY }}"
+          echo "  AUTO_MERGE: ${{ env.AUTO_MERGE }}"
+          echo "  ALLOWLIST_ORGS: ${{ env.ALLOWLIST_ORGS }}"
+          echo "==================================="
           echo ""
+          echo "⚠️  SAFETY MODE ACTIVE"
+          echo "This workflow runs in DRY_RUN mode by default."
+          echo "No automatic changes will be applied."
+          echo "Human review required before merge."
+          echo "==================================="
           
-          # Run scan in dry-run mode
-          if [ -f scripts/master.sh ]; then
-            DRY_RUN=true ./scripts/master.sh scan || true
-          else
-            echo "ℹ️  Master script not found, running basic audit..."
-            if [ -f scripts/audit.sh ]; then
-              DRY_RUN=true ./scripts/audit.sh || true
-            else
-              echo "⚠️  No audit scripts found"
-            fi
-          fi
-          
-          echo "✅ Dry-run scan complete"
-        continue-on-error: true
-        env:
-          DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
-          BOT_PINGS_ENABLED: 'false'
-          ALLOWLIST_ORGS: ''
-      
-      - name: Run health checks (Dry-Run)
-        run: |
-          echo "🏥 Running health checks in dry-run mode..."
-          
-          # Check for common issues
-          echo "Checking for secrets..."
-          if command -v git-secrets &> /dev/null; then
-            git secrets --scan || echo "⚠️  git-secrets not configured"
-          fi
-          
-          # Check for large files
-          echo "Checking for large files..."
-          find . -type f -size +10M -not -path "./.git/*" | head -10 || true
-          
-          # Basic security checks
-          echo "Running basic security checks..."
-          if [ -f package.json ]; then
-            npm audit --audit-level=moderate || true
-          fi
-          
-          echo "✅ Health checks complete (dry-run)"
-        continue-on-error: true
-      
-      - name: Generate scan report
-        if: always()
-        run: |
-          echo "📝 Generating scan report..."
-          
-          # Create report file
-          cat > AUDIT-REPORT.md << 'EOF'
-          # GitAntivirus Scan Report
-          
-          **Date**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          **Mode**: DRY-RUN (No changes made)
-          **Workflow**: ${{ github.workflow }}
-          **Run ID**: ${{ github.run_id }}
-          
-          ## Summary
-          
-          This scan ran in **DRY-RUN mode**. No actual changes were made to the repository.
-          
-          ### Safety Configuration
-          
-          - ✅ DRY_RUN: enabled
-          - ✅ BOT_PINGS_ENABLED: disabled
-          - ✅ ALLOWLIST_ORGS: empty (restrictive)
-          - ✅ MAX_PRS_PER_RUN: 3 (rate-limited)
-          
-          ### Scan Results
-          
-          Please review the workflow logs for detailed scan output.
-          
-          ## Next Steps
-          
-          To enable actual fixes (NOT RECOMMENDED without review):
-          1. Review this report carefully
-          2. Verify all findings
-          3. Set DRY_RUN=false (only if necessary)
-          4. Provide GitHub token with write permissions
-          
-          ## Security Notes
-          
-          ⚠️  **IMPORTANT**: This workflow runs in safe mode by default.
-          - No automatic fixes applied
-          - No automatic PRs created
-          - No automatic merges
-          - Manual review required for all actions
-          
-          ## Support
-          
-          For questions or issues, please open a GitHub issue or contact security@cuberai.example
-          
-          ---
-          *Generated by GitAntivirus Safe Scan Workflow*
-          EOF
-          
-          echo "✅ Report generated"
-      
-      - name: Upload scan artifacts
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: gitantivirus-scan-results
-          path: |
-            AUDIT-REPORT.md
-            SMARTBRAIN.log
-            .quarantine/
-          if-no-files-found: ignore
-          retention-days: 90
-      
-      - name: Add labels to PR (if applicable)
-        if: github.event_name == 'pull_request'
-=======
-          if [ -f "package.json" ]; then
-            pnpm install --no-frozen-lockfile || npm install || echo "No package.json or install failed"
-          fi
-      
       - name: Make scripts executable
         run: |
           if [ -d "scripts" ]; then
-            chmod +x scripts/*.sh || true
+            find scripts -type f -name "*.sh" -exec chmod +x {} \;
+            echo "✓ Scripts made executable"
+          else
+            echo "ℹ️  No scripts directory found"
           fi
-      
-      - name: Set dry-run mode
-        run: |
-          echo "DRY_RUN=${{ github.event.inputs.dry_run || 'true' }}" >> $GITHUB_ENV
-          echo "Running in DRY_RUN mode: ${{ github.event.inputs.dry_run || 'true' }}"
-      
+          
       - name: Run security scan (dry-run)
-        continue-on-error: true
+        id: scan
         run: |
-          echo "🔍 Starting GitAntivirus scan in DRY-RUN mode..."
-          echo "DRY_RUN=${DRY_RUN}"
-          echo "BOT_PINGS_ENABLED=${BOT_PINGS_ENABLED}"
-          echo "ALLOWLIST_ORGS=${ALLOWLIST_ORGS}"
+          echo "Starting security scan in DRY_RUN mode..."
+          echo ""
           
-          # Run master.sh scan if it exists
-          if [ -x "./scripts/master.sh" ]; then
-            ./scripts/master.sh scan || echo "Scan completed with warnings"
+          # Placeholder for actual scan logic
+          # In production, this would call scripts/master.sh or similar
+          
+          SCAN_EXIT_CODE=0
+          if [ -f "scripts/master.sh" ]; then
+            echo "Running SmartBrain scan..."
+            ./scripts/master.sh scan --dry-run || SCAN_EXIT_CODE=$?
+            if [ $SCAN_EXIT_CODE -ne 0 ]; then
+              echo "⚠️  Scan script exited with code $SCAN_EXIT_CODE"
+            fi
           else
-            echo "⚠️  master.sh not found or not executable"
-            echo "Creating placeholder scan results..."
-            mkdir -p .quarantine
-            echo "Dry-run scan completed - no issues found" > .quarantine/scan-summary.txt
+            echo "ℹ️  SmartBrain scan script not found"
+            echo "This is a placeholder workflow. Implement scripts/master.sh for actual scanning."
           fi
-      
-      - name: Run audit checks (dry-run)
-        continue-on-error: true
-        run: |
-          echo "🔒 Running audit checks in DRY-RUN mode..."
           
-          # Run audit script if it exists
-          if [ -x "./scripts/audit.sh" ]; then
-            ./scripts/audit.sh || echo "Audit completed with warnings"
-          else
-            echo "No audit script found, skipping"
-          fi
-      
-      - name: Health check (dry-run)
-        continue-on-error: true
-        run: |
-          echo "💚 Running health checks in DRY-RUN mode..."
+          # Create placeholder log files
+          mkdir -p .quarantine
           
-          # Basic repository health checks
-          echo "Repository structure:" > health-check.log
-          ls -la >> health-check.log
+          echo "==================================="  > SMARTBRAIN.log
+          echo "SmartBrain Security Scan Results"   >> SMARTBRAIN.log
+          echo "==================================="  >> SMARTBRAIN.log
+          echo ""                                     >> SMARTBRAIN.log
+          echo "Scan ID: ${{ github.run_id }}"       >> SMARTBRAIN.log
+          echo "Run by: SmartBrain (automated)"      >> SMARTBRAIN.log
+          echo "DRY_RUN: true"                       >> SMARTBRAIN.log
+          echo ""                                     >> SMARTBRAIN.log
+          echo "Status: Scan placeholder active"     >> SMARTBRAIN.log
+          echo "Note: Implement full scanning logic" >> SMARTBRAIN.log
+          echo ""                                     >> SMARTBRAIN.log
+          echo "No automated changes were made."     >> SMARTBRAIN.log
+          echo "Human review required."              >> SMARTBRAIN.log
           
-          echo "" >> health-check.log
-          echo "Git status:" >> health-check.log
-          git status >> health-check.log
+          echo "# Security Audit Report" > AUDIT-REPORT.md
+          echo "" >> AUDIT-REPORT.md
+          echo "**Scan ID**: ${{ github.run_id }}" >> AUDIT-REPORT.md
+          echo "**Date**: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> AUDIT-REPORT.md
+          echo "**Mode**: DRY_RUN" >> AUDIT-REPORT.md
+          echo "" >> AUDIT-REPORT.md
+          echo "## Summary" >> AUDIT-REPORT.md
+          echo "" >> AUDIT-REPORT.md
+          echo "This is a placeholder audit report." >> AUDIT-REPORT.md
+          echo "Implement full scanning logic in scripts/master.sh" >> AUDIT-REPORT.md
+          echo "" >> AUDIT-REPORT.md
+          echo "### Safety Checks" >> AUDIT-REPORT.md
+          echo "" >> AUDIT-REPORT.md
+          echo "- ✓ DRY_RUN enabled" >> AUDIT-REPORT.md
+          echo "- ✓ BOT_PINGS disabled" >> AUDIT-REPORT.md
+          echo "- ✓ AUTO_APPLY disabled" >> AUDIT-REPORT.md
+          echo "- ✓ AUTO_MERGE disabled" >> AUDIT-REPORT.md
+          echo "" >> AUDIT-REPORT.md
+          echo "## Findings" >> AUDIT-REPORT.md
+          echo "" >> AUDIT-REPORT.md
+          echo "No findings (placeholder scan)" >> AUDIT-REPORT.md
+          echo "" >> AUDIT-REPORT.md
+          echo "## Recommendations" >> AUDIT-REPORT.md
+          echo "" >> AUDIT-REPORT.md
+          echo "1. Implement full scanning logic" >> AUDIT-REPORT.md
+          echo "2. Configure detection rules" >> AUDIT-REPORT.md
+          echo "3. Set up quarantine procedures" >> AUDIT-REPORT.md
+          echo "" >> AUDIT-REPORT.md
+          echo "---" >> AUDIT-REPORT.md
+          echo "" >> AUDIT-REPORT.md
+          echo "**Note**: This workflow is in safe mode. No automated changes were made." >> AUDIT-REPORT.md
           
-          # Check for common security files
-          echo "" >> health-check.log
-          echo "Security files:" >> health-check.log
-          ls -la | grep -E "(SECURITY|LICENSE|CODE_OF_CONDUCT)" >> health-check.log || echo "Some security files missing"
+          echo "scan_completed=true" >> $GITHUB_OUTPUT
+          echo "findings_count=0" >> $GITHUB_OUTPUT
           
-          cat health-check.log
-      
-      - name: Upload scan artifacts
+      - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gitantivirus-scan-results
+          name: security-scan-results-${{ github.run_id }}
           path: |
             SMARTBRAIN.log
             AUDIT-REPORT.md
             .quarantine/
-            health-check.log
           retention-days: 90
-          if-no-files-found: ignore
-      
-      - name: Add PR labels (dry-run safe)
-        if: github.event_name == 'pull_request' && env.DRY_RUN == 'true'
->>>>>>> origin/pr9
+          
+      - name: Add PR labels
+        if: github.event_name == 'pull_request' && steps.scan.outputs.scan_completed == 'true'
         continue-on-error: true
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-<<<<<<< HEAD
-=======
-            const labels = ['security-scan', 'dry-run'];
-            
->>>>>>> origin/pr9
             try {
               await github.rest.issues.addLabels({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-<<<<<<< HEAD
-                labels: ['security-scan', 'dry-run']
+                labels: ['security-scanned', 'dry-run']
               });
+              console.log('✓ Added security scan labels');
             } catch (error) {
-              console.log('Could not add labels:', error.message);
+              console.log('ℹ️  Could not add labels (labels may not exist yet)');
+              console.log(error.message);
             }
-      
-      - name: Post PR comment (Dry-Run Notice)
+            
+      - name: Post scan summary
         if: github.event_name == 'pull_request'
         continue-on-error: true
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const comment = `## 🔍 GitAntivirus Scan Complete (Dry-Run)
-            
-            **Status**: ✅ Scan completed in safe dry-run mode
-            **Mode**: DRY-RUN (no changes made)
-            **Date**: ${new Date().toUTCString()}
-            
-            ### Safety Configuration
-            
-            - ✅ **DRY_RUN**: Enabled (no actual changes)
-            - ✅ **BOT_PINGS**: Disabled (quiet mode)
-            - ✅ **ALLOWLIST**: Empty (restrictive)
-            - ✅ **RATE_LIMIT**: 3 PRs max per run
-            
-            ### What This Means
-            
-            This security scan ran in **safe mode** and made **no changes** to your code or repository.
-            It only analyzed the code for potential issues.
-            
-            ### Next Steps
-            
-            1. ✅ Review the scan artifacts (attached to workflow run)
-            2. ✅ Check AUDIT-REPORT.md for findings
-            3. ✅ Address any security concerns manually
-            4. ⚠️  Do NOT disable dry-run without review
-            
-            ### Security Notes
-            
-            This workflow follows conservative security practices:
-            - Non-destructive by default
-            - Requires manual approval for any fixes
-            - No automatic merges or commits
-            - Comprehensive logging and auditing
-            
-            ---
-            
-            *This is a sticky comment and will be updated on subsequent scans.*
-            *For questions, see [SECURITY.md](../SECURITY.md) or contact security@cuberai.example*
-            `;
-            
-            // Try to find existing comment
-=======
-          if [ -f "package.json" ]; then
-            echo "📦 Installing npm dependencies..."
-            pnpm install --frozen-lockfile || npm install
-          else
-            echo "ℹ️  No package.json found, skipping dependency installation"
-          fi
-      
-      - name: Make scripts executable
-        run: |
-          echo "🔧 Making scripts executable..."
-          if [ -d "scripts" ]; then
-            find scripts -type f -name "*.sh" -exec chmod +x {} \;
-            echo "✅ Scripts in scripts/ are now executable"
-          fi
-          if [ -f "dao/merkle/generate_merkle.js" ]; then
-            chmod +x dao/merkle/generate_merkle.js
-            echo "✅ dao/merkle/generate_merkle.js is now executable"
-          fi
-          ls -la scripts/*.sh dao/merkle/*.js 2>/dev/null || echo "No scripts found"
-      
-      - name: Create quarantine directory
-        run: |
-          mkdir -p .quarantine
-          echo "📁 Quarantine directory created"
-      
-      - name: Run dry-run security scan
-        id: scan
-        run: |
-          echo "🔍 Running security scan in DRY-RUN mode..."
-          echo "DRY_RUN=${DRY_RUN}" >> $GITHUB_ENV
-          echo "BOT_PINGS_ENABLED=${BOT_PINGS_ENABLED}" >> $GITHUB_ENV
-          echo "ALLOWLIST_ORGS=${ALLOWLIST_ORGS}" >> $GITHUB_ENV
-          
-          # Create placeholder scan log
-          cat > SMARTBRAIN.log <<EOF
-          ╔════════════════════════════════════════════════════════════════╗
-          ║        SMARTBRAIN Security Scan - DRY-RUN MODE                ║
-          ╚════════════════════════════════════════════════════════════════╝
-          
-          Scan Date: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          Repository: ${{ github.repository }}
-          Branch: ${{ github.head_ref || github.ref_name }}
-          Commit: ${{ github.sha }}
-          
-          ⚙️  Configuration:
-          - DRY_RUN: ${DRY_RUN}
-          - BOT_PINGS_ENABLED: ${BOT_PINGS_ENABLED}
-          - ALLOWLIST_ORGS: ${ALLOWLIST_ORGS}
-          
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          
-          🔍 Scan Summary:
-          
-          ✅ No secrets or credentials detected
-          ✅ All scripts use DRY_RUN=true default
-          ✅ No auto-apply or auto-merge detected
-          ✅ BOT_PINGS_ENABLED=false confirmed
-          ✅ No destructive operations without confirmation
-          
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          
-          📊 Statistics:
-          - Files scanned: $(find . -type f | wc -l)
-          - Scripts checked: $(find scripts -type f -name "*.sh" 2>/dev/null | wc -l)
-          - Workflows analyzed: $(find .github/workflows -type f -name "*.yml" 2>/dev/null | wc -l)
-          
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          
-          🔐 Security Checks:
-          
-          [✓] Secret scanning: PASSED
-          [✓] Default safety modes: PASSED
-          [✓] Permission verification: PASSED
-          [✓] Destructive operations: PASSED
-          [✓] Bot configuration: PASSED
-          
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          
-          ℹ️  NOTE: This is a DRY-RUN scan. No actual changes are applied.
-          To run in live mode, set DRY_RUN=false (not recommended without review).
-          
-          ✨ Scan completed successfully!
-          
-          EOF
-          
-          cat SMARTBRAIN.log
-      
-      - name: Generate audit report
-        run: |
-          echo "📝 Generating audit report..."
-          cat > AUDIT-REPORT.md <<EOF
-          # Security Audit Report
-          
-          **Repository**: ${{ github.repository }}  
-          **Branch**: ${{ github.head_ref || github.ref_name }}  
-          **Commit**: \`${{ github.sha }}\`  
-          **Scan Date**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")  
-          **Mode**: 🟢 DRY-RUN (Safe Mode)
-          
-          ---
-          
-          ## Executive Summary
-          
-          This automated security scan completed successfully in **dry-run mode**. All safety checks passed.
-          
-          ### Status: ✅ PASSED
-          
-          - No secrets or credentials detected
-          - All operations use safe defaults (DRY_RUN=true)
-          - No destructive operations without explicit confirmation
-          - Bot operations properly disabled (BOT_PINGS_ENABLED=false)
-          
-          ---
-          
-          ## Configuration Verified
-          
-          | Setting | Value | Status |
-          |---------|-------|--------|
-          | DRY_RUN | ${DRY_RUN} | ✅ Safe |
-          | BOT_PINGS_ENABLED | ${BOT_PINGS_ENABLED} | ✅ Disabled |
-          | ALLOWLIST_ORGS | ${ALLOWLIST_ORGS} | ✅ Empty (restrictive) |
-          
-          ---
-          
-          ## Detailed Findings
-          
-          ### ✅ Secrets Scan
-          - **Status**: PASSED
-          - **Details**: No hardcoded secrets, API keys, or credentials found
-          - **Action Required**: None
-          
-          ### ✅ Default Safety Modes
-          - **Status**: PASSED
-          - **Details**: All scripts and workflows default to dry-run/safe mode
-          - **Action Required**: None
-          
-          ### ✅ Permission Check
-          - **Status**: PASSED
-          - **Details**: Workflow permissions are appropriately scoped
-          - **Action Required**: None
-          
-          ### ✅ Destructive Operations
-          - **Status**: PASSED
-          - **Details**: No auto-apply, auto-merge, or destructive operations detected
-          - **Action Required**: None
-          
-          ---
-          
-          ## Recommendations
-          
-          1. ✅ Continue using DRY_RUN=true as default
-          2. ✅ Maintain BOT_PINGS_ENABLED=false setting
-          3. ✅ Keep ALLOWLIST_ORGS empty for maximum security
-          4. ✅ Require manual approval for any live operations
-          5. ✅ Regularly review and audit workflow permissions
-          
-          ---
-          
-          ## Next Steps
-          
-          - [ ] Review this report
-          - [ ] Verify findings match expectations
-          - [ ] Approve PR if security checks pass
-          - [ ] Monitor for any issues post-merge
-          
-          ---
-          
-          **Report Generated By**: GitAntivirus Workflow (Automated)  
-          **Confidence Level**: High  
-          **False Positive Rate**: Low
-          
-          EOF
-          
-          cat AUDIT-REPORT.md
-      
-      - name: Upload scan artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: security-scan-results-${{ github.sha }}
-          path: |
-            SMARTBRAIN.log
-            AUDIT-REPORT.md
-            .quarantine/**
-          retention-days: 90
-      
-      - name: Add PR labels
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const labels = ['security', 'smartbrain:dry-run'];
-            await github.rest.issues.addLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              labels: labels
-            });
-            console.log('✅ Added labels:', labels.join(', '));
-      
-      - name: Post PR comment
-        if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const logContent = fs.readFileSync('SMARTBRAIN.log', 'utf8');
-            const auditContent = fs.readFileSync('AUDIT-REPORT.md', 'utf8');
             
-            const comment = `## 🤖 SmartBrain Security Scan Results
-            
-            <details>
-            <summary>📋 View Scan Log</summary>
-            
-            \`\`\`
-            ${logContent}
-            \`\`\`
-            
-            </details>
-            
-            <details>
-            <summary>📊 View Audit Report</summary>
-            
-            ${auditContent}
-            
-            </details>
-            
-            ---
-            
-            **✨ Scan completed in dry-run mode**
-            
-            - 🟢 **Status**: All security checks passed
-            - 🔒 **Mode**: DRY_RUN=true (safe mode)
-            - 🤖 **Bot Pings**: Disabled
-            - 📦 **Artifacts**: Available for 90 days
-            
-            > 💡 **Note**: This scan ran in dry-run mode. No changes were applied.
-            > Review the full report and logs before merging.
-            `;
-            
-            // Find existing comment to update (sticky comment)
->>>>>>> origin/pr10
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number
-            });
-            
-            const botComment = comments.find(c => 
-<<<<<<< HEAD
-              c.user.type === 'Bot' && c.body.includes('GitAntivirus Scan Complete')
-=======
-                labels: labels
-              });
-              console.log('✅ Labels added successfully');
+            let reportSummary = '';
+            try {
+              const reportContent = fs.readFileSync('AUDIT-REPORT.md', 'utf8');
+              // Truncate to prevent comment size issues
+              const maxLength = 5000;
+              if (reportContent.length > maxLength) {
+                reportSummary = reportContent.substring(0, maxLength) + '\n\n... (truncated, see artifacts for full report)';
+              } else {
+                reportSummary = reportContent;
+              }
             } catch (error) {
-              console.log('⚠️  Could not add labels:', error.message);
+              reportSummary = 'Audit report not generated';
             }
-      
-      - name: Post PR comment (dry-run notice)
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const comment = `## 🛡️ GitAntivirus Scan Complete (DRY-RUN)
             
-            This scan ran in **DRY-RUN mode** and made no changes to the repository.
+            const comment = `## 🛡️ SmartBrain Security Scan Results
+            
+            **Scan ID**: ${{ github.run_id }}
+            **Mode**: DRY_RUN (Safe Mode)
+            **Status**: ✓ Scan completed
             
             ### Configuration
-            - **DRY_RUN**: \`${process.env.DRY_RUN}\`
-            - **BOT_PINGS_ENABLED**: \`${process.env.BOT_PINGS_ENABLED}\`
-            - **ALLOWLIST_ORGS**: \`${process.env.ALLOWLIST_ORGS || '(empty)'}\`
-            
-            ### Safety Features
-            - ✅ No automatic fixes applied
-            - ✅ No automatic merges
-            - ✅ No bot pings enabled
-            - ✅ Read-only operations only
+            - **DRY_RUN**: ✓ Enabled
+            - **BOT_PINGS**: ✗ Disabled
+            - **AUTO_APPLY**: ✗ Disabled
+            - **AUTO_MERGE**: ✗ Disabled
             
             ### Artifacts
-            Scan results have been uploaded as workflow artifacts (90-day retention).
+            - 📄 SMARTBRAIN.log
+            - 📄 AUDIT-REPORT.md
+            - 📁 .quarantine/
             
-            ### Need Write Operations?
-            Write operations require:
-            - Repository secrets or GitHub App with appropriate permissions
-            - Explicit configuration in workflow
-            - Manual approval process
+            Download full artifacts from the [Actions tab](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).
+            
+            <details>
+            <summary>View Audit Report (Summary)</summary>
+            
+            ${reportSummary}
+            
+            </details>
             
             ---
-            *Scan ID: \`${context.runId}\` | Workflow: GitAntivirus v1.0*`;
             
-            // Find existing comment
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-            });
+            ⚠️ **Human review required**  
+            This is a dry-run scan. No automated changes have been made.  
+            Review the artifacts and findings before merging.
             
-            const botComment = comments.find(comment => 
-              comment.user.type === 'Bot' && 
-              comment.body.includes('GitAntivirus Scan Complete')
->>>>>>> origin/pr9
-=======
-              c.user.type === 'Bot' && c.body.includes('SmartBrain Security Scan Results')
->>>>>>> origin/pr10
-            );
+            *Scan powered by SmartBrain GitAntivirus*
+            `;
             
-            if (botComment) {
-              // Update existing comment
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-                body: comment
-              });
-<<<<<<< HEAD
-=======
-              console.log('✅ Updated existing comment');
->>>>>>> origin/pr10
-            } else {
-              // Create new comment
+            try {
               await github.rest.issues.createComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
                 body: comment
               });
-<<<<<<< HEAD
+              console.log('✓ Posted scan summary comment');
+            } catch (error) {
+              console.log('ℹ️  Could not post comment');
+              console.log(error.message);
             }
-      
-<<<<<<< HEAD
-      - name: Summary
+            
+      - name: Security reminder
         if: always()
         run: |
-          echo "## 🔍 GitAntivirus Scan Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Mode**: DRY-RUN (Safe Mode)" >> $GITHUB_STEP_SUMMARY
-          echo "**Status**: Completed" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Safety Checks" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Dry-run mode enabled" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ No changes made to repository" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Bot pings disabled" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Conservative allowlist" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Artifacts" >> $GITHUB_STEP_SUMMARY
-          echo "Scan results uploaded as workflow artifacts (90-day retention)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Security Notice" >> $GITHUB_STEP_SUMMARY
-          echo "This workflow runs in safe mode by default. No automatic fixes or changes are applied." >> $GITHUB_STEP_SUMMARY
-          echo "All findings require manual review and action." >> $GITHUB_STEP_SUMMARY
-=======
-      - name: Generate scan summary
-        if: always()
-        run: |
-          echo "## 🛡️ GitAntivirus Scan Results (DRY-RUN)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Configuration" >> $GITHUB_STEP_SUMMARY
-          echo "- **Mode**: Dry-Run (safe, no changes)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Date**: $(date -u)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Workflow Run**: [\#${GITHUB_RUN_NUMBER}](https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          
-          if [ -f "SMARTBRAIN.log" ]; then
-            echo "### Agent X Scan Log (Last 20 lines)" >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            tail -20 SMARTBRAIN.log >> $GITHUB_STEP_SUMMARY || echo "No agent logs available"
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          fi
-          
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Safety Notes" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ No automatic fixes applied" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ No repository changes made" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ No bot pings sent" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Results available in artifacts" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Scan completed at: $(date -u)" >> $GITHUB_STEP_SUMMARY
->>>>>>> origin/pr9
-=======
-              console.log('✅ Posted new comment');
-            }
-      
-      - name: Summary
-        run: |
-          echo "## 🎉 GitAntivirus Scan Complete" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "✅ All security checks passed!" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Configuration" >> $GITHUB_STEP_SUMMARY
-          echo "- **DRY_RUN**: ${DRY_RUN}" >> $GITHUB_STEP_SUMMARY
-          echo "- **BOT_PINGS_ENABLED**: ${BOT_PINGS_ENABLED}" >> $GITHUB_STEP_SUMMARY
-          echo "- **ALLOWLIST_ORGS**: \`${ALLOWLIST_ORGS}\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Artifacts" >> $GITHUB_STEP_SUMMARY
-          echo "- SMARTBRAIN.log" >> $GITHUB_STEP_SUMMARY
-          echo "- AUDIT-REPORT.md" >> $GITHUB_STEP_SUMMARY
-          echo "- .quarantine/ directory" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "📦 Artifacts retained for 90 days" >> $GITHUB_STEP_SUMMARY
->>>>>>> origin/pr10
->>>>>>> d8ea30bb378949bb923201a381b25b8a1b16a59a
+          echo ""
+          echo "==================================="
+          echo "Security Scan Complete"
+          echo "==================================="
+          echo ""
+          echo "✓ Scan completed in DRY_RUN mode"
+          echo "✓ Artifacts uploaded for review"
+          echo "✓ No automated changes were made"
+          echo ""
+          echo "Next steps:"
+          echo "1. Review scan artifacts"
+          echo "2. Address any findings"
+          echo "3. Manual review before merge"
+          echo ""
+          echo "For production scanning:"
+          echo "- Implement scripts/master.sh"
+          echo "- Configure detection rules"
+          echo "- Set up secrets scanning"
+          echo "- Configure quarantine procedures"
+          echo ""
+          echo "==================================="

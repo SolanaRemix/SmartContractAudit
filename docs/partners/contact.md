@@ -1,890 +1,486 @@
-<<<<<<< HEAD
 ---
-<<<<<<< HEAD
 title: Contact Information
-description: How to reach SmartContractAudit team and partners
-keywords: contact, support, email, communication
+description: Get in touch with the SmartContractAudit partnership team
+keywords: contact, email, phone, support, partnerships, sales
 ---
 
 # Contact Information
 
-## General Inquiries
+Get in touch with SmartContractAudit for partnerships, support, media inquiries, and more.
 
-**Email**: hello@cuberai.example  
-**Response Time**: 3-5 business days
+## Quick Contact
 
-**For**: General questions, information requests, media inquiries
-
----
-
-## Partnerships
+### General Inquiries
+**Email**: hello@cuberai.example
+**Response Time**: 1-2 business days
 
 ### Partnership Opportunities
+**Email**: partners@cuberai.example
+**Response Time**: 1 business day
+**Schedule Call**: [Calendly link to be added]
 
-**Email**: partners@cuberai.example  
-**Response Time**: 2-3 business days
+### Technical Support
+**Email**: technical-support@cuberai.example
+**Portal**: https://partners.smartcontractaudit.example
+**Response Time**: Per SLA (see [sla_and_support.md](sla_and_support.md))
 
-**For**:
-- Partnership inquiries
-- Integration discussions
-- Strategic collaborations
-- Custom agreements
+### Media and Press
+**Email**: press@cuberai.example
+**Response Time**: Same business day (typically)
+**Press Kit**: [press_kit.md](press_kit.md)
+
+## By Topic
 
 ### Sponsorship
 
-**Email**: sponsors@cuberai.example  
-**Response Time**: 2-3 business days
+**Contact**: sponsors@cuberai.example
 
 **For**:
-- Sponsorship information
-- Tier questions
-- Billing inquiries
-- Benefit questions
-
----
-
-## Technical Support
-
-### Community Support (All Users)
-
-**GitHub Issues**: https://github.com/SolanaRemix/SmartContractAudit/issues  
-**GitHub Discussions**: https://github.com/SolanaRemix/SmartContractAudit/discussions  
-**Response Time**: Best effort, community-driven
-
-**For**:
-- Bug reports
-- Feature requests
-- General questions
-- Community help
-
-### Partner Support
-
-**Email**: support@cuberai.example  
-**Response Time**: Per SLA (see [sla_and_support.md](sla_and_support.md))
-
-**For**: Partners with Bronze tier or higher
-- Technical issues
-- Integration support
-- Bug reports
-- Account questions
-
-### Enterprise Support
-
-**Email**: enterprise@cuberai.example  
-**Direct Contact**: Provided to Platinum partners  
-**Response Time**: Per enterprise SLA
-
-**For**: Platinum tier partners
-- Dedicated support
-- Strategic technical consultation
-- Custom development
-- Priority assistance
-
----
-=======
-# Contact Information
-
-## General Contact
-
-### Project Inquiries
-
-For general questions about CyberAi:
-
-**GitHub Discussions**: [github.com/CyberAi/CyberAi/discussions](https://github.com/CyberAi/CyberAi/discussions)  
-Best for: Community questions, feature discussions, general inquiries
-
-**GitHub Issues**: [github.com/CyberAi/CyberAi/issues](https://github.com/CyberAi/CyberAi/issues)  
-Best for: Bug reports, feature requests, technical issues
-
-## Partnership & Sponsorship
-
-### Partnership Inquiries
-
-**Email**: funding@cyberai.network  
-**Response Time**: 5-10 business days  
-**Best For**:
-- Sponsorship inquiries
-- Partnership proposals
-- Custom deployment discussions
-- Enterprise licensing
-- Collaboration opportunities
+- Financial sponsorship inquiries
+- Sponsorship tier questions
+- Benefits and ROI discussions
+- Custom sponsorship packages
 
 **What to Include**:
-- Your organization name and description
-- Partnership type of interest
-- Expected benefits for both parties
-- Timeline and budget (if applicable)
+- Organization name and type
+- Sponsorship interests (tier or custom)
+- Budget range
+- Goals and objectives
+- Preferred contact method
 
-### Technical Partnership
+**Next Steps**:
+- Initial consultation call
+- Custom proposal
+- Agreement and onboarding
 
-**Email**: funding@cyberai.network (include "TECHNICAL PARTNERSHIP" in subject)  
-**GitHub**: Open issue with tag `partnership`  
-**Best For**:
-- Platform integration discussions
-- API access requests
-- White-label deployment
-- Custom development needs
+### Technology Partnerships
 
-## Support
+**Contact**: tech-partnerships@cuberai.example
 
-### Community Support
+**For**:
+- Platform integrations
+- API partnerships
+- Developer tool integrations
+- Ecosystem collaborations
 
-**Free Community Support**:
-- **GitHub Discussions**: Questions and general help
-- **GitHub Issues**: Bug reports and feature requests
-- **Documentation**: [README.md](../../README.md) and docs
-- **Response Time**: Best effort, community-driven
+**What to Include**:
+- Company and product overview
+- Integration ideas
+- Technical architecture
+- Timeline expectations
+- Existing user base
 
-### Partner Support
+**Next Steps**:
+- Technical discovery call
+- Integration feasibility review
+- Partnership proposal
+- Technical onboarding
 
-**Paid Partner Support** (Gold tier and above):
-- **Email**: partners-support@cyberai.network
-- **Slack/Discord**: Private channels (invitation sent after partnership)
-- **Response Time**: See [sla_and_support.md](sla_and_support.md)
+### Enterprise Sales
 
-**Support Ticket Format**:
-```
-Subject: [SEVERITY] Brief description
-Partner: [Your organization name]
-Tier: [Bronze/Silver/Gold/Platinum]
+**Contact**: enterprise@cuberai.example
+**Phone**: [To be added]
 
-Issue Description:
-[Detailed description]
+**For**:
+- On-premise deployments
+- Custom enterprise agreements
+- Large-scale implementations
+- White-label solutions
 
-Environment:
-[Version, platform, configuration]
+**What to Include**:
+- Company information
+- Number of contracts/users
+- Deployment requirements
+- Compliance needs
+- Budget and timeline
 
-Steps to Reproduce:
-1. [Step 1]
-2. [Step 2]
-...
+**Next Steps**:
+- Discovery call
+- Requirements gathering
+- Custom proposal and pricing
+- Proof of concept
 
-Expected Behavior:
-[What should happen]
+### Reseller Program
 
-Actual Behavior:
-[What actually happens]
+**Contact**: resellers@cuberai.example
 
-Logs/Screenshots:
-[Attach relevant logs or screenshots]
-```
->>>>>>> origin/pr10
+**For**:
+- Reseller partnership inquiries
+- Revenue share models
+- White-label offerings
+- Agency partnerships
 
-## Security
+**What to Include**:
+- Agency/firm overview
+- Current client base
+- Service offerings
+- Sales capacity
+- Geographic focus
 
-### Security Vulnerabilities
+**Next Steps**:
+- Partnership evaluation
+- Agreement and terms
+- Technical enablement
+- Go-to-market planning
 
-<<<<<<< HEAD
-**Email**: security@cuberai.example  
-**PGP Key**: [TO BE PROVIDED]  
-**Response Time**: 24-48 hours
+### Academic Partnerships
+
+**Contact**: academic@cuberai.example
+
+**For**:
+- Research collaborations
+- Educational programs
+- Student projects
+- Grant opportunities
+
+**What to Include**:
+- Institution information
+- Research area or course details
+- Collaboration objectives
+- Timeline and scope
+
+**Next Steps**:
+- Initial discussion
+- Proposal development
+- Agreement execution
+- Research/program launch
+
+### Security and Compliance
+
+**Contact**: security@cuberai.example
+**PGP Key**: [To be added]
 
 **For**:
 - Security vulnerability reports
-- Responsible disclosure
+- Compliance questions
+- Data protection inquiries
 - Security incidents
-- Security questions
 
-**Please**: Follow [SECURITY.md](../../SECURITY.md) guidelines
+**See Also**: [SECURITY.md](../../SECURITY.md)
 
-### Privacy
+**Response Time**: 
+- Critical: 24 hours
+- Non-critical: 2-3 business days
 
-**Email**: privacy@cuberai.example  
-**Response Time**: 5-7 business days
+### Legal and Contracts
 
-**For**:
-- Data privacy questions
-- GDPR/CCPA requests
-- Data deletion requests
-- Privacy concerns
-
----
-
-## Governance and Community
-
-### DAO and Governance
-
-**Email**: governance@cuberai.example  
-**GitHub Discussions**: Governance category  
-**Response Time**: 5-7 business days
+**Contact**: legal@cuberai.example
 
 **For**:
-- DAO questions
-- Token distribution
-- Governance proposals
-- Eligibility questions
+- Contract questions
+- Terms of service
+- Privacy policy
+- Licensing questions
+- Legal compliance
 
-### Community Management
+**What to Include**:
+- Specific question or concern
+- Relevant agreement/document
+- Your organization details
+- Timeline if urgent
 
-**GitHub Discussions**: https://github.com/SolanaRemix/SmartContractAudit/discussions  
-**Discord**: [TO BE PROVIDED]  
-**Telegram**: [TO BE PROVIDED]
+### Billing and Finance
 
-**For**:
-- Community discussions
-- Project updates
-- Collaboration
-- Networking
-
----
-
-## Business Operations
-
-### Billing and Invoices
-
-**Email**: billing@cuberai.example  
-**Response Time**: 3-5 business days
+**Contact**: billing@cuberai.example
 
 **For**:
-- Invoice requests
-- Payment questions
+- Invoice questions
+- Payment methods
 - Subscription changes
 - Refund requests
+- Financial reporting
 
-### Legal
+**Portal**: Access via partner portal
 
-**Email**: legal@cuberai.example  
-**Response Time**: 5-7 business days
+**Response Time**: 2 business days
 
-**For**:
-- Legal questions
-- Contract negotiations
-- Compliance inquiries
-- Licensing questions
+## Office Locations
 
----
+### Headquarters
 
-## Media and Press
+**Address**: [To be added]
+[City, State ZIP]
+[Country]
 
-### Press Inquiries
+**Office Hours**: Monday-Friday, 9 AM - 5 PM PT
 
-**Email**: press@cuberai.example  
-**Response Time**: 1-2 business days
+**Note**: Please schedule appointments in advance. Email preferred for initial contact.
 
-**For**:
-- Press releases
-- Interview requests
-- Media kits
-- Event coverage
+### Regional Offices
 
-**Press Kit**: See [press_kit.md](press_kit.md)
+**Europe**: [To be added]
 
-### Marketing and Co-Marketing
+**Asia Pacific**: [To be added]
 
-**Email**: marketing@cuberai.example  
-**Response Time**: 3-5 business days
+**Latin America**: [To be added]
 
-**For**:
-- Co-marketing opportunities
-- Case studies
-- Blog posts
-- Event partnerships
+## Phone Support
 
----
+### General
+**Number**: [To be added]
+**Hours**: Monday-Friday, 9 AM - 5 PM PT
+**Availability**: Silver tier and above
 
-## Development Team
-
-### Contributors
-
-**GitHub**: https://github.com/SolanaRemix/SmartContractAudit  
-**Contributing**: See [CONTRIBUTING.md](../../CONTRIBUTING.md)
-
-**For**:
-- Code contributions
-- Pull requests
-- Technical discussions
-- Development questions
-
-### Maintainers
-
-**Contact**: Via GitHub Issues or Discussions  
-**For Urgent Issues**: security@cuberai.example
-
----
-=======
-**IMPORTANT**: Do NOT open public issues for security vulnerabilities.
-
-**Email**: security@cyberai.network  
-**PGP Key**: Available on request at security@cyberai.network  
-**Response Time**: 48 hours for acknowledgment
-
-**What to Include**:
-- Vulnerability description
-- Affected versions
-- Reproduction steps
-- Proof of concept (if applicable)
-- Suggested fix (if you have one)
-- Your contact information
-
-**Process**: See [SECURITY.md](../../SECURITY.md) for full disclosure policy
-
-### Security Incidents
-
-**Emergency Security Contact**: security@cyberai.network  
-**Subject Line**: "SECURITY INCIDENT - [Brief Description]"  
-**Response Time**: Immediate (24/7 monitoring)
-
-## Media & Press
-
-### Press Inquiries
-
-**Email**: press@cyberai.network  
-**Response Time**: 1-2 business days  
-**Best For**:
-- Press releases and announcements
-- Interview requests
-- Quote requests
-- Media kits and assets
-- Story pitches
-
-**Media Kit**: See [press_kit.md](press_kit.md)
-
-### Speaking Opportunities
-
-**Email**: press@cyberai.network (include "SPEAKING" in subject)  
-**Best For**:
-- Conference speaking requests
-- Podcast interviews
-- Webinar invitations
-- Panel discussions
-- Workshop facilitation
-
-**What to Include**:
-- Event name, date, and location
-- Expected audience size and profile
-- Topic or theme
-- Time commitment required
-- Compensation or coverage offered
-
-## Privacy & Data
-
-### Privacy Inquiries
-
-**Email**: privacy@cyberai.network  
-**Response Time**: 5 business days  
-**Best For**:
-- Data access requests
-- Data deletion requests
-- Privacy policy questions
-- GDPR/CCPA inquiries
-- Data retention questions
-
-**See Also**: [PRIVACY.md](../../PRIVACY.md)
-
-### Data Redaction Requests
-
-**Email**: privacy@cyberai.network  
-**Subject**: "DATA REDACTION REQUEST"  
-**Response Time**: 5 business days for review  
-**See Also**: [PRIVACY.md](../../PRIVACY.md) redaction section
-
-## Governance & Community
-
-### Governance Questions
-
-**GitHub Discussions**: Tag `governance`  
-**Email**: funding@cyberai.network (for formal governance matters)  
-**Best For**:
-- Policy questions
-- Proposal discussions
-- Decision-making process
-- Maintainer election questions
-
-**See Also**: [GOVERNANCE.md](../../GOVERNANCE.md)
-
-### Code of Conduct Reports
-
-**Email**: security@cyberai.network  
-**Confidential**: Yes  
-**Best For**:
-- Code of Conduct violations
-- Harassment reports
-- Community behavior concerns
-
-**See Also**: [CODE_OF_CONDUCT.md](../../CODE_OF_CONDUCT.md)
-
-## Contributions
-
-### Contributing Questions
-
-**GitHub Discussions**: Tag `contributing`  
-**Best For**:
-- How to contribute
-- Contribution guidelines clarification
-- Development setup help
-- Pull request process questions
-
-**See Also**: [CONTRIBUTING.md](../../CONTRIBUTING.md)
-
-### Feature Requests
-
-**GitHub Issues**: Use feature request template  
-**Best For**:
-- New feature suggestions
-- Enhancement ideas
-- Use case proposals
-
-## Technical Contact
-
-### API & Integration
-
-**Documentation**: See [technical_onboarding.md](technical_onboarding.md)  
-**GitHub Issues**: Tag `api` or `integration`  
-**Partner Support**: partners-support@cyberai.network (paid partners)
-
-### Bug Reports
-
-**GitHub Issues**: Use bug report template  
-**Include**:
-- Version information
-- Operating system
-- Reproduction steps
-- Expected vs actual behavior
-- Logs and error messages
-
-## Regional Contacts
-
-Currently, we operate globally from a central team. Regional contacts may be added in the future.
-
-**Primary Time Zone**: UTC  
-**Business Hours**: Monday-Friday, 9 AM - 5 PM UTC
->>>>>>> origin/pr10
+### Emergency Hotline
+**Number**: [To be added]
+**Hours**: 24/7
+**Availability**: Platinum tier only
+**Use**: Critical production issues only
 
 ## Social Media
 
 ### Official Channels
 
-<<<<<<< HEAD
-**GitHub**: https://github.com/SolanaRemix/SmartContractAudit  
-**Twitter**: [TO BE PROVIDED]  
-**LinkedIn**: [TO BE PROVIDED]  
-**Discord**: [TO BE PROVIDED]  
-**Telegram**: [TO BE PROVIDED]
+**Twitter/X**: [@SmartContractAudit - to be added]
+- Product updates
+- Security news
+- Community engagement
 
-**Note**: Always verify official channels. Beware of impersonators.
+**LinkedIn**: [Company Page - to be added]
+- Professional updates
+- Partnership announcements
+- Industry insights
 
-### Community Channels
+**GitHub**: [github.com/SmartContractAudit - to be added]
+- Open source repository
+- Technical documentation
+- Community contributions
 
-**Reddit**: [TO BE PROVIDED]  
-**Forum**: GitHub Discussions
+**Discord**: [Invite link - to be added]
+- Community support
+- Developer discussions
+- Real-time updates
 
----
+**Telegram**: [Channel - to be added]
+- Announcements
+- Community chat
+- Quick updates
 
-## Office Information
+### Follow for
 
-**Status**: Remote-first, distributed team
+- **Product Updates**: Twitter, LinkedIn
+- **Technical News**: GitHub, Discord
+- **Community**: Discord, Telegram
+- **Business Updates**: LinkedIn
+- **Support**: Discord (community), Portal (official)
 
-**Mailing Address**: [TO BE PROVIDED]
+## Community
 
-**Note**: We operate as a distributed team. Email is the preferred contact method.
+### Discussion Forums
 
----
+**GitHub Discussions**: [Link to be added]
+- Feature requests
+- Technical Q&A
+- Community support
 
-## Regional Contacts
+**Discord Community**: [Link to be added]
+- Real-time chat
+- Community help
+- Announcements
 
-### North America
+### Newsletter
 
-**Email**: hello@cuberai.example  
-**Hours**: 9 AM - 5 PM EST
+**Subscribe**: [Newsletter signup - to be added]
 
-### Europe
+**Frequency**: Monthly
 
-**Email**: hello@cuberai.example  
-**Hours**: 9 AM - 5 PM CET
+**Content**:
+- Product updates
+- Security insights
+- Partner spotlight
+- Industry news
+- Best practices
 
-### Asia-Pacific
+## Schedule a Meeting
 
-**Email**: hello@cuberai.example  
-**Hours**: 9 AM - 5 PM SGT
+### Partnership Consultation
 
----
+**Duration**: 30 minutes
+**Link**: [Calendly link - to be added]
+**Best For**: Initial partnership exploration
 
-## Emergency Contacts
+**What We'll Cover**:
+- Your objectives
+- Partnership fit
+- Next steps
 
-### Critical Security Issues
+### Technical Deep Dive
 
-**Email**: security@cuberai.example  
-**Subject Line**: "CRITICAL SECURITY ISSUE"  
-**Response**: Within 4 hours
+**Duration**: 60 minutes
+**Link**: [Calendly link - to be added]
+**Best For**: Technical integrations, enterprise deployments
 
-### System Outages (Platinum Partners)
+**What We'll Cover**:
+- Technical requirements
+- Architecture review
+- Integration approach
+- Timeline and resources
 
-**Email**: support@cuberai.example  
-**Subject Line**: "P1 - SYSTEM OUTAGE"  
-**Response**: Per SLA (1-4 hours)
+### Executive Briefing
 
----
+**Duration**: 30 minutes
+**Link**: [Calendly link - to be added]
+**Best For**: Strategic partnerships, enterprise sales
 
-## Partnership Tiers Contact Summary
+**What We'll Cover**:
+- Business overview
+- Strategic fit
+- Value proposition
+- Investment and ROI
 
-| Tier | Primary Contact | Response Time |
-|------|----------------|---------------|
-| Community | GitHub Issues | Best effort |
-| Supporter | support@cuberai.example | 5 days |
-| Bronze | support@cuberai.example | 48 hours |
-| Silver | support@cuberai.example | 24 hours |
-| Gold | Dedicated account manager | 12 hours |
-| Platinum | Direct contact + 24/7 | 4 hours |
+## Contact Form
 
----
+**Web Form**: [Link to be added]
+
+**Use When**:
+- Detailed inquiry
+- Multiple topics
+- Attachments needed
+- Prefer web to email
+
+**Response Time**: 1-2 business days
+
+## Office Hours
+
+### Community Office Hours
+
+**When**: Every Thursday, 10 AM - 11 AM PT
+**Where**: Discord voice channel
+**Who**: Open to all community members
+**Topic**: Open Q&A, product demos, discussions
+
+### Partner Office Hours
+
+**When**: Weekly (scheduled with account manager)
+**Where**: Video conference
+**Who**: Active partners (Silver and above)
+**Topic**: Partner-specific questions and support
+
+## Response Time Expectations
+
+| Contact Method | General | Partners | Enterprise | Critical |
+|---------------|---------|----------|------------|----------|
+| Email | 1-2 days | 1 day | 4 hours | 1 hour |
+| Portal | 1-2 days | Per SLA | Per SLA | Per SLA |
+| Phone | N/A | Business hours | Business hours | 24/7 (Platinum) |
+| Social Media | Best effort | N/A | N/A | N/A |
+
+## Escalation
+
+If you're not getting adequate response:
+
+1. **Check SLA**: Ensure timeframe per your tier
+2. **Use Correct Channel**: Email/portal for support
+3. **Mark Priority**: Indicate urgency clearly
+4. **Escalate**: Use escalations@cuberai.example
+5. **Account Manager**: Contact directly (Gold/Platinum)
+
+## Holiday Schedule
+
+Office closed:
+- New Year's Day
+- Memorial Day (US)
+- Independence Day (US)
+- Labor Day (US)
+- Thanksgiving (US)
+- Christmas
+
+**Note**: Critical support (Platinum) available 24/7 including holidays
+
+## Mailing Address
+
+**For legal documents, contracts**:
+
+SmartContractAudit, Inc.
+[Address Line 1]
+[Address Line 2]
+[City, State ZIP]
+[Country]
+
+**Attention**: [Department Name]
+
+## Time Zone
+
+**Primary**: Pacific Time (PT)
+- UTC-8 (Standard Time)
+- UTC-7 (Daylight Time)
+
+**When Scheduling**:
+- Specify time zone clearly
+- Use 24-hour format for clarity
+- Consider international partners
+
+## Languages
+
+**Primary**: English
+
+**Available**:
+- Spanish (limited)
+- Mandarin (limited)
+- More languages coming soon
+
+**Translation**:
+- Documentation: Community-driven
+- Support: English primarily
+- Enterprise: Custom arrangements
+
+## Frequently Asked Questions
+
+### How quickly will I hear back?
+
+Response times vary by contact method and partnership tier. See table above for expectations.
+
+### Can I schedule a call before signing up?
+
+Yes! Use our scheduling links for partnership consultations.
+
+### What's the best way to reach you?
+
+- **Partnerships**: Email partners@cuberai.example
+- **Technical**: Partner portal for existing partners
+- **Media**: Email press@cuberai.example
+- **Urgent**: Phone for active partners
+
+### Do you have phone support?
+
+Yes, for Silver tier and above during business hours. Platinum tier has 24/7 emergency hotline.
+
+### Can I visit your office?
+
+Yes, please schedule in advance via email.
+
+### How do I report a bug?
+
+- Community: GitHub Issues
+- Partners: Partner portal
+- Security: security@cuberai.example
+
+### Where's your status page?
+
+https://status.smartcontractaudit.example
+
+## Additional Resources
+
+- **Documentation**: [URL to be added]
+- **API Docs**: [URL to be added]
+- **Partner Portal**: https://partners.smartcontractaudit.example
+- **Blog**: [URL to be added]
+- **Help Center**: [URL to be added]
 
 ## Feedback
 
 We value your feedback!
 
-**General Feedback**: hello@cuberai.example  
-**Product Feedback**: GitHub Discussions  
-**Partner Feedback**: partners@cuberai.example
+**Product Feedback**: feedback@cuberai.example
+**Partner Experience**: partner-feedback@cuberai.example
+**General Suggestions**: hello@cuberai.example
+
+## Thank You
+
+Thank you for your interest in SmartContractAudit. We look forward to hearing from you!
+
+For urgent matters, use the appropriate contact method above. For everything else, we'll respond as quickly as possible.
 
 ---
 
-## Newsletter
-
-Stay updated with project news:
-
-**Subscribe**: [LINK TO BE PROVIDED]
-
-**Frequency**: Monthly  
-**Content**: Product updates, partnerships, security advisories, community highlights
-
----
-
-## FAQ
-
-**Q: What's the best way to contact you?**  
-A: Email is generally best. GitHub Issues for bugs/features. Emergency security issues to security@cuberai.example.
-
-**Q: How quickly will I get a response?**  
-A: Depends on inquiry type and partnership tier. See response times above.
-
-**Q: Can I call you?**  
-A: Phone support is available for Platinum partners. Otherwise, email is preferred.
-
-**Q: I'm not getting responses to my emails.**  
-A: Check spam folder. If still no response after stated time, try alternative contact or follow up.
-
-**Q: How do I report a security issue?**  
-A: Email security@cuberai.example. Do NOT use public GitHub Issues for security vulnerabilities.
-
----
-
-## Contact Form
-
-**Web Form**: [TO BE PROVIDED]
-
-For those preferring web form over email.
-
----
-
-## Availability
-
-### Support Hours
-
-**Business Hours**: Monday-Friday, 9 AM - 5 PM UTC
-
-**Extended Hours** (Silver+): Monday-Friday, 6 AM - 10 PM UTC
-
-**24/7 Support** (Platinum): Around the clock
-
-**Holidays**: Reduced hours on major holidays (advance notice provided)
-
-### Out of Office
-
-During holidays or planned absences:
-- Auto-reply with expected response time
-- Emergency contacts provided
-- Backup support available for partners
-
----
-
-## Related Resources
-
-- [Partnership Program](README.md)
-- [Sponsorship Tiers](sponsorship_tiers.md)
-- [SLA and Support](sla_and_support.md)
-- [Technical Onboarding](technical_onboarding.md)
-
----
-
-## Verification
-
-**Verify Official Contacts**:
-
-All official emails end in: `@cuberai.example`
-
-Be wary of:
-- Misspelled domains
-- Personal email addresses
-- Unsolicited contact
-- Phishing attempts
-
-**When in Doubt**: Verify via official GitHub repository or our website.
-=======
-- **GitHub**: [github.com/CyberAi/CyberAi](https://github.com/CyberAi/CyberAi)
-- **Twitter**: [@CyberAi](#) (Coming soon)
-- **LinkedIn**: [CyberAi](#) (Coming soon)
-- **Discord**: [Community Server](#) (Coming soon)
-- **YouTube**: [CyberAi](#) (Coming soon)
-
-### Community Guidelines
-
-When engaging on social media:
-- Be respectful and professional
-- Follow our Code of Conduct
-- Don't share sensitive information
-- Don't impersonate project members
-- Report spam or abuse
-
-## Office Hours
-
-### Maintainer Office Hours
-
-**Currently**: By appointment only  
-**Request**: funding@cyberai.network
-
-Future plans include:
-- Regular community office hours
-- Partner sync calls
-- Open Q&A sessions
-- Technical deep dives
-
-## Mailing Lists
-
-### Announcements
-
-**Subscribe**: Watch repository on GitHub for release notifications  
-**Frequency**: As needed (major releases, security updates)  
-**Content**: Important project updates only
-
-### Partner Newsletter
-
-**Subscribe**: Automatic for paid partners  
-**Frequency**: Monthly  
-**Content**: Roadmap updates, partner features, community highlights
-
-## Emergency Contact
-
-### Critical Issues Only
-
-**Security Incidents**: security@cyberai.network  
-**Service Outages** (partners): partners-support@cyberai.network with "CRITICAL" in subject  
-**Media Crisis**: press@cyberai.network
-
-**What Qualifies as Emergency**:
-- Active security breach
-- Service completely down (paid partners)
-- Major public incident requiring response
-- Legal issues requiring immediate attention
-
-## Contact Preferences
-
-### Response Times
-
-| Contact Method | Response Time | Best For |
-|---------------|---------------|----------|
-| GitHub Discussions | 1-3 days | General questions |
-| GitHub Issues | 1-5 days | Bugs, features |
-| security@cyberai.network | 48 hours | Security issues |
-| funding@cyberai.network | 5-10 days | Partnerships |
-| press@cyberai.network | 1-2 days | Media inquiries |
-| privacy@cyberai.network | 5 days | Privacy requests |
-| partners-support@cyberai.network | See SLA | Partner support |
-
-### Business Hours
-
-**Standard Hours**: Monday-Friday, 9 AM - 5 PM UTC  
-**Holidays**: Major US and EU holidays observed  
-**Emergency Support**: 24/7 for security issues
-
-## Feedback
-
-### General Feedback
-
-We love hearing from the community!
-
-**Good feedback**:
-- GitHub Discussions for general thoughts
-- GitHub Issues for specific improvements
-- Direct emails for partnership feedback
-- Surveys (when we send them)
-
-**Anonymous Feedback**: [Google Form](#) (coming soon)
-
-## Stay Updated
-
-### Get Notified About
-
-- New releases
-- Security advisories
-- Major features
-- Partnership opportunities
-- Community events
-
-**How to Stay Updated**:
-1. ⭐ Star the repository on GitHub
-2. 👁️ Watch for release notifications
-3. 📧 Subscribe to partner newsletter (partners)
-4. 🐦 Follow on Twitter (coming soon)
-5. 💬 Join Discord community (coming soon)
-
----
-
-## Quick Reference
-
-**General**: GitHub Discussions  
-**Bugs**: GitHub Issues  
-**Security**: security@cyberai.network  
-**Partners**: funding@cyberai.network  
-**Press**: press@cyberai.network  
-**Privacy**: privacy@cyberai.network  
-**Support**: partners-support@cyberai.network (paid partners)
->>>>>>> origin/pr10
-
----
-
-**Last Updated**: 2026-01-01  
-<<<<<<< HEAD
-**Next Review**: 2026-04-01
-
-We look forward to hearing from you! 📧
-=======
-title: Contact
-description: Get in touch with SmartContractAudit
-keywords: contact, support, partnerships, sales
----
-
-# Contact Us
-
-## General Inquiries
-
-📧 **Email**: hello@cuberai.example  
-🌐 **Website**: [Link]  
-💬 **GitHub Discussions**: [Link]
-
-## Partnerships
-
-**Email**: partnerships@cuberai.example  
-**Schedule**: [Calendar link]
-
-**Best for**:
-- Partnership inquiries
-- Integration discussions
-- Sponsorship opportunities
-- Strategic collaborations
-
-## Technical Support
-
-**Email**: support@cuberai.example  
-**GitHub**: Open an issue  
-**Hours**: Monday-Friday, 9 AM - 5 PM EST
-
-**Best for**:
-- Technical issues
-- API questions
-- Integration support
-- Bug reports
-
-## Sales
-
-**Email**: sales@cuberai.example  
-**Schedule**: [Calendar link]
-
-**Best for**:
-- Enterprise plans
-- Custom pricing
-- Volume licensing
-- Dedicated support
-
-## Security
-
-**Email**: security@cuberai.example  
-**PGP**: [Key link]
-
-**Best for**:
-- Security vulnerabilities
-- Responsible disclosure
-- Security questions
-
-**See**: [SECURITY.md](../../SECURITY.md)
-
-## Press & Media
-
-**Email**: press@cuberai.example
-
-**Best for**:
-- Media inquiries
-- Press releases
-- Interview requests
-- Brand assets
-
-**See**: [Press Kit](press_kit.md)
-
-## Privacy
-
-**Email**: privacy@cuberai.example
-
-**Best for**:
-- Privacy questions
-- Data requests
-- GDPR inquiries
-- Data deletion
-
-**See**: [PRIVACY.md](../../PRIVACY.md)
-
-## Office Hours
-
-**When**: Every Thursday, 2 PM EST  
-**Where**: [Video link]  
-**What**: Open Q&A, demos, discussions
-
-## Social Media
-
-🐦 **Twitter**: @SmartContractAudit  
-💼 **LinkedIn**: [Link]  
-📺 **YouTube**: [Link]  
-💬 **Discord**: [Link]
-
-## Mailing Address
-
-SmartContractAudit  
-[Address line 1]  
-[Address line 2]  
-[City, State ZIP]  
-[Country]
-
-*For legal correspondence only*
-
-## Response Times
-
-| Channel | Response Time |
-|---------|--------------|
-| Email (general) | 2-3 business days |
-| Email (partners) | 1 business day |
-| Email (support) | Per SLA tier |
-| Email (security) | 24 hours |
-| Social media | Best effort |
-
-## FAQ
-
-**Q: How do I become a partner?**  
-A: Email partnerships@cuberai.example to start the conversation.
-
-**Q: Do you offer demos?**  
-A: Yes! Schedule via our calendar link.
-
-**Q: Can I contribute?**  
-A: Absolutely! See [CONTRIBUTING.md](../../CONTRIBUTING.md)
-
-**Q: How do I report a bug?**  
-A: Open a GitHub issue or email support@cuberai.example
-
----
-
-*Last updated: 2026-01-01*
->>>>>>> origin/pr9
-=======
-**Contact Version**: 1.0  
-**Next Review**: 2026-04-01
-
-For the most current contact information, always check this page in the repository.
->>>>>>> origin/pr10
+*Contact information current as of 2025-12-31. For the most up-to-date information, visit our website or check the partner portal.*

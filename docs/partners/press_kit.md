@@ -1,773 +1,486 @@
-<<<<<<< HEAD
 ---
 title: Press Kit
-<<<<<<< HEAD
-description: Brand assets and media resources for SmartContractAudit
-keywords: press kit, media, brand, logo, assets
-=======
-description: Brand assets and media resources
-keywords: press, media, brand, logos, assets
->>>>>>> origin/pr9
+description: Media resources and branding guidelines for partners
+keywords: press kit, media, branding, logos, guidelines, marketing
 ---
 
 # Press Kit
 
-<<<<<<< HEAD
-## Overview
+Media resources, branding guidelines, and marketing materials for SmartContractAudit partners and press.
 
-This press kit provides brand assets, key information, and media resources for SmartContractAudit partners, press, and community members.
+## Quick Downloads
 
-## Quick Facts
+### Logos
 
-**Project Name**: SmartContractAudit  
-**Founded**: 2025  
-**License**: Apache-2.0 (Open Source)  
-**Category**: Smart Contract Security, Blockchain Development Tools  
-**Repository**: https://github.com/SolanaRemix/SmartContractAudit
-
-**Mission**: Automated smart contract auditing and security for the blockchain ecosystem
-
-**Key Features**:
-- Automated security auditing
-- Multi-chain support (Solana, Ethereum, and more)
-- GitHub Actions integration
-- AI-powered vulnerability detection
-- Continuous monitoring capabilities
-
-## Boilerplate
-
-### Short (50 words)
-
-SmartContractAudit is an open-source automated auditing platform for smart contracts. It provides continuous security scanning, vulnerability detection, and integration with development workflows to help blockchain developers build secure applications across multiple chains.
-
-### Medium (100 words)
-
-SmartContractAudit is an open-source security platform that automates smart contract auditing for blockchain developers. Built on Apache-2.0 license, it integrates seamlessly with GitHub Actions and CI/CD pipelines to provide continuous security monitoring. The platform supports multiple blockchain platforms including Solana and Ethereum, using AI-powered analysis to detect vulnerabilities, security issues, and best practice violations. With features like automated scanning, customizable rules, and detailed reporting, SmartContractAudit helps development teams catch security issues early in the development cycle, reducing audit costs and improving overall smart contract security across the blockchain ecosystem.
-
-### Long (200 words)
-
-SmartContractAudit is a comprehensive open-source security platform designed to automate and enhance smart contract auditing for blockchain developers and organizations. Released under the Apache-2.0 license, the platform addresses the growing need for accessible, continuous security validation in blockchain development.
-
-The platform integrates seamlessly into modern development workflows through GitHub Actions, pre-commit hooks, and API integrations, enabling teams to catch security vulnerabilities early in the development cycle. SmartContractAudit supports multiple blockchain platforms including Solana, Ethereum, and other EVM-compatible chains, with extensible architecture for additional networks.
-
-Key capabilities include AI-powered vulnerability detection, automated code analysis, customizable security rule sets, and comprehensive reporting. The platform operates in a safety-first model with dry-run defaults, ensuring non-destructive scanning by default. Advanced features include merkle tree-based airdrop management, DAO governance infrastructure, and partner integration capabilities.
-
-SmartContractAudit serves a diverse ecosystem including DeFi protocols, blockchain platforms, security firms, enterprises, and educational institutions. The project is supported through a tiered partnership program and operates under transparent community governance, ensuring independence while providing enterprise-grade support options.
-
-By making professional-grade security tooling accessible to all developers, SmartContractAudit aims to raise the security bar across the entire blockchain ecosystem, reducing vulnerabilities and building trust in decentralized applications.
-
-## Logo and Brand Assets
-
-### Logo Usage Guidelines
-
-**Primary Logo**: [TO BE PROVIDED]
-
-**Logo Variations**:
-- Full color (preferred)
-- White/light backgrounds
-- Dark/black backgrounds
-- Monochrome
-
-**File Formats Available**:
-- SVG (vector, preferred)
-- PNG (1000px, 2000px, 4000px)
-- EPS (print)
-
-**Download**: [LINK TO BE PROVIDED]
-
-### Logo Usage Rules
-
-**Do**:
-✅ Use official logo files  
-✅ Maintain aspect ratio  
-✅ Provide clear space around logo  
-✅ Use on contrasting backgrounds  
-✅ Scale proportionally  
-
-**Don't**:
-❌ Modify colors or design  
-❌ Stretch or distort  
-❌ Add effects or shadows  
-❌ Use low-resolution versions  
-❌ Combine with other logos  
-
-### Clear Space
-
-Minimum clear space: Height of the "S" in SmartContractAudit
-
-### Minimum Size
-
-- Digital: 120px width minimum
-- Print: 1 inch width minimum
-
-## Brand Colors
-
-### Primary Palette
-
-**Primary Blue**: `#0066CC`  
-- RGB: 0, 102, 204  
-- CMYK: 100, 50, 0, 20  
-- Usage: Primary brand color, CTAs, links
-
-**Dark Gray**: `#2C3E50`  
-- RGB: 44, 62, 80  
-- CMYK: 45, 23, 0, 69  
-- Usage: Text, headers
-
-**Light Gray**: `#ECF0F1`  
-- RGB: 236, 240, 241  
-- CMYK: 2, 0, 0, 5  
-- Usage: Backgrounds, secondary elements
-
-### Secondary Palette
-
-**Success Green**: `#27AE60`  
-- Usage: Success states, positive actions
-
-**Warning Orange**: `#F39C12`  
-- Usage: Warnings, cautions
-
-**Error Red**: `#E74C3C`  
-- Usage: Errors, critical issues
-
-**Info Blue**: `#3498DB`  
-- Usage: Information, tips
-
-## Typography
-
-**Primary Font**: Inter (sans-serif)  
-**Code Font**: JetBrains Mono, Monaco, Courier (monospace)  
-**Fallback**: System fonts
-
-**Download**: https://fonts.google.com/specimen/Inter
-
-## Screenshots
-
-### Application Screenshots
-
-[TO BE PROVIDED]
-
-**Available Screenshots**:
-1. GitHub Actions workflow in action
-2. Audit report example
-3. Security dashboard (if applicable)
-4. Integration examples
-5. Documentation homepage
-
-**Format**: PNG, 1920×1080 minimum
-
-## Key Messaging
-
-### Value Propositions
-
-1. **Accessible Security**: Professional-grade security tools for all developers
-2. **Continuous Protection**: Automated scanning throughout development lifecycle
-3. **Multi-Chain Support**: Works across major blockchain platforms
-4. **Open Source**: Transparent, community-driven, Apache-2.0 licensed
-5. **Developer-Friendly**: Easy integration into existing workflows
-
-### Key Differentiators
-
-- **Open Source & Free**: No cost barrier to entry
-- **Non-Destructive**: Safe defaults with dry-run mode
-- **Comprehensive**: From development to deployment
-- **Community-Driven**: Governed by contributors
-- **Flexible**: From individuals to enterprises
-
-## Target Audience
-
-### Primary
-- Smart contract developers
-- Blockchain development teams
-- DeFi protocol teams
-- Security engineers
-
-### Secondary
-- Blockchain platforms
-- Security audit firms
-- Educational institutions
-- Enterprise blockchain teams
-
-## Media Contact
-
-**Press Inquiries**: press@cuberai.example  
-**Partnership Inquiries**: partners@cuberai.example  
-**General Inquiries**: hello@cuberai.example
-
-**Response Time**: 2-3 business days
-
-## Leadership
-
-[TO BE COMPLETED]
-
-**Bios and headshots**: Available upon request
-
-## Statistics (as of 2026-01-01)
-
-- **Supported Chains**: 2+ (Solana, Ethereum)
-- **GitHub Stars**: [Current count]
-- **Contributors**: [Current count]
-- **Security Issues Detected**: [Cumulative]
-- **Partnerships**: [Current count]
-
-*Note: Current statistics available in repository*
-
-## Awards and Recognition
-
-*To be updated as received*
-
-## Recent News
-
-*To be updated with announcements*
-
-**Press Releases**:
-- Product launch announcement
-- Partnership announcements
-- Major feature releases
-- Security advisories
-
-## Usage in Media
-
-### Naming
-
-**Correct**:
-- SmartContractAudit
-- SmartContractAudit platform
-- The SmartContractAudit project
-
-**Incorrect**:
-- ~~Smart Contract Audit~~ (as one word)
-- ~~SCA~~ (abbreviation not official)
-- ~~Smart Audit~~
-
-### Descriptions
-
-When describing SmartContractAudit:
-
-- "Open-source smart contract security platform"
-- "Automated auditing for blockchain developers"
-- "Smart contract security and auditing tool"
-- "Blockchain security automation platform"
-
-## Social Media
-
-**GitHub**: https://github.com/SolanaRemix/SmartContractAudit  
-**Twitter**: [TO BE PROVIDED]  
-**LinkedIn**: [TO BE PROVIDED]  
-**Discord**: [TO BE PROVIDED]
-
-**Hashtags**: #SmartContractAudit #BlockchainSecurity #SmartContractSecurity
-
-## Partner Logos
-
-Partners may display "Powered by SmartContractAudit" badge:
-
-[BADGE TO BE PROVIDED]
-
-**Usage**: Partners may use badge on websites, documentation, and marketing materials.
-
-## Co-Marketing Opportunities
-
-**For Partners**:
-- Joint blog posts
-- Case studies
-- Webinars
-- Conference co-presentations
-- Social media campaigns
-
-**Contact**: partners@cuberai.example
-
-## Sample Headlines
-
-For press releases or announcements:
-
-- "SmartContractAudit Launches Open-Source Security Platform for Blockchain Developers"
-- "[Company] Partners with SmartContractAudit to Enhance Smart Contract Security"
-- "New Tool Brings Professional Security Auditing to All Blockchain Developers"
-- "SmartContractAudit Adds Support for [Blockchain Platform]"
-
-## Fact Sheet
-
-**One-Pager**: [LINK TO BE PROVIDED]
+**Primary Logo Package**: [Download ZIP - to be hosted]
 
 Includes:
-- Key facts
-- Features overview
-- Partnership information
-- Contact details
+- Full color (PNG, SVG, AI)
+- White version (PNG, SVG)
+- Black version (PNG, SVG)
+- Icon only (PNG, SVG)
+- Multiple sizes
 
-## B-Roll and Video Assets
+### Partner Badges
 
-[TO BE PROVIDED]
+**Sponsor Badges**: [Download ZIP - to be hosted]
 
-**Available**:
-- Product demo videos
-- Tutorial screencast
-- Developer testimonials
-- Integration examples
+Available for:
+- Bronze Sponsor
+- Silver Sponsor
+- Gold Sponsor
+- Platinum Sponsor
+- Technology Partner
+- Certified Integration
 
-**Format**: MP4, 1080p
+### Marketing Templates
 
-## Presentation Templates
-
-**For Partners**: Presentation templates available
-
-**Includes**:
-- PowerPoint/Google Slides templates
-- Brand-compliant designs
-- Editable slides
-- Usage guidelines
-
-**Request**: partners@cuberai.example
-
-## Trademark Information
-
-"SmartContractAudit" is a trademark of [ENTITY TO BE DETERMINED].
-
-**Usage**: Partners may reference the trademark in descriptive contexts. Commercial use requires partnership agreement.
-
-## Attribution
-
-When featuring SmartContractAudit:
-
-**Preferred Attribution**:
-"Security provided by SmartContractAudit" or "Powered by SmartContractAudit"
-
-**Link**: https://github.com/SolanaRemix/SmartContractAudit
-
-## Resources
-
-**Documentation**: See /docs directory in repository  
-**Blog**: [TO BE PROVIDED]  
-**Developer Resources**: See /docs/partners in repository
-
-## Updates
-
-This press kit is updated quarterly.
-
-**Last Updated**: 2026-01-01  
-**Next Update**: 2026-04-01
-
-**Subscribe**: Join our mailing list for press updates
-
-## Download Press Kit
-
-**Full Press Kit ZIP**: [TO BE PROVIDED]
+**Social Media Templates**: [Download ZIP - to be hosted]
 
 Includes:
-- All logo variations
-- Brand guidelines PDF
-- Screenshots
-- Fact sheet
-- Boilerplate text
+- Twitter/X headers and posts
+- LinkedIn banners and posts
+- Facebook covers and posts
+- Instagram story templates
 
----
+## Brand Identity
 
-For additional assets or questions, contact: press@cuberai.example
+### Logo Variations
 
-Thank you for your interest in SmartContractAudit! 📰
-=======
-## Brand Overview
+#### Primary Logo
+- **Use**: Default for most applications
+- **Colors**: Full brand colors
+- **Minimum Size**: 120px wide (digital), 1 inch wide (print)
+- **Clear Space**: Minimum 1/4 logo height on all sides
 
-**Name**: SmartContractAudit  
-**Tagline**: Automated Security for Blockchain  
-**Founded**: 2024  
-**Mission**: Make blockchain security accessible to everyone
+#### Icon/Symbol Only
+- **Use**: Small spaces, social media avatars, app icons
+- **Minimum Size**: 32px × 32px (digital)
+- **Use independently when space constrained**
 
-## Logos
+#### Wordmark Only
+- **Use**: Horizontal layouts, footer credits
+- **Minimum Size**: 100px wide (digital)
 
-### Primary Logo
-- Full color (PNG, SVG)
-- White version
-- Black version
-- Minimum size: 120px width
+### Color Palette
 
-### Icon
-- App icon (512x512)
-- Favicon (32x32, 16x16)
-- Social media profile (400x400)
+#### Primary Colors
 
-**Download**: [Link to press kit assets]
+**Brand Blue**
+- Hex: #0066CC
+- RGB: 0, 102, 204
+- CMYK: 100, 50, 0, 20
+- Pantone: [TBD]
 
-## Brand Colors
+**Deep Navy**
+- Hex: #001F3F
+- RGB: 0, 31, 63
+- CMYK: 100, 75, 0, 75
 
-**Primary**:
-- Brand Blue: #0066FF
-- Dark: #001133
-- Light: #E6F0FF
+**White**
+- Hex: #FFFFFF
+- RGB: 255, 255, 255
+- CMYK: 0, 0, 0, 0
 
-**Secondary**:
-- Success: #00CC66
-- Warning: #FF9900
-- Error: #FF3333
+#### Secondary Colors
 
-## Typography
+**Accent Green** (Success)
+- Hex: #00CC66
+- RGB: 0, 204, 102
 
-**Primary**: Inter
-**Secondary**: Roboto Mono
-**Headings**: Bold/Semi-bold
-**Body**: Regular
+**Warning Orange**
+- Hex: #FF9900
+- RGB: 255, 153, 0
 
-## Usage Guidelines
+**Alert Red**
+- Hex: #CC0033
+- RGB: 204, 0, 51
 
-### Do's ✅
-- Use official logos only
-- Maintain minimum spacing
-- Use on contrasting backgrounds
-- Link to official website
-
-### Don'ts ❌
-- Don't modify logos
-- Don't use unofficial colors
-- Don't stretch or distort
-- Don't use outdated versions
-
-## Boilerplate
-
-**Short** (50 words):
-SmartContractAudit provides automated security scanning for blockchain projects. Our open-source platform helps developers identify vulnerabilities in smart contracts and infrastructure code before deployment.
-
-**Medium** (100 words):
-SmartContractAudit is an open-source security platform that provides automated vulnerability scanning for blockchain projects. Built by security experts and open-source contributors, our tools help developers identify and fix security issues in smart contracts, infrastructure code, and blockchain applications. With support for multiple languages and frameworks, continuous monitoring, and detailed reporting, SmartContractAudit makes professional security auditing accessible to projects of all sizes.
-
-## Team
-
-**Leadership**:
-- [Names and titles]
-- [Contact information]
-
-## Key Facts
-
-- Open source (Apache 2.0)
-- 1000+ projects secured
-- 50+ contributors
-- 24/7 monitoring
-- Multi-chain support
-
-## Media Contact
-
-📧 **Press**: press@cuberai.example  
-📧 **Partnerships**: partnerships@cuberai.example  
-🌐 **Website**: [Link]  
-🐦 **Twitter**: @SmartContractAudit
-
-## Recent News
-
-- [Press release links]
-- [Media coverage]
-- [Announcements]
-
-## Screenshots
-
-Available in press kit:
-- Dashboard views
-- Scan results
-- Integration examples
-- Mobile views
-
----
-
-*Last updated: 2026-01-01*
->>>>>>> origin/pr9
-=======
-# Press Kit
-
-## Brand Assets
-
-### Logo Files
-
-**Full Logo**:
-- [SVG (vector)](assets/logo.svg) - Scalable, preferred format
-- [PNG (high-res)](assets/logo-2000px.png) - 2000×2000px
-- [PNG (web)](assets/logo-500px.png) - 500×500px
-
-**Logo Variations**:
-- Primary (full color)
-- White (for dark backgrounds)
-- Black (for light backgrounds)
-- Monochrome
-
-**Icon Only**:
-- [SVG](assets/icon.svg)
-- [PNG 512×512](assets/icon-512px.png)
-- [PNG 256×256](assets/icon-256px.png)
-- [PNG 128×128](assets/icon-128px.png)
-- [Favicon ICO](assets/favicon.ico)
-
-### Brand Colors
-
-**Primary Palette**:
-- Primary Blue: `#0066CC` (RGB: 0, 102, 204)
-- Dark Blue: `#004499` (RGB: 0, 68, 153)
-- Light Blue: `#3399FF` (RGB: 51, 153, 255)
-
-**Secondary Palette**:
-- Security Green: `#00CC66` (RGB: 0, 204, 102)
-- Warning Orange: `#FF9933` (RGB: 255, 153, 51)
-- Error Red: `#CC3333` (RGB: 204, 51, 51)
-
-**Neutrals**:
-- Dark Gray: `#333333`
-- Medium Gray: `#666666`
-- Light Gray: `#CCCCCC`
-- Off-White: `#F5F5F5`
+**Neutral Gray**
+- Hex: #6C757D
+- RGB: 108, 117, 125
 
 ### Typography
 
-**Primary Font**: Inter (Google Fonts)
-- Headings: Inter Bold (700)
-- Body: Inter Regular (400)
-- Code: JetBrains Mono
+#### Primary Font
+**Inter** (Open source, free to use)
+- Headings: Inter Bold
+- Body: Inter Regular
+- UI: Inter Medium
 
-**Fallbacks**: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+**Fallback**: system-ui, -apple-system, sans-serif
 
-### Logo Usage Guidelines
+#### Secondary Font
+**JetBrains Mono** (for code)
+- Code snippets
+- Technical documentation
+- Terminal output
 
-**Do's**:
-- ✅ Maintain clear space (minimum 20px on all sides)
-- ✅ Use official logo files
-- ✅ Maintain aspect ratio
-- ✅ Use on contrasting backgrounds
-- ✅ Use appropriate logo variation for context
+**Fallback**: monospace
 
-**Don'ts**:
-- ❌ Distort or stretch logo
-- ❌ Change logo colors
-- ❌ Add effects (shadows, gradients, etc.)
-- ❌ Place on busy backgrounds
-- ❌ Rotate or modify logo
-- ❌ Use low-resolution versions
+### Logo Usage
 
-## Project Description
+#### ✅ Do
 
-### Short Description (50 words)
+- Use official logo files provided
+- Maintain proper clear space
+- Use approved color variations
+- Scale proportionally
+- Ensure adequate contrast with background
+- Use on approved backgrounds
 
-CyberAi is an open-source security analysis platform for smart contracts. It provides automated vulnerability detection, helping developers, auditors, and blockchain projects identify and fix security issues before deployment. Apache-2.0 licensed and community-driven.
+#### ❌ Don't
 
-### Medium Description (100 words)
+- Distort, rotate, or modify the logo
+- Change logo colors
+- Add effects (shadows, glows, etc.)
+- Place on busy backgrounds
+- Use outdated versions
+- Recreate or redraw the logo
+- Use unapproved variations
 
-CyberAi is an open-source smart contract security analysis platform that helps developers and auditors identify vulnerabilities before deployment. With automated scanning, CI/CD integration, and real-time feedback, it catches common security issues like reentrancy, overflow, and access control bugs. Built for Solana, Ethereum, and EVM-compatible chains, CyberAi combines community-driven rules with professional-grade analysis. Free and open source under Apache-2.0 license, with transparent governance and security-first principles. Used by DeFi protocols, NFT marketplaces, audit firms, and development teams worldwide.
+### Minimum Sizes
 
-### Long Description (200 words)
+**Digital**:
+- Full logo: 120px wide
+- Icon only: 32px × 32px
+- Wordmark: 100px wide
 
-CyberAi is a comprehensive open-source security analysis platform designed to protect smart contracts across multiple blockchain ecosystems. Our automated scanning tools identify critical vulnerabilities including reentrancy attacks, integer overflows, access control issues, and dozens of other security patterns before deployment.
+**Print**:
+- Full logo: 1 inch wide
+- Icon only: 0.25 inch
+- Wordmark: 0.75 inch wide
 
-Built with security-first principles, CyberAi integrates seamlessly into development workflows through GitHub Actions, CI/CD pipelines, IDE plugins, and API access. Developers get real-time feedback during coding, catching bugs early when fixes are cheapest. Audit firms use our tools to scale their capacity while maintaining quality. Marketplaces protect users by scanning contracts before listing.
+### Clear Space
 
-Key features include multi-chain support (Solana, Ethereum, and EVM-compatible networks), customizable rule sets, detailed vulnerability reports, and continuous monitoring capabilities. Our community-driven approach means constantly evolving detection patterns based on the latest threat research.
+Maintain clear space around logo equal to:
+- **Minimum**: 1/4 of logo height
+- **Recommended**: 1/2 of logo height
 
-Licensed under Apache-2.0, CyberAi maintains transparent governance where sponsors support development but don't control decisions. The project serves thousands of developers, has prevented millions in potential losses, and contributes to a more secure blockchain ecosystem. Join our community to build safer smart contracts together.
+No text, graphics, or other elements should intrude into this space.
 
-## Boilerplate Text
+### Background Usage
 
-### About CyberAi
+#### Approved Backgrounds
 
-For inclusion in press releases and articles:
+**Light backgrounds**:
+- White
+- Light gray (#F8F9FA)
+- Light blue (#E3F2FD)
 
-> **About CyberAi**  
-> CyberAi is an open-source security analysis platform for smart contracts, providing automated vulnerability detection across Solana, Ethereum, and EVM-compatible blockchains. With thousands of users worldwide, the project helps developers and auditors identify security issues early in the development cycle. Licensed under Apache-2.0 with transparent community governance, CyberAi is committed to making blockchain security accessible to all. Learn more at [github.com/CyberAi/CyberAi](https://github.com/CyberAi/CyberAi).
+**Dark backgrounds**:
+- Black
+- Deep navy (#001F3F)
+- Dark gray (#212529)
 
-## Key Facts & Statistics
+**Overlays**:
+- Use white logo on dark images
+- Use dark logo on light images
+- Ensure contrast ratio ≥ 4.5:1
 
-### Project Stats
+#### Not Approved
 
-- **License**: Apache-2.0 (Open Source)
-- **Started**: [Project Start Date]
-- **Primary Languages**: JavaScript, Python, Solidity, Rust
-- **Supported Blockchains**: Solana, Ethereum, EVM-compatible chains
-- **GitHub Stars**: [Current count]
-- **Contributors**: [Current count]
-- **Detection Rules**: 50+ vulnerability patterns
+- Busy patterns
+- Low-contrast backgrounds
+- Gradients (without testing)
+- Photos (without sufficient contrast)
 
-### Usage Statistics
+## Partner Branding
 
-- **Scans Performed**: 10,000+ (and growing)
-- **Vulnerabilities Found**: 1,000+ critical/high severity
-- **Potential Losses Prevented**: $10M+ estimated
-- **CI/CD Integrations**: 500+ active installations
-- **Developer Community**: Growing globally
+### Co-Branding Guidelines
 
-### Recognition
+When featuring SmartContractAudit alongside your brand:
 
-- Featured in blockchain security publications
-- Used by leading DeFi protocols
-- Trusted by professional audit firms
-- Educational partner for universities
+**Logo Placement**:
+- Equal prominence with partner logo
+- Appropriate clear space maintained
+- Aligned consistently (top, center, or baseline)
 
-## Media Resources
+**Sizing**:
+- Similar visual weight
+- Neither logo should dominate
+- Maintain proportions
+
+**Spacing**:
+- Adequate separation between logos
+- Use divider if needed (vertical line, "&" symbol, "+" symbol)
+
+### Sponsor Badges
+
+Partners may display sponsor badges:
+
+**Bronze Tier**:
+- Badge text: "Bronze Sponsor"
+- Color: #CD7F32
+- Size: Standard or small
+
+**Silver Tier**:
+- Badge text: "Silver Sponsor"
+- Color: #C0C0C0
+- Size: Standard or medium
+
+**Gold Tier**:
+- Badge text: "Gold Sponsor"
+- Color: #FFD700
+- Size: Standard, medium, or large
+
+**Platinum Tier**:
+- Badge text: "Platinum Sponsor"
+- Color: #E5E4E2
+- Size: Any size
+
+### Partner Descriptions
+
+#### Approved Descriptions
+
+**Short** (Twitter, bios):
+> "SmartContractAudit: AI-powered smart contract security auditing with on-chain automation."
+
+**Medium** (Web pages):
+> "SmartContractAudit provides automated security auditing for smart contracts using AI workers and on-chain automation. Detect vulnerabilities early, deploy with confidence."
+
+**Long** (Press releases, about pages):
+> "SmartContractAudit is an open-source platform for automated smart contract security auditing. Using AI-powered analysis and on-chain automation, it helps developers and organizations detect vulnerabilities, maintain security best practices, and deploy smart contracts with confidence. Trusted by leading DeFi protocols, NFT marketplaces, and blockchain enterprises."
+
+### Terminology
+
+**Correct**:
+- SmartContractAudit (one word, camelCase)
+- Smart contract auditing
+- Security scanning
+- Vulnerability detection
+- AI-powered analysis
+
+**Avoid**:
+- Smart Contract Audit (three words)
+- SCA (ambiguous acronym)
+- Contract checker
+- Bug finder
+
+## Messaging
+
+### Key Messages
+
+**1. Security First**
+- "Detect vulnerabilities before they become exploits"
+- "Proactive security for blockchain applications"
+- "Peace of mind for smart contract deployments"
+
+**2. AI-Powered**
+- "Advanced AI analysis catches what manual reviews miss"
+- "Machine learning trained on thousands of vulnerabilities"
+- "Continuous improvement through AI"
+
+**3. Developer-Friendly**
+- "Integrates with your existing workflow"
+- "Real-time feedback during development"
+- "Clear, actionable security recommendations"
+
+**4. Open Source**
+- "Transparent, auditable, community-driven"
+- "Trust through openness"
+- "Contribute and customize"
+
+**5. Enterprise-Ready**
+- "Scales from startups to enterprises"
+- "Compliance and audit support"
+- "On-premise deployment options"
+
+### Value Propositions
+
+**For Developers**:
+- Catch bugs early when they're cheap to fix
+- Learn security best practices
+- Ship with confidence
+
+**For Security Teams**:
+- Automate routine checks
+- Focus on complex analysis
+- Comprehensive coverage
+
+**For Organizations**:
+- Reduce risk of exploits
+- Faster development cycles
+- Meet compliance requirements
+
+## Media Assets
 
 ### Screenshots
 
-**Dashboard**:
-- [Main Dashboard](screenshots/dashboard.png)
-- [Scan Results](screenshots/results.png)
-- [Vulnerability Detail](screenshots/vulnerability.png)
+**Dashboard**: [Link to hosted image]
+- Overview of scan results
+- Use for: Product demos, presentations
 
-**Integration Examples**:
-- [GitHub PR Comment](screenshots/github-pr.png)
-- [VS Code Plugin](screenshots/vscode.png)
-- [CLI Output](screenshots/cli.png)
+**IDE Integration**: [Link to hosted image]
+- VS Code with real-time warnings
+- Use for: Developer-focused content
 
-**Request Additional**: press@cyberai.network
+**Scan Report**: [Link to hosted image]
+- Detailed vulnerability report
+- Use for: Feature highlights
 
-### Video Resources
+**CLI Output**: [Link to hosted image]
+- Terminal scan execution
+- Use for: Technical documentation
 
-**Product Demo** (2 minutes):
-- [YouTube Link](#)
-- [Download MP4](videos/demo.mp4)
+### Product Images
 
-**Integration Tutorial** (5 minutes):
-- [YouTube Link](#)
-- [Download MP4](videos/tutorial.mp4)
+**High-Resolution**: [Link to hosted images]
+- Product screenshots (PNG, 300 DPI)
+- Use for: Print, high-quality web
 
-**Testimonials Compilation** (3 minutes):
-- [YouTube Link](#)
-- [Download MP4](videos/testimonials.mp4)
+**Web-Optimized**: [Link to hosted images]
+- Product screenshots (JPG, optimized)
+- Use for: Web, email
 
-### Sample Headlines
+### Team Photos
 
-- "CyberAi Launches Open-Source Security Platform for Blockchain Developers"
-- "New Tool Helps Developers Catch Smart Contract Bugs Before Deployment"
-- "Open-Source Project Aims to Improve Blockchain Security Through Automated Analysis"
-- "CyberAi Reaches 10,000 Scans Milestone, Prevents Millions in Potential Losses"
-- "Audit Firms Adopt CyberAi to Scale Security Reviews"
+**Founders/Leadership**: [Link to hosted images]
+- Professional headshots
+- Use for: About pages, press releases
 
-## Quotes
+**Team**: [Link to hosted images]
+- Group photos
+- Use for: Culture, recruitment
 
-### Maintainer Quotes
+### Demo Videos
 
-> "Our mission is to make smart contract security accessible to every developer, regardless of budget or expertise. By providing professional-grade tools as open source, we're raising the security baseline for the entire blockchain ecosystem."  
-> — CyberAi Core Team
+**Product Demo** (2 minutes): [Link to video]
+- Overview of key features
+- Use for: Landing pages, presentations
 
-> "Security shouldn't be an afterthought or a luxury. CyberAi integrates security into the development workflow, catching vulnerabilities when they're easiest and cheapest to fix."  
-> — CyberAi Security Lead
+**Integration Tutorial** (5 minutes): [Link to video]
+- Step-by-step integration guide
+- Use for: Onboarding, documentation
 
-### Partner Testimonials
+**Case Study Video** (3 minutes): [Link to video]
+- Partner success story
+- Use for: Marketing, sales
 
-(See [use_cases.md](use_cases.md) for full case studies)
+## Press Information
 
-> "CyberAi caught critical vulnerabilities that could have cost our users millions. It's now an essential part of our development process."  
-> — DeFi Protocol CTO
+### Boilerplate
 
-> "By integrating CyberAi, we've reduced scam contracts by 95% and significantly increased user trust in our marketplace."  
-> — NFT Marketplace Founder
+**Short** (50 words):
+> SmartContractAudit is an AI-powered security platform for smart contracts. The open-source tool integrates into development workflows to detect vulnerabilities and ensure secure blockchain deployments. Used by leading DeFi protocols, NFT marketplaces, and enterprises worldwide.
 
-## Contact Information
+**Long** (100 words):
+> SmartContractAudit is an open-source platform providing automated security auditing for smart contracts through AI-powered analysis and on-chain automation. The platform integrates seamlessly into developer workflows via IDE plugins, CI/CD pipelines, and API integrations, enabling teams to detect vulnerabilities early and deploy with confidence. Founded in [Year], SmartContractAudit serves developers, security teams, and organizations across DeFi, NFTs, gaming, and enterprise blockchain applications. The platform combines automated scanning with human expertise, offering solutions from community tiers to enterprise deployments. Learn more at [URL].
 
-### Media Inquiries
+### Key Facts
 
-**Email**: press@cyberai.network  
-**Response Time**: 1-2 business days
+- **Founded**: [Year]
+- **Type**: Open Source
+- **License**: Apache 2.0
+- **Headquarters**: [Location]
+- **Employees**: [Number]
+- **Contracts Scanned**: [Number] and growing
+- **Partners**: [Number] across [Number] countries
 
-### Partnership Inquiries
+### Leadership
 
-**Email**: funding@cyberai.network  
-**Phone**: [Available for partners]
+**[Name]** - Founder & CEO
+- Bio: [To be added]
+- LinkedIn: [Link]
+- Twitter: [Link]
 
-### Technical Questions
+**[Name]** - CTO
+- Bio: [To be added]
+- LinkedIn: [Link]
+- Twitter: [Link]
 
-**GitHub**: [github.com/CyberAi/CyberAi/issues](https://github.com/CyberAi/CyberAi/issues)  
-**Documentation**: [Project README](https://github.com/CyberAi/CyberAi)
+### Press Contacts
 
-### Social Media
+**Media Inquiries**:
+- Email: press@cuberai.example
+- Phone: [To be added]
 
-- **GitHub**: [@CyberAi/CyberAi](https://github.com/CyberAi/CyberAi)
-- **Twitter**: [@CyberAi](#)
-- **LinkedIn**: [CyberAi](#)
-- **Discord**: [Community Server](#)
+**Partnership Inquiries**:
+- Email: partners@cuberai.example
 
-## Press Releases
+**General Information**:
+- Website: [URL]
+- Twitter: [@handle]
+- LinkedIn: [Company page]
+- GitHub: [Org page]
 
-### Template Press Release
+## Recent News
 
-```
-FOR IMMEDIATE RELEASE
+### Press Releases
 
-CyberAi Announces [News/Partnership/Milestone]
+**[Date]** - [Title]
+- Summary: [Brief description]
+- Link: [URL]
 
-[CITY, DATE] — CyberAi, an open-source security analysis platform for smart contracts, today announced [news]. [Additional context and details].
+**[Date]** - [Title]
+- Summary: [Brief description]
+- Link: [URL]
 
-[Quote from maintainer or partner]
+### Media Coverage
 
-[Additional details about the announcement]
+**[Date]** - [Publication]
+- Article: "[Title]"
+- Link: [URL]
 
-About CyberAi
-[Use boilerplate text above]
+**[Date]** - [Publication]
+- Article: "[Title]"
+- Link: [URL]
 
-Media Contact:
-press@cyberai.network
+## Partner Marketing
 
-###
-```
+### Co-Marketing Opportunities
 
-### Recent Announcements
+**Blog Posts**:
+- Guest posts on partner blogs
+- Cross-promotion
+- Technical tutorials
 
-- Launch announcement (2026-01-01)
-- [Future press releases will be listed here]
+**Webinars**:
+- Joint educational webinars
+- Product demonstrations
+- Q&A sessions
 
-## Brand Assets Download
+**Events**:
+- Conference sponsorship
+- Booth presence
+- Speaking opportunities
 
-### Complete Press Kit
+**Social Media**:
+- Cross-promotion
+- Tag mentions
+- Shared content
 
-**Download All Assets**:
-- [Press Kit ZIP](assets/smartcontractaudit-press-kit.zip) - Complete package
+**Case Studies**:
+- Success stories
+- Video testimonials
+- Written case studies
 
-**Individual Downloads**:
-- [Logos ZIP](assets/logos.zip) - All logo variations
-- [Screenshots ZIP](assets/screenshots.zip) - All screenshots
-- [Videos ZIP](assets/videos.zip) - All video assets
-- [Brand Guidelines PDF](assets/brand-guidelines.pdf)
+### Approval Process
 
-## Usage Terms
+**Required for**:
+- Press releases mentioning SmartContractAudit
+- Co-branded materials
+- Use of logo in marketing
+- Public case studies
 
-### Permitted Uses
+**Contact**: partners@cuberai.example
 
-You may use our brand assets to:
-- ✅ Write news articles or blog posts about CyberAi
-- ✅ Include in partnership announcements (approved partners)
-- ✅ Show integration or usage of our tools
-- ✅ Educational or review purposes
-- ✅ Share in presentations or talks (with attribution)
+**Timeline**: 5 business days for review
 
-### Prohibited Uses
+## Contact
 
-You may NOT:
-- ❌ Imply endorsement without permission
-- ❌ Modify or create derivative logos
-- ❌ Use in misleading or false context
-- ❌ Use for competing products
-- ❌ Use in ways that violate our terms or values
+### Press Kit Questions
 
-### Attribution
+- **Email**: press@cuberai.example
+- **Download Full Kit**: [Link to ZIP]
+- **Request Custom Assets**: [Contact form]
 
-When using our brand assets, please attribute:
-- "CyberAi" (proper capitalization)
-- Link to: github.com/CyberAi/CyberAi
-- Mention open-source status when relevant
+### Partner Marketing
 
-## FAQ for Media
-
-**Q: Is CyberAi free to use?**  
-A: Yes, it's open source under Apache-2.0 license. Free for all users.
-
-**Q: Who maintains CyberAi?**  
-A: Community-driven with transparent governance. Core maintainers listed in repository.
-
-**Q: How is the project funded?**  
-A: Through voluntary sponsorships that don't control project decisions. See FUNDING.yml.
-
-**Q: Can I get a quote or interview?**  
-A: Yes! Contact press@cyberai.network to arrange.
-
-**Q: Do you have case studies or success stories?**  
-A: Yes, see [use_cases.md](use_cases.md) or contact us for detailed case studies.
-
-**Q: What makes CyberAi different?**  
-A: Open source, community-driven, transparent governance, multi-chain support, and free for all.
+- **Email**: partnerships@cuberai.example
+- **Co-Marketing Opportunities**: [Calendar link]
+- **Approval Requests**: partners@cuberai.example
 
 ---
 
-**Last Updated**: 2026-01-01  
-**Press Kit Version**: 1.0  
-**Contact**: press@cyberai.network
->>>>>>> origin/pr10
+*Press kit and brand guidelines last updated: 2025-12-31. All trademarks and logos are property of their respective owners. Usage subject to brand guidelines and partnership agreements.*
