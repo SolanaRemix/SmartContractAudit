@@ -75,9 +75,10 @@ banner() {
 # ═══════════════════════════════════════════════════════════════════════════
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-readonly DRY_RUN="${DRY_RUN:-true}"
-readonly VERBOSE="${VERBOSE:-false}"
-readonly AGENTS_ENABLED="${AGENTS_ENABLED:-A,B,C,D,E,F}"
+# Note: DRY_RUN, VERBOSE, and AGENTS_ENABLED are not readonly to allow CLI override
+DRY_RUN="${DRY_RUN:-true}"
+VERBOSE="${VERBOSE:-false}"
+AGENTS_ENABLED="${AGENTS_ENABLED:-A,B,C,D,E,F}"
 
 # ═══════════════════════════════════════════════════════════════════════════
 # 🧹 Port Cleaner
@@ -338,9 +339,10 @@ cmd_full() {
 # 📋 Main Entry Point
 # ═══════════════════════════════════════════════════════════════════════════
 main() {
-    local command="${1:-help}"
+    local command=""
     
-    # Parse options
+    # Parse options first (can appear anywhere)
+    local -a args=()
     while [[ $# -gt 0 ]]; do
         case $1 in
             --dry-run)
@@ -359,17 +361,23 @@ main() {
                 export AGENTS_ENABLED="${1#*=}"
                 shift
                 ;;
+            --help|-h|help)
+                args+=("help")
+                shift
+                ;;
             -*)
                 log_warning "Unknown option: $1"
                 shift
                 ;;
             *)
-                break
+                args+=("$1")
+                shift
                 ;;
         esac
     done
     
-    command="${1:-help}"
+    # Get command from remaining arguments
+    command="${args[0]:-help}"
     
     # Display configuration
     log_info "SmartBrain Orchestrator v${VERSION}"

@@ -2,13 +2,11 @@ name: GitAntivirus - Smart Contract Security Scanner
 
 on:
   push:
-    branches: [main, develop]
-  pull_request:
-    types: [opened, synchronize, reopened]
-  push:
     branches:
       - main
       - develop
+  pull_request:
+    types: [opened, synchronize, reopened]
   schedule:
     # Run daily at 2 AM UTC
     - cron: '0 2 * * *'
@@ -95,7 +93,7 @@ jobs:
         run: |
           echo "🔍 Running SmartBrain scan..."
           if [ -f "scripts/master.sh" ]; then
-            ./scripts/master.sh scan --verbose
+            ./scripts/master.sh --verbose scan
           else
             echo "⚠️ SmartBrain orchestrator not found"
           fi
@@ -104,7 +102,7 @@ jobs:
         run: |
           echo "🔒 Running SmartBrain audit..."
           if [ -f "scripts/master.sh" ]; then
-            ./scripts/master.sh audit --verbose
+            ./scripts/master.sh --verbose audit
           else
             echo "⚠️ SmartBrain orchestrator not found"
           fi
@@ -113,7 +111,7 @@ jobs:
         run: |
           echo "💊 Running SmartBrain health check..."
           if [ -f "scripts/master.sh" ]; then
-            ./scripts/master.sh health --verbose
+            ./scripts/master.sh --verbose health
           else
             echo "⚠️ SmartBrain orchestrator not found"
           fi

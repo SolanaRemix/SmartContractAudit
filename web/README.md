@@ -266,7 +266,7 @@ app.use(cors({
 
 ## 📝 License
 
-MIT - Same as parent project
+Apache-2.0 - Same as parent project
 
 ---
 

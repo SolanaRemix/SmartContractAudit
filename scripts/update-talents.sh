@@ -26,7 +26,8 @@ readonly NC='\033[0m'
 # Configuration
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-readonly DRY_RUN="${DRY_RUN:-true}"
+# Note: DRY_RUN is not readonly to allow CLI override
+DRY_RUN="${DRY_RUN:-true}"
 readonly BUILD_DIR="${PROJECT_ROOT}/build"
 readonly ARTIFACT_PATH="${BUILD_DIR}/talents.json"
 

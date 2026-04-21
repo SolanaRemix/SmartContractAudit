@@ -33,10 +33,11 @@ readonly BLUE='\033[0;34m'
 readonly NC='\033[0m'
 
 # Configuration
-readonly DRY_RUN="${DRY_RUN:-true}"
-readonly ARTIFACT_PATH="${ARTIFACT_PATH:-./build/talents.json}"
-readonly ENS_NAME="${ENS_NAME:-gxqstudio.eth}"
-readonly NETWORK="${NETWORK:-base}"
+# Note: These are not readonly to allow CLI override
+DRY_RUN="${DRY_RUN:-true}"
+ARTIFACT_PATH="${ARTIFACT_PATH:-./build/talents.json}"
+ENS_NAME="${ENS_NAME:-gxqstudio.eth}"
+NETWORK="${NETWORK:-base}"
 
 log_info() { echo -e "${BLUE}ℹ️  [INFO]${NC} $*"; }
 log_success() { echo -e "${GREEN}✅ [SUCCESS]${NC} $*"; }
