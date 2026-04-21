@@ -2,243 +2,446 @@
 # ═══════════════════════════════════════════════════════════════════════════
 # 🧠 SmartBrain Orchestrator - Master Control Script
 # ═══════════════════════════════════════════════════════════════════════════
-# Purpose: Orchestrate security scanning, auditing, and health checks
-# Author: SmartBrain / SMSDAO
-# License: MIT
+# Description: Central orchestration system for smart contract auditing,
+#              scanning, and health monitoring. Coordinates multiple agents
+#              (A-F) to perform comprehensive security analysis.
+# 
+# Usage: ./scripts/master.sh [command] [options]
+# Commands: scan, audit, health, deploy, report, full
+# Options: --dry-run, --verbose, --agent=<A-F>
 # ═══════════════════════════════════════════════════════════════════════════
 
-set -e
+set -euo pipefail
 
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-MAGENTA='\033[0;35m'
-CYAN='\033[0;36m'
-NC='\033[0m' # No Color
+# ═══════════════════════════════════════════════════════════════════════════
+# 📌 Version
+# ═══════════════════════════════════════════════════════════════════════════
+readonly VERSION="1.0.0"
 
-# Default configuration
-DRY_RUN="${DRY_RUN:-true}"
-VERBOSE="${VERBOSE:-false}"
-OUTPUT_DIR="${OUTPUT_DIR:-./reports}"
+# ═══════════════════════════════════════════════════════════════════════════
+# 🎨 Colors and Formatting
+# ═══════════════════════════════════════════════════════════════════════════
+readonly RED='\033[0;31m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[1;33m'
+readonly BLUE='\033[0;34m'
+readonly MAGENTA='\033[0;35m'
+readonly CYAN='\033[0;36m'
+readonly WHITE='\033[1;37m'
+readonly NC='\033[0m' # No Color
+readonly BOLD='\033[1m'
 
-# Banner
+# ═══════════════════════════════════════════════════════════════════════════
+# 📝 Logging Helpers
+# ═══════════════════════════════════════════════════════════════════════════
+log_info() {
+    echo -e "${BLUE}ℹ️  [INFO]${NC} $*"
+}
+
+log_success() {
+    echo -e "${GREEN}✅ [SUCCESS]${NC} $*"
+}
+
+log_warning() {
+    echo -e "${YELLOW}⚠️  [WARNING]${NC} $*"
+}
+
+log_error() {
+    echo -e "${RED}❌ [ERROR]${NC} $*"
+}
+
+log_debug() {
+    if [[ "${VERBOSE:-false}" == "true" ]]; then
+        echo -e "${MAGENTA}🔍 [DEBUG]${NC} $*"
+    fi
+}
+
+log_agent() {
+    local agent=$1
+    shift
+    echo -e "${CYAN}🤖 [AGENT-${agent}]${NC} $*"
+}
+
 banner() {
-    echo -e "${CYAN}"
+    echo -e "${BOLD}${CYAN}"
     echo "═══════════════════════════════════════════════════════════════════════════"
-    echo "🧠 SmartBrain Orchestrator - $1"
+    echo "  $*"
     echo "═══════════════════════════════════════════════════════════════════════════"
     echo -e "${NC}"
 }
 
-# Logging functions
-log_info() {
-    echo -e "${BLUE}[INFO]${NC} $1"
-}
+# ═══════════════════════════════════════════════════════════════════════════
+# 🔧 Configuration
+# ═══════════════════════════════════════════════════════════════════════════
+readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+# Note: DRY_RUN, VERBOSE, and AGENTS_ENABLED are not readonly to allow CLI override
+DRY_RUN="${DRY_RUN:-true}"
+VERBOSE="${VERBOSE:-false}"
+AGENTS_ENABLED="${AGENTS_ENABLED:-A,B,C,D,E,F}"
 
-log_success() {
-    echo -e "${GREEN}[SUCCESS]${NC} $1"
-}
-
-log_warning() {
-    echo -e "${YELLOW}[WARNING]${NC} $1"
-}
-
-log_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
-}
-
-log_debug() {
-    if [[ "$VERBOSE" == "true" ]]; then
-        echo -e "${MAGENTA}[DEBUG]${NC} $1"
-    fi
-}
-
-# Initialize output directory
-init_output() {
-    if [[ "$DRY_RUN" == "false" ]]; then
-        mkdir -p "$OUTPUT_DIR"
-        log_info "Output directory: $OUTPUT_DIR"
-    else
-        log_warning "DRY_RUN mode enabled - no files will be written"
-    fi
-}
-
-# Security scan function
-scan() {
-    banner "Security Scan"
-    log_info "Starting security scan..."
+# ═══════════════════════════════════════════════════════════════════════════
+# 🧹 Port Cleaner
+# ═══════════════════════════════════════════════════════════════════════════
+clean_ports() {
+    log_info "Cleaning up stale processes on common ports..."
+    local ports=(3000 3001 8000 8080 8545 9545)
     
-    # Check for common security tools
-    local tools=("git" "grep" "find")
-    for tool in "${tools[@]}"; do
-        if command -v "$tool" &> /dev/null; then
-            log_debug "Found tool: $tool"
+    for port in "${ports[@]}"; do
+        if lsof -ti:$port >/dev/null 2>&1; then
+            if [[ "${DRY_RUN}" == "true" ]]; then
+                log_warning "[DRY-RUN] Would kill process on port $port"
+            else
+                log_warning "Killing process on port $port"
+                lsof -ti:$port | xargs kill -9 2>/dev/null || true
+            fi
+        fi
+    done
+    log_success "Port cleanup complete"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 📦 PNPM Helpers
+# ═══════════════════════════════════════════════════════════════════════════
+ensure_pnpm() {
+    if ! command -v pnpm &> /dev/null; then
+        log_warning "pnpm not found, attempting to install..."
+        if [[ "${DRY_RUN}" == "true" ]]; then
+            log_warning "[DRY-RUN] Would install pnpm"
+            return 0
+        fi
+        npm install -g pnpm || {
+            log_error "Failed to install pnpm"
+            return 1
+        }
+    fi
+    log_success "pnpm is available"
+}
+
+pnpm_install() {
+    if [[ -f "${PROJECT_ROOT}/package.json" ]]; then
+        log_info "Installing dependencies with pnpm..."
+        if [[ "${DRY_RUN}" == "true" ]]; then
+            log_warning "[DRY-RUN] Would run: pnpm install"
         else
-            log_warning "Tool not found: $tool"
+            cd "${PROJECT_ROOT}" && pnpm install
         fi
-    done
-    
-    # Scan for potential issues
-    log_info "Scanning for hardcoded secrets..."
-    if [[ "$DRY_RUN" == "false" ]]; then
-        {
-            echo "# Security Scan Report"
-            echo "Date: $(date -u +"%Y-%m-%d %H:%M:%S UTC")"
-            echo ""
-            echo "## Hardcoded Secrets Check"
-            
-            # Look for common secret patterns (non-destructive)
-            if git rev-parse --git-dir > /dev/null 2>&1; then
-                git grep -i -E "(password|secret|api[_-]?key|token|credential)" -- ':!*.md' ':!*.txt' || echo "No obvious secrets found"
-            fi
-        } > "$OUTPUT_DIR/security-scan.md"
-        log_success "Security scan complete: $OUTPUT_DIR/security-scan.md"
+        log_success "Dependencies installed"
     else
-        log_info "Would scan repository for hardcoded secrets"
-        log_info "Would check for common vulnerabilities"
+        log_debug "No package.json found, skipping pnpm install"
     fi
 }
 
-# Audit function
-audit() {
-    banner "Code Audit"
-    log_info "Starting code audit..."
+# ═══════════════════════════════════════════════════════════════════════════
+# 🤖 Agent A: Repository Scanner
+# ═══════════════════════════════════════════════════════════════════════════
+agent_a_scan() {
+    log_agent "A" "Starting repository scan..."
     
-    # Check repository structure
-    log_info "Analyzing repository structure..."
-    if [[ "$DRY_RUN" == "false" ]]; then
-        {
-            echo "# Code Audit Report"
-            echo "Date: $(date -u +"%Y-%m-%d %H:%M:%S UTC")"
-            echo ""
-            echo "## Repository Structure"
-            tree -L 2 -a || find . -maxdepth 2 -not -path '*/\.git/*' | head -20
-            echo ""
-            echo "## File Statistics"
-            echo "Total files: $(find . -type f -not -path '*/\.git/*' | wc -l)"
-            echo "Total lines: $(find . -type f -not -path '*/\.git/*' -exec wc -l {} \; 2>/dev/null | awk '{sum+=$1} END {print sum}')"
-        } > "$OUTPUT_DIR/audit-report.md"
-        log_success "Audit complete: $OUTPUT_DIR/audit-report.md"
-    else
-        log_info "Would analyze repository structure"
-        log_info "Would generate audit report"
-    fi
+    log_debug "Scanning for smart contract files..."
+    local contract_files=$(find "${PROJECT_ROOT}" -type f \( -name "*.sol" -o -name "*.vy" \) 2>/dev/null | wc -l)
+    log_info "Found ${contract_files} smart contract files"
+    
+    log_debug "Scanning for configuration files..."
+    local config_files=$(find "${PROJECT_ROOT}" -type f \( -name "*.json" -o -name "*.yml" -o -name "*.yaml" \) 2>/dev/null | wc -l)
+    log_info "Found ${config_files} configuration files"
+    
+    log_debug "Checking for security tools..."
+    [[ -f "${PROJECT_ROOT}/.solhint.json" ]] && log_info "Solhint config found"
+    [[ -f "${PROJECT_ROOT}/slither.config.json" ]] && log_info "Slither config found"
+    
+    log_agent "A" "Repository scan complete"
 }
 
-# Health check function
-health() {
-    banner "Health Check"
-    log_info "Starting health check..."
+# ═══════════════════════════════════════════════════════════════════════════
+# 🤖 Agent B: Dependency Auditor
+# ═══════════════════════════════════════════════════════════════════════════
+agent_b_audit() {
+    log_agent "B" "Starting dependency audit..."
     
-    # Check for common configuration files
-    local configs=("package.json" "Cargo.toml" "go.mod" "requirements.txt" "pom.xml")
-    local found_configs=()
-    
-    for config in "${configs[@]}"; do
-        if [[ -f "$config" ]]; then
-            found_configs+=("$config")
-            log_success "Found: $config"
+    if [[ -f "${PROJECT_ROOT}/package.json" ]]; then
+        log_info "Auditing npm dependencies..."
+        if [[ "${DRY_RUN}" == "true" ]]; then
+            log_warning "[DRY-RUN] Would run: pnpm audit"
+        else
+            cd "${PROJECT_ROOT}" && pnpm audit --json > /tmp/audit-report.json 2>/dev/null || true
+            log_info "Audit report saved to /tmp/audit-report.json"
         fi
-    done
-    
-    if [[ "$DRY_RUN" == "false" ]]; then
-        {
-            echo "# Health Check Report"
-            echo "Date: $(date -u +"%Y-%m-%d %H:%M:%S UTC")"
-            echo ""
-            echo "## Configuration Files"
-            for config in "${found_configs[@]}"; do
-                echo "- ✅ $config"
-            done
-            echo ""
-            echo "## Git Status"
-            if git rev-parse --git-dir > /dev/null 2>&1; then
-                echo "\`\`\`"
-                git status --short
-                echo "\`\`\`"
-            fi
-        } > "$OUTPUT_DIR/health-check.md"
-        log_success "Health check complete: $OUTPUT_DIR/health-check.md"
-    else
-        log_info "Would check configuration files"
-        log_info "Would verify git status"
     fi
+    
+    if [[ -f "${PROJECT_ROOT}/requirements.txt" ]]; then
+        log_info "Checking Python dependencies..."
+        if command -v pip &> /dev/null; then
+            if [[ "${DRY_RUN}" == "true" ]]; then
+                log_warning "[DRY-RUN] Would run: pip list --outdated"
+            else
+                pip list --outdated || true
+            fi
+        fi
+    fi
+    
+    log_agent "B" "Dependency audit complete"
 }
 
-# Full analysis
-full() {
-    banner "Full Analysis"
-    log_info "Running complete analysis..."
-    scan
-    audit
-    health
-    log_success "Full analysis complete!"
+# ═══════════════════════════════════════════════════════════════════════════
+# 🤖 Agent C: Security Analyzer
+# ═══════════════════════════════════════════════════════════════════════════
+agent_c_security() {
+    log_agent "C" "Starting security analysis..."
+    
+    log_info "Checking for common security issues..."
+    
+    # Check for hardcoded secrets
+    log_debug "Scanning for potential secrets..."
+    if grep -r -i "private.*key\|secret\|password\|api.*key" "${PROJECT_ROOT}" --include="*.sol" --include="*.js" --include="*.ts" 2>/dev/null | grep -v "node_modules" | grep -v ".git" | head -5; then
+        log_warning "Potential secrets found in code (review required)"
+    fi
+    
+    # Check for unsafe functions
+    log_debug "Scanning for unsafe function calls..."
+    if grep -r "selfdestruct\|delegatecall\|call.value" "${PROJECT_ROOT}" --include="*.sol" 2>/dev/null | grep -v "node_modules" | head -5; then
+        log_warning "Potentially unsafe functions found"
+    fi
+    
+    log_agent "C" "Security analysis complete"
 }
 
-# Help function
-usage() {
-    cat << EOF
-Usage: $0 [COMMAND] [OPTIONS]
-
-Commands:
-    scan        Run security scan
-    audit       Run code audit
-    health      Run health check
-    full        Run all checks (default)
-    help        Show this help message
-
-Options:
-    DRY_RUN=false       Disable dry-run mode (default: true)
-    VERBOSE=true        Enable verbose logging (default: false)
-    OUTPUT_DIR=path     Set output directory (default: ./reports)
-
-Examples:
-    $0 scan                     # Run security scan (dry-run)
-    DRY_RUN=false $0 audit      # Run audit with file output
-    VERBOSE=true $0 health      # Run health check with debug logs
-    DRY_RUN=false $0 full       # Run all checks with file output
-
-Environment Variables:
-    DRY_RUN         Set to 'false' to enable file writing
-    VERBOSE         Set to 'true' to enable debug logs
-    OUTPUT_DIR      Directory for output reports
-
-EOF
+# ═══════════════════════════════════════════════════════════════════════════
+# 🤖 Agent D: Code Quality Checker
+# ═══════════════════════════════════════════════════════════════════════════
+agent_d_quality() {
+    log_agent "D" "Starting code quality check..."
+    
+    log_info "Analyzing code structure..."
+    
+    # Count lines of code
+    if command -v cloc &> /dev/null; then
+        log_debug "Running cloc analysis..."
+        if [[ "${DRY_RUN}" == "true" ]]; then
+            log_warning "[DRY-RUN] Would run: cloc ${PROJECT_ROOT}"
+        else
+            cloc "${PROJECT_ROOT}" --quiet 2>/dev/null || log_debug "cloc not available or failed"
+        fi
+    fi
+    
+    # Check for linting configs
+    [[ -f "${PROJECT_ROOT}/.eslintrc" ]] && log_info "ESLint config found"
+    [[ -f "${PROJECT_ROOT}/.prettierrc" ]] && log_info "Prettier config found"
+    
+    log_agent "D" "Code quality check complete"
 }
 
-# Main execution
+# ═══════════════════════════════════════════════════════════════════════════
+# 🤖 Agent E: Test Coverage Analyzer
+# ═══════════════════════════════════════════════════════════════════════════
+agent_e_coverage() {
+    log_agent "E" "Starting test coverage analysis..."
+    
+    if [[ -f "${PROJECT_ROOT}/package.json" ]]; then
+        log_info "Checking for test scripts..."
+        if grep -q "\"test\"" "${PROJECT_ROOT}/package.json"; then
+            log_success "Test scripts found in package.json"
+            if [[ "${DRY_RUN}" == "true" ]]; then
+                log_warning "[DRY-RUN] Would run: pnpm test"
+            else
+                cd "${PROJECT_ROOT}" && pnpm test 2>/dev/null || log_warning "Tests failed or not configured"
+            fi
+        else
+            log_warning "No test scripts found in package.json"
+        fi
+    fi
+    
+    # Check for test directories
+    [[ -d "${PROJECT_ROOT}/test" ]] && log_info "Test directory found"
+    [[ -d "${PROJECT_ROOT}/tests" ]] && log_info "Tests directory found"
+    
+    log_agent "E" "Test coverage analysis complete"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 🤖 Agent F: Health Monitor
+# ═══════════════════════════════════════════════════════════════════════════
+agent_f_health() {
+    log_agent "F" "Starting health monitoring..."
+    
+    log_info "Checking system health..."
+    
+    # Check disk space
+    local disk_usage=$(df -h "${PROJECT_ROOT}" | awk 'NR==2 {print $5}' | sed 's/%//')
+    if [[ ${disk_usage} -gt 80 ]]; then
+        log_warning "Disk usage is high: ${disk_usage}%"
+    else
+        log_success "Disk usage OK: ${disk_usage}%"
+    fi
+    
+    # Check memory
+    if command -v free &> /dev/null; then
+        local mem_usage=$(free | awk 'NR==2{printf "%.0f", $3*100/$2}')
+        log_info "Memory usage: ${mem_usage}%"
+    fi
+    
+    # Check git status
+    if [[ -d "${PROJECT_ROOT}/.git" ]]; then
+        cd "${PROJECT_ROOT}"
+        local changes=$(git status --porcelain | wc -l)
+        log_info "Git: ${changes} uncommitted changes"
+    fi
+    
+    log_agent "F" "Health monitoring complete"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 🎯 Command Handlers
+# ═══════════════════════════════════════════════════════════════════════════
+cmd_scan() {
+    banner "🔍 SCAN MODE"
+    agent_a_scan
+}
+
+cmd_audit() {
+    banner "🔒 AUDIT MODE"
+    agent_b_audit
+    agent_c_security
+}
+
+cmd_health() {
+    banner "💊 HEALTH CHECK MODE"
+    agent_f_health
+}
+
+cmd_deploy() {
+    banner "🚀 DEPLOY MODE"
+    log_warning "Deploy mode is not yet implemented"
+    log_info "Please use scripts/deploy-caster.sh for deployments"
+}
+
+cmd_report() {
+    banner "📊 REPORT MODE"
+    log_info "Generating comprehensive report..."
+    agent_a_scan
+    agent_b_audit
+    agent_c_security
+    agent_d_quality
+    agent_e_coverage
+    agent_f_health
+    log_success "Report generation complete"
+}
+
+cmd_full() {
+    banner "🎯 FULL ANALYSIS MODE"
+    clean_ports
+    ensure_pnpm
+    pnpm_install
+    cmd_report
+}
+
+# ═══════════════════════════════════════════════════════════════════════════
+# 📋 Main Entry Point
+# ═══════════════════════════════════════════════════════════════════════════
 main() {
-    local command="${1:-full}"
+    local command=""
     
-    case "$command" in
+    # Parse options first (can appear anywhere)
+    local -a args=()
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            --dry-run)
+                export DRY_RUN=true
+                shift
+                ;;
+            --no-dry-run)
+                export DRY_RUN=false
+                shift
+                ;;
+            --verbose)
+                export VERBOSE=true
+                shift
+                ;;
+            --agent=*)
+                export AGENTS_ENABLED="${1#*=}"
+                shift
+                ;;
+            --help|-h|help)
+                args+=("help")
+                shift
+                ;;
+            -*)
+                log_warning "Unknown option: $1"
+                shift
+                ;;
+            *)
+                args+=("$1")
+                shift
+                ;;
+        esac
+    done
+    
+    # Get command from remaining arguments
+    command="${args[0]:-help}"
+    
+    # Display configuration
+    log_info "SmartBrain Orchestrator v${VERSION}"
+    log_info "DRY_RUN: ${DRY_RUN}"
+    log_info "VERBOSE: ${VERBOSE}"
+    log_info "Project: ${PROJECT_ROOT}"
+    echo ""
+    
+    # Execute command
+    case "${command}" in
         scan)
-            init_output
-            scan
+            cmd_scan
             ;;
         audit)
-            init_output
-            audit
+            cmd_audit
             ;;
         health)
-            init_output
-            health
+            cmd_health
+            ;;
+        deploy)
+            cmd_deploy
+            ;;
+        report)
+            cmd_report
             ;;
         full)
-            init_output
-            full
+            cmd_full
             ;;
         help|--help|-h)
-            usage
+            banner "🧠 SmartBrain Orchestrator - Help"
+            echo "Usage: $0 [command] [options]"
+            echo ""
+            echo "Commands:"
+            echo "  scan      - Scan repository for contracts and configs"
+            echo "  audit     - Audit dependencies and security"
+            echo "  health    - Check system health"
+            echo "  deploy    - Deploy contracts (placeholder)"
+            echo "  report    - Generate comprehensive report"
+            echo "  full      - Run full analysis with all agents"
+            echo "  help      - Show this help message"
+            echo ""
+            echo "Options:"
+            echo "  --dry-run      - Enable dry-run mode (default: true)"
+            echo "  --no-dry-run   - Disable dry-run mode"
+            echo "  --verbose      - Enable verbose output"
+            echo "  --agent=A-F    - Enable specific agents (comma-separated)"
+            echo ""
+            echo "Examples:"
+            echo "  $0 scan"
+            echo "  $0 audit --verbose"
+            echo "  $0 full --no-dry-run"
+            echo ""
             ;;
         *)
-            log_error "Unknown command: $command"
-            usage
+            log_error "Unknown command: ${command}"
+            log_info "Run '$0 help' for usage information"
             exit 1
             ;;
     esac
+    
+    log_success "SmartBrain orchestration complete! 🎉"
 }
 
-# Run main function
-main "$@"
+# Run main if not sourced
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

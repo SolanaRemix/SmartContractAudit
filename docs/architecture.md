@@ -1,406 +1,313 @@
 ---
 title: "GitAntivirus Architecture"
-description: "System architecture and technical design of GitAntivirus security automation platform"
-tags: ["architecture", "design", "technical", "system"]
-seo_keywords: "gitantivirus architecture, system design, automation platform, security framework"
-geo:
-  country: "global"
+description: "System architecture and design overview for GitAntivirus"
+tags: ["architecture", "design", "system-design"]
+seo_keywords: "gitantivirus architecture, smart contract security system, automation architecture"
 ---
 
 # 🏗️ GitAntivirus Architecture
 
-> Technical overview of the GitAntivirus security automation platform
+## System Overview
 
-## ═══════════════════════════════════════════════════════════════
-## 📐 System Overview
-## ═══════════════════════════════════════════════════════════════
-
-GitAntivirus is a distributed security automation system built on GitHub Actions, Node.js, and Bash scripting. The architecture follows a modular, event-driven design with safety-first principles.
+GitAntivirus is a distributed, automated security scanning system designed to identify and remediate vulnerabilities in smart contract repositories across GitHub.
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     GitHub Repository                        │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
-│  │   Scripts    │  │   Workflows  │  │     Node     │     │
-│  │              │  │              │  │     BOT      │     │
-│  │ master.sh    │  │ gitantivirus │  │              │     │
-│  │ deploy.sh    │  │     .yml     │  │  index.js    │     │
-│  │ update.sh    │  │              │  │              │     │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘     │
-│         │                  │                  │              │
-│         └──────────────────┼──────────────────┘              │
-│                            │                                 │
-│                    ┌───────▼────────┐                        │
-│                    │   Orchestrator  │                        │
-│                    │   SmartBrain    │                        │
-│                    └───────┬────────┘                        │
-│                            │                                 │
-│         ┌──────────────────┼──────────────────┐              │
-│         │                  │                  │              │
-│    ┌────▼─────┐     ┌─────▼──────┐     ┌────▼─────┐        │
-│    │  Scan    │     │   Audit    │     │  Health  │        │
-│    │  Engine  │     │   Engine   │     │  Check   │        │
-│    └──────────┘     └────────────┘     └──────────┘        │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────┐
+│                         GitAntivirus System                         │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  ┌──────────────────┐      ┌──────────────────┐                   │
+│  │  SmartBrain      │◄────►│  Node Bot        │                   │
+│  │  Orchestrator    │      │  System          │                   │
+│  └────────┬─────────┘      └────────┬─────────┘                   │
+│           │                         │                              │
+│           │                         │                              │
+│  ┌────────▼─────────────────────────▼─────────┐                   │
+│  │         GitHub Actions Workflows           │                   │
+│  └────────────────┬───────────────────────────┘                   │
+│                   │                                                │
+│  ┌────────────────▼───────────────────────────┐                   │
+│  │         GitHub Repositories                │                   │
+│  │  (Scanned, Analyzed, Improved)             │                   │
+│  └────────────────────────────────────────────┘                   │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
-## ═══════════════════════════════════════════════════════════════
-## 🧩 Core Components
-## ═══════════════════════════════════════════════════════════════
+## Core Components
 
-### 1. SmartBrain Orchestrator (`scripts/master.sh`)
+### 1. SmartBrain Orchestrator
 
-**Purpose**: Master control script for all security operations
+**Purpose:** Central command and control for security operations.
 
-**Responsibilities**:
-- Command routing and execution
-- Environment validation
-- Logging and output management
-- Error handling and recovery
+**Architecture:**
+```
+SmartBrain
+├── Agent A: Repository Scanner
+│   └── File discovery, pattern matching
+├── Agent B: Dependency Auditor
+│   └── npm/pip audit, vulnerability detection
+├── Agent C: Security Analyzer
+│   └── Secret scanning, unsafe function detection
+├── Agent D: Code Quality Checker
+│   └── Linting, code metrics
+├── Agent E: Test Coverage Analyzer
+│   └── Test discovery, coverage analysis
+└── Agent F: Health Monitor
+    └── System diagnostics, resource monitoring
+```
 
-**Operations**:
-- `scan`: Security vulnerability scanning
-- `audit`: Code quality and structure analysis
-- `health`: Repository health monitoring
-- `full`: Complete analysis suite
+**Technology:**
+- Language: Bash
+- Dependencies: None (portable)
+- Execution: Local or CI/CD
 
-**Design Patterns**:
-- Command pattern for operation dispatch
-- Strategy pattern for different scan types
-- Template method for common workflows
+### 2. Node Bot System
 
-### 2. GitAntivirus Workflow (`.github/workflows/gitantivirus.yml`)
+**Purpose:** Automated repository discovery and PR creation.
 
-**Purpose**: Automated execution via GitHub Actions
+**Architecture:**
+```
+Node Bot
+├── Search Module
+│   └── GitHub API integration
+├── Analysis Module
+│   └── Security issue detection
+├── Filter Module
+│   └── Allowlist, star threshold
+└── PR Module
+    └── Draft PR creation
+```
 
-**Triggers**:
-- Push events (main, develop branches)
-- Pull request events
-- Scheduled runs (weekly)
+**Technology:**
+- Language: Node.js (ES Modules)
+- Dependencies: @octokit/rest
+- Execution: Scheduled or on-demand
+
+**Data Flow:**
+```
+GitHub Search → Filter → Analyze → Generate Fix → Create PR (Draft)
+     ↓            ↓         ↓           ↓              ↓
+  Repo List → Filtered → Issues → PR Body → GitHub API
+```
+
+### 3. GitHub Actions Integration
+
+**Purpose:** Continuous integration and security monitoring.
+
+**Workflow Triggers:**
+- Pull requests (opened, synchronize)
+- Push to protected branches
+- Scheduled (cron)
 - Manual dispatch
 
-**Features**:
-- Parallel job execution
-- Artifact management
-- PR commenting
-- Label automation
-- Project integration
+**Pipeline Stages:**
+```
+1. Checkout → 2. Setup → 3. Install → 4. Scan → 5. Report → 6. Notify
+```
 
-**Permissions**:
-- `contents: write` - For committing results
-- `pull-requests: write` - For PR operations
-- `issues: write` - For issue management
+## Security Architecture
 
-### 3. Node BOT (`node/bot/index.js`)
+### Authentication & Authorization
 
-**Purpose**: Automated repository discovery and PR automation
-
-**Architecture**:
-```javascript
+```
 ┌─────────────────┐
-│  Configuration  │
+│  GitHub Token   │
+│   (Secret)      │
 └────────┬────────┘
          │
-    ┌────▼────────┐
-    │   Octokit   │ (GitHub API)
-    └────┬────────┘
+         ▼
+┌─────────────────┐
+│  Permission     │
+│  Validation     │
+└────────┬────────┘
          │
-    ┌────▼────────┐
-    │   Search    │
-    │   Engine    │
-    └────┬────────┘
+         ▼
+┌─────────────────┐
+│  Allowlist      │
+│  Check          │
+└────────┬────────┘
          │
-    ┌────▼────────┐
-    │   Filter    │
-    │   Pipeline  │
-    └────┬────────┘
-         │
-    ┌────▼────────┐
-    │  PR Creator │
-    └────┬────────┘
-         │
-    ┌────▼────────┐
-    │   Logger    │
-    └─────────────┘
+         ▼
+┌─────────────────┐
+│  Operation      │
+│  Execution      │
+└─────────────────┘
 ```
 
-**Key Features**:
-- Dry-run mode by default
-- Rate limit awareness
-- Allowlist filtering
-- Configurable thresholds
-- Comprehensive logging
+### Dry-Run Architecture
 
-### 4. Deployment Tools
-
-#### update-talents.sh
-**Purpose**: Build and artifact preparation
-
-**Flow**:
-```
-Check Prerequisites
-        │
-        ▼
-Install Dependencies
-        │
-        ▼
-  Run Build
-        │
-        ▼
-Generate Artifacts
-        │
-        ▼
-Validate Output
-```
-
-#### deploy-caster.sh
-**Purpose**: Smart contract deployment
-
-**Flow**:
-```
-Parse Arguments
-        │
-        ▼
-Validate Config
-        │
-        ▼
-Check Artifact
-        │
-        ▼
-Execute Deploy
-        │
-        ▼
-Verify Success
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🔄 Data Flow
-## ═══════════════════════════════════════════════════════════════
-
-### Security Scan Flow
+All components support dry-run mode:
 
 ```
-GitHub Event → Workflow Trigger → Checkout Code
-                                        │
-                                        ▼
-                                  Setup Environment
-                                        │
-                                        ▼
-                                Make Scripts Executable
-                                        │
-                                        ▼
-                              Run SmartBrain Orchestrator
-                                        │
-                    ┌───────────────────┼───────────────────┐
-                    │                   │                   │
-                    ▼                   ▼                   ▼
-               Scan Engine         Audit Engine       Health Check
-                    │                   │                   │
-                    └───────────────────┼───────────────────┘
-                                        │
-                                        ▼
-                              Generate Reports
-                                        │
-                                        ▼
-                              Upload Artifacts
-                                        │
-                                        ▼
-                              Update PR/Issue
+Operation Request
+     ↓
+Check DRY_RUN Flag
+     ↓
+┌────┴────┐
+│ true    │ false
+▼         ▼
+Log       Execute
+Action    Action
 ```
 
-### Bot Automation Flow
+### Safety Layers
 
-```
-Schedule/Manual Trigger → Initialize Bot → Load Config
-                                               │
-                                               ▼
-                                    Search Repositories
-                                               │
-                                               ▼
-                                       Apply Filters
-                                               │
-                                               ▼
-                                    Rank Candidates
-                                               │
-                                               ▼
-                          ┌────────────────────┴────────────────────┐
-                          │                                         │
-                    DRY_RUN=true                               DRY_RUN=false
-                          │                                         │
-                          ▼                                         ▼
-                    Log Actions                              Create Draft PRs
-                          │                                         │
-                          └────────────────────┬────────────────────┘
-                                               │
-                                               ▼
-                                       Save Summary
-```
+1. **Input Validation:** All parameters validated
+2. **Rate Limiting:** Max operations per run
+3. **Allowlist Filtering:** Org/repo restrictions
+4. **Dry-Run Default:** Safe by default
+5. **Audit Logging:** All operations logged
 
-## ═══════════════════════════════════════════════════════════════
-## 🗄️ Data Storage
-## ═══════════════════════════════════════════════════════════════
+## Data Architecture
 
-### Configuration Files
+### Log Structure
 
-- `config/repair.json`: Bot behavior settings
-- `.github/workflows/*.yml`: Workflow definitions
-- `node/bot/package.json`: Bot dependencies
-
-### Runtime Data
-
-- `reports/`: Generated security reports (temporary)
-- `node/logs/`: Bot execution logs
-- `build/`: Compiled artifacts
-
-### Artifacts
-
-- Workflow artifacts (GitHub Actions)
-- Bot logs (retention: 30 days)
-- Security reports (retention: 30 days)
-
-## ═══════════════════════════════════════════════════════════════
-## 🔐 Security Architecture
-## ═══════════════════════════════════════════════════════════════
-
-### Authentication
-
-```
-┌──────────────┐
-│  User/Bot    │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│  GH_TOKEN    │ (Environment Variable)
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│   Octokit    │ (GitHub API Client)
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│  GitHub API  │
-└──────────────┘
+```json
+{
+  "timestamp": "ISO-8601",
+  "config": {
+    "dryRun": true,
+    "botPingsEnabled": false,
+    "allowlistOrgs": []
+  },
+  "results": [
+    {
+      "repo": "owner/name",
+      "analysis": { "issues": [], "recommendations": [] },
+      "pr": { "created": false, "reason": "dry-run" }
+    }
+  ],
+  "stats": {
+    "total": 10,
+    "analyzed": 10,
+    "prsCreated": 0
+  }
+}
 ```
 
-### Authorization Layers
+### Configuration Schema
 
-1. **Repository Level**: Read/write permissions
-2. **Workflow Level**: GitHub Actions permissions
-3. **Bot Level**: Token scopes and rate limits
-4. **Allowlist Level**: Organization filtering
-
-### Secrets Management
-
-- **Storage**: GitHub Secrets (encrypted)
-- **Access**: Environment variables only
-- **Scope**: Minimal required permissions
-- **Rotation**: Regular token rotation recommended
-
-## ═══════════════════════════════════════════════════════════════
-## 🚀 Deployment Architecture
-## ═══════════════════════════════════════════════════════════════
-
-### Local Development
-
-```
-Developer Machine
-    │
-    ├── Git Clone
-    ├── Local Scripts
-    ├── Manual Testing
-    └── Push to Branch
+```json
+{
+  "auto_apply": false,
+  "dry_run_default": true,
+  "allowlist_orgs": ["org1", "org2"],
+  "max_prs_per_run": 3,
+  "pings_enabled": false
+}
 ```
 
-### CI/CD Pipeline
+## Deployment Architecture
+
+### ENS Deployment Flow
 
 ```
-Git Push → GitHub → Workflow Trigger → Runner
-                                          │
-                                          ▼
-                                    Execute Jobs
-                                          │
-                                          ▼
-                                   Upload Artifacts
-                                          │
-                                          ▼
-                                   Update PR/Issue
+Build Artifacts → Validate → Deploy to ENS
+     ↓              ↓            ↓
+  build/        Artifact     Caster CLI
+talents.json    Validation   (gxqstudio.eth)
 ```
 
-### Production Deployment
+### Network Topology
 
 ```
-Main Branch → Protected → Approval Required
-                              │
-                              ▼
-                        Merge to Main
-                              │
-                              ▼
-                    Workflow Auto-Run
-                              │
-                              ▼
-                     Deploy to Network
-                     (Base/Solana)
+┌─────────────────────────────────────────┐
+│         Base Network (Layer 2)          │
+├─────────────────────────────────────────┤
+│  ┌─────────────────────────────────┐   │
+│  │  ENS: gxqstudio.eth             │   │
+│  │  ├── Contract Deployment        │   │
+│  │  └── Talent Registry            │   │
+│  └─────────────────────────────────┘   │
+│                                         │
+│  Provider: https://mainnet.base.org    │
+└─────────────────────────────────────────┘
 ```
 
-## ═══════════════════════════════════════════════════════════════
-## ⚡ Performance Considerations
-## ═══════════════════════════════════════════════════════════════
+## Scalability Considerations
 
-### Optimization Strategies
+### Horizontal Scaling
 
-1. **Parallel Execution**: Multiple scan engines run concurrently
-2. **Caching**: Node modules and build artifacts cached
-3. **Rate Limiting**: Respectful API usage with backoff
-4. **Filtering**: Early filtering to reduce processing
-5. **Incremental Builds**: Only rebuild changed components
+- Multiple node bots can run independently
+- Each bot respects global rate limits
+- Coordination via allowlist configuration
 
-### Scalability
+### Performance Optimization
 
-- **Horizontal**: Multiple bot instances with coordination
-- **Vertical**: Resource allocation per workflow
-- **Throttling**: Configurable limits (MAX_PRS_PER_RUN)
+- GitHub API caching
+- Parallel repository analysis
+- Incremental scanning (delta detection)
 
-## ═══════════════════════════════════════════════════════════════
-## 🔧 Extension Points
-## ═══════════════════════════════════════════════════════════════
+### Rate Limiting
 
-### Adding New Scan Types
+```
+GitHub API: 5000 requests/hour (authenticated)
+Bot Operations: Max 3 PRs/run
+Agent Scans: Unlimited (local)
+```
 
-1. Add function in `scripts/master.sh`
-2. Update case statement
-3. Add workflow step
-4. Document in usage guide
+## Error Handling
 
-### Custom Filters
+### Failure Modes
 
-1. Extend filter logic in `node/bot/index.js`
-2. Add configuration options
-3. Update documentation
+1. **Network Failures:** Retry with exponential backoff
+2. **API Errors:** Log and continue with next item
+3. **Validation Failures:** Skip and report
+4. **Permission Errors:** Dry-run fallback
 
-### Integration Hooks
+### Recovery Strategies
 
-- Pre-scan hooks
-- Post-scan hooks
-- Custom reporters
-- External notifications
+```
+Error Detected
+     ↓
+Check Severity
+     ↓
+┌────┴────┐
+│ Fatal   │ Recoverable
+▼         ▼
+Exit      Log & Continue
+with      (Retry if needed)
+Error
+```
 
-## ═══════════════════════════════════════════════════════════════
-## 📚 References
-## ═══════════════════════════════════════════════════════════════
+## Monitoring & Observability
 
-- [GitHub Actions Documentation](https://docs.github.com/actions)
-- [Octokit REST API](https://octokit.github.io/rest.js/)
-- [Bash Best Practices](https://google.github.io/styleguide/shellguide.html)
-- [Node.js Security Guidelines](https://nodejs.org/en/docs/guides/security/)
+### Metrics
+
+- Repositories scanned
+- Issues detected
+- PRs created
+- API rate limit usage
+- Execution time
+
+### Logging Levels
+
+- **INFO:** Normal operations
+- **WARNING:** Non-fatal issues
+- **ERROR:** Failures requiring attention
+- **DEBUG:** Detailed diagnostics (verbose mode)
+
+## Future Enhancements
+
+1. **Machine Learning:** Pattern recognition for vulnerability detection
+2. **Multi-Chain Support:** Expand beyond Solana/EVM
+3. **Real-time Monitoring:** WebSocket-based live scanning
+4. **Advanced Analytics:** Trend analysis, risk scoring
+5. **Community Plugins:** Extensible agent system
 
 ---
 
-**Version**: 1.0.0  
-**Last Updated**: 2025-12-31  
-**Status**: Production Ready
+## Technical Specifications
+
+| Component | Language | Runtime | Dependencies |
+|-----------|----------|---------|--------------|
+| SmartBrain | Bash | Shell | None |
+| Node Bot | JavaScript (ES6+) | Node.js 18+ | @octokit/rest |
+| Workflows | YAML | GitHub Actions | Node.js 20 |
+| Web UI | HTML/JS | Browser | Tailwind CSS |
+
+---
+
+*Architecture Version: 1.0.0*
+*Last Updated: 2025-12-31*

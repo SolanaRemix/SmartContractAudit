@@ -1,101 +1,77 @@
-name: 🤖 GitAntivirus Node BOT (Scheduled)
+name: GitAntivirus Node Bot (Scheduled)
 
-# ═══════════════════════════════════════════════════════════════════════════
-# This is a TEMPLATE workflow for the Node BOT
-# Place this under .github/workflows/ to enable scheduled bot runs
-# ═══════════════════════════════════════════════════════════════════════════
+# ⚠️ This is a TEMPLATE workflow file for reference
+# Place this file in .github/workflows/ directory to enable scheduled bot runs
+# File location: .github/workflows/node-bot.yml (rename when deploying)
 
 on:
   schedule:
-    # Runs every Monday at 00:00 UTC
-    - cron: '0 0 * * 1'
+    # Run weekly on Mondays at 3 AM UTC
+    - cron: '0 3 * * 1'
   workflow_dispatch:
     inputs:
       dry_run:
-        description: 'Enable dry-run mode'
+        description: 'Run in dry-run mode'
         required: false
         default: 'true'
-        type: choice
-        options:
-          - 'true'
-          - 'false'
+      allowlist_orgs:
+        description: 'Allowlist organizations (comma-separated)'
+        required: false
+        default: ''
 
 permissions:
   contents: read
-  pull-requests: write
   issues: write
+  pull-requests: write
 
 env:
   DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
-  BOT_PINGS_ENABLED: false
-  ALLOWLIST_ORGS: ""
-  MAX_PRS_PER_RUN: 3
+  BOT_PINGS_ENABLED: 'false'
+  ALLOWLIST_ORGS: ${{ github.event.inputs.allowlist_orgs || '' }}
 
 jobs:
-  run-bot:
-    name: 🤖 Run GitAntivirus BOT
+  node-bot-scan:
+    name: 🤖 Node Bot Security Scan
     runs-on: ubuntu-latest
     
     steps:
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
-      
+        
       - name: 🔧 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      
-      - name: 📦 Install pnpm
-        run: |
-          npm install -g pnpm
-          pnpm --version
-      
-      - name: 📥 Install bot dependencies
-        working-directory: node/bot
-        run: |
-          pnpm install
-      
-      - name: 🤖 Run GitAntivirus BOT
-        working-directory: node/bot
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
-          DRY_RUN: ${{ env.DRY_RUN }}
-          BOT_PINGS_ENABLED: ${{ env.BOT_PINGS_ENABLED }}
-          ALLOWLIST_ORGS: ${{ env.ALLOWLIST_ORGS }}
-          MAX_PRS_PER_RUN: ${{ env.MAX_PRS_PER_RUN }}
-        run: |
-          echo "🤖 Starting GitAntivirus BOT..."
-          echo "Mode: ${DRY_RUN}"
-          node index.js
-      
-      - name: 📊 Upload Bot Logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: bot-logs-${{ github.run_number }}
-          path: node/logs/
-          retention-days: 30
-          if-no-files-found: ignore
-      
-      - name: 📝 Summary
-        if: always()
-        run: |
-          echo "## 🤖 GitAntivirus BOT Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Mode:** ${DRY_RUN}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Pings Enabled:** ${BOT_PINGS_ENABLED}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Status:** ✅ Complete" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
           
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          
+      - name: 📚 Install bot dependencies
+        run: |
+          cd node/bot
+          pnpm install
+          
+      - name: 🤖 Run Node Bot
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd node/bot
+          node index.js
+          
+      - name: 📤 Upload scan results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: node-bot-scan-results
+          path: node/logs/summary.json
+          retention-days: 30
+          
+      - name: 📊 Display summary
+        if: always()
+        run: |
           if [ -f "node/logs/summary.json" ]; then
-            echo "### Execution Summary" >> $GITHUB_STEP_SUMMARY
-            cat node/logs/summary.json >> $GITHUB_STEP_SUMMARY
+            echo "## 📊 Scan Summary"
+            cat node/logs/summary.json | jq .stats
           fi
-
-# ═══════════════════════════════════════════════════════════════════════════
-# NOTES:
-# - This workflow is a template placed in node/node.yml
-# - Copy to .github/workflows/bot.yml to activate
-# - Configure secrets: GH_TOKEN (for write operations)
-# - Adjust schedule as needed
-# ═══════════════════════════════════════════════════════════════════════════

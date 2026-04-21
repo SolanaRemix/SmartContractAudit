@@ -1,476 +1,428 @@
 ---
 title: "GitAntivirus Usage Guide"
-description: "Practical examples and workflows for using GitAntivirus security automation"
-tags: ["usage", "examples", "workflows", "tutorial"]
-seo_keywords: "gitantivirus usage, security automation examples, workflow guide, practical examples"
+description: "Practical examples and usage patterns for GitAntivirus"
+tags: ["usage", "examples", "guide"]
+seo_keywords: "gitantivirus usage, how to use gitantivirus, security scanning examples"
 ---
 
 # 📖 GitAntivirus Usage Guide
 
-> Practical examples and common workflows for security automation
+## Common Usage Patterns
 
-## ═══════════════════════════════════════════════════════════════
-## 🎯 Quick Start
-## ═══════════════════════════════════════════════════════════════
+### 1. Quick Security Scan
 
-### Run Your First Scan
+Scan your repository for common security issues:
 
 ```bash
-# Navigate to repository
-cd /path/to/SmartContractAudit
-
-# Run security scan (dry-run)
 ./scripts/master.sh scan
-
-# Run with file output
-DRY_RUN=false ./scripts/master.sh scan
-
-# View results
-cat reports/security-scan.md
 ```
 
-## ═══════════════════════════════════════════════════════════════
-## 🔍 Security Scanning
-## ═══════════════════════════════════════════════════════════════
+**Use when:**
+- Starting a new audit
+- Quick vulnerability check
+- Before committing changes
 
-### Basic Security Scan
+**Output:**
+- Count of smart contract files
+- Configuration files discovered
+- Security tool detection
+
+---
+
+### 2. Full Dependency Audit
+
+Audit all dependencies for known vulnerabilities:
 
 ```bash
-# Dry-run mode (safe, no file changes)
-./scripts/master.sh scan
-
-# Live mode (creates reports)
-DRY_RUN=false ./scripts/master.sh scan
-
-# Verbose output
-VERBOSE=true ./scripts/master.sh scan
-
-# Custom output directory
-OUTPUT_DIR=./my-reports DRY_RUN=false ./scripts/master.sh scan
+./scripts/master.sh audit
 ```
 
-### Advanced Security Scan
+**Use when:**
+- Updating dependencies
+- Security compliance review
+- Before production deployment
+
+**Output:**
+- npm/pip vulnerability report
+- Hardcoded secret detection
+- Unsafe function identification
+
+---
+
+### 3. System Health Check
+
+Monitor system health and repository status:
 
 ```bash
-# Scan with all options
-DRY_RUN=false \
-VERBOSE=true \
-OUTPUT_DIR=./security-reports \
-./scripts/master.sh scan
-
-# Review specific patterns
-git grep -i "password\|secret\|api_key" -- ':!*.md'
-
-# Check for TODO security items
-git grep -i "TODO.*security\|FIXME.*security"
+./scripts/master.sh health
 ```
 
-## ═══════════════════════════════════════════════════════════════
-## 🔬 Code Auditing
-## ═══════════════════════════════════════════════════════════════
+**Use when:**
+- CI/CD health checks
+- Pre-deployment verification
+- System diagnostics
 
-### Repository Audit
+**Output:**
+- Disk usage metrics
+- Memory consumption
+- Git repository status
+
+---
+
+### 4. Comprehensive Report
+
+Generate a complete security analysis:
 
 ```bash
-# Run code audit
-DRY_RUN=false ./scripts/master.sh audit
-
-# View audit report
-cat reports/audit-report.md
-
-# Analyze specific metrics
-find . -type f -name "*.js" | wc -l  # Count JS files
-find . -type f -name "*.md" | wc -l  # Count docs
+./scripts/master.sh report --verbose
 ```
 
-### Code Quality Checks
+**Use when:**
+- Compliance audits
+- Security reviews
+- Stakeholder reporting
+
+**Output:**
+- All agent reports combined
+- Detailed findings
+- Recommendations
+
+---
+
+### 5. Full Analysis Pipeline
+
+Run complete analysis with all components:
 
 ```bash
-# Run full audit with verbose logging
-VERBOSE=true DRY_RUN=false ./scripts/master.sh audit
-
-# Check for large files
-find . -type f -size +1M -not -path "*/\.git/*"
-
-# Check for binary files
-find . -type f -exec file {} \; | grep -i binary
+./scripts/master.sh full
 ```
 
-## ═══════════════════════════════════════════════════════════════
-## ❤️ Health Monitoring
-## ═══════════════════════════════════════════════════════════════
+**Use when:**
+- Initial repository onboarding
+- Quarterly security reviews
+- Major version releases
 
-### Basic Health Check
+**What it does:**
+1. Cleans up ports
+2. Installs dependencies
+3. Runs all 6 agents (A-F)
+4. Generates comprehensive report
 
-```bash
-# Run health check
-DRY_RUN=false ./scripts/master.sh health
+---
 
-# View health report
-cat reports/health-check.md
+## Node Bot Usage
 
-# Check git status
-git status --short
-```
-
-### Comprehensive Health Check
-
-```bash
-# Full health analysis
-VERBOSE=true DRY_RUN=false ./scripts/master.sh health
-
-# Check dependencies
-if [ -f "package.json" ]; then
-  npm outdated
-fi
-
-# Check for uncommitted changes
-git diff --stat
-
-# Check branch status
-git branch -vv
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🚀 Complete Analysis
-## ═══════════════════════════════════════════════════════════════
-
-### Run All Checks
-
-```bash
-# Run complete analysis suite
-DRY_RUN=false ./scripts/master.sh full
-
-# With verbose logging
-VERBOSE=true DRY_RUN=false ./scripts/master.sh full
-
-# Review all reports
-ls -la reports/
-cat reports/security-scan.md
-cat reports/audit-report.md
-cat reports/health-check.md
-```
-
-### Scheduled Analysis
-
-```bash
-# Create a cron job for weekly analysis
-# Add to crontab -e:
-0 0 * * 1 cd /path/to/SmartContractAudit && DRY_RUN=false ./scripts/master.sh full
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🤖 Bot Operations
-## ═══════════════════════════════════════════════════════════════
-
-### Run Bot in Dry-Run Mode
+### Safe Exploration (Dry-Run)
 
 ```bash
 cd node/bot
-
-# Install dependencies (first time only)
 pnpm install
-
-# Run bot (dry-run by default)
-node index.js
-
-# View execution log
-cat ../logs/summary.json
+pnpm start
 ```
 
-### Configure Bot for Specific Organizations
+**Result:** Analyzes repositories, logs findings, creates NO PRs
+
+### Live Operations
 
 ```bash
-# Set environment variables
-export ALLOWLIST_ORGS="SolanaRemix,smsdao"
-export MAX_PRS_PER_RUN=5
-export SEARCH_KEYWORDS="solana,rust,security"
-export MIN_STARS=20
-
-# Run bot
-node index.js
-
-# Check results
-cat ../logs/summary.json | jq .
+export GH_TOKEN=your_github_token
+DRY_RUN=false pnpm start
 ```
 
-### Run Bot in Live Mode
+**Result:** Creates draft PRs for security fixes
+
+### Filtered Scanning
 
 ```bash
-# CAUTION: This will create actual PRs!
-export GH_TOKEN="your_github_token_here"
-export DRY_RUN=false
-export ALLOWLIST_ORGS="YourOrg"
-export BOT_PINGS_ENABLED=false  # Keep disabled for safety
-
-# Run bot
-node index.js
-
-# Monitor progress
-tail -f ../logs/summary.json
+ALLOWLIST_ORGS="SolanaRemix,MyOrg" pnpm start
 ```
 
-## ═══════════════════════════════════════════════════════════════
-## 🔨 Build & Deploy
-## ═══════════════════════════════════════════════════════════════
+**Result:** Only scans allowed organizations
+
+### Adjust Rate Limits
+
+```bash
+MAX_PRS_PER_RUN=5 pnpm start
+```
+
+**Result:** Creates up to 5 PRs instead of default 3
+
+---
+
+## Deployment Workflows
 
 ### Build Artifacts
 
 ```bash
-# Dry-run (check what would be built)
+# Dry-run build check
 ./scripts/update-talents.sh --dry-run
 
-# Live build
-DRY_RUN=false ./scripts/update-talents.sh --live
-
-# Verify artifact
-ls -la build/
-cat build/talents.json | jq .
+# Actual build
+./scripts/update-talents.sh --no-dry-run
 ```
 
-### Deploy to Base Network
+**Output:** `build/talents.json`
+
+### Test Deployment
 
 ```bash
-# Dry-run deployment (safe)
+export CASTER_KEY=your_key
+export PROVIDER_URL=https://mainnet.base.org
 ./scripts/deploy-caster.sh --dry-run
-
-# Set deployment credentials
-export CASTER_KEY="your_private_key"
-export PROVIDER_URL="https://mainnet.base.org"
-
-# Live deployment
-DRY_RUN=false ./scripts/deploy-caster.sh --live
-
-# Custom configuration
-./scripts/deploy-caster.sh \
-  --network=base \
-  --ens=gxqstudio.eth \
-  --artifact=./build/talents.json
 ```
 
-## ═══════════════════════════════════════════════════════════════
-## 📊 GitHub Actions Workflows
-## ═══════════════════════════════════════════════════════════════
+**Result:** Shows what would be deployed without executing
 
-### Trigger Manual Workflow
-
-1. Go to repository on GitHub
-2. Navigate to **Actions** tab
-3. Select **GitAntivirus** workflow
-4. Click **Run workflow**
-5. Configure options:
-   - Dry Run: `true` or `false`
-   - Scan Type: `scan`, `audit`, `health`, or `full`
-6. Click **Run workflow** button
-
-### Monitor Workflow Execution
+### Production Deployment
 
 ```bash
-# Using GitHub CLI
-gh run list --workflow=gitantivirus.yml
-
-# View specific run
-gh run view <run-id>
-
-# Download artifacts
-gh run download <run-id>
+DRY_RUN=false ./scripts/deploy-caster.sh --network=base --ens=gxqstudio.eth
 ```
 
-### View Workflow Logs
-
-1. Go to **Actions** tab
-2. Click on workflow run
-3. Click on job name
-4. Expand step to view logs
-
-## ═══════════════════════════════════════════════════════════════
-## 🔧 Common Workflows
-## ═══════════════════════════════════════════════════════════════
-
-### Workflow 1: Daily Security Check
-
-```bash
-#!/bin/bash
-# daily-security.sh
-
-cd /path/to/SmartContractAudit
-
-# Run security scan
-DRY_RUN=false ./scripts/master.sh scan
-
-# Check for issues
-if grep -q "WARNING\|ERROR" reports/security-scan.md; then
-  echo "Security issues found! Review reports/"
-  exit 1
-fi
-
-echo "Security check passed!"
-```
-
-### Workflow 2: Pre-Commit Hook
-
-```bash
-#!/bin/bash
-# .git/hooks/pre-commit
-
-# Run quick security check
-./scripts/master.sh scan
-
-# Check for common issues
-git diff --cached --name-only | while read file; do
-  if grep -q "password\|secret" "$file"; then
-    echo "Warning: Possible secret in $file"
-  fi
-done
-```
-
-### Workflow 3: PR Preparation
-
-```bash
-#!/bin/bash
-# prepare-pr.sh
-
-# Run full analysis
-DRY_RUN=false VERBOSE=true ./scripts/master.sh full
-
-# Build artifacts
-DRY_RUN=false ./scripts/update-talents.sh --live
-
-# Create summary
-echo "## Security Analysis" > PR-SUMMARY.md
-echo "" >> PR-SUMMARY.md
-cat reports/security-scan.md >> PR-SUMMARY.md
-echo "" >> PR-SUMMARY.md
-cat reports/audit-report.md >> PR-SUMMARY.md
-
-echo "PR summary created: PR-SUMMARY.md"
-```
-
-### Workflow 4: Automated Bot Run
-
-```bash
-#!/bin/bash
-# run-bot-safely.sh
-
-cd node/bot
-
-# Always start with dry-run
-echo "Running dry-run first..."
-DRY_RUN=true node index.js
-
-# Ask for confirmation
-read -p "Proceed with live run? (yes/no): " confirm
-
-if [ "$confirm" = "yes" ]; then
-  echo "Running live mode..."
-  export GH_TOKEN="$GITHUB_TOKEN"
-  export DRY_RUN=false
-  node index.js
-else
-  echo "Cancelled."
-fi
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 📈 Monitoring & Reporting
-## ═══════════════════════════════════════════════════════════════
-
-### Generate Summary Report
-
-```bash
-#!/bin/bash
-# generate-summary.sh
-
-OUTPUT="SECURITY-SUMMARY-$(date +%Y%m%d).md"
-
-{
-  echo "# Security Summary - $(date +%Y-%m-%d)"
-  echo ""
-  echo "## Scan Results"
-  if [ -f "reports/security-scan.md" ]; then
-    cat reports/security-scan.md
-  fi
-  echo ""
-  echo "## Audit Results"
-  if [ -f "reports/audit-report.md" ]; then
-    cat reports/audit-report.md
-  fi
-  echo ""
-  echo "## Health Check"
-  if [ -f "reports/health-check.md" ]; then
-    cat reports/health-check.md
-  fi
-} > "$OUTPUT"
-
-echo "Summary generated: $OUTPUT"
-```
-
-### Track Bot Activity
-
-```bash
-# View bot logs
-cd node/logs
-
-# Latest execution
-cat summary.json | jq .
-
-# Count repositories scanned
-cat summary.json | jq .repositories_scanned
-
-# List all results
-cat summary.json | jq '.results[]'
-
-# Filter errors
-cat summary.json | jq '.results[] | select(.status == "error")'
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🆘 Troubleshooting
-## ═══════════════════════════════════════════════════════════════
-
-### Debug Mode
-
-```bash
-# Enable verbose logging
-VERBOSE=true ./scripts/master.sh scan
-
-# Check script execution
-bash -x ./scripts/master.sh scan
-
-# Verify environment
-env | grep -E "DRY_RUN|VERBOSE|OUTPUT_DIR"
-```
-
-### Common Issues
-
-```bash
-# Issue: Reports not generated
-# Solution: Check DRY_RUN setting
-echo "DRY_RUN=${DRY_RUN:-not set}"
-DRY_RUN=false ./scripts/master.sh scan
-
-# Issue: Permission denied
-# Solution: Make scripts executable
-chmod +x scripts/*.sh
-
-# Issue: Bot not finding repositories
-# Solution: Adjust search parameters
-export SEARCH_KEYWORDS="your,keywords"
-export MIN_STARS=5
-cd node/bot && node index.js
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 📚 Additional Resources
-## ═══════════════════════════════════════════════════════════════
-
-- [Architecture](architecture.md) - System design details
-- [Security Guide](security.md) - Security best practices
-- [Deployment Guide](deploy-caster.md) - Deployment instructions
-- [Onboarding](../autom/onboarding.md) - Getting started guide
+**Result:** Deploys to ENS domain on Base network
 
 ---
 
-**Version**: 1.0.0  
-**Last Updated**: 2025-12-31  
-**Status**: 🧪 Template / Active Development
+## CI/CD Integration
+
+### GitHub Actions - Pull Request
+
+Add to your workflow:
+
+```yaml
+- name: Run Security Scan
+  run: ./scripts/master.sh audit
+```
+
+### GitHub Actions - Scheduled
+
+```yaml
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/master.sh full
+```
+
+### GitLab CI
+
+```yaml
+security_scan:
+  stage: test
+  script:
+    - chmod +x scripts/master.sh
+    - ./scripts/master.sh audit
+  artifacts:
+    paths:
+      - reports/
+```
+
+---
+
+## Advanced Usage
+
+### Custom Agent Selection
+
+Run specific agents only:
+
+```bash
+# Only run repository scanner
+./scripts/master.sh scan --agent=A
+
+# Run security agents only
+./scripts/master.sh audit --agent=B,C
+```
+
+### Verbose Logging
+
+```bash
+./scripts/master.sh full --verbose
+```
+
+**Output:** Detailed debug information for troubleshooting
+
+### Override Dry-Run Globally
+
+```bash
+export DRY_RUN=false
+./scripts/master.sh audit
+```
+
+---
+
+## Real-World Examples
+
+### Example 1: Pre-Commit Hook
+
+Add to `.git/hooks/pre-commit`:
+
+```bash
+#!/bin/bash
+echo "Running security scan..."
+./scripts/master.sh scan
+if [ $? -ne 0 ]; then
+    echo "Security scan failed!"
+    exit 1
+fi
+```
+
+### Example 2: Weekly Security Report
+
+Cron job:
+
+```bash
+# Run every Monday at 9 AM
+0 9 * * 1 cd /path/to/repo && ./scripts/master.sh report > weekly-report.txt
+```
+
+### Example 3: Automated PR Scanning
+
+GitHub Action trigger:
+
+```yaml
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          chmod +x scripts/master.sh
+          ./scripts/master.sh audit --verbose
+```
+
+### Example 4: Multi-Repository Bot Scan
+
+```bash
+#!/bin/bash
+# Scan multiple organizations
+for org in "SolanaRemix" "MyOrg" "AnotherOrg"; do
+    ALLOWLIST_ORGS=$org node bot/index.js
+    sleep 60  # Rate limit friendly
+done
+```
+
+---
+
+## Output Interpretation
+
+### Scan Results
+
+```
+ℹ️  [INFO] Found 5 smart contract files
+```
+**Meaning:** 5 Solidity or Vyper files detected
+
+```
+⚠️  [WARNING] Potentially unsafe functions found
+```
+**Action Required:** Review identified functions
+
+```
+✅ [SUCCESS] Dependencies installed
+```
+**Status:** Operation completed successfully
+
+### Health Metrics
+
+```
+✅ [SUCCESS] Disk usage OK: 45%
+```
+**Status:** Plenty of disk space available
+
+```
+⚠️  [WARNING] Disk usage is high: 85%
+```
+**Action Required:** Free up disk space
+
+---
+
+## Tips & Best Practices
+
+### 1. Always Start with Dry-Run
+
+```bash
+# Test first
+DRY_RUN=true ./scripts/deploy-caster.sh
+
+# Then execute
+DRY_RUN=false ./scripts/deploy-caster.sh
+```
+
+### 2. Use Verbose Mode for Debugging
+
+```bash
+./scripts/master.sh full --verbose
+```
+
+### 3. Review Logs Regularly
+
+```bash
+cat node/logs/summary.json | jq .stats
+```
+
+### 4. Combine Commands
+
+```bash
+./scripts/master.sh audit && ./scripts/update-talents.sh && ./scripts/deploy-caster.sh --dry-run
+```
+
+### 5. Set Up Aliases
+
+Add to `.bashrc` or `.zshrc`:
+
+```bash
+alias gv-scan='./scripts/master.sh scan'
+alias gv-audit='./scripts/master.sh audit'
+alias gv-full='./scripts/master.sh full --verbose'
+```
+
+---
+
+## Troubleshooting Common Issues
+
+### Issue: Scripts not executable
+
+```bash
+chmod +x scripts/*.sh
+```
+
+### Issue: pnpm command not found
+
+```bash
+npm install -g pnpm
+```
+
+### Issue: GitHub API rate limit
+
+**Solution:** Authenticate your requests:
+```bash
+export GH_TOKEN=your_token
+```
+
+### Issue: Port conflicts
+
+```bash
+# SmartBrain automatically cleans ports
+./scripts/master.sh full
+```
+
+---
+
+## Next Steps
+
+- Review [Security Best Practices](./security.md)
+- Understand [System Architecture](./architecture.md)
+- Deploy with [Caster Guide](./deploy-caster.md)
+
+---
+
+*Usage Guide Version: 1.0.0*
+*Last Updated: 2025-12-31*

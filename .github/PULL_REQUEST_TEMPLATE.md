@@ -1,148 +1,137 @@
-## 📋 Pull Request Summary
+# Pull Request
 
-<!-- Provide a brief description of your changes -->
+## 📋 Description
 
-## 🎯 Changes Made
+<!-- Provide a clear and concise description of your changes -->
 
-<!-- List the key changes in this PR -->
-- 
-- 
-- 
+## 🎯 Type of Change
+
+<!-- Check the relevant option(s) -->
+
+- [ ] 🐛 Bug fix (non-breaking change which fixes an issue)
+- [ ] ✨ New feature (non-breaking change which adds functionality)
+- [ ] 💥 Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] 📝 Documentation update
+- [ ] 🔒 Security fix
+- [ ] ⚡ Performance improvement
+- [ ] 🎨 Code style update (formatting, naming)
+- [ ] ♻️ Code refactoring
+- [ ] 🔧 Configuration change
 
 ## 🤖 Bot Metadata
 
-<!-- Auto-generated bot information (if applicable) -->
-- **Bot Version**: 1.0.0
-- **Execution Mode**: 🔒 DRY_RUN / 🚀 LIVE
-- **Scan Type**: Security / Audit / Health / Full
-- **Timestamp**: YYYY-MM-DD HH:MM:SS UTC
+<!-- For automated PRs, fill this section -->
+
+```yaml
+bot_generated: false  # Set to true if automated
+bot_name: GitAntivirus
+scan_date: YYYY-MM-DD
+dry_run: true
+confidence_score: N/A
+```
 
 ## ✅ Safety Checklist
 
-<!-- Check all that apply -->
-- [ ] All changes reviewed and tested
-- [ ] No secrets or credentials included in code
-- [ ] All scripts default to safe, non-destructive mode (DRY_RUN=true)
-- [ ] Documentation updated to reflect changes
-- [ ] Workflow permissions are minimal and appropriate
-- [ ] Bot pings disabled by default (opt-in only)
-- [ ] Changes are backward compatible
-- [ ] Tests pass locally
-- [ ] No breaking changes introduced
+<!-- Ensure all items are checked before requesting review -->
 
-## 🔍 Testing Evidence
+- [ ] I have performed a self-review of my code
+- [ ] I have commented my code, particularly in hard-to-understand areas
+- [ ] I have made corresponding changes to the documentation
+- [ ] My changes generate no new warnings
+- [ ] I have added tests that prove my fix is effective or that my feature works
+- [ ] New and existing unit tests pass locally with my changes
+- [ ] Any dependent changes have been merged and published
+- [ ] I have checked my code for security vulnerabilities
+- [ ] No sensitive information (keys, tokens, passwords) is included
+- [ ] I have updated the changelog (if applicable)
 
-<!-- Describe how you tested your changes -->
-- **Test Environment**: Local / CI / Staging
-- **Test Results**: 
-- **Manual Testing**: 
+## 🔍 Testing
 
-### Security Scan Results
-<!-- If security scan was run -->
-- 🔒 Hardcoded secrets detection: ✅ Pass / ⚠️ Review needed
-- 🔐 Vulnerability scanning: ✅ Pass / ⚠️ Review needed
-- 📊 Code quality checks: ✅ Pass / ⚠️ Review needed
+<!-- Describe the tests you ran and how to reproduce them -->
 
-### Audit Results
-<!-- If code audit was run -->
-- 📁 Repository structure: ✅ Valid
-- 📈 Code metrics: 
-- 🧾 Compliance: ✅ Pass / ⚠️ Review needed
+### Test Configuration
 
-### Health Check
-<!-- If health check was run -->
-- ❤️ Configuration validation: ✅ Pass
-- 🩺 Dependency health: ✅ Pass / ⚠️ Needs attention
-- 📋 Status: 🟢 Healthy / 🟡 Warning / 🔴 Critical
+- **OS:** (e.g., Ubuntu 22.04, macOS 13)
+- **Node Version:** (e.g., 20.x)
+- **Package Manager:** (e.g., pnpm 8.x)
 
-## 🛡️ Security Notes
+### Test Steps
 
-<!-- Security-related information -->
-- **Secrets Required**: Yes / No
-  - If yes, list required secrets (but NOT the actual values!)
-- **Permissions Changed**: Yes / No
-  - If yes, describe the changes
-- **External Dependencies**: Yes / No
-  - If yes, list new dependencies
-
-### Security Review
-- [ ] No new secrets introduced in code
-- [ ] All credentials managed via environment variables
-- [ ] Third-party dependencies audited
-- [ ] No suspicious network calls
-- [ ] Input validation implemented
-- [ ] Error handling appropriate
+1. 
+2. 
+3. 
 
 ## 📊 Audit Artifacts
 
-<!-- Links to generated reports and artifacts -->
-- Security Scan Report: [Link or "See workflow artifacts"]
-- Audit Report: [Link or "See workflow artifacts"]
-- Health Check Report: [Link or "See workflow artifacts"]
-- Bot Logs: [Link or "See workflow artifacts"]
+<!-- Attach scan results, reports, or evidence -->
 
-### Workflow Run
-- **Workflow**: [Link to GitHub Actions run]
-- **Status**: ✅ Success / ⚠️ Warning / ❌ Failed
-- **Duration**: X minutes
-- **Artifacts**: [Link to downloadable artifacts]
+<details>
+<summary>🔍 Security Scan Results</summary>
+
+```
+[Paste security scan output here]
+```
+
+</details>
+
+<details>
+<summary>📦 Dependency Audit</summary>
+
+```
+[Paste dependency audit output here]
+```
+
+</details>
+
+<details>
+<summary>🧪 Test Results</summary>
+
+```
+[Paste test results here]
+```
+
+</details>
+
+## 📸 Screenshots / Recordings
+
+<!-- If applicable, add screenshots or recordings to help explain your changes -->
 
 ## 🔗 Related Issues
 
-<!-- Link related issues or PRs -->
+<!-- Link related issues using #issue_number -->
+
 Closes #
-Related to #
+Relates to #
 
-## 📚 Documentation
+## 📚 Additional Context
 
-<!-- Links to relevant documentation -->
-- Architecture changes documented in: 
-- Usage guide updated: 
-- Security implications documented: 
+<!-- Add any other context about the PR here -->
 
-## 🚀 Deployment Notes
+## 🔒 Security Notes
 
-<!-- If this PR includes deployment changes -->
-- **Deployment Target**: Testnet / Mainnet
-- **Network**: Base / Solana / Other
-- **Pre-deployment Steps**: 
-- **Post-deployment Verification**: 
-- **Rollback Plan**: 
+<!-- Important: Address security considerations -->
 
-## 💬 Additional Context
+- **Secrets:** No secrets or credentials are included in this PR
+- **Dependencies:** All new dependencies are from trusted sources
+- **Permissions:** This PR requires the following permissions: 
+- **Impact:** Security impact assessment: [None/Low/Medium/High]
 
-<!-- Any other information reviewers should know -->
+## 📝 Reviewer Notes
 
-## 👥 Reviewers
-
-<!-- Tag specific people for review -->
-@SolanaRemix @smsdao @SmartBrain
+<!-- Specific instructions or areas for reviewers to focus on -->
 
 ---
 
-## 🤖 Automated PR Information
+## 📋 Post-Merge Checklist
 
-<!-- This section can be populated by automation -->
+<!-- Items to complete after merge -->
 
-### GitAntivirus Bot Activity
-- **Repositories Scanned**: N/A
-- **PRs Created**: 0
-- **Pings Sent**: 0 (disabled by default)
-- **Errors**: None
-
-### Configuration Used
-```json
-{
-  "dry_run": true,
-  "bot_pings_enabled": false,
-  "allowlist_orgs": [],
-  "max_prs_per_run": 3
-}
-```
+- [ ] Update production environment
+- [ ] Notify stakeholders
+- [ ] Update documentation site
+- [ ] Monitor for issues
+- [ ] Close related issues
 
 ---
 
-**🔒 Security First**: This PR follows security best practices with conservative defaults and dry-run mode enabled.
-
-**✨ Created**: YYYY-MM-DD  
-**🧠 Powered by**: SmartBrain / SMSDAO / GitAntivirus
+*🤖 GitAntivirus PR Template v1.0.0*

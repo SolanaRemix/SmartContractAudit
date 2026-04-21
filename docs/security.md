@@ -1,473 +1,385 @@
 ---
-title: "GitAntivirus Security Guide"
-description: "Security best practices, guidelines, and threat mitigation for GitAntivirus"
-tags: ["security", "best-practices", "guidelines", "safety"]
-seo_keywords: "security best practices, gitantivirus security, automation safety, secure deployment"
+title: "GitAntivirus Security Practices"
+description: "Security best practices and safety guidelines for GitAntivirus"
+tags: ["security", "best-practices", "safety"]
+seo_keywords: "gitantivirus security, security best practices, safe deployment"
 ---
 
-# 🛡️ GitAntivirus Security Guide
+# 🔐 GitAntivirus Security Practices
 
-> Comprehensive security practices and guidelines for safe automation
+## Core Security Principles
 
-## ═══════════════════════════════════════════════════════════════
-## 🎯 Security Principles
-## ═══════════════════════════════════════════════════════════════
+### 1. 🛡️ Safe by Default
 
-### Core Principles
+**Principle:** All operations default to non-destructive behavior.
 
-1. **🔒 Secure by Default**: All operations default to dry-run mode
-2. **🔐 Minimal Permissions**: Request only required access scopes
-3. **📝 Audit Everything**: Comprehensive logging of all operations
-4. **🚫 No Secrets in Code**: All credentials via environment variables
-5. **✅ Verify Before Trust**: Validate all inputs and outputs
-
-## ═══════════════════════════════════════════════════════════════
-## 🔐 Secrets Management
-## ═══════════════════════════════════════════════════════════════
-
-### ✅ DO: Proper Secrets Handling
-
+**Implementation:**
 ```bash
-# Store secrets in environment variables
-export GH_TOKEN="ghp_your_token_here"
-export CASTER_KEY="your_private_key"
-export PROVIDER_URL="https://mainnet.base.org"
+# Default behavior (safe)
+./scripts/master.sh audit  # DRY_RUN=true
 
-# Use GitHub repository secrets
-# Settings → Secrets and variables → Actions → New secret
-
-# Load from secure file (not committed)
-source .env.local  # Add to .gitignore!
-
-# Use secrets managers
-# - GitHub Secrets
-# - HashiCorp Vault
-# - AWS Secrets Manager
-# - Azure Key Vault
+# Explicit override required for writes
+DRY_RUN=false ./scripts/master.sh audit
 ```
 
-### ❌ DON'T: Insecure Practices
+**Why it matters:** Prevents accidental modifications, data loss, or unauthorized actions.
 
+---
+
+### 2. 🔑 No Hardcoded Secrets
+
+**Principle:** Never commit credentials, keys, or tokens to version control.
+
+**What we protect:**
+- GitHub tokens (`GH_TOKEN`, `GITHUB_TOKEN`)
+- Private keys (`CASTER_KEY`)
+- API endpoints with auth (`PROVIDER_URL`)
+- Database credentials
+- API keys
+
+**Implementation:**
 ```bash
-# NEVER commit secrets to git
-echo "GH_TOKEN=abc123" >> config.json  # ❌ BAD
+# ✅ CORRECT: Use environment variables
+export GH_TOKEN=your_token_here
+node bot/index.js
 
-# NEVER hardcode credentials
-const token = "ghp_abc123";  // ❌ BAD
-
-# NEVER log secrets
-console.log(`Token: ${process.env.GH_TOKEN}`);  // ❌ BAD
-
-# NEVER share secrets in PRs
-# "Use this token: ghp_abc123"  # ❌ BAD
+# ❌ WRONG: Never hardcode
+GH_TOKEN="ghp_xxxxx" node bot/index.js  # Don't commit this!
 ```
 
-### Checking for Leaked Secrets
+**Storage recommendations:**
+- Local: Use `.env` files (add to `.gitignore`)
+- CI/CD: Use repository secrets
+- Production: Use secret management services (Vault, AWS Secrets Manager)
 
-```bash
-# Run security scan
-./scripts/master.sh scan
+---
 
-# Manual check with git
-git grep -i "password\|secret\|api[_-]?key\|token" -- ':!*.md'
+### 3. 🎯 Least Privilege Access
 
-# Check git history
-git log -p -S "password" --all
+**Principle:** Grant minimum permissions necessary for operation.
 
-# Use git-secrets tool
-git secrets --scan
+**GitHub Token Permissions:**
+
+**Minimum (read-only):**
+```
+✅ repo:status
+✅ public_repo (read)
 ```
 
-## ═══════════════════════════════════════════════════════════════
-## 🔑 Token Security
-## ═══════════════════════════════════════════════════════════════
-
-### GitHub Personal Access Token (PAT)
-
-**Creating a Secure Token:**
-
-1. Go to GitHub Settings → Developer settings → Personal access tokens
-2. Click "Generate new token (classic)"
-3. Give it a descriptive name: "GitAntivirus Bot - <purpose>"
-4. Set expiration: 90 days maximum
-5. Select minimal scopes:
-   - `repo` (for private repos)
-   - `public_repo` (for public repos only)
-   - `write:discussion` (if needed)
-6. Generate and store securely
-
-**Token Best Practices:**
-
-```bash
-# Rotate tokens regularly (every 90 days)
-# Set token expiration
-# Use fine-grained tokens when possible
-# One token per use case
-# Revoke unused tokens immediately
-
-# Store token in secure location
-mkdir -p ~/.secrets
-chmod 700 ~/.secrets
-echo "GH_TOKEN=ghp_..." > ~/.secrets/gitantivirus
-chmod 600 ~/.secrets/gitantivirus
-
-# Load token when needed
-export $(cat ~/.secrets/gitantivirus | xargs)
+**Bot operations (write):**
+```
+✅ repo (full)
+✅ workflow (if updating actions)
+✅ pull_requests:write
 ```
 
-### GitHub App Authentication (Recommended)
+**Avoid:**
+```
+❌ admin:org
+❌ delete_repo
+❌ admin:repo_hook
+```
 
+**Setup:**
+```bash
+# Generate token at: https://github.com/settings/tokens
+# Select only required scopes
+export GH_TOKEN=your_minimal_scope_token
+```
+
+---
+
+### 4. 🔍 Input Validation
+
+**Principle:** Validate all inputs before processing.
+
+**Bot filtering:**
 ```javascript
-// More secure than PAT for automated systems
-import { createAppAuth } from "@octokit/auth-app";
-
-const auth = createAppAuth({
-  appId: process.env.APP_ID,
-  privateKey: process.env.PRIVATE_KEY,
-  installationId: process.env.INSTALLATION_ID,
-});
-
-const authentication = await auth({ type: "installation" });
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🚦 Safe Deployment Practices
-## ═══════════════════════════════════════════════════════════════
-
-### Pre-Deployment Checklist
-
-```bash
-# 1. Always test in dry-run first
-./scripts/deploy-caster.sh --dry-run
-
-# 2. Verify artifact integrity
-sha256sum build/talents.json
-
-# 3. Test on testnet first
-NETWORK=base-goerli ./scripts/deploy-caster.sh
-
-# 4. Review transaction parameters
-cat build/talents.json | jq .
-
-# 5. Backup existing state
-git commit -am "Pre-deployment backup"
-
-# 6. Set spending limits
-# Use wallet with limited funds
-
-# 7. Monitor deployment
-# Watch for transaction confirmation
-
-# 8. Verify deployment
-# Check on-chain data
-```
-
-### Deployment Security
-
-```bash
-# Use hardware wallet for production
-export CASTER_KEY="ledger://..."
-
-# Set gas limits
-export MAX_GAS=500000
-
-# Use multi-sig for critical operations
-# Require 2-of-3 signatures
-
-# Enable transaction simulation
-export SIMULATE_FIRST=true
-
-# Set deployment timeout
-export DEPLOY_TIMEOUT=300
-
-# Use deterministic deployments
-export DETERMINISTIC=true
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🤖 Bot Security
-## ═══════════════════════════════════════════════════════════════
-
-### Safe Bot Configuration
-
-```bash
-# Conservative defaults
-export DRY_RUN=true              # Always start with dry-run
-export BOT_PINGS_ENABLED=false   # Disable pings by default
-export MAX_PRS_PER_RUN=3         # Limit PR creation
-export RATE_LIMIT_BUFFER=0.2     # Stay under rate limits
-
-# Restrictive allowlist
-export ALLOWLIST_ORGS="YourOrgOnly"
-
-# Monitor bot activity
-tail -f node/logs/summary.json
-
-# Set timeouts
-export REQUEST_TIMEOUT=30000     # 30 seconds
-export MAX_RETRIES=3
-```
-
-### Rate Limiting
-
-```javascript
-// Implement exponential backoff
-async function retryWithBackoff(fn, maxRetries = 3) {
-  for (let i = 0; i < maxRetries; i++) {
-    try {
-      return await fn();
-    } catch (error) {
-      if (error.status === 429) {  // Rate limit
-        const delay = Math.pow(2, i) * 1000;
-        await new Promise(r => setTimeout(r, delay));
-      } else {
-        throw error;
-      }
-    }
-  }
+// Allowlist validation
+if (config.allowlistOrgs.length > 0) {
+  filtered = repos.filter(repo => 
+    config.allowlistOrgs.includes(repo.owner.login)
+  );
 }
 
-// Check rate limit before operations
-const rateLimit = await octokit.rest.rateLimit.get();
-console.log(`Remaining: ${rateLimit.data.rate.remaining}`);
+// Star threshold
+filtered = filtered.filter(repo => 
+  repo.stargazers_count >= config.starThreshold
+);
 ```
 
-## ═══════════════════════════════════════════════════════════════
-## 🔍 Vulnerability Scanning
-## ═══════════════════════════════════════════════════════════════
-
-### Automated Scanning
-
+**Script validation:**
 ```bash
-# Run GitAntivirus security scan
-DRY_RUN=false ./scripts/master.sh scan
+# Check file exists before processing
+if [[ ! -f "${ARTIFACT_PATH}" ]]; then
+    log_error "Artifact not found"
+    return 1
+fi
 
-# Check for dependency vulnerabilities
-npm audit
-pnpm audit
-
-# Scan Docker images (if applicable)
-docker scan your-image:latest
-
-# Use additional security tools
-# - Snyk
-# - Dependabot
-# - GitHub Advanced Security
+# Validate JSON format
+if ! jq empty "${ARTIFACT_PATH}" 2>/dev/null; then
+    log_error "Invalid JSON"
+    return 1
+fi
 ```
-
-### Manual Security Review
-
-```bash
-# Check for common issues
-git grep -E "eval\(|exec\(|system\("
-
-# Look for insecure dependencies
-npm outdated
-pnpm outdated
-
-# Review permissions
-ls -la scripts/
-# Should be: -rwxr-xr-x (executable)
-
-# Check file ownership
-find . -type f -perm 0777
-
-# Review network calls
-git grep -E "http://|ftp://"  # Should be https://
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🛡️ Workflow Security
-## ═══════════════════════════════════════════════════════════════
-
-### GitHub Actions Security
-
-```yaml
-# Minimal permissions
-permissions:
-  contents: read      # Default to read-only
-  pull-requests: write # Only when needed
-
-# Pin action versions
-- uses: actions/checkout@v4.1.1  # ✅ Specific version
-# NOT: @v4 or @main                # ❌ Avoid floating tags
-
-# Validate inputs
-- name: Validate input
-  run: |
-    if [[ ! "${{ inputs.scan_type }}" =~ ^(scan|audit|health|full)$ ]]; then
-      echo "Invalid scan_type"
-      exit 1
-    fi
-
-# Use secrets properly
-env:
-  GH_TOKEN: ${{ secrets.GH_TOKEN }}  # ✅ Correct
-# NOT: GH_TOKEN: ${{ secrets.GH_TOKEN }} in script # ❌ Logs secret
-
-# Limit workflow triggers
-on:
-  pull_request:
-    branches: [main]  # ✅ Specific branches
-  # NOT: pull_request: # ❌ Too broad
-```
-
-### Environment Isolation
-
-```bash
-# Use separate environments
-# - Development: dev.example.com
-# - Staging: staging.example.com
-# - Production: example.com
-
-# Different tokens per environment
-export DEV_GH_TOKEN="..."
-export PROD_GH_TOKEN="..."
-
-# Network segregation
-# - Development: Base Goerli
-# - Production: Base Mainnet
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 📊 Audit & Monitoring
-## ═══════════════════════════════════════════════════════════════
-
-### Logging Best Practices
-
-```bash
-# Comprehensive logging
-LOG_LEVEL=debug ./scripts/master.sh full
-
-# Log rotation
-# Keep logs for 30 days maximum
-find node/logs -name "*.json" -mtime +30 -delete
-
-# Redact sensitive data
-cat log.json | jq 'del(.token, .private_key)'
-
-# Centralized logging (for production)
-# - Splunk
-# - ELK Stack
-# - CloudWatch
-```
-
-### Monitoring Checklist
-
-```bash
-# Monitor bot activity
-watch -n 60 'cat node/logs/summary.json | jq ".prs_created"'
-
-# Track workflow runs
-gh run list --workflow=gitantivirus.yml --limit 10
-
-# Alert on failures
-# Set up GitHub webhooks or notifications
-
-# Review security alerts
-# GitHub Security → Code scanning alerts
-
-# Check dependencies
-pnpm audit --audit-level=moderate
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🚨 Incident Response
-## ═══════════════════════════════════════════════════════════════
-
-### If Secret is Leaked
-
-```bash
-# 1. Immediately revoke the token
-# GitHub Settings → Developer settings → Revoke
-
-# 2. Rotate credentials
-# Generate new token with minimal scopes
-
-# 3. Review access logs
-# Check for unauthorized access
-
-# 4. Update secret in repository
-# GitHub Settings → Secrets → Update
-
-# 5. Scan history for secret
-git log -S "leaked_secret" --all
-
-# 6. Consider rewriting history (careful!)
-git filter-branch --tree-filter 'rm -f .env' HEAD
-
-# 7. Document incident
-# Create incident report
-
-# 8. Notify stakeholders
-# If production credentials were leaked
-```
-
-### If Unauthorized PR Created
-
-```bash
-# 1. Close PR immediately
-gh pr close <pr-number>
-
-# 2. Revoke bot token
-# GitHub Settings → Revoke token
-
-# 3. Review bot logs
-cat node/logs/summary.json
-
-# 4. Check allowlist
-cat config/repair.json
-
-# 5. Update security measures
-export ALLOWLIST_ORGS="OnlyTrustedOrg"
-
-# 6. Enable additional monitoring
-export BOT_APPROVAL_REQUIRED=true
-```
-
-## ═══════════════════════════════════════════════════════════════
-## ✅ Security Checklist
-## ═══════════════════════════════════════════════════════════════
-
-### Before Enabling Live Mode
-
-- [ ] All scripts tested in dry-run mode
-- [ ] Secrets stored securely (not in code)
-- [ ] Token has minimal required scopes
-- [ ] Allowlist configured correctly
-- [ ] Rate limits configured
-- [ ] Logging enabled
-- [ ] Monitoring set up
-- [ ] Incident response plan documented
-- [ ] Team members trained
-- [ ] Backup and rollback plan ready
-
-### Regular Security Maintenance
-
-- [ ] Rotate tokens every 90 days
-- [ ] Review and update dependencies monthly
-- [ ] Audit bot activity weekly
-- [ ] Review access logs daily
-- [ ] Update security documentation
-- [ ] Test incident response procedures
-- [ ] Review and update allowlist
-- [ ] Scan for new vulnerabilities
-
-## ═══════════════════════════════════════════════════════════════
-## 📚 Additional Resources
-## ═══════════════════════════════════════════════════════════════
-
-- [GitHub Security Best Practices](https://docs.github.com/en/code-security)
-- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
-- [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/)
-- [Node.js Security Best Practices](https://nodejs.org/en/docs/guides/security/)
-- [Bash Security Guidelines](https://google.github.io/styleguide/shellguide.html#s9-security)
 
 ---
 
-**Version**: 1.0.0  
-**Last Updated**: 2025-12-31  
-**Classification**: Public  
-**Status**: Production Ready
+### 5. 📊 Comprehensive Logging
 
-**Remember**: Security is not a one-time setup, it's a continuous process! 🛡️✨
+**Principle:** Log all operations for audit trails.
+
+**What we log:**
+- All bot operations → `node/logs/summary.json`
+- Agent execution → stdout with timestamps
+- API interactions → success/failure status
+- Configuration used → dry-run status, allowlist
+
+**Example log:**
+```json
+{
+  "timestamp": "2025-12-31T01:48:00Z",
+  "config": {
+    "dryRun": true,
+    "botPingsEnabled": false,
+    "allowlistOrgs": ["SolanaRemix"]
+  },
+  "results": [...],
+  "stats": {
+    "total": 10,
+    "prsCreated": 0
+  }
+}
+```
+
+---
+
+## Security Checklist
+
+### Before Deployment
+
+- [ ] Review all code changes
+- [ ] Verify no secrets in commits
+- [ ] Test with `DRY_RUN=true`
+- [ ] Validate artifact contents
+- [ ] Check token permissions
+- [ ] Review allowlist settings
+- [ ] Confirm rate limits
+
+### During Operation
+
+- [ ] Monitor logs for errors
+- [ ] Check API rate limit usage
+- [ ] Verify expected behavior
+- [ ] Review created PRs/issues
+- [ ] Monitor system resources
+
+### After Operation
+
+- [ ] Review summary logs
+- [ ] Archive audit reports
+- [ ] Rotate tokens if exposed
+- [ ] Document any incidents
+- [ ] Update allowlist as needed
+
+---
+
+## Secure Configuration
+
+### Environment Variables
+
+**Template `.env` file:**
+```bash
+# GitHub Authentication
+GH_TOKEN=your_token_here
+
+# Safety Settings
+DRY_RUN=true
+BOT_PINGS_ENABLED=false
+ALLOWLIST_ORGS=SolanaRemix
+
+# Rate Limiting
+MAX_PRS_PER_RUN=3
+STAR_THRESHOLD=10
+
+# Deployment (if needed)
+# CASTER_KEY=your_key
+# PROVIDER_URL=https://mainnet.base.org
+```
+
+**Protect it:**
+```bash
+# Create .env
+touch .env
+chmod 600 .env  # Read/write owner only
+
+# Add to .gitignore
+echo ".env" >> .gitignore
+```
+
+---
+
+## Common Security Pitfalls
+
+### ❌ Pitfall 1: Exposed Secrets in Logs
+
+**Problem:**
+```bash
+echo "Deploying with key: $CASTER_KEY"  # DON'T DO THIS
+```
+
+**Solution:**
+```bash
+echo "Deploying with key: ${CASTER_KEY:0:8}..."  # Show only prefix
+```
+
+### ❌ Pitfall 2: Overly Broad Tokens
+
+**Problem:** Using admin tokens for read operations
+
+**Solution:** Create specific tokens per use case
+
+### ❌ Pitfall 3: Disabled Safety Checks
+
+**Problem:**
+```bash
+# Skipping validation
+DRY_RUN=false ./scripts/deploy-caster.sh  # No testing!
+```
+
+**Solution:**
+```bash
+# Always test first
+./scripts/deploy-caster.sh --dry-run
+# Review output, then:
+DRY_RUN=false ./scripts/deploy-caster.sh
+```
+
+### ❌ Pitfall 4: Unrestricted Bot Access
+
+**Problem:** No allowlist, scanning all repositories
+
+**Solution:**
+```bash
+ALLOWLIST_ORGS="SolanaRemix,TrustedOrg" node bot/index.js
+```
+
+---
+
+## Incident Response
+
+### If a Secret is Exposed
+
+1. **Immediately revoke** the exposed token/key
+2. **Generate a new** credential
+3. **Audit logs** for unauthorized usage
+4. **Update all** systems using the old credential
+5. **Document** the incident
+6. **Review** security practices
+
+### If Unauthorized PRs are Created
+
+1. **Close** all unauthorized PRs
+2. **Disable** the bot token
+3. **Review** allowlist configuration
+4. **Check** for token compromise
+5. **Re-enable** with corrected settings
+
+### If Rate Limits are Exceeded
+
+1. **Reduce** `MAX_PRS_PER_RUN`
+2. **Add delays** between operations
+3. **Use authenticated** requests (higher limits)
+4. **Schedule** scans during off-peak hours
+
+---
+
+## Security Audit Guidelines
+
+### Self-Audit Checklist
+
+**Code Review:**
+- [ ] No hardcoded secrets
+- [ ] Input validation present
+- [ ] Error handling implemented
+- [ ] Dry-run mode functional
+- [ ] Logging comprehensive
+
+**Configuration:**
+- [ ] Allowlist configured
+- [ ] Rate limits set
+- [ ] Tokens have minimal scope
+- [ ] Pings disabled (unless needed)
+
+**Documentation:**
+- [ ] Security notes in PR descriptions
+- [ ] README mentions safety features
+- [ ] Examples use dry-run
+
+---
+
+## Best Practices Summary
+
+### ✅ DO
+
+- Use environment variables for secrets
+- Test with dry-run first
+- Apply allowlist filtering
+- Log all operations
+- Use minimal token permissions
+- Review PRs before merging
+- Monitor API rate limits
+- Rotate credentials regularly
+
+### ❌ DON'T
+
+- Commit secrets to git
+- Skip dry-run testing
+- Use admin tokens unnecessarily
+- Disable safety checks
+- Ignore error logs
+- Create PRs without review
+- Exceed rate limits
+- Share tokens between systems
+
+---
+
+## Compliance Notes
+
+GitAntivirus is designed to help maintain security compliance:
+
+- **SOC 2:** Audit logging, access controls
+- **GDPR:** No personal data collection
+- **ISO 27001:** Security best practices
+- **OWASP:** Secure coding standards
+
+---
+
+## Resources
+
+- [GitHub Token Security](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure)
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+- [Smart Contract Security Best Practices](https://consensys.github.io/smart-contract-best-practices/)
+- [Solidity Security Considerations](https://docs.soliditylang.org/en/latest/security-considerations.html)
+
+---
+
+## Security Contact
+
+For security issues or questions:
+
+1. Review documentation first
+2. Check closed issues on GitHub
+3. Create a private security advisory
+4. Do NOT publicly disclose vulnerabilities
+
+---
+
+*Security Guide Version: 1.0.0*
+*Last Updated: 2025-12-31*
+
+```
+═══════════════════════════════════════════════════════════════════════════
+🔐 Security First | 🛡️ Safety Always
+═══════════════════════════════════════════════════════════════════════════
+```

@@ -1,431 +1,433 @@
 ---
-title: "Deploy Caster - Smart Contract Deployment Guide"
-description: "Complete guide for deploying smart contracts to Base network using Caster and ENS"
-tags: ["deployment", "caster", "base", "ens", "smart-contracts"]
-seo_keywords: "caster deployment, base network deployment, ens deployment, smart contract deployment, gxqstudio.eth"
+title: "Caster Deployment Guide"
+description: "Complete guide for deploying smart contracts to ENS domains using Caster"
+tags: ["deployment", "caster", "ens", "base-network"]
+seo_keywords: "caster deployment, ens deployment, base network deployment, gxqstudio.eth"
 ---
 
-# 🚀 Deploy Caster - Deployment Guide
+# 🚀 Caster Deployment Guide
 
-> Complete guide for deploying smart contracts to Base network via Caster
+## Overview
 
-## ═══════════════════════════════════════════════════════════════
-## 🎯 Overview
-## ═══════════════════════════════════════════════════════════════
+This guide covers deploying smart contracts to ENS domains on the Base network using the Caster protocol.
 
-Caster is a deployment tool for publishing smart contract artifacts to ENS (Ethereum Name Service) addresses on various networks. This guide covers deployment to **Base network** targeting the ENS name **gxqstudio.eth**.
+**Target ENS:** `gxqstudio.eth`  
+**Network:** Base (Layer 2)  
+**Tool:** Caster CLI
 
-### Target Configuration
+---
 
-- **Network**: Base (Chain ID: 8453)
-- **ENS Target**: gxqstudio.eth
-- **Artifact**: ./build/talents.json
-- **Script**: scripts/deploy-caster.sh
+## Prerequisites
 
-## ═══════════════════════════════════════════════════════════════
-## 📋 Prerequisites
-## ═══════════════════════════════════════════════════════════════
-
-### Required Tools
+### 1. Install Caster CLI
 
 ```bash
-# Node.js and pnpm
-node --version  # v18.0.0+
-pnpm --version
+# Option 1: npm/pnpm
+pnpm add -g @caster/cli
 
-# Caster CLI (install if needed)
-npm install -g @caster/cli
+# Option 2: Direct download
+# Visit: https://github.com/caster-protocol/caster
+```
 
-# Verify caster installation
+### 2. Prepare Environment
+
+```bash
+# Required environment variables
+export CASTER_KEY=your_private_key_or_keystore_path
+export PROVIDER_URL=https://mainnet.base.org
+
+# Optional
+export ENS_NAME=gxqstudio.eth
+export NETWORK=base
+```
+
+### 3. Build Artifacts
+
+```bash
+# Build your smart contracts
+./scripts/update-talents.sh --no-dry-run
+
+# Verify artifact exists
+ls -lh build/talents.json
+```
+
+---
+
+## Deployment Process
+
+### Step 1: Dry-Run Test
+
+**Always test before live deployment:**
+
+```bash
+./scripts/deploy-caster.sh --dry-run
+```
+
+**Expected output:**
+```
+═══════════════════════════════════════════════════════════════════════════
+  🚀 Caster Deployment Tool
+═══════════════════════════════════════════════════════════════════════════
+
+ℹ️  [INFO] Starting deployment process...
+✅ [SUCCESS] Dependencies OK
+✅ [SUCCESS] Environment OK
+✅ [SUCCESS] Artifact OK
+
+ℹ️  [INFO] Deployment Configuration:
+  • ENS Name:    gxqstudio.eth
+  • Network:     base
+  • Artifact:    ./build/talents.json
+  • Provider:    https://mainnet.base.org
+  • Dry Run:     true
+
+⚠️  [WARNING] 🧪 DRY-RUN MODE ENABLED
+ℹ️  [INFO] Would execute the following command:
+
+  caster push \
+    --ens gxqstudio.eth \
+    --network base \
+    --artifact ./build/talents.json \
+    --provider https://mainnet.base.org
+
+⚠️  [WARNING] Run with DRY_RUN=false to execute actual deployment
+```
+
+### Step 2: Review Artifact
+
+```bash
+# View artifact contents
+cat build/talents.json | jq
+
+# Check artifact size
+du -h build/talents.json
+
+# Validate JSON structure
+jq empty build/talents.json && echo "✅ Valid JSON"
+```
+
+### Step 3: Verify ENS Ownership
+
+**Before deployment, confirm you control the ENS domain:**
+
+```bash
+# Check ENS owner (using cast or ethers)
+cast lookup-address gxqstudio.eth --rpc-url https://mainnet.base.org
+```
+
+### Step 4: Execute Deployment
+
+**When ready, deploy to production:**
+
+```bash
+DRY_RUN=false ./scripts/deploy-caster.sh
+```
+
+**Or with explicit parameters:**
+
+```bash
+DRY_RUN=false \
+CASTER_KEY=$YOUR_KEY \
+PROVIDER_URL=https://mainnet.base.org \
+./scripts/deploy-caster.sh --network=base --ens=gxqstudio.eth
+```
+
+---
+
+## Network Configuration
+
+### Base Mainnet
+
+```bash
+export NETWORK=base
+export PROVIDER_URL=https://mainnet.base.org
+# Chain ID: 8453
+```
+
+### Base Testnet (Sepolia)
+
+```bash
+export NETWORK=base-sepolia
+export PROVIDER_URL=https://sepolia.base.org
+# Chain ID: 84532
+```
+
+### Custom RPC
+
+```bash
+# Use your own RPC endpoint
+export PROVIDER_URL=https://your-rpc-endpoint.com
+```
+
+---
+
+## Security Considerations
+
+### Private Key Management
+
+**Option 1: Environment Variable (Quick)**
+```bash
+export CASTER_KEY=0x1234...your_key
+./scripts/deploy-caster.sh
+```
+
+**Option 2: Keystore File (Recommended)**
+```bash
+# Create encrypted keystore
+cast wallet new keystore
+
+# Use keystore path
+export CASTER_KEY=/path/to/keystore.json
+./scripts/deploy-caster.sh
+```
+
+**Option 3: Hardware Wallet (Most Secure)**
+```bash
+# Ledger/Trezor support (if available in Caster)
+export CASTER_KEY=ledger://0x...address
+./scripts/deploy-caster.sh
+```
+
+### Best Practices
+
+- ✅ Always dry-run test first
+- ✅ Use testnet before mainnet
+- ✅ Verify artifact contents
+- ✅ Confirm ENS ownership
+- ✅ Use hardware wallet for production
+- ✅ Keep private keys secure
+- ❌ Never commit private keys
+- ❌ Never share keys in chat/email
+- ❌ Never deploy untested artifacts
+
+---
+
+## Troubleshooting
+
+### Issue: "Caster CLI not found"
+
+**Solution:**
+```bash
+# Install Caster
+pnpm add -g @caster/cli
+
+# Verify installation
+which caster
 caster --version
 ```
 
-### Required Credentials
+### Issue: "Artifact not found"
 
-1. **CASTER_KEY**: Private key or mnemonic phrase
-   - Format: `0x...` (64 hex characters) or 12/24 word mnemonic
-   - Must have funds for gas fees on Base network
-
-2. **PROVIDER_URL**: RPC endpoint for Base network
-   - Mainnet: `https://mainnet.base.org`
-   - Testnet: `https://goerli.base.org`
-   - Alternative providers: Alchemy, Infura, QuickNode
-
-### Required Artifact
-
+**Solution:**
 ```bash
-# Build artifact first
-DRY_RUN=false ./scripts/update-talents.sh --live
+# Build artifacts first
+./scripts/update-talents.sh --no-dry-run
 
-# Verify artifact exists
-ls -la build/talents.json
-cat build/talents.json | jq .
+# Verify path
+ls -lh build/talents.json
 ```
 
-## ═══════════════════════════════════════════════════════════════
-## 🔧 Setup
-## ═══════════════════════════════════════════════════════════════
+### Issue: "CASTER_KEY not set"
 
-### Step 1: Configure Environment
-
+**Solution:**
 ```bash
-# Create secure environment file (DO NOT COMMIT)
-cat > .env.deploy << 'EOF'
-# Caster Deployment Configuration
-CASTER_KEY=your_private_key_or_mnemonic
-PROVIDER_URL=https://mainnet.base.org
-NETWORK=base
-ENS_NAME=gxqstudio.eth
-ARTIFACT_PATH=./build/talents.json
-EOF
+# Set environment variable
+export CASTER_KEY=your_key_here
 
-# Secure the file
-chmod 600 .env.deploy
-
-# Add to .gitignore
-echo ".env.deploy" >> .gitignore
+# Or use .env file
+echo "CASTER_KEY=your_key" >> .env
+source .env
 ```
 
-### Step 2: Load Environment
+### Issue: "Insufficient funds"
 
-```bash
-# Load environment variables
-source .env.deploy
-
-# Verify configuration
-echo "Network: $NETWORK"
-echo "ENS: $ENS_NAME"
-echo "Artifact: $ARTIFACT_PATH"
-echo "Provider: ${PROVIDER_URL}"
-echo "Key: ${CASTER_KEY:0:10}..." # Show only first 10 chars
-```
-
-### Step 3: Verify Network Connection
-
-```bash
-# Test RPC connection
-curl -X POST $PROVIDER_URL \
-  -H "Content-Type: application/json" \
-  -d '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}'
-
-# Expected response for Base mainnet:
-# {"jsonrpc":"2.0","id":1,"result":"0x2105"} # 8453 in hex
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🚦 Deployment Process
-## ═══════════════════════════════════════════════════════════════
-
-### Dry-Run Deployment (Recommended First)
-
-```bash
-# Test deployment without executing
-./scripts/deploy-caster.sh --dry-run
-
-# Or with explicit flag
-DRY_RUN=true ./scripts/deploy-caster.sh
-
-# Review output
-# This shows exactly what would be deployed
-```
-
-**Expected Output:**
-```
-═══════════════════════════════════════════════════════════════════════════
-🚀 Deploy Caster - Safe Deployment Script
-═══════════════════════════════════════════════════════════════════════════
-[INFO] Configuration:
-  Network: base
-  ENS: gxqstudio.eth
-  Artifact: ./build/talents.json
-  Dry Run: true
-
-[WARNING] 🔒 DRY RUN MODE - No deployment will occur
-
-[INFO] Would execute command:
-caster push --ens gxqstudio.eth --network base --artifact ./build/talents.json
-```
-
-### Live Deployment
-
-```bash
-# CAUTION: This will execute actual blockchain transaction!
-
-# Load credentials
-source .env.deploy
-
-# Verify one more time
-echo "Deploying to: $ENS_NAME on $NETWORK"
-read -p "Continue? (yes/no): " confirm
-
-if [ "$confirm" = "yes" ]; then
-  # Execute deployment
-  DRY_RUN=false ./scripts/deploy-caster.sh --live
-fi
-```
-
-### Custom Deployment Options
-
-```bash
-# Deploy to testnet first
-./scripts/deploy-caster.sh \
-  --network=base-goerli \
-  --ens=gxqstudio.eth \
-  --artifact=./build/talents.json
-
-# Deploy with custom artifact
-./scripts/deploy-caster.sh \
-  --artifact=./build/custom-talents.json
-
-# Deploy to different ENS
-./scripts/deploy-caster.sh \
-  --ens=myproject.eth
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🔍 Verification
-## ═══════════════════════════════════════════════════════════════
-
-### Verify Deployment
-
-```bash
-# Check transaction on Base explorer
-# Visit: https://basescan.org/tx/<transaction-hash>
-
-# Verify ENS resolution
-# Check that gxqstudio.eth points to deployed contract
-
-# Query deployed artifact (if available)
-caster query --ens gxqstudio.eth --network base
-```
-
-### Post-Deployment Checks
-
-```bash
-# 1. Verify transaction confirmed
-echo "Check transaction status on BaseScan"
-
-# 2. Test contract functionality
-# Run integration tests against deployed contract
-
-# 3. Update documentation
-echo "Deployment completed at $(date)" >> DEPLOYMENT.log
-
-# 4. Tag release
-git tag -a v1.0.0 -m "Deployed to gxqstudio.eth on Base"
-git push origin v1.0.0
-
-# 5. Notify team
-echo "✅ Deployment successful!"
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🛡️ Security Best Practices
-## ═══════════════════════════════════════════════════════════════
-
-### Before Deployment
-
-- [ ] Test thoroughly on testnet first
-- [ ] Verify artifact integrity (checksums)
-- [ ] Review all transaction parameters
-- [ ] Ensure sufficient gas funds
-- [ ] Backup current state
-- [ ] Have rollback plan ready
-- [ ] Notify stakeholders
-
-### During Deployment
-
-- [ ] Monitor transaction status
-- [ ] Watch for errors or reverts
-- [ ] Keep transaction hash
-- [ ] Note block number
-- [ ] Record gas used
-
-### After Deployment
-
-- [ ] Verify contract on explorer
-- [ ] Test contract functionality
-- [ ] Update documentation
-- [ ] Archive deployment artifacts
-- [ ] Revoke temporary access
-- [ ] Monitor for issues
-
-## ═══════════════════════════════════════════════════════════════
-## 📊 Deployment Scenarios
-## ═══════════════════════════════════════════════════════════════
-
-### Scenario 1: First Deployment
-
-```bash
-# 1. Build artifacts
-DRY_RUN=false ./scripts/update-talents.sh --live
-
-# 2. Test on testnet
-NETWORK=base-goerli \
-PROVIDER_URL=https://goerli.base.org \
-DRY_RUN=false ./scripts/deploy-caster.sh --live
-
-# 3. Verify testnet deployment
-# Test all functionality
-
-# 4. Deploy to mainnet
-source .env.deploy
-DRY_RUN=false ./scripts/deploy-caster.sh --live
-
-# 5. Verify and celebrate! 🎉
-```
-
-### Scenario 2: Update Existing Deployment
-
-```bash
-# 1. Build new version
-DRY_RUN=false ./scripts/update-talents.sh --live
-
-# 2. Compare artifacts
-diff build/talents.json build/talents.json.backup
-
-# 3. Test update on testnet
-NETWORK=base-goerli DRY_RUN=false ./scripts/deploy-caster.sh --live
-
-# 4. Deploy update to mainnet
-source .env.deploy
-DRY_RUN=false ./scripts/deploy-caster.sh --live
-```
-
-### Scenario 3: Rollback Deployment
-
-```bash
-# 1. Restore previous artifact
-cp build/talents.json.backup build/talents.json
-
-# 2. Verify backup integrity
-cat build/talents.json | jq .
-
-# 3. Deploy previous version
-source .env.deploy
-DRY_RUN=false ./scripts/deploy-caster.sh --live
-
-# 4. Verify rollback successful
-caster query --ens gxqstudio.eth --network base
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🆘 Troubleshooting
-## ═══════════════════════════════════════════════════════════════
-
-### Common Issues
-
-#### Issue: Insufficient Funds
-
+**Solution:**
 ```bash
 # Check balance
 cast balance $YOUR_ADDRESS --rpc-url $PROVIDER_URL
 
-# Solution: Add more ETH to deployment wallet
-# Transfer from another wallet or exchange
+# Get Base ETH from:
+# - Mainnet: Bridge from Ethereum
+# - Testnet: https://faucet.base.org
 ```
 
-#### Issue: Transaction Reverted
+### Issue: "ENS not owned"
 
+**Solution:**
 ```bash
-# Check revert reason
-# View on BaseScan or check logs
+# Verify ENS ownership
+cast lookup-address gxqstudio.eth --rpc-url $PROVIDER_URL
 
-# Common causes:
-# - Insufficient gas limit
-# - Contract requirements not met
-# - Incorrect parameters
-
-# Solution: Review and fix parameters
+# If incorrect, update ENS records or use correct domain
 ```
 
-#### Issue: RPC Connection Failed
+### Issue: "Transaction failed"
 
+**Possible causes:**
+1. Insufficient gas
+2. Incorrect nonce
+3. Network congestion
+4. Contract errors
+
+**Debug:**
 ```bash
-# Test connection
-curl $PROVIDER_URL
+# Check transaction details
+cast tx $TX_HASH --rpc-url $PROVIDER_URL
 
-# Solutions:
-# 1. Check provider URL is correct
-# 2. Verify internet connection
-# 3. Try alternative RPC endpoint
-# 4. Check provider status page
+# View logs
+cast logs --address $CONTRACT_ADDRESS --rpc-url $PROVIDER_URL
 ```
-
-#### Issue: ENS Not Resolving
-
-```bash
-# Check ENS registration
-# Verify on ENS app: https://app.ens.domains/
-
-# Ensure:
-# - ENS name is registered
-# - You have permission to update
-# - Correct network (mainnet ENS vs L2)
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 📚 Additional Resources
-## ═══════════════════════════════════════════════════════════════
-
-### Documentation
-
-- [Base Network Docs](https://docs.base.org/)
-- [ENS Documentation](https://docs.ens.domains/)
-- [Caster CLI Guide](https://github.com/caster-project/caster)
-- [Ethers.js Docs](https://docs.ethers.org/)
-
-### Tools & Explorers
-
-- [BaseScan](https://basescan.org/) - Base network explorer
-- [ENS App](https://app.ens.domains/) - ENS management
-- [Base Bridge](https://bridge.base.org/) - Bridge assets to Base
-- [Tenderly](https://tenderly.co/) - Transaction simulation
-
-### Support
-
-- [Base Discord](https://discord.gg/base)
-- [ENS Discord](https://discord.gg/ens)
-- Repository Issues: Open issue on GitHub
-- Team Contact: @SolanaRemix, @smsdao
-
-## ═══════════════════════════════════════════════════════════════
-## 📝 Deployment Checklist
-## ═══════════════════════════════════════════════════════════════
-
-### Pre-Deployment
-
-- [ ] Artifact built and verified
-- [ ] Credentials configured securely
-- [ ] RPC connection tested
-- [ ] Sufficient funds confirmed
-- [ ] Testnet deployment successful
-- [ ] Team notified
-- [ ] Backup created
-
-### Deployment
-
-- [ ] Dry-run completed
-- [ ] Parameters reviewed
-- [ ] Deployment executed
-- [ ] Transaction confirmed
-- [ ] Verification completed
-
-### Post-Deployment
-
-- [ ] Contract tested
-- [ ] Documentation updated
-- [ ] Release tagged
-- [ ] Team notified
-- [ ] Monitoring active
-- [ ] Credentials rotated
 
 ---
 
-**Version**: 1.0.0  
-**Network**: Base (Chain ID: 8453)  
-**ENS**: gxqstudio.eth  
-**Last Updated**: 2025-12-31  
-**Status**: Production Ready
+## Advanced Usage
 
-**🚀 Happy Deploying!** Remember to always test on testnet first! 🛡️✨
+### Custom Artifact Path
+
+```bash
+./scripts/deploy-caster.sh --artifact=./custom/path/contracts.json
+```
+
+### Different ENS Domain
+
+```bash
+./scripts/deploy-caster.sh --ens=myproject.eth
+```
+
+### Gas Price Control
+
+```bash
+# Set custom gas price (if supported)
+export GAS_PRICE=50  # gwei
+./scripts/deploy-caster.sh
+```
+
+### Multi-Contract Deployment
+
+```bash
+# Deploy multiple contracts sequentially
+for artifact in build/*.json; do
+    ARTIFACT_PATH=$artifact ./scripts/deploy-caster.sh --dry-run
+done
+```
+
+---
+
+## Verification
+
+### After Deployment
+
+**1. Verify on Block Explorer:**
+```
+https://basescan.org/address/YOUR_CONTRACT_ADDRESS
+```
+
+**2. Test Contract Functions:**
+```bash
+# Read contract state
+cast call $CONTRACT_ADDRESS "function()" --rpc-url $PROVIDER_URL
+```
+
+**3. Verify ENS Resolution:**
+```bash
+cast resolve-name gxqstudio.eth --rpc-url $PROVIDER_URL
+```
+
+**4. Check Event Logs:**
+```bash
+cast logs --address $CONTRACT_ADDRESS --from-block latest --rpc-url $PROVIDER_URL
+```
+
+---
+
+## Deployment Checklist
+
+Pre-Deployment:
+- [ ] Artifacts built successfully
+- [ ] Dry-run test passed
+- [ ] Artifact reviewed and validated
+- [ ] ENS ownership confirmed
+- [ ] Private key secured
+- [ ] Sufficient balance for gas
+- [ ] Network configured correctly
+- [ ] Testnet deployment completed (if applicable)
+
+Post-Deployment:
+- [ ] Transaction confirmed
+- [ ] Contract address recorded
+- [ ] Block explorer verification
+- [ ] ENS resolution tested
+- [ ] Contract functions tested
+- [ ] Deployment documented
+- [ ] Team notified
+
+---
+
+## Example Workflow
+
+```bash
+# 1. Build artifacts
+./scripts/update-talents.sh --no-dry-run
+
+# 2. Review artifact
+cat build/talents.json | jq . | less
+
+# 3. Test deployment (dry-run)
+./scripts/deploy-caster.sh --dry-run
+
+# 4. Deploy to testnet first
+NETWORK=base-sepolia \
+PROVIDER_URL=https://sepolia.base.org \
+DRY_RUN=false \
+./scripts/deploy-caster.sh
+
+# 5. If testnet successful, deploy to mainnet
+NETWORK=base \
+PROVIDER_URL=https://mainnet.base.org \
+DRY_RUN=false \
+./scripts/deploy-caster.sh
+
+# 6. Verify deployment
+cast resolve-name gxqstudio.eth --rpc-url https://mainnet.base.org
+```
+
+---
+
+## Additional Resources
+
+### Base Network
+- **Website:** https://base.org
+- **Docs:** https://docs.base.org
+- **Block Explorer:** https://basescan.org
+- **Bridge:** https://bridge.base.org
+
+### ENS
+- **Website:** https://ens.domains
+- **Docs:** https://docs.ens.domains
+- **Manager:** https://app.ens.domains
+
+### Caster Protocol
+- **GitHub:** https://github.com/caster-protocol/caster
+- **Docs:** [Caster Documentation]
+
+---
+
+## Support
+
+For deployment issues:
+1. Review this guide thoroughly
+2. Check Caster documentation
+3. Verify network status
+4. Test on testnet first
+5. Seek community help if needed
+
+---
+
+*Deployment Guide Version: 1.0.0*
+*Last Updated: 2025-12-31*
+
+```
+═══════════════════════════════════════════════════════════════════════════
+🚀 Deploy Safely | 🛡️ Test First | ✅ Verify Always
+═══════════════════════════════════════════════════════════════════════════
+```

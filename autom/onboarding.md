@@ -1,389 +1,354 @@
 ---
-title: "GitAntivirus Onboarding Guide"
-description: "Step-by-step guide to onboard your repository to GitAntivirus security automation"
-tags: ["onboarding", "tutorial", "getting-started", "gitantivirus"]
-seo_keywords: "gitantivirus onboarding, security automation setup, smart contract audit onboarding"
+title: "GitAntivirus Automation & Onboarding"
+description: "Complete guide to onboarding and using GitAntivirus automation tools"
+tags: ["automation", "onboarding", "guide", "gitantivirus"]
+seo_keywords: "gitantivirus onboarding, automation guide, smart contract security automation"
+geo:
+  country: "global"
 ---
 
-# 🎓 GitAntivirus Onboarding Guide
+# 🚀 GitAntivirus Automation & Onboarding
 
-> **Welcome!** This guide will walk you through setting up GitAntivirus security automation for your repository.
+```
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                    🎯 Welcome to GitAntivirus                             ║
+║              Your Automated Smart Contract Security System                ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+```
 
-## ═══════════════════════════════════════════════════════════════
-## 🎯 Prerequisites
-## ═══════════════════════════════════════════════════════════════
+Welcome to the GitAntivirus ecosystem! This guide will help you get started with our automated security scanning and improvement tools.
 
-Before you begin, ensure you have:
+## 📚 Table of Contents
 
-- ✅ Git installed (v2.0+)
-- ✅ Node.js (v18+) and pnpm
-- ✅ GitHub account with repository access
-- ✅ Basic command line knowledge
-- ⚠️ GitHub Personal Access Token (for write operations only)
+1. [Quick Start](#quick-start)
+2. [Component Overview](#component-overview)
+3. [Step-by-Step Setup](#step-by-step-setup)
+4. [Running Agents](#running-agents)
+5. [Advanced Configuration](#advanced-configuration)
+6. [Troubleshooting](#troubleshooting)
 
-## ═══════════════════════════════════════════════════════════════
-## 📋 Step-by-Step Setup
-## ═══════════════════════════════════════════════════════════════
+---
 
-### Step 1: Clone the Repository
+## 🎯 Quick Start
+
+### Prerequisites
+
+- ✅ Node.js 18+ installed
+- ✅ pnpm or npm package manager
+- ✅ Git repository access
+- ✅ GitHub token (for bot operations)
+
+### 5-Minute Setup
 
 ```bash
-# Clone the repository
+# 1. Clone repository
 git clone https://github.com/SolanaRemix/SmartContractAudit.git
 cd SmartContractAudit
 
-# Check current branch
-git branch
-```
-
-**Expected Output:**
-```
-* gitantivirus-node
-```
-
-### Step 2: Verify Directory Structure
-
-```bash
-# List all directories
-tree -L 2 -d
-```
-
-**Expected Structure:**
-```
-.
-├── .github
-│   └── workflows
-├── autom
-├── config
-├── docs
-├── node
-│   ├── bot
-│   └── logs
-└── scripts
-```
-
-### Step 3: Make Scripts Executable
-
-```bash
-# Make all scripts executable
-chmod +x scripts/*.sh
-
-# Verify permissions
-ls -la scripts/
-```
-
-**Expected Output:**
-```
--rwxr-xr-x  master.sh
--rwxr-xr-x  deploy-caster.sh
--rwxr-xr-x  update-talents.sh
-```
-
-### Step 4: Install Bot Dependencies
-
-```bash
-# Install pnpm if not already installed
-npm install -g pnpm
-
-# Navigate to bot directory
-cd node/bot
-
-# Install dependencies
+# 2. Install dependencies (if package.json exists)
 pnpm install
 
-# Return to root
-cd ../..
-```
-
-### Step 5: Run Your First Security Scan
-
-```bash
-# Run security scan (dry-run mode)
-./scripts/master.sh scan
-```
-
-**Expected Output:**
-```
-═══════════════════════════════════════════════════════════════════════════
-🧠 SmartBrain Orchestrator - Security Scan
-═══════════════════════════════════════════════════════════════════════════
-[INFO] Starting security scan...
-[WARNING] DRY_RUN mode enabled - no files will be written
-[INFO] Would scan repository for hardcoded secrets
-[INFO] Would check for common vulnerabilities
-```
-
-### Step 6: Run Complete Audit
-
-```bash
-# Run all checks (dry-run mode)
-./scripts/master.sh full
-```
-
-**This will execute:**
-1. 🔍 Security Scan
-2. 🔬 Code Audit
-3. ❤️ Health Check
-
-### Step 7: Test the Node BOT
-
-```bash
-# Navigate to bot directory
-cd node/bot
-
-# Run bot in dry-run mode
-node index.js
-```
-
-**Expected Output:**
-```
-═══════════════════════════════════════════════════════════════════════════
-🤖 GitAntivirus BOT - Automated Security & Onboarding
-═══════════════════════════════════════════════════════════════════════════
-[INFO] Configuration:
-  Mode: 🔒 DRY RUN
-  Bot Pings: ❌ Disabled
-  Allowlist Orgs: (none)
-  Max PRs: 3
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🔧 Advanced Configuration
-## ═══════════════════════════════════════════════════════════════
-
-### Enable File Writing (Live Mode)
-
-```bash
-# Run scan with file output
-DRY_RUN=false ./scripts/master.sh scan
-
-# Check generated reports
-ls -la reports/
-cat reports/security-scan.md
-```
-
-### Configure Bot Allowlist
-
-```bash
-# Set allowlist for specific organizations
-export ALLOWLIST_ORGS="SolanaRemix,smsdao"
-
-# Run bot with allowlist
-cd node/bot
-node index.js
-```
-
-### Enable Bot Pings (Use Responsibly!)
-
-```bash
-# Enable pings for SolanaRemix repositories only
-export BOT_PINGS_ENABLED=true
-export ALLOWLIST_ORGS="SolanaRemix"
-
-# Run bot
-node index.js
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🎭 Example Agent Runs
-## ═══════════════════════════════════════════════════════════════
-
-### Example 1: Quick Security Check
-
-```bash
-# Scan for security issues
-./scripts/master.sh scan
-
-# Review output
-echo "Check complete! Review console output for findings."
-```
-
-### Example 2: Full Repository Audit
-
-```bash
-# Enable verbose logging and run all checks
-VERBOSE=true DRY_RUN=false ./scripts/master.sh full
-
-# Check generated reports
-ls -la reports/
-```
-
-### Example 3: Build and Prepare Deployment
-
-```bash
-# Build project and create artifacts
-DRY_RUN=false ./scripts/update-talents.sh --live
-
-# Verify artifact
-cat build/talents.json | jq .
-```
-
-### Example 4: Dry-Run Deployment
-
-```bash
-# Test deployment without executing
-./scripts/deploy-caster.sh --dry-run
-
-# This shows what would be deployed without actually deploying
-```
-
-### Example 5: Bot Repository Discovery
-
-```bash
-cd node/bot
-
-# Search for repositories with custom keywords
-SEARCH_KEYWORDS="solana,rust,security" \
-MIN_STARS=50 \
-node index.js
-```
-
-## ═══════════════════════════════════════════════════════════════
-## ⚙️ GitHub Actions Integration
-## ═══════════════════════════════════════════════════════════════
-
-### Workflow is Pre-Configured
-
-The GitAntivirus workflow (`.github/workflows/gitantivirus.yml`) is already set up to run:
-
-- ✅ On push to main/develop
-- ✅ On pull requests
-- ✅ Weekly on Mondays (scheduled)
-- ✅ Manually via workflow_dispatch
-
-### Trigger Manual Run
-
-1. Go to repository on GitHub
-2. Click **Actions** tab
-3. Select **GitAntivirus** workflow
-4. Click **Run workflow**
-5. Select options:
-   - Dry Run: true/false
-   - Scan Type: scan/audit/health/full
-6. Click **Run workflow** button
-
-### Configure Secrets (Optional)
-
-For write operations, add these secrets in repository settings:
-
-1. Navigate to **Settings** → **Secrets and variables** → **Actions**
-2. Add secrets:
-   - `GH_TOKEN`: GitHub Personal Access Token
-   - `CASTER_KEY`: Deployment key (optional)
-   - `PROVIDER_URL`: RPC endpoint (optional)
-   - `PROJECT_URL`: GitHub Projects URL (optional)
-
-## ═══════════════════════════════════════════════════════════════
-## 🛡️ Security Best Practices
-## ═══════════════════════════════════════════════════════════════
-
-### ✅ DO:
-- Always test in dry-run mode first
-- Review generated reports carefully
-- Use environment variables for secrets
-- Keep allowlist restrictive
-- Monitor bot activity logs
-
-### ❌ DON'T:
-- Commit secrets to version control
-- Enable pings without permission
-- Run live mode without testing
-- Ignore security warnings
-- Bypass rate limits
-
-## ═══════════════════════════════════════════════════════════════
-## 📊 Monitoring & Logs
-## ═══════════════════════════════════════════════════════════════
-
-### Check Bot Logs
-
-```bash
-# View bot execution summary
-cat node/logs/summary.json | jq .
-
-# Check workflow artifacts
-# Available in GitHub Actions → Workflow run → Artifacts
-```
-
-### Review Reports
-
-```bash
-# Security scan report
-cat reports/security-scan.md
-
-# Audit report
-cat reports/audit-report.md
-
-# Health check report
-cat reports/health-check.md
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🆘 Troubleshooting
-## ═══════════════════════════════════════════════════════════════
-
-### Issue: Scripts not executable
-```bash
-# Solution: Make executable
+# 3. Make scripts executable
 chmod +x scripts/*.sh
+
+# 4. Run your first scan
+./scripts/master.sh scan
 ```
-
-### Issue: Permission denied
-```bash
-# Solution: Check file permissions
-ls -la scripts/
-```
-
-### Issue: Node modules not found
-```bash
-# Solution: Install dependencies
-cd node/bot && pnpm install
-```
-
-### Issue: Cannot create reports
-```bash
-# Solution: Ensure DRY_RUN=false
-DRY_RUN=false ./scripts/master.sh scan
-```
-
-## ═══════════════════════════════════════════════════════════════
-## 🎓 Next Steps
-## ═══════════════════════════════════════════════════════════════
-
-1. ✅ Complete initial setup (you're here!)
-2. 📖 Read [Architecture Documentation](../docs/architecture.md)
-3. 🔍 Review [Usage Examples](../docs/usage.md)
-4. 🛡️ Study [Security Guide](../docs/security.md)
-5. 🚀 Try [Deployment Guide](../docs/deploy-caster.md)
-
-## ═══════════════════════════════════════════════════════════════
-## 💬 Getting Help
-## ═══════════════════════════════════════════════════════════════
-
-Need assistance? We're here to help!
-
-- 📖 **Documentation**: Check `/docs` directory
-- 🐛 **Issues**: Open a GitHub issue
-- 💬 **Contact**: @SolanaRemix, @smsdao, @SmartBrain
-- 🔗 **Community**: Join our Discord/Telegram
-
-## ═══════════════════════════════════════════════════════════════
-## 🎉 Congratulations!
-## ═══════════════════════════════════════════════════════════════
-
-You've successfully onboarded to GitAntivirus! 🎊
-
-Your repository now has:
-- ✅ Automated security scanning
-- ✅ Code quality auditing
-- ✅ Health monitoring
-- ✅ Smart contract deployment tools
-- ✅ Bot automation capabilities
-
-Happy securing! 🛡️✨
 
 ---
 
-**🧠 Powered by**: SmartBrain / SMSDAO  
-**📅 Created**: 2025-12-31  
-**📍 Status**: Production Ready
+## 🧩 Component Overview
+
+### 1. 🧠 SmartBrain Orchestrator (`scripts/master.sh`)
+
+Central coordination system with multiple agents:
+
+- **Agent A:** Repository Scanner
+- **Agent B:** Dependency Auditor
+- **Agent C:** Security Analyzer
+- **Agent D:** Code Quality Checker
+- **Agent E:** Test Coverage Analyzer
+- **Agent F:** Health Monitor
+
+### 2. 🤖 Node Bot (`node/bot/`)
+
+Automated GitHub scanner that:
+- Searches for repositories
+- Analyzes security issues
+- Creates draft PRs with fixes
+- Respects allowlist boundaries
+
+### 3. ⚙️ GitHub Actions (`.github/workflows/`)
+
+CI/CD pipelines for:
+- Automated security scanning on PRs
+- Scheduled repository audits
+- Continuous monitoring
+
+### 4. 🚀 Deployment Tools (`scripts/`)
+
+- `deploy-caster.sh` - Deploy to ENS domains
+- `update-talents.sh` - Build and validate artifacts
+
+---
+
+## 📋 Step-by-Step Setup
+
+### Step 1: Environment Configuration
+
+Create a `.env` file (never commit this!):
+
+```bash
+# GitHub Token (required for bot write operations)
+GH_TOKEN=your_github_token_here
+
+# Optional configurations
+DRY_RUN=true
+BOT_PINGS_ENABLED=false
+ALLOWLIST_ORGS=SolanaRemix,smsdao
+MAX_PRS_PER_RUN=3
+STAR_THRESHOLD=10
+
+# Deployment (if using)
+CASTER_KEY=your_caster_key
+PROVIDER_URL=https://mainnet.base.org
+```
+
+### Step 2: Run SmartBrain Agents
+
+#### 🔍 Agent A: Repository Scan
+
+```bash
+./scripts/master.sh scan
+```
+
+**What it does:**
+- Scans for smart contract files (*.sol, *.vy)
+- Identifies configuration files
+- Checks for security tools
+
+**Example output:**
+```
+═══════════════════════════════════════════════════════════════════════════
+  🔍 SCAN MODE
+═══════════════════════════════════════════════════════════════════════════
+
+ℹ️  [INFO] Found 5 smart contract files
+ℹ️  [INFO] Found 12 configuration files
+ℹ️  [INFO] Solhint config found
+```
+
+#### 🔒 Agent B+C: Security Audit
+
+```bash
+./scripts/master.sh audit
+```
+
+**What it does:**
+- Audits npm/pip dependencies
+- Scans for hardcoded secrets
+- Identifies unsafe function calls
+- Reports potential vulnerabilities
+
+**Example output:**
+```
+═══════════════════════════════════════════════════════════════════════════
+  🔒 AUDIT MODE
+═══════════════════════════════════════════════════════════════════════════
+
+🤖 [AGENT-B] Starting dependency audit...
+ℹ️  [INFO] Auditing npm dependencies...
+ℹ️  [INFO] Audit report saved to /tmp/audit-report.json
+
+🤖 [AGENT-C] Starting security analysis...
+⚠️  [WARNING] Potentially unsafe functions found
+```
+
+#### 💊 Agent F: Health Check
+
+```bash
+./scripts/master.sh health
+```
+
+**What it does:**
+- Checks disk space
+- Monitors memory usage
+- Reports git status
+- System diagnostics
+
+**Example output:**
+```
+═══════════════════════════════════════════════════════════════════════════
+  💊 HEALTH CHECK MODE
+═══════════════════════════════════════════════════════════════════════════
+
+🤖 [AGENT-F] Starting health monitoring...
+✅ [SUCCESS] Disk usage OK: 45%
+ℹ️  [INFO] Memory usage: 62%
+ℹ️  [INFO] Git: 3 uncommitted changes
+```
+
+#### 📊 Full Analysis
+
+```bash
+./scripts/master.sh full
+```
+
+**What it does:**
+- Runs ALL agents (A through F)
+- Generates comprehensive report
+- Cleans ports and installs dependencies
+- Complete system analysis
+
+### Step 3: Run Node Bot
+
+```bash
+cd node/bot
+pnpm install
+pnpm start
+```
+
+**Dry-run mode (default):**
+```
+═══════════════════════════════════════════════════════════════════════════
+  🤖 GitAntivirus Node Bot
+═══════════════════════════════════════════════════════════════════════════
+
+ℹ️  [INFO] DRY_RUN: true
+⚠️  [WARNING] 🧪 RUNNING IN DRY-RUN MODE - No PRs will be created
+
+✅ [SUCCESS] Found 25 repositories matching criteria
+✅ [SUCCESS] 15 repositories passed filters
+ℹ️  [INFO] Processing 3 repositories...
+```
+
+**Enable live operations:**
+```bash
+DRY_RUN=false GH_TOKEN=$YOUR_TOKEN pnpm start
+```
+
+### Step 4: Build and Deploy
+
+#### Build Artifacts
+
+```bash
+./scripts/update-talents.sh --no-dry-run
+```
+
+**What it does:**
+- Runs build process (pnpm build)
+- Validates output artifact
+- Prepares for deployment
+
+#### Deploy to ENS (Dry-Run)
+
+```bash
+./scripts/deploy-caster.sh --dry-run
+```
+
+**What it does:**
+- Checks dependencies (caster CLI)
+- Validates environment variables
+- Shows deployment preview
+- Does NOT deploy (dry-run)
+
+#### Live Deployment
+
+```bash
+export CASTER_KEY=your_private_key
+export PROVIDER_URL=https://mainnet.base.org
+DRY_RUN=false ./scripts/deploy-caster.sh
+```
+
+---
+
+## ⚙️ Advanced Configuration
+
+### Custom Agent Selection
+
+Run specific agents only:
+
+```bash
+./scripts/master.sh scan --agent=A
+./scripts/master.sh audit --agent=B,C
+```
+
+### Verbose Output
+
+Enable detailed logging:
+
+```bash
+./scripts/master.sh full --verbose
+```
+
+### Override Dry-Run
+
+```bash
+./scripts/master.sh audit --no-dry-run
+```
+
+### Bot Allowlist
+
+Scan only specific organizations:
+
+```bash
+ALLOWLIST_ORGS="SolanaRemix,myorg" node bot/index.js
+```
+
+---
+
+## 🔧 Troubleshooting
+
+### Issue: "Permission denied" on scripts
+
+**Solution:**
+```bash
+chmod +x scripts/*.sh
+```
+
+### Issue: "pnpm not found"
+
+**Solution:**
+```bash
+npm install -g pnpm
+```
+
+### Issue: Bot not creating PRs
+
+**Check:**
+1. Is `DRY_RUN=false`?
+2. Is `GH_TOKEN` set with write permissions?
+3. Does token have repo and PR write access?
+
+### Issue: "No repositories found"
+
+**Check:**
+1. Verify `SEARCH_KEYWORDS` are relevant
+2. Lower `STAR_THRESHOLD`
+3. Check GitHub API rate limits
+
+---
+
+## 📞 Getting Help
+
+- 📖 [Architecture Documentation](../docs/architecture.md)
+- 🔐 [Security Practices](../docs/security.md)
+- 💡 [Usage Examples](../docs/usage.md)
+- 🤖 [Bot Configuration](../node/bot/README.md)
+
+---
+
+## 🎉 Congratulations!
+
+You're now ready to use GitAntivirus! Start with `./scripts/master.sh scan` and explore from there.
+
+```
+═══════════════════════════════════════════════════════════════════════════
+🎯 Happy Scanning! | 🛡️ Stay Secure!
+═══════════════════════════════════════════════════════════════════════════
+```
+
+---
+
+*Last updated: 2025-12-31*
+*Version: 1.0.0*
