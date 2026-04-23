@@ -133,7 +133,7 @@ jobs:
           npm run audit:continuous
           
       - name: Upload Reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: audit-reports
           path: reports/
