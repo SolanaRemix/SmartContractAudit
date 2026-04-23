@@ -93,7 +93,7 @@ jobs:
           fi
       
       - name: Upload detailed reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: deep-scan-reports-${{ github.run_number }}
           path: |

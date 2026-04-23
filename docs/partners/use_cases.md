@@ -271,7 +271,7 @@ jobs:
       - name: Run Security Audit
         run: ./scripts/audit.sh
       - name: Upload Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: audit-report
           path: AUDIT-REPORT.md
