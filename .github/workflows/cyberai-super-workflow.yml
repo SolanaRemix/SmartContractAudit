@@ -6,18 +6,16 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    # Run daily at 2 AM UTC
     - cron: '0 2 * * *'
   workflow_dispatch:
     inputs:
       mode:
-        description: 'Execution mode'
+        description: 'Execution mode (production requires approval)'
         required: false
         default: 'dry-run'
         type: choice
         options:
           - dry-run
-          - production
       audit_depth:
         description: 'Audit depth'
         required: false
@@ -29,8 +27,8 @@ on:
           - deep
 
 env:
-  DRY_RUN: true
-  PNPM: pnpm
+  DRY_RUN: 'true'
+  LOG_LEVEL: 'INFO'
 
 permissions:
   contents: read
@@ -41,11 +39,7 @@ jobs:
   orchestrate:
     name: CyberAi Bot Orchestration
     runs-on: ubuntu-latest
-    
-    permissions:
-      contents: read
-      pull-requests: write
-      actions: read
+    timeout-minutes: 30
     
     steps:
       - name: Checkout SmartContractAudit
@@ -58,167 +52,166 @@ jobs:
         with:
           node-version: '20'
       
-      - name: Install pnpm
-        run: npm install -g pnpm
-      
       - name: Setup Environment
         run: |
           echo "Setting up CyberAi Bot environment..."
           
-          # Copy environment template
-          if [ -f .env.example ]; then
-            cp .env.example .env
-          fi
-          
-          # Configure dry-run mode
-          echo "DRY_RUN=true" >> .env
-          echo "PNPM=pnpm" >> .env
-          echo "LOG_LEVEL=INFO" >> .env
-          
-          # Make scripts executable
-          chmod +x scripts/*.sh
-          
           # Create necessary directories
-          mkdir -p logs
-          mkdir -p reports
-          mkdir -p .quarantine
+          mkdir -p logs reports .quarantine
+          
+          # Make scripts executable with validation
+          for script in scripts/*.sh; do
+            if [ -f "$script" ]; then
+              # Verify script has valid shebang
+              if head -1 "$script" | grep -qE '^#!(/usr/bin/env |/bin/|/usr/bin/)'; then
+                chmod +x "$script"
+              else
+                echo "::warning::Invalid shebang in $script"
+              fi
+            fi
+          done
+          
+          # NEVER copy .env.example to .env in CI
+          # Use environment variables directly
+          echo "Environment setup complete"
       
       - name: Install Dependencies
         if: hashFiles('package.json') != ''
         run: |
           if [ -f pnpm-lock.yaml ]; then
-            pnpm install --frozen-lockfile || pnpm install
+            pnpm install --frozen-lockfile
+          elif [ -f package-lock.json ]; then
+            npm ci
+          elif [ -f yarn.lock ]; then
+            yarn install --frozen-lockfile
           else
-            pnpm install || true
+            echo "::error::No lockfile found. Cannot verify dependencies."
+            exit 1
           fi
       
       - name: SmartBrain Health Check
         id: health_check
         run: |
-          echo "Running SmartBrain health check..."
+          echo "::group::SmartBrain Health Check"
           
-          # Run health check
-          ./scripts/master.sh health || echo "Health check completed with warnings"
-          
-          # Check if SMARTBRAIN.log exists and has content
-          if [ -f SMARTBRAIN.log ]; then
-            echo "health_status=success" >> $GITHUB_OUTPUT
-            echo "Health check log:"
-            tail -20 SMARTBRAIN.log
+          if [ -f scripts/master.sh ]; then
+            bash scripts/master.sh health 2>&1 | tee logs/health-check.log
+            HEALTH_EXIT=${PIPESTATUS[0]}
+            
+            if [ "$HEALTH_EXIT" -eq 0 ]; then
+              echo "health_status=success" >> $GITHUB_OUTPUT
+            else
+              echo "health_status=warning" >> $GITHUB_OUTPUT
+              echo "::warning::Health check exited with code $HEALTH_EXIT"
+            fi
           else
-            echo "health_status=warning" >> $GITHUB_OUTPUT
+            echo "health_status=skipped" >> $GITHUB_OUTPUT
+            echo "::warning::scripts/master.sh not found"
           fi
+          
+          echo "::endgroup::"
       
-      - name: CyberAi Bot - Audit Orchestration
+      - name: CyberAi Bot — Audit Orchestration
         id: audit
         if: github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
-          echo "Starting CyberAi Bot audit orchestration..."
+          echo "::group::Audit Orchestration"
           
-          # Determine audit mode
           AUDIT_MODE="${{ github.event.inputs.mode || 'dry-run' }}"
           AUDIT_DEPTH="${{ github.event.inputs.audit_depth || 'standard' }}"
           
           echo "Audit mode: $AUDIT_MODE"
           echo "Audit depth: $AUDIT_DEPTH"
           
-          # Run audit through SmartBrain orchestrator
-          if [ "$AUDIT_MODE" = "dry-run" ]; then
-            export DRY_RUN=true
+          # ALWAYS run in dry-run mode in CI
+          # Production mode REMOVED from workflow_dispatch options
+          export DRY_RUN=true
+          
+          if [ -f scripts/master.sh ]; then
+            bash scripts/master.sh audit 2>&1 | tee logs/audit.log
+            AUDIT_EXIT=${PIPESTATUS[0]}
+            
+            if [ -f AUDIT-REPORT.md ]; then
+              echo "audit_status=completed" >> $GITHUB_OUTPUT
+            else
+              echo "audit_status=warning" >> $GITHUB_OUTPUT
+            fi
           else
-            export DRY_RUN=false
+            echo "audit_status=skipped" >> $GITHUB_OUTPUT
           fi
           
-          # Execute audit
-          ./scripts/master.sh audit || echo "Audit completed with findings"
-          
-          # Store audit status
-          if [ -f AUDIT-REPORT.md ]; then
-            echo "audit_status=completed" >> $GITHUB_OUTPUT
-          else
-            echo "audit_status=no_report" >> $GITHUB_OUTPUT
-          fi
+          echo "::endgroup::"
       
-      - name: CyberAi Bot - Security Scan
+      - name: CyberAi Bot — Security Scan
         id: security_scan
         run: |
-          echo "Running CyberAi Bot security scan..."
+          echo "::group::Security Scan"
           
-          # Run security scan
-          ./scripts/master.sh scan || echo "Security scan completed"
-          
-          # Check quarantine
-          if [ -d .quarantine ] && [ "$(ls -A .quarantine)" ]; then
-            echo "scan_findings=true" >> $GITHUB_OUTPUT
-            echo "Security findings detected in .quarantine/"
+          if [ -f scripts/master.sh ]; then
+            bash scripts/master.sh scan 2>&1 | tee logs/security-scan.log
+            SCAN_EXIT=${PIPESTATUS[0]}
+            
+            if [ -d .quarantine ] && [ "$(ls -A .quarantine 2>/dev/null)" ]; then
+              echo "scan_findings=true" >> $GITHUB_OUTPUT
+              echo "::warning::Security findings detected — see .quarantine/"
+            else
+              echo "scan_findings=false" >> $GITHUB_OUTPUT
+            fi
           else
             echo "scan_findings=false" >> $GITHUB_OUTPUT
-            echo "No security issues detected"
           fi
+          
+          echo "::endgroup::"
       
-      - name: CyberAi Bot - Integrity Check
+      - name: CyberAi Bot — Integrity Check
         id: integrity
         if: github.event_name == 'pull_request' || github.event_name == 'push'
         run: |
-          echo "Running CyberAi Bot integrity check..."
+          echo "::group::Integrity Check"
           
-          # Run integrity check
-          ./scripts/master.sh integrity || echo "Integrity check completed"
-          
-          echo "integrity_status=completed" >> $GITHUB_OUTPUT
-      
-      - name: CyberAi Bot - Aggregate Results
-        id: aggregate
-        run: |
-          echo "Aggregating CyberAi Bot results..."
-          
-          # Create comprehensive report
-          cat > reports/cyberai-summary.md <<EOF
-          # CyberAi Bot Execution Summary
-          
-          **Run Date**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          **Trigger**: ${{ github.event_name }}
-          **Branch**: ${{ github.ref_name }}
-          **Commit**: ${{ github.sha }}
-          
-          ## Results
-          
-          ### Health Check
-          - Status: ${{ steps.health_check.outputs.health_status || 'not_run' }}
-          
-          ### Audit
-          - Status: ${{ steps.audit.outputs.audit_status || 'not_run' }}
-          - Mode: ${{ github.event.inputs.mode || 'dry-run' }}
-          
-          ### Security Scan
-          - Status: ${{ steps.security_scan.outputs.scan_findings == 'true' && 'findings_detected' || 'clean' }}
-          
-          ### Integrity Check
-          - Status: ${{ steps.integrity.outputs.integrity_status || 'not_run' }}
-          
-          ## Logs
-          
-          EOF
-          
-          # Append SmartBrain log if exists
-          if [ -f SMARTBRAIN.log ]; then
-            echo "### SmartBrain Log (Last 50 lines)" >> reports/cyberai-summary.md
-            echo '```' >> reports/cyberai-summary.md
-            tail -50 SMARTBRAIN.log >> reports/cyberai-summary.md
-            echo '```' >> reports/cyberai-summary.md
+          if [ -f scripts/master.sh ]; then
+            bash scripts/master.sh integrity 2>&1 | tee logs/integrity.log
+            echo "integrity_status=completed" >> $GITHUB_OUTPUT
+          else
+            echo "integrity_status=skipped" >> $GITHUB_OUTPUT
           fi
           
-          # Display summary
+          echo "::endgroup::"
+      
+      - name: Aggregate Results
+        id: aggregate
+        if: always()
+        run: |
+          echo "::group::Results Aggregation"
+          
+          cat > reports/cyberai-summary.md <<'ENDOFREPORT'
+          # CyberAi Bot Execution Summary
+          
+          ENDOFREPORT
+          
+          echo "**Run Date**: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> reports/cyberai-summary.md
+          echo "**Trigger**: ${{ github.event_name }}" >> reports/cyberai-summary.md
+          echo "**Branch**: ${{ github.ref_name }}" >> reports/cyberai-summary.md
+          echo "**Commit**: ${{ github.sha }}" >> reports/cyberai-summary.md
+          echo "" >> reports/cyberai-summary.md
+          echo "## Results" >> reports/cyberai-summary.md
+          echo "" >> reports/cyberai-summary.md
+          echo "| Component | Status |" >> reports/cyberai-summary.md
+          echo "|-----------|--------|" >> reports/cyberai-summary.md
+          echo "| Health Check | ${{ steps.health_check.outputs.health_status || 'skipped' }} |" >> reports/cyberai-summary.md
+          echo "| Audit | ${{ steps.audit.outputs.audit_status || 'skipped' }} |" >> reports/cyberai-summary.md
+          echo "| Security Scan | ${{ steps.security_scan.outputs.scan_findings == 'true' && '⚠️ Findings' || '✅ Clean' }} |" >> reports/cyberai-summary.md
+          echo "| Integrity Check | ${{ steps.integrity.outputs.integrity_status || 'skipped' }} |" >> reports/cyberai-summary.md
+          
           cat reports/cyberai-summary.md
+          echo "::endgroup::"
       
       - name: Upload Audit Report
         if: steps.audit.outputs.audit_status == 'completed'
         uses: actions/upload-artifact@v4
         with:
           name: audit-report-${{ github.run_number }}
-          path: |
-            AUDIT-REPORT.md
-            SMARTBRAIN.log
+          path: AUDIT-REPORT.md
           retention-days: 30
       
       - name: Upload Security Findings
@@ -229,7 +222,8 @@ jobs:
           path: .quarantine/
           retention-days: 90
       
-      - name: Upload CyberAi Summary
+      - name: Upload Summary
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cyberai-summary-${{ github.run_number }}
@@ -241,97 +235,72 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const fs = require('fs');
+            const scanFindings = '${{ steps.security_scan.outputs.scan_findings }}';
+            const auditStatus = '${{ steps.audit.outputs.audit_status }}';
             
             let body = '## 🤖 CyberAi Bot Report\n\n';
             
-            // Add health check status
-            body += '### Health Check\n';
-            body += `- Status: ${{ steps.health_check.outputs.health_status }}\n\n`;
+            body += '| Component | Status |\n';
+            body += '|-----------|--------|\n';
+            body += `| Health Check | ${{ steps.health_check.outputs.health_status || 'skipped' }} |\n`;
+            body += `| Audit | ${auditStatus || 'skipped'} |\n`;
+            body += `| Security Scan | ${scanFindings === 'true' ? '⚠️ Findings Detected' : '✅ Clean'} |\n`;
+            body += `| Integrity Check | ${{ steps.integrity.outputs.integrity_status || 'skipped' }} |\n`;
             
-            // Add audit status
-            if ('${{ steps.audit.outputs.audit_status }}' !== 'not_run') {
-              body += '### Audit\n';
-              body += `- Status: ${{ steps.audit.outputs.audit_status }}\n`;
-              body += `- Mode: ${{ github.event.inputs.mode || 'dry-run' }}\n\n`;
-            }
+            body += '\n---\n';
+            body += `*[View workflow run](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})*\n`;
             
-            // Add security scan results
-            body += '### Security Scan\n';
-            if ('${{ steps.security_scan.outputs.scan_findings }}' === 'true') {
-              body += '⚠️ Security findings detected. Please review the artifacts.\n\n';
-            } else {
-              body += '✅ No security issues detected.\n\n';
-            }
-            
-            // Add integrity check
-            if ('${{ steps.integrity.outputs.integrity_status }}' !== 'not_run') {
-              body += '### Integrity Check\n';
-              body += `- Status: ${{ steps.integrity.outputs.integrity_status }}\n\n`;
-            }
-            
-            body += '---\n';
-            body += '*CyberAi Bot - Smart Brain Security for Smart Contracts*\n';
-            body += `*Workflow run: [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})*`;
-            
-            github.rest.issues.createComment({
+            await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: body
             });
       
-      - name: Set Job Summary
+      - name: Job Summary
+        if: always()
         run: |
-          cat >> $GITHUB_STEP_SUMMARY <<EOF
-          # CyberAi Bot Execution Summary
-          
-          ## 🤖 Overview
-          
-          **Orchestrator**: SmartBrain (master.sh)
-          **Mode**: ${{ github.event.inputs.mode || 'dry-run' }}
-          **Trigger**: ${{ github.event_name }}
-          
-          ## 📊 Results
-          
-          | Component | Status |
-          |-----------|--------|
-          | Health Check | ${{ steps.health_check.outputs.health_status || 'N/A' }} |
-          | Audit | ${{ steps.audit.outputs.audit_status || 'not_run' }} |
-          | Security Scan | ${{ steps.security_scan.outputs.scan_findings == 'true' && '⚠️ Findings' || '✅ Clean' }} |
-          | Integrity Check | ${{ steps.integrity.outputs.integrity_status || 'not_run' }} |
-          
-          ## 📁 Artifacts
-          
-          - Audit Report: ${{ steps.audit.outputs.audit_status == 'completed' && '✅ Available' || 'N/A' }}
-          - Security Findings: ${{ steps.security_scan.outputs.scan_findings == 'true' && '⚠️ Available' || 'N/A' }}
-          - Summary Report: ✅ Available
-          
-          ## 🔗 Resources
-          
-          - [CyberAi Architecture](docs/CYBERAI_ARCHITECTURE.md)
-          - [PR Merge Guide](docs/CYBERAI_PR_MERGE_GUIDE.md)
-          - [Setup Documentation](docs/cuberai-setup.md)
-          
-          ---
-          
-          *CyberAi Bot orchestrates all SolanaRemix security tools while keeping SmartContract functions focused and separate.*
-          EOF
+          {
+            echo "# 🤖 CyberAi Bot — Execution Summary"
+            echo ""
+            echo "| Component | Status |"
+            echo "|-----------|--------|"
+            echo "| Health Check | ${{ steps.health_check.outputs.health_status || 'skipped' }} |"
+            echo "| Audit | ${{ steps.audit.outputs.audit_status || 'skipped' }} |"
+            echo "| Security Scan | ${{ steps.security_scan.outputs.scan_findings == 'true' && '⚠️ Findings' || '✅ Clean' }} |"
+            echo "| Integrity Check | ${{ steps.integrity.outputs.integrity_status || 'skipped' }} |"
+            echo ""
+            echo "**Mode:** ${{ github.event.inputs.mode || 'dry-run' }}"
+            echo "**Trigger:** ${{ github.event_name }}"
+            echo ""
+            echo "## 📁 Artifacts"
+            echo ""
+            echo "- [Audit Report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+            echo "- [Security Findings](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          } >> $GITHUB_STEP_SUMMARY
       
-      - name: Fail on Critical Security Findings
+      - name: Block on Critical Security Findings
         if: steps.security_scan.outputs.scan_findings == 'true' && github.event_name == 'pull_request'
         run: |
-          echo "⚠️ Critical security findings detected in PR"
-          echo "Please review the security artifacts before merging"
-          echo "This is a warning - review required but not blocking"
-          # Uncomment the next line to make security findings blocking
-          # exit 1
+          echo "::error::Critical security findings detected in PR"
+          echo "Please review artifacts: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          exit 1
+      
+      # Cleanup
+      - name: Cleanup environment
+        if: always()
+        run: |
+          rm -f .env 2>/dev/null || true
+          rm -rf logs/ 2>/dev/null || true
 
   notify:
     name: Notification
     runs-on: ubuntu-latest
     needs: orchestrate
-    if: always() && (github.event_name == 'schedule' || github.event_name == 'push')
+    if: |
+      always() &&
+      (github.event_name == 'schedule' || github.event_name == 'push') &&
+      needs.orchestrate.result == 'failure'
     
     permissions:
       contents: read
@@ -339,11 +308,8 @@ jobs:
     steps:
       - name: Workflow Summary
         run: |
-          echo "CyberAi Bot workflow completed"
-          echo "Status: ${{ needs.orchestrate.result }}"
+          echo "CyberAi Bot workflow completed with status: ${{ needs.orchestrate.result }}"
           
-          if [ "${{ needs.orchestrate.result }}" = "success" ]; then
-            echo "✅ All checks passed"
-          else
-            echo "⚠️ Some checks require attention"
+          if [ "${{ needs.orchestrate.result }}" = "failure" ]; then
+            echo "::warning::Workflow failed — check artifacts for details"
           fi
