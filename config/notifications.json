@@ -1,12 +1,16 @@
 {
+  "_comment": "SmartContractAudit Notification Configuration v1.0.0",
+  "_security": "NEVER commit real webhook URLs, tokens, or API keys. Use GitHub Secrets.",
+  "_usage": "Set NOTIFICATIONS_CONFIG as a GitHub Secret with real values for production.",
+
   "email": {
     "enabled": false,
-    "recipients": ["admin@example.com"],
+    "recipients": "${NOTIFY_EMAIL_RECIPIENTS}",
     "severity": ["critical", "high"]
   },
   "slack": {
     "enabled": false,
-    "webhook": "https://hooks.slack.com/services/YOUR/WEBHOOK/URL",
+    "webhook": "${SLACK_WEBHOOK_URL}",
     "channel": "#security-alerts",
     "username": "Audit Bot",
     "iconEmoji": ":shield:",
@@ -14,18 +18,18 @@
   },
   "telegram": {
     "enabled": false,
-    "botToken": "YOUR_BOT_TOKEN",
-    "chatId": "YOUR_CHAT_ID",
+    "botToken": "${TELEGRAM_BOT_TOKEN}",
+    "chatId": "${TELEGRAM_CHAT_ID}",
     "severity": ["critical"]
   },
   "discord": {
     "enabled": false,
-    "webhook": "https://discord.com/api/webhooks/YOUR/WEBHOOK",
+    "webhook": "${DISCORD_WEBHOOK_URL}",
     "severity": ["critical", "high"]
   },
   "webhook": {
     "enabled": false,
-    "url": "https://your-api.com/webhook",
+    "url": "${CUSTOM_WEBHOOK_URL}",
     "method": "POST",
     "severity": ["critical", "high", "medium", "low"]
   }
