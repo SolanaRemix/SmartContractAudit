@@ -9,22 +9,37 @@ on:
         description: 'Issue number to fix'
         required: false
       scan_report:
-        description: 'Path to scan report'
+        description: 'Path to scan report (relative to repo root)'
         required: false
+        default: 'reports/latest.json'
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
 
 jobs:
   auto-repair:
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' || github.event.label.name == 'auto-fix'
+    timeout-minutes: 20
+    
+    # Only trigger for 'auto-fix' label AND only from authorized actors
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'issues' && 
+       github.event.label.name == 'auto-fix' &&
+       contains(fromJSON('["owner","collaborator","member"]'), github.event.issue.author_association) &&
+       github.actor != 'dependabot[bot]')
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
@@ -32,126 +47,267 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Get issue details
+      # ─── Validate Trigger Actor ────────────
+      - name: Verify authorization
         if: github.event_name == 'issues'
-        id: issue
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const issue = context.payload.issue;
-            return {
-              number: issue.number,
-              title: issue.title,
-              body: issue.body
-            };
+        run: |
+          echo "Triggered by: ${{ github.actor }}"
+          echo "Author association: ${{ github.event.issue.author_association }}"
+          
+          # Additional safety: only run for specific label
+          if [ "${{ github.event.label.name }}" != "auto-fix" ]; then
+            echo "Label is not 'auto-fix', skipping"
+            exit 0
+          fi
       
+      # ─── Check for Existing PR ─────────────
+      - name: Check for existing auto-fix PR
+        id: existing
+        run: |
+          EXISTING=$(gh pr list \
+            --label "automated-fix" \
+            --state open \
+            --json number,title \
+            --jq 'length')
+          
+          echo "count=$EXISTING" >> $GITHUB_OUTPUT
+          
+          if [ "$EXISTING" -gt 0 ]; then
+            echo "::warning::Found $EXISTING open auto-fix PR(s). Skipping to avoid duplicates."
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+      
+      # ─── Generate Fixes ────────────────────
       - name: Generate fixes
+        if: steps.existing.outputs.count == 0
         id: fix
+        timeout-minutes: 10
         run: |
-          # Check if there's a recent scan report
-          if [ -f "reports/latest.json" ]; then
-            echo "Using latest scan report"
-            node script/repair.js --report reports/latest.json --source contracts/ > repair.log 2>&1
-            echo "result=$?" >> $GITHUB_OUTPUT
-          else
-            echo "No scan report found"
-            echo "result=1" >> $GITHUB_OUTPUT
-          fi
+          REPORT_PATH="${{ github.event.inputs.scan_report || 'reports/latest.json' }}"
           
-          if [ -f "reports/fixes.json" ]; then
-            FIX_COUNT=$(jq 'length' reports/fixes.json)
-            echo "fix_count=$FIX_COUNT" >> $GITHUB_OUTPUT
-          else
+          if [ ! -f "$REPORT_PATH" ]; then
+            echo "::warning::No scan report found at $REPORT_PATH"
             echo "fix_count=0" >> $GITHUB_OUTPUT
+            exit 0
           fi
-      
-      - name: Apply fixes to code
-        if: steps.fix.outputs.fix_count > 0
-        run: |
-          echo "Applying ${{ steps.fix.outputs.fix_count }} fixes from reports/fixes.json..."
           
-          if [ ! -f "reports/fixes.json" ]; then
-            echo "Error: reports/fixes.json not found, cannot apply fixes."
+          # Validate JSON before processing
+          if ! jq empty "$REPORT_PATH" 2>/dev/null; then
+            echo "::error::Invalid JSON in $REPORT_PATH"
+            echo "fix_count=0" >> $GITHUB_OUTPUT
             exit 1
           fi
           
-          # Expecting reports/fixes.json to be an array of objects like:
-          # [{ "file": "path/to/file", "patch": "unified diff for git apply" }, ...]
-          jq -c '.[]' reports/fixes.json | while read -r fix; do
-            FILE_PATH=$(echo "$fix" | jq -r '.file // empty')
-            PATCH_CONTENT=$(echo "$fix" | jq -r '.patch // empty')
+          echo "Generating fixes from $REPORT_PATH..."
+          node script/repair.js --report "$REPORT_PATH" --source contracts/ 2>&1 | tee repair.log
+          REPAIR_EXIT=$?
           
-            if [ -z "$FILE_PATH" ] || [ -z "$PATCH_CONTENT" ]; then
-              echo "Skipping entry with missing file or patch:"
-              echo "$fix"
+          if [ -f "reports/fixes.json" ]; then
+            FIX_COUNT=$(jq 'length // 0' reports/fixes.json)
+            echo "fix_count=$FIX_COUNT" >> $GITHUB_OUTPUT
+            
+            # Validate fixes structure
+            if ! jq -e 'all(.[]; has("file") and has("patch") and (.confidence // 0) >= 80)' reports/fixes.json >/dev/null 2>&1; then
+              echo "::warning::Some fixes have low confidence or missing fields. Filtering..."
+              jq '[.[] | select(.confidence >= 80 and .file and .patch)]' reports/fixes.json > reports/fixes-filtered.json
+              mv reports/fixes-filtered.json reports/fixes.json
+              FIX_COUNT=$(jq 'length // 0' reports/fixes.json)
+              echo "fix_count=$FIX_COUNT" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "fix_count=0" >> $GITHUB_OUTPUT
+          fi
+          
+          if [ "$REPAIR_EXIT" -ne 0 ]; then
+            echo "::warning::repair.js exited with code $REPAIR_EXIT"
+          fi
+      
+      # ─── Validate Patches Before Applying ───
+      - name: Validate fix patches
+        if: steps.fix.outputs.fix_count > 0
+        id: validate
+        run: |
+          echo "Validating ${{ steps.fix.outputs.fix_count }} fix(es)..."
+          
+          FAILED=0
+          jq -c '.[]' reports/fixes.json | while read -r fix; do
+            FILE_PATH=$(echo "$fix" | jq -r '.file // ""')
+            PATCH_CONTENT=$(echo "$fix" | jq -r '.patch // ""')
+            CONFIDENCE=$(echo "$fix" | jq -r '.confidence // 0')
+            
+            # Path traversal check
+            if echo "$FILE_PATH" | grep -qE '(\.\./|^/|^\.\.)'; then
+              echo "::error::Path traversal detected in fix: $FILE_PATH"
+              FAILED=1
               continue
             fi
-          
-            echo "Applying patch to $FILE_PATH..."
-            # Apply the patch; fail fast if any patch cannot be applied
-            printf '%s\n' "$PATCH_CONTENT" | git apply --whitespace=nowarn - || exit 1
+            
+            # File must exist or be creatable within repo
+            if [ ! -f "$FILE_PATH" ] && ! echo "$PATCH_CONTENT" | grep -q '^new file'; then
+              echo "::warning::Target file does not exist: $FILE_PATH"
+            fi
+            
+            # Confidence threshold enforcement
+            if [ "$CONFIDENCE" -lt 80 ]; then
+              echo "::warning::Skipping low-confidence fix ($CONFIDENCE%) for $FILE_PATH"
+              continue
+            fi
+            
+            echo "✅ Validated fix for $FILE_PATH (confidence: $CONFIDENCE%)"
           done
           
-          echo "Finished applying fixes."
+          if [ "$FAILED" -ne 0 ]; then
+            echo "::error::Patch validation failed"
+            exit 1
+          fi
       
+      # ─── Apply Fixes ───────────────────────
+      - name: Apply fixes to code
+        if: steps.fix.outputs.fix_count > 0
+        run: |
+          echo "Applying fixes..."
+          
+          jq -c '.[]' reports/fixes.json | while read -r fix; do
+            FILE_PATH=$(echo "$fix" | jq -r '.file // ""')
+            PATCH_CONTENT=$(echo "$fix" | jq -r '.patch // ""')
+            CONFIDENCE=$(echo "$fix" | jq -r '.confidence // 0')
+            
+            # Skip low-confidence fixes
+            if [ "$CONFIDENCE" -lt 80 ]; then
+              echo "Skipping $FILE_PATH (confidence $CONFIDENCE% < 80%)"
+              continue
+            fi
+            
+            echo "::group::Applying fix to $FILE_PATH"
+            
+            # Apply patch safely
+            if printf '%s\n' "$PATCH_CONTENT" | git apply --whitespace=nowarn --reject - 2>&1; then
+              echo "✅ Successfully applied"
+            else
+              echo "::error::Failed to apply patch to $FILE_PATH"
+              git checkout -- "$FILE_PATH" 2>/dev/null || true
+              exit 1
+            fi
+            
+            echo "::endgroup::"
+          done
+          
+          echo "All fixes applied successfully"
+      
+      # ─── Run Tests on Fixed Code ───────────
+      - name: Run tests on fixed code
+        if: steps.fix.outputs.fix_count > 0
+        run: |
+          echo "Running tests to verify fixes..."
+          
+          if [ -f "package.json" ]; then
+            if grep -q '"test"' package.json; then
+              npm test || echo "::warning::Tests failed — manual review required"
+            else
+              echo "No test script defined in package.json — skipping"
+            fi
+          fi
+      
+      # ─── Create Pull Request ───────────────
       - name: Create Pull Request
         if: steps.fix.outputs.fix_count > 0
+        id: pr
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: auto-fix-${{ github.run_number }}
-          commit-message: '🔒 Automated security fixes'
-          title: '🔒 Automated Security Fixes'
+          branch: auto-fix/${{ github.run_number }}-${{ github.run_attempt }}
+          commit-message: |
+            🔒 Automated security fixes
+            
+            Generated from scan report with ${{ steps.fix.outputs.fix_count }} fix(es).
+            All fixes have ≥80% confidence.
+            
+            Triggered by: ${{ github.actor }}
+            Workflow: ${{ github.workflow }}
+            Run: ${{ github.run_id }}
+          title: '🔒 Automated Security Fixes — ${{ steps.fix.outputs.fix_count }} fix(es)'
           body: |
-            ## Automated Security Fixes
+            ## 🔒 Automated Security Fixes
             
             This PR contains automated fixes for detected security vulnerabilities.
             
-            ### Fixed Issues
+            ### Summary
             
-            Applied ${{ steps.fix.outputs.fix_count }} automated fix(es).
+            | Metric | Value |
+            |--------|-------|
+            | Fixes Applied | ${{ steps.fix.outputs.fix_count }} |
+            | Minimum Confidence | 80% |
+            | Triggered By | @${{ github.actor }} |
+            | Workflow Run | [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
             
-            ### Review Checklist
+            ### ⚠️ Review Checklist
             
-            - [ ] Review all code changes
-            - [ ] Run tests to ensure functionality
-            - [ ] Verify security improvements
+            - [ ] Review all code changes carefully
+            - [ ] Run local tests: `npm test`
+            - [ ] Verify security improvements are correct
             - [ ] Check for any breaking changes
+            - [ ] Test on a staging/testnet environment
             
-            ### Related Issue
+            ### 📎 Related
             
-            ${{ github.event_name == 'issues' && format('Fixes #{0}', github.event.issue.number) || 'Manual trigger' }}
+            ${{ github.event_name == 'issues' && format('- Original Issue: #{0}', github.event.issue.number) || '' }}
+            - [View Scan Artifacts](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
             
             ---
             
-            ⚠️ **Important:** Please carefully review these automated changes before merging.
-            While these fixes address known vulnerabilities, they should be tested thoroughly.
+            > ⚠️ **Important:** These are automated fixes. While confidence is ≥80%, manual review is essential before merging. Do not merge without testing.
             
-            *Generated by Auto-Repair Workflow*
-          labels: security, automated-fix, needs-review
-          assignees: ${{ github.event.issue.assignees && join(github.event.issue.assignees.*.login, ',') || '' }}
+            *Generated by Auto-Repair Workflow on $(date -u +'%Y-%m-%d %H:%M:%S UTC')*
+          labels: |
+            security
+            automated-fix
+            needs-review
+            confidence-high
           reviewers: ${{ github.repository_owner }}
+          draft: true
       
-      - name: Comment on issue
-        if: github.event_name == 'issues' && steps.fix.outputs.fix_count > 0
-        uses: actions/github-script@v6
+      # ─── Comment on Issue ──────────────────
+      - name: Comment success on issue
+        if: github.event_name == 'issues' && steps.fix.outputs.fix_count > 0 && steps.pr.outputs.pull-request-url
+        uses: actions/github-script@v7
         with:
           script: |
+            const prUrl = '${{ steps.pr.outputs.pull-request-url }}';
+            const fixCount = '${{ steps.fix.outputs.fix_count }}';
+            
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: '✅ Automated fixes have been generated and a pull request has been created. Please review the PR for the proposed changes.'
+              body: `## ✅ Automated Fixes Generated\n\n` +
+                    `**${fixCount} fix(es)** have been generated with ≥80% confidence.\n\n` +
+                    `### Pull Request\n` +
+                    `📎 ${prUrl}\n\n` +
+                    `### Next Steps\n` +
+                    `1. Review the PR carefully\n` +
+                    `2. Run local tests\n` +
+                    `3. Test on staging before merging\n\n` +
+                    `> ⚠️ Do not merge without manual review.`
             });
       
-      - name: Comment on issue if no fixes
+      - name: Comment no fixes on issue
         if: github.event_name == 'issues' && steps.fix.outputs.fix_count == 0
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: '⚠️ Unable to generate automated fixes for this issue. Manual review and fixes may be required.'
+              body: `## ⚠️ No Automated Fixes Available\n\n` +
+                    `Auto-repair was unable to generate fixes for this issue.\n\n` +
+                    `### Possible reasons:\n` +
+                    `- No scan report available\n` +
+                    `- Vulnerabilities require manual remediation\n` +
+                    `- Confidence below 80% threshold\n\n` +
+                    `### Recommended actions:\n` +
+                    `- Run a manual scan: \`npm run scan\`\n` +
+                    `- Review vulnerabilities manually\n` +
+                    `- Apply fixes by hand and open a PR`
             });
