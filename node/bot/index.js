@@ -1,27 +1,20 @@
 #!/usr/bin/env node
 /**
  * ═══════════════════════════════════════════════════════════════════════════
- * 🤖 GitAntivirus Node Bot - Automated Security Scanner (TEMPLATE)
+ * 🤖 GitAntivirus Node Bot - Automated Security Scanner
  * ═══════════════════════════════════════════════════════════════════════════
- * Description: Scans GitHub repositories for security issues and creates
- *              draft PRs with fixes. Operates in dry-run mode by default.
  * 
- * ⚠️  IMPORTANT: This is a TEMPLATE implementation. The PR creation logic
- *     (createDraftPR function) is a placeholder and requires full implementation
- *     including repository forking, branch creation, and actual PR submission.
- *     See inline comments in createDraftPR() for implementation details.
+ * PRODUCTION-HARDENED v1.0.0
  * 
- * Usage: node index.js
+ * Scans GitHub repositories for security issues.
+ * ALWAYS operates in DRY_RUN mode. PR creation requires explicit implementation.
  * 
  * Environment Variables:
- *   GH_TOKEN / GITHUB_TOKEN  - GitHub token (required for write operations)
- *   DRY_RUN                  - Run in safe mode (default: true)
- *   BOT_PINGS_ENABLED        - Enable notifications (default: false)
- *   ALLOWLIST_ORGS           - Comma-separated org list (default: empty)
- *   MAX_PRS_PER_RUN          - Max PRs to create (default: 3)
- *   STAR_THRESHOLD           - Min stars (default: 10)
- *   SEARCH_KEYWORDS          - Search terms (default: "smart contract,solidity")
- * ═══════════════════════════════════════════════════════════════════════════
+ *   GITHUB_TOKEN  - GitHub token (issues:read, pull-requests:read only)
+ *   DRY_RUN       - Enforced to 'true' (non-configurable)
+ *   ALLOWLIST_ORGS - Comma-separated org list
+ *   MAX_PRS_PER_RUN - Max repos to scan (default: 3)
+ *   STAR_THRESHOLD - Min stars (default: 10)
  */
 
 import { Octokit } from '@octokit/rest';
@@ -29,99 +22,136 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 🔧 Configuration
-// ═══════════════════════════════════════════════════════════════════════════
+// ─── Constants ────────────────────────────────
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const MAX_QUERY_LENGTH = 256;
+const RATE_LIMIT_DELAY = 2000; // 2 seconds between API calls
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 5000;
+
+// ─── Configuration (Hardened) ────────────────
 const config = {
-  dryRun: process.env.DRY_RUN !== 'false',
-  botPingsEnabled: process.env.BOT_PINGS_ENABLED === 'true',
-  allowlistOrgs: process.env.ALLOWLIST_ORGS?.split(',').map(s => s.trim()).filter(Boolean) || [],
-  maxPrsPerRun: parseInt(process.env.MAX_PRS_PER_RUN || '3', 10),
-  starThreshold: parseInt(process.env.STAR_THRESHOLD || '10', 10),
-  searchKeywords: process.env.SEARCH_KEYWORDS || 'smart contract,solidity,audit',
-  token: process.env.GH_TOKEN || process.env.GITHUB_TOKEN,
+  // ALWAYS dry-run — cannot be disabled
+  dryRun: true,
+  
+  // Bot pings permanently disabled
+  botPingsEnabled: false,
+  
+  // Allowlist — empty = most restrictive
+  allowlistOrgs: validateAllowlistOrgs(process.env.ALLOWLIST_ORGS || ''),
+  
+  maxPrsPerRun: clamp(parseInt(process.env.MAX_PRS_PER_RUN || '3', 10), 1, 10),
+  starThreshold: clamp(parseInt(process.env.STAR_THRESHOLD || '10', 10), 1, 1000),
+  searchKeywords: validateSearchKeywords(
+    process.env.SEARCH_KEYWORDS || 'smart contract,solidity,audit'
+  ),
+  
+  // Token with minimal scope
+  token: process.env.GITHUB_TOKEN || null,
 };
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 🎨 Logging Helpers
-// ═══════════════════════════════════════════════════════════════════════════
+// ─── Validation Utilities ─────────────────────
+
+function clamp(value, min, max) {
+  if (isNaN(value)) return min;
+  return Math.max(min, Math.min(max, value));
+}
+
+function validateAllowlistOrgs(input) {
+  if (!input || typeof input !== 'string') return [];
+  
+  const orgs = input.split(',').map(s => s.trim()).filter(Boolean);
+  
+  // Only allow alphanumeric + hyphens
+  const validOrgs = orgs.filter(org => /^[a-zA-Z0-9-]+$/.test(org));
+  
+  if (validOrgs.length !== orgs.length) {
+    console.warn('⚠️  Some org names were invalid and filtered out');
+  }
+  
+  return validOrgs;
+}
+
+function validateSearchKeywords(input) {
+  if (!input || typeof input !== 'string') return 'smart contract,solidity,audit';
+  
+  // Sanitize: remove special GitHub search operators
+  const sanitized = input.replace(/[<>|!+\-]/g, ' ').replace(/\s+/g, ' ').trim();
+  
+  if (sanitized.length > MAX_QUERY_LENGTH) {
+    console.warn(`⚠️  Search query truncated to ${MAX_QUERY_LENGTH} characters`);
+    return sanitized.substring(0, MAX_QUERY_LENGTH);
+  }
+  
+  return sanitized || 'smart contract,solidity,audit';
+}
+
+// ─── Logging ──────────────────────────────────
 const log = {
   info: (msg) => console.log(`ℹ️  [INFO] ${msg}`),
   success: (msg) => console.log(`✅ [SUCCESS] ${msg}`),
   warning: (msg) => console.log(`⚠️  [WARNING] ${msg}`),
   error: (msg) => console.error(`❌ [ERROR] ${msg}`),
-  debug: (msg) => console.log(`🔍 [DEBUG] ${msg}`),
 };
 
 const banner = (text) => {
-  console.log('\n═══════════════════════════════════════════════════════════════════════════');
+  console.log(`\n${'═'.repeat(60)}`);
   console.log(`  ${text}`);
-  console.log('═══════════════════════════════════════════════════════════════════════════\n');
+  console.log(`${'═'.repeat(60)}\n`);
 };
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 🔌 Initialize Octokit
-// ═══════════════════════════════════════════════════════════════════════════
-let octokit = null;
+// ─── Octokit Initialization ───────────────────
+const octokit = config.token
+  ? new Octokit({ auth: config.token })
+  : new Octokit();
+
 if (config.token) {
-  octokit = new Octokit({ auth: config.token });
   log.success('GitHub API client initialized');
 } else {
-  log.warning('No GitHub token provided - running in read-only mode');
-  octokit = new Octokit();
+  log.warning('No GitHub token — running in read-only mode');
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 📝 Load PR Template
-// ═══════════════════════════════════════════════════════════════════════════
-function loadPRTemplate() {
-  try {
-    const templatePath = join(__dirname, '..', 'PR_TEMPLATE.md');
-    if (existsSync(templatePath)) {
-      return readFileSync(templatePath, 'utf8');
+// ─── Retry Wrapper ────────────────────────────
+async function withRetry(fn, retries = MAX_RETRIES) {
+  let lastError;
+  for (let i = 0; i <= retries; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      lastError = error;
+      
+      if (error.status === 403 || error.status === 429) {
+        const retryAfter = parseInt(error.response?.headers?.['retry-after'] || '5', 10);
+        log.warning(`Rate limited. Waiting ${retryAfter}s... (attempt ${i + 1}/${retries + 1})`);
+        await new Promise(r => setTimeout(r, retryAfter * 1000));
+      } else if (i < retries) {
+        await new Promise(r => setTimeout(r, RETRY_DELAY));
+      }
     }
-  } catch (error) {
-    log.warning(`Could not load PR template: ${error.message}`);
   }
-  return `## 🛡️ GitAntivirus Security Fix
-
-This automated PR addresses security issues found in your repository.
-
-### Changes Made
-- Security vulnerability fixes
-- Dependency updates
-- Configuration improvements
-
-### Review Checklist
-- [ ] Review all changes
-- [ ] Run tests
-- [ ] Verify security fixes
-- [ ] Merge when ready
-
-*🤖 Automated by GitAntivirus*`;
+  throw lastError;
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 🔍 Search for Repositories
-// ═══════════════════════════════════════════════════════════════════════════
+// ─── Search Repositories ──────────────────────
 async function searchRepositories() {
   log.info('Searching for repositories...');
   
-  const keywords = config.searchKeywords.split(',').map(k => k.trim());
-  const query = keywords.join(' OR ');
+  const keywords = config.searchKeywords.split(',').map(k => k.trim()).filter(Boolean);
+  const query = keywords.join(' OR ').substring(0, MAX_QUERY_LENGTH);
   
   try {
-    const { data } = await octokit.rest.search.repos({
-      q: `${query} stars:>${config.starThreshold}`,
-      sort: 'stars',
-      order: 'desc',
-      per_page: 30,
-    });
+    const { data } = await withRetry(() =>
+      octokit.rest.search.repos({
+        q: `${query} stars:>=${config.starThreshold}`,
+        sort: 'stars',
+        order: 'desc',
+        per_page: 10,
+      })
+    );
     
-    log.success(`Found ${data.total_count} repositories matching criteria`);
+    log.success(`Found ${data.total_count} repositories`);
     return data.items || [];
   } catch (error) {
     log.error(`Search failed: ${error.message}`);
@@ -129,36 +159,34 @@ async function searchRepositories() {
   }
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 🎯 Filter Repositories
-// ═══════════════════════════════════════════════════════════════════════════
+// ─── Filter Repositories ──────────────────────
 function filterRepositories(repos) {
   log.info('Filtering repositories...');
   
-  let filtered = repos;
+  let filtered = repos.filter(repo => {
+    const ownerLogin = repo.owner?.login;
+    if (!ownerLogin) return false;
+    
+    // Validate owner is alphanumeric + hyphens
+    if (!/^[a-zA-Z0-9-]+$/.test(ownerLogin)) {
+      log.warning(`Skipping invalid owner: ${ownerLogin}`);
+      return false;
+    }
+    
+    return true;
+  });
   
-  // Apply allowlist if configured
   if (config.allowlistOrgs.length > 0) {
-    filtered = filtered.filter(repo => {
-      const ownerLogin = repo.owner.login;
-      const allowed = config.allowlistOrgs.includes(ownerLogin);
-      if (!allowed) {
-        log.debug(`Filtered out ${repo.full_name} (not in allowlist)`);
-      }
-      return allowed;
-    });
+    filtered = filtered.filter(repo => config.allowlistOrgs.includes(repo.owner.login));
   }
   
-  // Apply star threshold
   filtered = filtered.filter(repo => repo.stargazers_count >= config.starThreshold);
   
   log.success(`${filtered.length} repositories passed filters`);
   return filtered;
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 📊 Analyze Repository
-// ═══════════════════════════════════════════════════════════════════════════
+// ─── Analyze Repository ───────────────────────
 async function analyzeRepository(repo) {
   log.info(`Analyzing ${repo.full_name}...`);
   
@@ -170,99 +198,39 @@ async function analyzeRepository(repo) {
     recommendations: [],
   };
   
-  try {
-    // Check for security files
-    try {
-      await octokit.rest.repos.getContent({
+  // Check security files in parallel
+  const securityFiles = ['SECURITY.md', '.gitignore', 'package.json'];
+  const checks = securityFiles.map(file =>
+    withRetry(() =>
+      octokit.rest.repos.getContent({
         owner: repo.owner.login,
         repo: repo.name,
-        path: 'SECURITY.md',
-      });
-      analysis.recommendations.push('✅ SECURITY.md found');
-    } catch {
-      analysis.issues.push('❌ Missing SECURITY.md');
-    }
-    
-    // Check for common security files
-    const securityFiles = ['.solhint.json', 'slither.config.json', '.gitignore'];
-    for (const file of securityFiles) {
-      try {
-        await octokit.rest.repos.getContent({
-          owner: repo.owner.login,
-          repo: repo.name,
-          path: file,
-        });
-      } catch {
-        analysis.issues.push(`❌ Missing ${file}`);
-      }
-    }
-    
-  } catch (error) {
-    log.warning(`Analysis error for ${repo.full_name}: ${error.message}`);
-  }
+        path: file,
+      })
+    )
+      .then(() => analysis.recommendations.push(`✅ ${file} found`))
+      .catch(err => {
+        if (err.status === 404) {
+          analysis.issues.push(`❌ Missing ${file}`);
+        } else {
+          log.warning(`Check failed for ${file}: ${err.message}`);
+        }
+      })
+  );
+  
+  await Promise.allSettled(checks);
   
   return analysis;
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 📝 Create Draft PR
-// ═══════════════════════════════════════════════════════════════════════════
-async function createDraftPR(repo, analysis) {
-  if (config.dryRun) {
-    log.warning(`[DRY-RUN] Would create PR for ${repo.full_name}`);
-    return { created: false, reason: 'dry-run' };
-  }
-  
-  if (!config.token) {
-    log.warning(`[NO-TOKEN] Cannot create PR for ${repo.full_name}`);
-    return { created: false, reason: 'no-token' };
-  }
-  
-  try {
-    const prTemplate = loadPRTemplate();
-    
-    // Build PR body with pings if enabled and owner is SolanaRemix
-    let prBody = prTemplate;
-    if (config.botPingsEnabled && repo.owner.login === 'SolanaRemix') {
-      prBody += '\n\n---\ncc: @SolanaRemix\n';
-    }
-    
-    log.info(`Creating draft PR for ${repo.full_name}...`);
-    
-    // ⚠️  TEMPLATE: This function is a placeholder and requires full implementation.
-    // To implement actual PR creation, you need to:
-    // 1. Fork the target repository (if not already forked)
-    // 2. Create a new branch in your fork with the proposed changes
-    // 3. Commit the security fixes to that branch
-    // 4. Use octokit.rest.pulls.create() to open a draft PR from your fork to the target repo
-    // 5. Handle authentication, rate limiting, and error cases appropriately
-    // 
-    // Example implementation outline:
-    //   const fork = await octokit.rest.repos.createFork({ owner, repo });
-    //   const branch = await createBranch(fork, 'security-fixes');
-    //   await commitChanges(branch, fixes);
-    //   const pr = await octokit.rest.pulls.create({
-    //     owner, repo, head: `${fork.owner.login}:${branch}`, base: 'main',
-    //     title: 'Security fixes', body: prBody, draft: true
-    //   });
-    
-    log.warning('PR creation logic is a template - implement full workflow as described above');
-    
-    return { created: false, reason: 'template-only' };
-  } catch (error) {
-    log.error(`Failed to create PR: ${error.message}`);
-    return { created: false, reason: error.message };
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// 💾 Save Summary
-// ═══════════════════════════════════════════════════════════════════════════
+// ─── Save Summary ─────────────────────────────
 function saveSummary(results) {
   const logsDir = join(__dirname, '..', 'logs');
   if (!existsSync(logsDir)) {
-    mkdirSync(logsDir, { recursive: true });
+    mkdirSync(logsDir, { recursive: true, mode: 0o755 });
   }
+  
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   
   const summary = {
     timestamp: new Date().toISOString(),
@@ -270,107 +238,76 @@ function saveSummary(results) {
       dryRun: config.dryRun,
       botPingsEnabled: config.botPingsEnabled,
       allowlistOrgs: config.allowlistOrgs,
-      maxPrsPerRun: config.maxPrsPerRun,
     },
-    results,
+    results: results.map(r => ({
+      repo: r.repo.full_name,
+      issues: r.analysis.issues.length,
+      recommendations: r.analysis.recommendations.length,
+    })),
     stats: {
       total: results.length,
-      analyzed: results.filter(r => r.analysis).length,
-      prsCreated: results.filter(r => r.pr?.created).length,
+      analyzed: results.length,
+      totalIssues: results.reduce((sum, r) => sum + r.analysis.issues.length, 0),
     },
   };
   
-  // Add conditional ping notice
-  if (config.botPingsEnabled) {
-    const solanaRemixRepos = results.filter(r => r.repo.owner.login === 'SolanaRemix');
-    if (solanaRemixRepos.length > 0) {
-      summary.notifications = {
-        enabled: true,
-        mention: '@SolanaRemix',
-        repos: solanaRemixRepos.map(r => r.repo.full_name),
-      };
-    }
-  }
-  
-  const summaryPath = join(logsDir, 'summary.json');
-  writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
+  const summaryPath = join(logsDir, `summary-${timestamp}.json`);
+  writeFileSync(summaryPath, JSON.stringify(summary, null, 2), { mode: 0o644 });
   log.success(`Summary saved to ${summaryPath}`);
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 🚀 Main Execution
-// ═══════════════════════════════════════════════════════════════════════════
+// ─── Main ─────────────────────────────────────
 async function main() {
-  banner('🤖 GitAntivirus Node Bot');
+  banner('🤖 GitAntivirus Node Bot v1.0.0');
   
-  // Display configuration
-  log.info(`DRY_RUN: ${config.dryRun}`);
-  log.info(`BOT_PINGS_ENABLED: ${config.botPingsEnabled}`);
-  log.info(`ALLOWLIST_ORGS: ${config.allowlistOrgs.join(', ') || 'none'}`);
+  log.info('DRY_RUN: true (permanently enforced)');
+  log.info('BOT_PINGS: false (permanently disabled)');
+  log.info(`ALLOWLIST_ORGS: ${config.allowlistOrgs.join(', ') || '(none — most restrictive)'}`);
   log.info(`MAX_PRS_PER_RUN: ${config.maxPrsPerRun}`);
   log.info(`STAR_THRESHOLD: ${config.starThreshold}`);
   console.log();
   
-  if (config.dryRun) {
-    log.warning('🧪 RUNNING IN DRY-RUN MODE - No PRs will be created');
-    console.log();
-  }
+  log.warning('🧪 DRY-RUN MODE — No PRs will be created');
+  console.log();
   
-  // Search for repositories
   const repos = await searchRepositories();
   if (repos.length === 0) {
-    log.warning('No repositories found matching criteria');
+    log.warning('No repositories found');
     return;
   }
   
-  // Filter repositories
   const filtered = filterRepositories(repos);
   if (filtered.length === 0) {
     log.warning('No repositories passed filters');
     return;
   }
   
-  // Process repositories
-  const results = [];
   const limit = Math.min(filtered.length, config.maxPrsPerRun);
-  
   log.info(`Processing ${limit} repositories...`);
   console.log();
   
+  const results = [];
   for (let i = 0; i < limit; i++) {
     const repo = filtered[i];
     const analysis = await analyzeRepository(repo);
-    const pr = await createDraftPR(repo, analysis);
     
-    results.push({ repo, analysis, pr });
+    results.push({ repo, analysis });
     
-    // Rate limiting delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    log.info(`[${i + 1}/${limit}] ${repo.full_name}: ${analysis.issues.length} issues, ${analysis.recommendations.length} checks passed`);
+    
+    await new Promise(resolve => setTimeout(resolve, RATE_LIMIT_DELAY));
   }
   
-  // Save summary
   saveSummary(results);
   
-  // Display summary
-  console.log();
-  banner('📊 Scan Summary');
-  log.info(`Repositories scanned: ${results.length}`);
-  log.info(`Issues found: ${results.reduce((sum, r) => sum + r.analysis.issues.length, 0)}`);
-  log.info(`PRs created: ${results.filter(r => r.pr?.created).length}`);
-  
-  if (config.dryRun) {
-    console.log();
-    log.warning('To enable live PR creation, run with: DRY_RUN=false');
-  }
-  
-  log.success('Scan complete! 🎉');
+  banner('📊 Scan Complete');
+  log.success(`Repositories scanned: ${results.length}`);
+  log.success(`Total issues found: ${results.reduce((sum, r) => sum + r.analysis.issues.length, 0)}`);
+  log.success('PR creation is disabled — dry-run only');
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// 🎬 Entry Point
-// ═══════════════════════════════════════════════════════════════════════════
+// ─── Entry Point ──────────────────────────────
 main().catch(error => {
-  log.error(`Fatal error: ${error.message}`);
-  console.error(error);
+  log.error(`Fatal: ${error.message}`);
   process.exit(1);
 });
