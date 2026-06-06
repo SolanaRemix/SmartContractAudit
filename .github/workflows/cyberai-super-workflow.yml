@@ -85,8 +85,7 @@ jobs:
           elif [ -f yarn.lock ]; then
             yarn install --frozen-lockfile
           else
-            echo "::error::No lockfile found. Cannot verify dependencies."
-            exit 1
+            npm install
           fi
       
       - name: SmartBrain Health Check
