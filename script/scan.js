@@ -9,6 +9,85 @@ const Auditor = require('../auditor');
 const fs = require('fs');
 const path = require('path');
 
+// Security: Maximum file size (10MB) to prevent DoS
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+// Security: Sanitize input to prevent injection attacks
+function sanitizeInput(input) {
+  if (typeof input !== 'string') {
+    throw new Error('Input must be a string');
+  }
+  
+  // Remove any shell metacharacters and control characters
+  const sanitized = input
+    .replace(/[;&|`$(){}[\]<>]/g, '')
+    .replace(/[\x00-\x1F\x7F]/g, '')
+    .trim();
+  
+  if (sanitized.length === 0 && input.length > 0) {
+    throw new Error('Input contains only invalid characters');
+  }
+  
+  return sanitized;
+}
+
+// Security: Validate and sanitize file paths to prevent path traversal
+function sanitizeFilePath(filePath) {
+  if (!filePath || typeof filePath !== 'string') {
+    throw new Error('File path must be a non-empty string');
+  }
+  
+  // Resolve to absolute path and normalize
+  const normalizedPath = path.resolve(filePath);
+  
+  // Ensure the resolved path doesn't contain path traversal attempts
+  if (normalizedPath.includes('..')) {
+    throw new Error('Path traversal detected in file path');
+  }
+  
+  // Ensure file exists and is readable
+  if (!fs.existsSync(normalizedPath)) {
+    throw new Error(`File does not exist: ${filePath}`);
+  }
+  
+  const stats = fs.statSync(normalizedPath);
+  
+  if (!stats.isFile()) {
+    throw new Error(`Path is not a file: ${filePath}`);
+  }
+  
+  // Check file size
+  if (stats.size > MAX_FILE_SIZE) {
+    throw new Error(`File size exceeds maximum allowed size (${MAX_FILE_SIZE} bytes): ${filePath}`);
+  }
+  
+  return normalizedPath;
+}
+
+// Security: Validate blockchain address format
+function validateAddress(address, chain = 'ethereum') {
+  if (!address || typeof address !== 'string') {
+    throw new Error('Address must be a non-empty string');
+  }
+  
+  const sanitized = sanitizeInput(address);
+  
+  // Basic validation based on chain
+  if (chain === 'ethereum' || chain === 'bsc' || chain === 'polygon') {
+    // Ethereum-style addresses start with 0x and have 40 hex characters
+    if (!/^0x[a-fA-F0-9]{40}$/.test(sanitized)) {
+      throw new Error('Invalid Ethereum-style address format');
+    }
+  } else if (chain === 'solana') {
+    // Solana addresses are base58 encoded, typically 32-44 characters
+    if (!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(sanitized)) {
+      throw new Error('Invalid Solana address format');
+    }
+  }
+  
+  return sanitized;
+}
+
 // Parse command line arguments
 function parseArgs() {
   const args = process.argv.slice(2);
@@ -28,42 +107,78 @@ function parseArgs() {
           console.error('Error: --address requires a value');
           process.exit(1);
         }
-        options.address = args[++i];
+        // Security: Sanitize address input
+        try {
+          options.address = args[++i];
+        } catch (error) {
+          console.error(`Error: Invalid address - ${error.message}`);
+          process.exit(1);
+        }
         break;
       case '--chain':
         if (i + 1 >= args.length) {
           console.error('Error: --chain requires a value');
           process.exit(1);
         }
-        options.chain = args[++i];
+        // Security: Sanitize chain input
+        try {
+          options.chain = sanitizeInput(args[++i]);
+        } catch (error) {
+          console.error(`Error: Invalid chain - ${error.message}`);
+          process.exit(1);
+        }
         break;
       case '--modules':
         if (i + 1 >= args.length) {
           console.error('Error: --modules requires a value');
           process.exit(1);
         }
-        options.modules = args[++i].split(',');
+        // Security: Sanitize module names
+        try {
+          const modulesInput = sanitizeInput(args[++i]);
+          options.modules = modulesInput.split(',').map(m => sanitizeInput(m.trim()));
+        } catch (error) {
+          console.error(`Error: Invalid modules - ${error.message}`);
+          process.exit(1);
+        }
         break;
       case '--output':
         if (i + 1 >= args.length) {
           console.error('Error: --output requires a value');
           process.exit(1);
         }
-        options.output = args[++i];
+        // Security: Sanitize output format
+        try {
+          options.output = sanitizeInput(args[++i]);
+        } catch (error) {
+          console.error(`Error: Invalid output format - ${error.message}`);
+          process.exit(1);
+        }
         break;
       case '--depth':
         if (i + 1 >= args.length) {
           console.error('Error: --depth requires a value');
           process.exit(1);
         }
-        options.depth = parseInt(args[++i]);
+        const depthValue = parseInt(args[++i]);
+        if (isNaN(depthValue) || depthValue < 1 || depthValue > 100) {
+          console.error('Error: --depth must be a number between 1 and 100');
+          process.exit(1);
+        }
+        options.depth = depthValue;
         break;
       case '--file':
         if (i + 1 >= args.length) {
           console.error('Error: --file requires a value');
           process.exit(1);
         }
-        options.file = args[++i];
+        // Security: Validate and sanitize file path
+        try {
+          options.file = sanitizeFilePath(args[++i]);
+        } catch (error) {
+          console.error(`Error: Invalid file path - ${error.message}`);
+          process.exit(1);
+        }
         break;
       case '--help':
         printHelp();
@@ -103,6 +218,19 @@ Supported modules: antivirus, spam, honeypot, tracer
 }
 
 async function scanAddress(auditor, address, chain, modules) {
+  // Security: Validate address before scanning
+  try {
+    address = validateAddress(address, chain);
+  } catch (error) {
+    console.error(`Invalid address: ${error.message}`);
+    return {
+      address,
+      chain,
+      error: `Invalid address format: ${error.message}`,
+      timestamp: Date.now()
+    };
+  }
+  
   console.log(`\n${'='.repeat(60)}`);
   console.log(`Scanning: ${address}`);
   console.log(`Chain: ${chain}`);
@@ -143,7 +271,10 @@ async function main() {
     const result = await scanAddress(auditor, options.address, options.chain, options.modules);
     results.push(result);
   } else if (options.file) {
-    const addresses = fs.readFileSync(options.file, 'utf8')
+    // Security: File path already validated in parseArgs via sanitizeFilePath
+    // Read file content securely
+    const fileContent = fs.readFileSync(options.file, 'utf8');
+    const addresses = fileContent
       .split('\n')
       .map(line => line.trim())
       .filter(line => line && !line.startsWith('#'));
