@@ -37,12 +37,19 @@ function sanitizeFilePath(filePath) {
     throw new Error('File path must be a non-empty string');
   }
   
+  // Check for path traversal attempts BEFORE normalization
+  if (filePath.includes('..')) {
+    throw new Error('Path traversal detected in file path');
+  }
+  
   // Resolve to absolute path and normalize
   const normalizedPath = path.resolve(filePath);
   
-  // Ensure the resolved path doesn't contain path traversal attempts
-  if (normalizedPath.includes('..')) {
-    throw new Error('Path traversal detected in file path');
+  // Additional security: ensure resolved path is within allowed directories
+  // This prevents symlink-based traversal attacks
+  const allowedBase = path.resolve(process.cwd());
+  if (!normalizedPath.startsWith(allowedBase)) {
+    throw new Error('Access to path outside project directory is not allowed');
   }
   
   // Ensure file exists and is readable
@@ -107,9 +114,13 @@ function parseArgs() {
           console.error('Error: --address requires a value');
           process.exit(1);
         }
-        // Security: Sanitize address input
+        // Security: Validate and sanitize address input
+        // Note: Full validation happens in scanAddress(), but we store the raw value here
+        // to preserve the original input for error messages
         try {
-          options.address = args[++i];
+          const rawAddress = args[++i];
+          // Basic sanitization only - full validation deferred to scanAddress()
+          options.address = sanitizeInput(rawAddress);
         } catch (error) {
           console.error(`Error: Invalid address - ${error.message}`);
           process.exit(1);

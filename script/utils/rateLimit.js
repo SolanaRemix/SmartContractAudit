@@ -101,7 +101,7 @@ class RateLimitManager extends EventEmitter {
       this.lastReset.minute = minuteBoundary;
     } else if (this.lastReset.hour !== hourBoundary) {
       // Reset hourly counts
-      for (const [key, value] of this.requestCounts.entries()) {
+      for (const [key] of this.requestCounts.entries()) {
         if (key.includes(':hour')) {
           this.requestCounts.delete(key);
         }
@@ -110,7 +110,7 @@ class RateLimitManager extends EventEmitter {
       this.lastReset.minute = minuteBoundary;
     } else if (this.lastReset.minute !== minuteBoundary) {
       // Reset minute counts
-      for (const [key, value] of this.requestCounts.entries()) {
+      for (const [key] of this.requestCounts.entries()) {
         if (key.includes(':minute')) {
           this.requestCounts.delete(key);
         }
@@ -286,6 +286,10 @@ class RateLimitManager extends EventEmitter {
   /**
    * Cap conversation history to prevent unbounded token consumption
    * Keeps the most recent messages within the configured limits
+   * 
+   * NOTE: maxTokensPerMessage is based on character count, not actual token count.
+   * For accurate token counting, integrate a tokenization library like 'gpt-3-encoder' or 'tiktoken'.
+   * Character-based limits provide a reasonable approximation for basic use cases.
    */
   capConversationHistory(messages) {
     if (!Array.isArray(messages)) {

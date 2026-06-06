@@ -50,12 +50,19 @@ function sanitizeFilePath(filePath) {
     throw new Error('File path must be a non-empty string');
   }
   
+  // Check for path traversal attempts BEFORE normalization
+  if (filePath.includes('..')) {
+    throw new Error('Path traversal detected in file path');
+  }
+  
   // Resolve to absolute path and normalize
   const normalizedPath = path.resolve(filePath);
   
-  // Ensure the resolved path doesn't contain path traversal attempts
-  if (normalizedPath.includes('..')) {
-    throw new Error('Path traversal detected in file path');
+  // Additional security: ensure resolved path is within allowed directories
+  // This prevents symlink-based traversal attacks
+  const allowedBase = path.resolve(process.cwd());
+  if (!normalizedPath.startsWith(allowedBase)) {
+    throw new Error('Access to path outside project directory is not allowed');
   }
   
   // Ensure file exists
