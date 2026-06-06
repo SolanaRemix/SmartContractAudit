@@ -186,7 +186,7 @@ The scanner validates addresses based on `config/chains.json` and currently supp
 
 #### Adding a New Chain
 
-1. Add the chain metadata in `/tmp/workspace/SolanaRemix/SmartContractAudit/config/chains.json`.
+1. Add the chain metadata in `config/chains.json`.
 2. Provide `chainId`, `type` (`evm` or `solana`), and RPC endpoints.
 3. For EVM chains, addresses are validated with EIP-55 checksum support.
 4. Re-run `node script/scan.js --verify` to confirm validation coverage.

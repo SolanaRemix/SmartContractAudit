@@ -36,6 +36,9 @@
     "eslint": "8.57.1",
     "prettier": "3.6.2"
   },
+  "overrides": {
+    "ws": "8.20.1"
+  },
   "engines": {
     "node": ">=18.0.0",
     "pnpm": ">=8.0.0"

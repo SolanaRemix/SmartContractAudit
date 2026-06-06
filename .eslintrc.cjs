@@ -12,5 +12,5 @@ module.exports = {
   rules: {
     'no-undef': 'error'
   },
-  ignorePatterns: ['node_modules/', 'reports/']
+  ignorePatterns: ['node_modules/', 'reports/', 'node/bot/']
 };

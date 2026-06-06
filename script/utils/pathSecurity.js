@@ -8,9 +8,24 @@ function ensureAllowedPath(targetPath, allowedBase) {
 
   const normalizedBase = path.resolve(path.normalize(allowedBase));
   const normalizedTarget = path.resolve(path.normalize(targetPath));
+  const targetInsideBase =
+    normalizedTarget === normalizedBase ||
+    normalizedTarget.startsWith(normalizedBase + path.sep);
+
+  if (!targetInsideBase) {
+    throw new Error('Path traversal detected: target is outside allowed base');
+  }
 
   const existingBase = fs.realpathSync(normalizedBase);
-  const existingTarget = fs.realpathSync(normalizedTarget);
+  let existingTarget;
+  try {
+    existingTarget = fs.realpathSync(normalizedTarget);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      throw new Error('Path does not exist');
+    }
+    throw error;
+  }
 
   if (!existingTarget.startsWith(existingBase + path.sep) && existingTarget !== existingBase) {
     throw new Error('Path traversal detected: target is outside allowed base');
