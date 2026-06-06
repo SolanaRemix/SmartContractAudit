@@ -9,6 +9,7 @@ async function retryWithBackoff(task, options = {}) {
     baseDelayMs = 100,
     jitterRatio = 0.25,
     timeoutMs = 5000,
+    retryAfterMs = 0,
     randomFn = Math.random,
     sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
   } = options;
@@ -36,7 +37,10 @@ async function retryWithBackoff(task, options = {}) {
         throw new Error(`Retry timeout exceeded after ${elapsed}ms`);
       }
 
-      const delay = createJitter(baseDelayMs * (2 ** attempt), jitterRatio, randomFn);
+      // Use the larger of the exponential backoff delay and any externally
+      // supplied retryAfterMs (e.g. from a rate limiter's resetAt field) so
+      // that retries never fire before the rate-limit window has reset.
+      const delay = Math.max(createJitter(baseDelayMs * (2 ** attempt), jitterRatio, randomFn), retryAfterMs);
       await sleep(delay);
       attempt += 1;
     }

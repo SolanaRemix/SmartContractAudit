@@ -5,6 +5,24 @@ const path = require('path');
 const { JsonLogger } = require('./utils/logger');
 const { ensureAllowedPath } = require('./utils/pathSecurity');
 
+// Security: Maximum source-code size (50 MB) to prevent DoS
+const MAX_FILE_SIZE = 50 * 1024 * 1024;
+
+// Security: Validate vulnerability data structure.
+// Accepts any non-empty string type so that scanner-reported types not in
+// the built-in repair list (e.g. 'selfdestruct') are not misclassified as
+// invalid data.  Unknown types will simply reach the "auto-repair not
+// available" path in the repair engine.
+function validateVulnerabilityData(data) {
+  if (!data || typeof data !== 'object') {
+    throw new Error('Invalid vulnerability data: must be an object');
+  }
+  if (!data.type || typeof data.type !== 'string' || data.type.trim().length === 0) {
+    throw new Error('Invalid vulnerability data: type must be a non-empty string');
+  }
+  return true;
+}
+
 const logger = new JsonLogger('repair');
 
 class RepairEngine {
@@ -69,6 +87,36 @@ class RepairEngine {
   }
 
   async generateFix(vulnerability, sourceCode, filePath = null) {
+    // Security: Validate vulnerability data structure
+    try {
+      validateVulnerabilityData(vulnerability);
+    } catch (error) {
+      console.error(`Invalid vulnerability data: ${error.message}`);
+      return {
+        vulnerabilityId: vulnerability?.type || 'unknown',
+        fixAvailable: false,
+        reason: `Invalid vulnerability data: ${error.message}`
+      };
+    }
+    
+    // Security: Validate source code
+    if (!sourceCode || typeof sourceCode !== 'string' || sourceCode.trim().length === 0) {
+      return {
+        vulnerabilityId: vulnerability.type,
+        fixAvailable: false,
+        reason: 'Source code must be a non-empty string'
+      };
+    }
+    
+    // Security: Check source code size
+    if (Buffer.byteLength(sourceCode, 'utf8') > MAX_FILE_SIZE) {
+      return {
+        vulnerabilityId: vulnerability.type,
+        fixAvailable: false,
+        reason: `Source code exceeds maximum size (${MAX_FILE_SIZE} bytes)`
+      };
+    }
+    
     const pattern = this.repairPatterns[vulnerability.type];
 
     if (!pattern || !pattern.enabled) {
@@ -307,7 +355,12 @@ async function main(argv = process.argv.slice(2)) {
 
   if (createPR && fixes.length > 0 && config.autoCreatePR) {
     const repository = process.env.GITHUB_REPOSITORY || 'owner/repo';
-    await engine.createPR(fixes, repository);
+    try {
+      await engine.createPR(fixes, repository, authToken);
+    } catch (error) {
+      console.error(`Failed to create PR: ${error.message}`);
+      process.exit(1);
+    }
   }
 }
 
