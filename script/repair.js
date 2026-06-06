@@ -7,6 +7,114 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
+
+// Security: Maximum file size (50MB) to prevent DoS
+const MAX_FILE_SIZE = 50 * 1024 * 1024;
+
+// Security: Maximum number of fixes to prevent resource exhaustion
+const MAX_FIXES_PER_REQUEST = 100;
+
+// Security: Authentication token validation
+function validateAuthToken(token) {
+  if (!token || typeof token !== 'string') {
+    throw new Error('Authentication token is required');
+  }
+  
+  // Check if token matches expected format (e.g., GitHub token)
+  // In production, this should verify against a secure store
+  const expectedToken = process.env.REPAIR_AUTH_TOKEN;
+  
+  if (!expectedToken) {
+    throw new Error('Authentication not configured (REPAIR_AUTH_TOKEN not set)');
+  }
+  
+  // Use constant-time comparison to prevent timing attacks
+  const bufferA = Buffer.from(token);
+  const bufferB = Buffer.from(expectedToken);
+  
+  if (bufferA.length !== bufferB.length) {
+    throw new Error('Authentication failed');
+  }
+  
+  if (!crypto.timingSafeEqual(bufferA, bufferB)) {
+    throw new Error('Authentication failed');
+  }
+  
+  return true;
+}
+
+// Security: Validate and sanitize file paths
+function sanitizeFilePath(filePath) {
+  if (!filePath || typeof filePath !== 'string') {
+    throw new Error('File path must be a non-empty string');
+  }
+  
+  // Resolve to absolute path and normalize
+  const normalizedPath = path.resolve(filePath);
+  
+  // Ensure the resolved path doesn't contain path traversal attempts
+  if (normalizedPath.includes('..')) {
+    throw new Error('Path traversal detected in file path');
+  }
+  
+  // Ensure file exists
+  if (!fs.existsSync(normalizedPath)) {
+    throw new Error(`File does not exist: ${filePath}`);
+  }
+  
+  const stats = fs.statSync(normalizedPath);
+  
+  if (!stats.isFile()) {
+    throw new Error(`Path is not a file: ${filePath}`);
+  }
+  
+  // Check file size
+  if (stats.size > MAX_FILE_SIZE) {
+    throw new Error(`File size exceeds maximum allowed size (${MAX_FILE_SIZE} bytes): ${filePath}`);
+  }
+  
+  return normalizedPath;
+}
+
+// Security: Validate data structure
+function validateVulnerabilityData(data) {
+  if (!data || typeof data !== 'object') {
+    throw new Error('Invalid vulnerability data: must be an object');
+  }
+  
+  if (!data.type || typeof data.type !== 'string') {
+    throw new Error('Invalid vulnerability data: type is required');
+  }
+  
+  // Validate type is one of the expected vulnerability types
+  const validTypes = ['reentrancy', 'overflow', 'uncheckedSend', 'txOrigin', 'publicMint', 'delegatecall'];
+  if (!validTypes.includes(data.type)) {
+    throw new Error(`Invalid vulnerability type: ${data.type}`);
+  }
+  
+  return true;
+}
+
+// Security: Log authentication events for audit trail
+function logAuthEvent(event, success, details = {}) {
+  const logEntry = {
+    timestamp: new Date().toISOString(),
+    event,
+    success,
+    details,
+    pid: process.pid
+  };
+  
+  const logPath = path.join(__dirname, '../reports/auth-events.log');
+  const logDir = path.dirname(logPath);
+  
+  if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir, { recursive: true });
+  }
+  
+  fs.appendFileSync(logPath, JSON.stringify(logEntry) + '\n');
+}
 
 class RepairEngine {
   constructor(config = {}) {
@@ -80,6 +188,36 @@ class RepairEngine {
    * @returns {Object} Fix object with file, vulnerabilityId, fixAvailable, patch, description, confidence, and strategy
    */
   async generateFix(vulnerability, sourceCode, filePath = null) {
+    // Security: Validate vulnerability data structure
+    try {
+      validateVulnerabilityData(vulnerability);
+    } catch (error) {
+      console.error(`Invalid vulnerability data: ${error.message}`);
+      return {
+        vulnerabilityId: vulnerability?.type || 'unknown',
+        fixAvailable: false,
+        reason: `Invalid vulnerability data: ${error.message}`
+      };
+    }
+    
+    // Security: Validate source code
+    if (!sourceCode || typeof sourceCode !== 'string') {
+      return {
+        vulnerabilityId: vulnerability.type,
+        fixAvailable: false,
+        reason: 'Source code must be a non-empty string'
+      };
+    }
+    
+    // Security: Check source code size
+    if (sourceCode.length > MAX_FILE_SIZE) {
+      return {
+        vulnerabilityId: vulnerability.type,
+        fixAvailable: false,
+        reason: `Source code exceeds maximum size (${MAX_FILE_SIZE} bytes)`
+      };
+    }
+    
     const pattern = this.repairPatterns[vulnerability.type];
     
     if (!pattern || !pattern.enabled) {
@@ -292,7 +430,21 @@ class RepairEngine {
   /**
    * Create pull request with fixes
    */
-  async createPR(fixes, repository) {
+  async createPR(fixes, repository, authToken) {
+    // Security: Validate authentication token
+    try {
+      validateAuthToken(authToken);
+      logAuthEvent('pr_creation_attempt', true, { repository, fixesCount: fixes.length });
+    } catch (error) {
+      logAuthEvent('pr_creation_attempt', false, { repository, error: error.message });
+      throw new Error(`PR creation failed: ${error.message}`);
+    }
+    
+    // Security: Validate fixes count
+    if (fixes.length > MAX_FIXES_PER_REQUEST) {
+      throw new Error(`Too many fixes requested (max: ${MAX_FIXES_PER_REQUEST})`);
+    }
+    
     console.log(`[Repair] Creating PR for ${fixes.length} fixes...`);
     
     // This would use GitHub API to create PR
@@ -303,6 +455,8 @@ class RepairEngine {
     
     console.log('PR Title:', prTitle);
     console.log('PR Body:', prBody);
+    
+    logAuthEvent('pr_creation_success', true, { repository, fixesCount: fixes.length });
     
     return {
       prNumber: null, // Would be returned from GitHub API
@@ -349,6 +503,7 @@ Options:
   --report <path>     Path to scan report JSON
   --source <path>     Path to source code file
   --create-pr         Create pull request with fixes
+  --auth-token <token> Authentication token for PR creation (or use REPAIR_AUTH_TOKEN env var)
   --help              Show this help message
     `);
     return;
@@ -357,6 +512,7 @@ Options:
   let reportPath = null;
   let sourcePath = null;
   let createPR = false;
+  let authToken = process.env.REPAIR_AUTH_TOKEN || null;
 
   for (let i = 0; i < args.length; i++) {
     switch (args[i]) {
@@ -365,17 +521,36 @@ Options:
           console.error('Error: --report requires a value');
           process.exit(1);
         }
-        reportPath = args[++i];
+        // Security: Validate report path
+        try {
+          reportPath = sanitizeFilePath(args[++i]);
+        } catch (error) {
+          console.error(`Error: Invalid report path - ${error.message}`);
+          process.exit(1);
+        }
         break;
       case '--source':
         if (i + 1 >= args.length) {
           console.error('Error: --source requires a value');
           process.exit(1);
         }
-        sourcePath = args[++i];
+        // Security: Validate source path
+        try {
+          sourcePath = sanitizeFilePath(args[++i]);
+        } catch (error) {
+          console.error(`Error: Invalid source path - ${error.message}`);
+          process.exit(1);
+        }
         break;
       case '--create-pr':
         createPR = true;
+        break;
+      case '--auth-token':
+        if (i + 1 >= args.length) {
+          console.error('Error: --auth-token requires a value');
+          process.exit(1);
+        }
+        authToken = args[++i];
         break;
     }
   }
@@ -385,7 +560,7 @@ Options:
     process.exit(1);
   }
 
-  // Load report
+  // Load report - path already validated
   const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
   const sourceCode = sourcePath ? fs.readFileSync(sourcePath, 'utf8') : '';
 
@@ -419,7 +594,12 @@ Options:
   // Create PR if requested
   if (createPR && fixes.length > 0 && config.autoCreatePR) {
     const repository = process.env.GITHUB_REPOSITORY || 'owner/repo';
-    await engine.createPR(fixes, repository);
+    try {
+      await engine.createPR(fixes, repository, authToken);
+    } catch (error) {
+      console.error(`Failed to create PR: ${error.message}`);
+      process.exit(1);
+    }
   }
 }
 
