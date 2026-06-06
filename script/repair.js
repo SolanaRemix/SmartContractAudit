@@ -51,26 +51,27 @@ function sanitizeFilePath(filePath) {
   }
   
   // Check for path traversal attempts BEFORE normalization
-  if (filePath.includes('..')) {
+  const pathSegments = filePath.split(/[\\/]+/).filter(Boolean);
+  if (pathSegments.includes('..')) {
     throw new Error('Path traversal detected in file path');
   }
   
   // Resolve to absolute path and normalize
   const normalizedPath = path.resolve(filePath);
   
-  // Additional security: ensure resolved path is within allowed directories
-  // This prevents symlink-based traversal attacks
-  const allowedBase = path.resolve(process.cwd());
-  if (!normalizedPath.startsWith(allowedBase)) {
-    throw new Error('Access to path outside project directory is not allowed');
-  }
-  
   // Ensure file exists
   if (!fs.existsSync(normalizedPath)) {
     throw new Error(`File does not exist: ${filePath}`);
   }
   
-  const stats = fs.statSync(normalizedPath);
+  const realPath = fs.realpathSync(normalizedPath);
+  const allowedBase = fs.realpathSync(process.cwd());
+  const relativePath = path.relative(allowedBase, realPath);
+  if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
+    throw new Error('Access to path outside project directory is not allowed');
+  }
+  
+  const stats = fs.statSync(realPath);
   
   if (!stats.isFile()) {
     throw new Error(`Path is not a file: ${filePath}`);
@@ -81,7 +82,7 @@ function sanitizeFilePath(filePath) {
     throw new Error(`File size exceeds maximum allowed size (${MAX_FILE_SIZE} bytes): ${filePath}`);
   }
   
-  return normalizedPath;
+  return realPath;
 }
 
 // Security: Validate data structure
@@ -217,7 +218,7 @@ class RepairEngine {
     }
     
     // Security: Check source code size
-    if (sourceCode.length > MAX_FILE_SIZE) {
+    if (Buffer.byteLength(sourceCode, 'utf8') > MAX_FILE_SIZE) {
       return {
         vulnerabilityId: vulnerability.type,
         fixAvailable: false,

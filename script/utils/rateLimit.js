@@ -119,9 +119,9 @@ class RateLimitManager extends EventEmitter {
     }
     
     // Get current counts
-    const dayKey = \`\${userId}:day:\${dayBoundary}\`;
-    const hourKey = \`\${userId}:hour:\${hourBoundary}\`;
-    const minuteKey = \`\${userId}:minute:\${minuteBoundary}\`;
+    const dayKey = `${userId}:day:${dayBoundary}`;
+    const hourKey = `${userId}:hour:${hourBoundary}`;
+    const minuteKey = `${userId}:minute:${minuteBoundary}`;
     
     const dayCount = this.requestCounts.get(dayKey) || 0;
     const hourCount = this.requestCounts.get(hourKey) || 0;
@@ -188,9 +188,9 @@ class RateLimitManager extends EventEmitter {
     const hourBoundary = this.getUTCHourBoundary(now);
     const minuteBoundary = this.getUTCMinuteBoundary(now);
     
-    const dayKey = \`\${userId}:day:\${dayBoundary}\`;
-    const hourKey = \`\${userId}:hour:\${hourBoundary}\`;
-    const minuteKey = \`\${userId}:minute:\${minuteBoundary}\`;
+    const dayKey = `${userId}:day:${dayBoundary}`;
+    const hourKey = `${userId}:hour:${hourBoundary}`;
+    const minuteKey = `${userId}:minute:${minuteBoundary}`;
     
     this.requestCounts.set(dayKey, (this.requestCounts.get(dayKey) || 0) + 1);
     this.requestCounts.set(hourKey, (this.requestCounts.get(hourKey) || 0) + 1);
@@ -265,7 +265,7 @@ class RateLimitManager extends EventEmitter {
         retryAfter: limitCheck.retryAfter,
         limitType: limitCheck.limitType,
         context,
-        message: \`Rate limit hit (\${limitCheck.limitType}). Retrying in \${delay}ms (attempt \${attempt}/\${this.backoff.maxAttempts})\`
+        message: `Rate limit hit (${limitCheck.limitType}). Retrying in ${delay}ms (attempt ${attempt}/${this.backoff.maxAttempts})`
       });
       
       // Wait before retrying
@@ -280,7 +280,7 @@ class RateLimitManager extends EventEmitter {
       context
     });
     
-    throw new Error(\`Request failed after \${this.backoff.maxAttempts} attempts: \${lastError?.message || 'Rate limit exceeded'}\`);
+    throw new Error(`Request failed after ${this.backoff.maxAttempts} attempts: ${lastError?.message || 'Rate limit exceeded'}`);
   }
   
   /**
@@ -363,11 +363,15 @@ class RateLimitManager extends EventEmitter {
    * Verify request signature (Drift Protocol lesson)
    */
   verifyRequestSignature(data, signature, secret) {
+    if (typeof signature !== 'string' || !/^[a-fA-F0-9]+$/.test(signature) || signature.length % 2 !== 0) {
+      return false;
+    }
+    
     const expectedSignature = this.generateRequestSignature(data, secret);
     
     // Use timing-safe comparison
-    const bufferA = Buffer.from(signature);
-    const bufferB = Buffer.from(expectedSignature);
+    const bufferA = Buffer.from(signature, 'hex');
+    const bufferB = Buffer.from(expectedSignature, 'hex');
     
     if (bufferA.length !== bufferB.length) {
       return false;

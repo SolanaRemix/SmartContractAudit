@@ -38,26 +38,27 @@ function sanitizeFilePath(filePath) {
   }
   
   // Check for path traversal attempts BEFORE normalization
-  if (filePath.includes('..')) {
+  const pathSegments = filePath.split(/[\\/]+/).filter(Boolean);
+  if (pathSegments.includes('..')) {
     throw new Error('Path traversal detected in file path');
   }
   
   // Resolve to absolute path and normalize
   const normalizedPath = path.resolve(filePath);
   
-  // Additional security: ensure resolved path is within allowed directories
-  // This prevents symlink-based traversal attacks
-  const allowedBase = path.resolve(process.cwd());
-  if (!normalizedPath.startsWith(allowedBase)) {
-    throw new Error('Access to path outside project directory is not allowed');
-  }
-  
   // Ensure file exists and is readable
   if (!fs.existsSync(normalizedPath)) {
     throw new Error(`File does not exist: ${filePath}`);
   }
+ 
+  const realPath = fs.realpathSync(normalizedPath);
+  const allowedBase = fs.realpathSync(process.cwd());
+  const relativePath = path.relative(allowedBase, realPath);
+  if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
+    throw new Error('Access to path outside project directory is not allowed');
+  }
   
-  const stats = fs.statSync(normalizedPath);
+  const stats = fs.statSync(realPath);
   
   if (!stats.isFile()) {
     throw new Error(`Path is not a file: ${filePath}`);
@@ -68,7 +69,7 @@ function sanitizeFilePath(filePath) {
     throw new Error(`File size exceeds maximum allowed size (${MAX_FILE_SIZE} bytes): ${filePath}`);
   }
   
-  return normalizedPath;
+  return realPath;
 }
 
 // Security: Validate blockchain address format
@@ -80,7 +81,7 @@ function validateAddress(address, chain = 'ethereum') {
   const sanitized = sanitizeInput(address);
   
   // Basic validation based on chain
-  if (chain === 'ethereum' || chain === 'bsc' || chain === 'polygon') {
+  if (['ethereum', 'bsc', 'polygon', 'avalanche', 'arbitrum', 'optimism'].includes(chain)) {
     // Ethereum-style addresses start with 0x and have 40 hex characters
     if (!/^0x[a-fA-F0-9]{40}$/.test(sanitized)) {
       throw new Error('Invalid Ethereum-style address format');
@@ -161,6 +162,9 @@ function parseArgs() {
         // Security: Sanitize output format
         try {
           options.output = sanitizeInput(args[++i]);
+          if (!['json', 'all'].includes(options.output)) {
+            throw new Error('Output format must be one of: json, all');
+          }
         } catch (error) {
           console.error(`Error: Invalid output format - ${error.message}`);
           process.exit(1);
@@ -213,7 +217,7 @@ Options:
   --address <address>     Contract or wallet address to scan
   --chain <chain>         Blockchain network (default: ethereum)
   --modules <modules>     Comma-separated list of modules (default: antivirus,spam,honeypot)
-  --output <format>       Output format: json, html, pdf (default: json)
+  --output <format>       Output format: json, all (default: json)
   --depth <number>        Trace depth for wallet scanning (default: 5)
   --file <path>           File containing addresses to scan (one per line)
   --help                  Show this help message
