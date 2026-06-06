@@ -20,7 +20,10 @@ contract SecureToken is ERC20, Ownable, Pausable, ReentrancyGuard {
     event AddressWhitelisted(address indexed account);
     
     constructor() ERC20("SecureToken", "STKN") {
-        _mint(msg.sender, 100000 * 10**18);
+        uint256 initialSupply = 100000 * 10**18;
+        // Enforce supply cap: Initial minting cannot exceed MAX_SUPPLY
+        require(initialSupply <= MAX_SUPPLY, "Initial supply exceeds max supply");
+        _mint(msg.sender, initialSupply);
     }
     
     /**
