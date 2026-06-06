@@ -1,4 +1,7 @@
-# Example monitored addresses (one per line)
-# Ethereum mainnet addresses to continuously monitor
+# Monitored Addresses — SmartContractAudit
+# Add one address per line. Lines starting with # are ignored.
+# Supported formats: 0x... (EVM chains), base58... (Solana)
+#
+# Example:
 # 0x1234567890123456789012345678901234567890
 # 0xabcdefabcdefabcdefabcdefabcdefabcdefabcd

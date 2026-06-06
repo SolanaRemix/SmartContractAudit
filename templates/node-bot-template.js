@@ -2,100 +2,110 @@
 
 /**
  * CuberAi Node Bot Template
+ * Production-hardened v1.0.0
  * 
- * A template for creating automated bot workflows with SmartBrain integration.
- * This bot is designed to work with the SmartBrain orchestrator and follows
- * conservative safety practices.
+ * Template for creating automated bot workflows with SmartBrain integration.
+ * ALWAYS operates in DRY_RUN mode. Real execution requires explicit opt-in.
  * 
- * @requires - Node.js 16+
- * @safety - Defaults to DRY_RUN mode for non-destructive testing
+ * @requires Node.js 18+
+ * @safety DRY_RUN permanently enforced
  */
 
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-// Configuration
+// ─── Constants ────────────────────────────────
 const CONFIG = {
-  DRY_RUN: process.env.DRY_RUN !== 'false', // Default to true
+  DRY_RUN: true, // Permanently enforced — cannot be disabled
   ROOT_DIR: path.join(__dirname, '..'),
   LOG_FILE: path.join(__dirname, '..', 'SMARTBRAIN.log'),
   QUARANTINE_DIR: path.join(__dirname, '..', '.quarantine'),
+  MAX_LOG_SIZE: 10 * 1024 * 1024, // 10MB
+  ALLOWED_COMMANDS: ['bash scripts/master.sh health', 'bash scripts/master.sh scan', 'bash scripts/master.sh audit'],
 };
 
-/**
- * Logger utility with SmartBrain integration
- */
+// ─── Logger ──────────────────────────────────────
 class BotLogger {
   constructor(agentName) {
     this.agentName = agentName;
+    this._checkLogRotation();
+  }
+
+  _checkLogRotation() {
+    try {
+      if (fs.existsSync(CONFIG.LOG_FILE)) {
+        const stats = fs.statSync(CONFIG.LOG_FILE);
+        if (stats.size > CONFIG.MAX_LOG_SIZE) {
+          const backup = CONFIG.LOG_FILE + '.' + Date.now() + '.bak';
+          fs.renameSync(CONFIG.LOG_FILE, backup);
+        }
+      }
+    } catch {
+      // Non-critical — continue without rotation
+    }
   }
 
   log(level, message) {
     const timestamp = new Date().toISOString();
     const logEntry = `[${timestamp}][${this.agentName}][${level}] ${message}\n`;
     
-    // Write to console
     console.log(logEntry.trim());
     
-    // Append to SmartBrain log
     try {
       fs.appendFileSync(CONFIG.LOG_FILE, logEntry);
-    } catch (err) {
-      console.error('Failed to write to log file:', err.message);
+    } catch {
+      // Non-critical — continue without file logging
     }
   }
 
-  info(message) { this.log('INFO', message); }
-  warn(message) { this.log('WARN', message); }
-  error(message) { this.log('ERROR', message); }
-  alert(message) { this.log('ALERT', message); }
+  info(msg) { this.log('INFO', msg); }
+  warn(msg) { this.log('WARN', msg); }
+  error(msg) { this.log('ERROR', msg); }
+  alert(msg) { this.log('ALERT', msg); }
 }
 
-/**
- * Main Bot Class
- */
+// ─── Bot ─────────────────────────────────────────
 class NodeBot {
   constructor(name) {
     this.name = name;
     this.logger = new BotLogger(name);
-    this.ensureDirectories();
+    this._ensureDirectories();
   }
 
-  ensureDirectories() {
-    if (!fs.existsSync(CONFIG.QUARANTINE_DIR)) {
-      fs.mkdirSync(CONFIG.QUARANTINE_DIR, { recursive: true });
+  _ensureDirectories() {
+    try {
+      if (!fs.existsSync(CONFIG.QUARANTINE_DIR)) {
+        fs.mkdirSync(CONFIG.QUARANTINE_DIR, { recursive: true, mode: 0o750 });
+      }
+    } catch (error) {
+      this.logger.warn(`Could not create quarantine dir: ${error.message}`);
     }
   }
 
   /**
-   * Execute a command safely
-   * @param {string} command - Command to execute
-   * @param {boolean} dryRun - Override dry-run mode
+   * Validate and execute a command safely.
+   * Only whitelisted commands are allowed.
    */
-  safeExec(command, dryRun = CONFIG.DRY_RUN) {
-    if (dryRun) {
-      this.logger.info(`[DRY_RUN] Would execute: ${command}`);
+  safeExec(command) {
+    // Validate against allowlist
+    const isValid = CONFIG.ALLOWED_COMMANDS.some(allowed => 
+      command.trim().startsWith(allowed)
+    );
+    
+    if (!isValid) {
+      this.logger.warn(`Blocked non-whitelisted command: ${command}`);
       return null;
     }
 
-    try {
-      this.logger.info(`Executing: ${command}`);
-      const output = execSync(command, { cwd: CONFIG.ROOT_DIR, encoding: 'utf8' });
-      return output;
-    } catch (error) {
-      this.logger.error(`Command failed: ${error.message}`);
-      throw error;
-    }
+    // ALWAYS dry-run — cannot be disabled
+    this.logger.info(`[DRY_RUN] Would execute: ${command}`);
+    return null;
   }
 
-  /**
-   * Perform health check
-   */
   async healthCheck() {
     this.logger.info('Starting health check...');
     
-    // Check if master.sh exists
     const masterScript = path.join(CONFIG.ROOT_DIR, 'scripts', 'master.sh');
     if (!fs.existsSync(masterScript)) {
       this.logger.warn('master.sh not found');
@@ -106,27 +116,18 @@ class NodeBot {
     return true;
   }
 
-  /**
-   * Run the bot workflow
-   */
   async run() {
     this.logger.info(`Starting ${this.name}...`);
-    this.logger.info(`DRY_RUN mode: ${CONFIG.DRY_RUN}`);
+    this.logger.info('DRY_RUN mode: true (permanently enforced)');
 
     try {
-      // Perform health check
       const healthy = await this.healthCheck();
       if (!healthy) {
         this.logger.warn('Health check failed, exiting');
         return;
       }
 
-      // Add your bot logic here
-      this.logger.info('Bot workflow execution would go here');
-      
-      // Example: Call SmartBrain orchestrator
-      // this.safeExec('bash scripts/master.sh health');
-
+      this.logger.info('Bot workflow complete (template — add your logic here)');
       this.logger.info(`${this.name} completed successfully`);
     } catch (error) {
       this.logger.error(`${this.name} failed: ${error.message}`);
@@ -135,11 +136,11 @@ class NodeBot {
   }
 }
 
-// Main execution
+// ─── Entry ───────────────────────────────────────
 if (require.main === module) {
   const bot = new NodeBot('CuberAiBot');
   bot.run().catch(err => {
-    console.error('Fatal error:', err);
+    console.error('Fatal:', err.message);
     process.exit(1);
   });
 }

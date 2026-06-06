@@ -1,4 +1,13 @@
 {
+  "_comment": "SmartContractAudit Scanner Configuration v1.0.0",
+  
+  "rateLimiting": {
+    "delayMs": 1000,
+    "maxConcurrent": 3,
+    "maxRetries": 3,
+    "rpcTimeoutMs": 15000
+  },
+
   "antivirus": {
     "enabled": true,
     "threshold": 70,
@@ -13,35 +22,53 @@
     ],
     "bytecodeAnalysis": true,
     "sourceAnalysis": true,
-    "timeout": 60000
+    "timeout": 60000,
+    "maxFileSize": "5MB"
   },
+
   "spam": {
     "enabled": true,
     "threshold": 80,
     "checkAirdrop": true,
     "checkSimilarity": true,
-    "minContractAge": 86400
+    "minContractAge": 86400,
+    "maxDeploymentAge": 2592000
   },
+
   "honeypot": {
     "enabled": true,
     "simulateTransfer": true,
     "maxBuyTax": 10,
     "maxSellTax": 10,
-    "simulationAmount": "0.1"
+    "simulationAmount": "0.1",
+    "maxSlippage": 50
   },
+
   "tracer": {
     "enabled": true,
     "maxDepth": 5,
     "minAmount": "0.01",
     "includeTokens": true,
     "includeNFTs": false,
-    "timeout": 120000
+    "timeout": 120000,
+    "maxTransactions": 5000
   },
+
   "deepScan": {
     "enabled": true,
     "maxTransactions": 10000,
     "analyzePatterns": true,
     "generateGraph": true,
-    "identifyClusters": true
+    "identifyClusters": true,
+    "maxGraphNodes": 500,
+    "maxGraphEdges": 1000
+  },
+
+  "reporting": {
+    "format": "json",
+    "outputDir": "reports",
+    "retentionDays": 90,
+    "includeRawData": false,
+    "redactSecrets": true
   }
 }

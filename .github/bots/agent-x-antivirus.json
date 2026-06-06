@@ -9,28 +9,35 @@
     "scanDepth": "deep",
     "suspiciousPatterns": {
       "commands": [
-        "rm -rf /",
-        "curl.*sh",
-        "wget.*sh",
-        "eval\\`\\(",
-        "exec\\(",
-        "system\\(",
-        "__import__"
+        "rm\\s+-rf\\s+/",
+        "curl.*\\|\\s*(ba)?sh",
+        "wget.*\\|\\s*(ba)?sh",
+        "eval\\s*[\\(`]",
+        "exec\\s*\\(",
+        "system\\s*\\(",
+        "__import__\\s*\\(",
+        "base64\\s+(-d|--decode)",
+        "openssl\\s+enc",
+        "nc\\s+-[nl]",
+        "chmod\\s+[0-7]*7",
+        "sudo\\s+"
       ],
       "secretPatterns": [
-        "api[_-]?key",
-        "access[_-]?token",
-        "secret[_-]?key",
-        "private[_-]?key",
-        "password",
-        "bearer",
-        "authorization"
+        "(?i)api[_-]?key",
+        "(?i)access[_-]?token",
+        "(?i)secret[_-]?key",
+        "(?i)private[_-]?key",
+        "(?i)password\\s*[=:]\\s*['\"]?\\S+['\"]?",
+        "(?i)bearer\\s+[A-Za-z0-9_\\-\\.]+",
+        "(?i)authorization\\s*[=:]\\s*['\"]?\\S+['\"]?"
       ],
       "malwareSignatures": [
         "base64.*eval",
         "fromCharCode",
         "unescape.*eval",
-        "document.write.*script"
+        "document\\.write.*script",
+        "atob\\s*\\(",
+        "String\\.fromCharCode"
       ]
     },
     "fileTypes": {
@@ -44,18 +51,29 @@
       "enabled": true,
       "path": ".quarantine",
       "createReport": true,
-      "notifyOnFindings": true
+      "notifyOnFindings": true,
+      "autoExpireDays": 30,
+      "maxQuarantineSize": "50MB"
+    },
+    "bypass": {
+      "enabled": true,
+      "label": "security-bypass",
+      "requireAdminApproval": true,
+      "auditLog": true
     }
   },
   "triggers": {
     "events": ["push", "pull_request", "schedule"],
     "schedule": "0 2 * * *",
-    "branches": ["main", "develop", "gitantivirus-node"]
+    "branches": ["main", "develop"],
+    "excludePaths": [".quarantine/**", "*.md", "LICENSE", "docs/**"]
   },
   "severity": {
     "critical": {
       "action": "block",
-      "notify": true
+      "notify": true,
+      "bypassLabel": "security-bypass-critical",
+      "bypassRequiresAdmin": true
     },
     "high": {
       "action": "warn",
@@ -73,7 +91,11 @@
   "reporting": {
     "format": "json",
     "outputPath": ".quarantine/scan-report.json",
-    "includeHashes": true,
-    "includePaths": true
+    "includeHashes": false,
+    "_hashNote": "Set to false to prevent file fingerprint leakage in reports",
+    "includePaths": true,
+    "redactSecrets": true,
+    "maxReportSize": "10MB",
+    "retentionDays": 90
   }
 }

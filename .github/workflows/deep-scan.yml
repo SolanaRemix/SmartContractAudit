@@ -2,30 +2,45 @@ name: Deep Scan
 
 on:
   schedule:
-    # Run weekly on Sundays at midnight
-    - cron: '0 0 * * 0'
+    - cron: '0 0 * * 0'  # Weekly Sunday midnight
   release:
-    types: [created, published]
+    types: [published]    # Only on publish, not create
   workflow_dispatch:
     inputs:
       targets:
-        description: 'Targets to scan (comma-separated addresses)'
+        description: 'Contract addresses (0x-prefixed hex, comma-separated)'
         required: false
+        default: ''
       chain:
         description: 'Blockchain network'
         required: false
         default: 'ethereum'
+        type: choice
+        options:
+          - ethereum
+          - bsc
+          - polygon
+          - avalanche
+          - arbitrum
+          - optimism
+          - solana
+
+permissions:
+  contents: read
+  issues: write
+  actions: read
 
 jobs:
   deep-scan:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
@@ -33,128 +48,254 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Run comprehensive deep scan
-        env:
-          ETHEREUM_RPC_URL: ${{ secrets.ETHEREUM_RPC_URL }}
-          BSC_RPC_URL: ${{ secrets.BSC_RPC_URL }}
-          POLYGON_RPC_URL: ${{ secrets.POLYGON_RPC_URL }}
-          SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
-          ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
-          BSCSCAN_API_KEY: ${{ secrets.BSCSCAN_API_KEY }}
+      # ─── Validate Inputs ──────────────────
+      - name: Validate chain input
+        id: chain
         run: |
-          echo "Starting comprehensive deep scan..."
+          CHAIN="${{ github.event.inputs.chain || 'ethereum' }}"
+          VALID_CHAINS="ethereum bsc polygon avalanche arbitrum optimism solana"
           
-          # Load targets
-          if [ -n "${{ github.event.inputs.targets }}" ]; then
-            TARGETS="${{ github.event.inputs.targets }}"
-          elif [ -f "config/deep-scan-targets.txt" ]; then
-            TARGETS=$(cat config/deep-scan-targets.txt | tr '\n' ',')
-          else
-            echo "No targets specified"
-            exit 0
+          if ! echo "$VALID_CHAINS" | grep -qw "$CHAIN"; then
+            echo "::error::Invalid chain: $CHAIN"
+            exit 1
           fi
           
-          # Run deep scan
-          IFS=',' read -ra TARGET_ARRAY <<< "$TARGETS"
+          echo "chain=$CHAIN" >> $GITHUB_OUTPUT
+      
+      - name: Validate and sanitize targets
+        id: targets
+        run: |
+          INPUT="${{ github.event.inputs.targets }}"
+          VALIDATED=""
+          
+          if [ -n "$INPUT" ]; then
+            IFS=',' read -ra ADDRS <<< "$INPUT"
+            for addr in "${ADDRS[@]}"; do
+              addr=$(echo "$addr" | xargs)
+              # Strict address validation
+              if echo "$addr" | grep -qE '^(0x[a-fA-F0-9]{40}|[1-9A-HJ-NP-Za-km-z]{32,44})$'; then
+                VALIDATED="${VALIDATED}${VALIDATED:+,}$addr"
+              else
+                echo "::warning::Skipping invalid address: $addr"
+              fi
+            done
+          elif [ -f "config/deep-scan-targets.txt" ]; then
+            while IFS= read -r line; do
+              line=$(echo "$line" | xargs)
+              [ -z "$line" ] && continue
+              if echo "$line" | grep -qE '^(0x[a-fA-F0-9]{40}|[1-9A-HJ-NP-Za-km-z]{32,44})$'; then
+                VALIDATED="${VALIDATED}${VALIDATED:+,}$line"
+              fi
+            done < config/deep-scan-targets.txt
+          fi
+          
+          echo "addresses=$VALIDATED" >> $GITHUB_OUTPUT
+          echo "count=$(echo "$VALIDATED" | tr ',' '\n' | grep -c . || echo 0)" >> $GITHUB_OUTPUT
+      
+      # ─── Run Deep Scan ────────────────────
+      - name: Run comprehensive deep scan
+        if: steps.targets.outputs.count > 0
+        id: scan
+        env:
+          RPC_URL: ${{ secrets[format('{0}_RPC_URL', steps.chain.outputs.chain)] || '' }}
+        run: |
+          echo "::group::Deep Scan — ${{ steps.targets.outputs.count }} target(s) on ${{ steps.chain.outputs.chain }}"
+          
+          IFS=',' read -ra TARGET_ARRAY <<< "${{ steps.targets.outputs.addresses }}"
           for target in "${TARGET_ARRAY[@]}"; do
             target=$(echo "$target" | xargs)
             if [ -n "$target" ]; then
-              echo "Deep scanning $target..."
+              echo "Scanning $target..."
               node script/scan.js \
                 --address "$target" \
-                --chain "${{ github.event.inputs.chain || 'ethereum' }}" \
+                --chain "${{ steps.chain.outputs.chain }}" \
                 --modules antivirus,spam,honeypot,tracer \
                 --depth 10 \
-                --output json
+                --output json 2>&1 || echo "::warning::Scan failed for $target"
             fi
           done
+          
+          echo "::endgroup::"
       
+      # ─── Generate Report ──────────────────
       - name: Generate detailed report
+        id: report
+        if: always()
         run: |
-          if [ -f "reports/latest.json" ]; then
-            echo "Generating detailed analysis..."
-            
-            # Extract statistics
-            TOTAL=$(jq 'length' reports/latest.json)
-            CRITICAL=$(jq '[.[] | select(.summary.overallRisk == "critical")] | length' reports/latest.json)
-            HIGH=$(jq '[.[] | select(.summary.overallRisk == "high")] | length' reports/latest.json)
-            MEDIUM=$(jq '[.[] | select(.summary.overallRisk == "medium")] | length' reports/latest.json)
-            
-            echo "## Deep Scan Summary" > reports/summary.md
-            echo "" >> reports/summary.md
-            echo "- Total scanned: $TOTAL" >> reports/summary.md
-            echo "- Critical risk: $CRITICAL" >> reports/summary.md
-            echo "- High risk: $HIGH" >> reports/summary.md
-            echo "- Medium risk: $MEDIUM" >> reports/summary.md
-            echo "" >> reports/summary.md
-            echo "Scan completed at: $(date)" >> reports/summary.md
-            
-            cat reports/summary.md
+          if [ ! -f "reports/latest.json" ]; then
+            echo "::warning::No scan report generated"
+            exit 0
           fi
+          
+          # Validate JSON
+          if ! jq empty reports/latest.json 2>/dev/null; then
+            echo "::error::Invalid JSON in scan report"
+            exit 1
+          fi
+          
+          TOTAL=$(jq 'length // 0' reports/latest.json)
+          CRITICAL=$(jq '[.[] | select(.summary.overallRisk == "critical")] | length // 0' reports/latest.json)
+          HIGH=$(jq '[.[] | select(.summary.overallRisk == "high")] | length // 0' reports/latest.json)
+          MEDIUM=$(jq '[.[] | select(.summary.overallRisk == "medium")] | length // 0' reports/latest.json)
+          LOW=$(jq '[.[] | select(.summary.overallRisk == "low")] | length // 0' reports/latest.json)
+          
+          {
+            echo "# 📊 Deep Scan Report"
+            echo ""
+            echo "**Date:** $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+            echo "**Chain:** ${{ steps.chain.outputs.chain }}"
+            echo "**Targets:** ${{ steps.targets.outputs.count }}"
+            echo ""
+            echo "## Risk Summary"
+            echo ""
+            echo "| Risk Level | Count |"
+            echo "|------------|-------|"
+            echo "| 🔴 Critical | $CRITICAL |"
+            echo "| 🟠 High     | $HIGH |"
+            echo "| 🟡 Medium   | $MEDIUM |"
+            echo "| 🟢 Low      | $LOW |"
+            echo "| **Total**   | **$TOTAL** |"
+          } > reports/deep-scan-summary.md
+          
+          echo "total=$TOTAL" >> $GITHUB_OUTPUT
+          echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
+          echo "high=$HIGH" >> $GITHUB_OUTPUT
+          
+          cat reports/deep-scan-summary.md
       
       - name: Upload detailed reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: deep-scan-reports-${{ github.run_number }}
-          path: |
-            reports/
+          path: reports/
           retention-days: 90
       
+      # ─── Create Issue (Deduplicated) ───────
+      - name: Check for existing scan issue
+        id: existing_issue
+        if: steps.report.outputs.total > 0
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'deep-scan,report',
+              per_page: 5
+            });
+            
+            const existing = issues.find(i => i.title.includes('Deep Scan Results'));
+            return existing ? existing.number : null;
+      
+      - name: Close previous scan issues
+        if: steps.existing_issue.outputs.result
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'deep-scan,report'
+            });
+            
+            for (const issue of issues) {
+              if (issue.number !== ${{ steps.existing_issue.outputs.result }}) {
+                await github.rest.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  state: 'closed'
+                });
+                console.log(`Closed stale scan issue #${issue.number}`);
+              }
+            }
+      
       - name: Create scan summary issue
-        uses: actions/github-script@v6
+        if: steps.report.outputs.total > 0
+        uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
             
-            if (!fs.existsSync('reports/summary.md')) {
-              console.log('No summary to report');
-              return;
-            }
+            let issueBody = '## 📊 Deep Scan Results\n\n';
+            issueBody += `**Date:** ${new Date().toISOString().split('T')[0]}\n`;
+            issueBody += `**Chain:** ${{ steps.chain.outputs.chain }}\n`;
+            issueBody += `**Scanned:** ${{ steps.report.outputs.total }} target(s)\n\n`;
             
-            const summary = fs.readFileSync('reports/summary.md', 'utf8');
-            
-            let issueBody = '## 📊 Weekly Deep Scan Results\n\n';
-            issueBody += summary + '\n\n';
+            issueBody += '| Risk | Count |\n';
+            issueBody += '|------|-------|\n';
+            issueBody += '| 🔴 Critical | ${{ steps.report.outputs.critical }} |\n';
+            issueBody += '| 🟠 High | ${{ steps.report.outputs.high }} |\n\n';
             
             if (fs.existsSync('reports/latest.json')) {
               const report = JSON.parse(fs.readFileSync('reports/latest.json', 'utf8'));
               
-              const criticalResults = report.filter(r => r.summary?.overallRisk === 'critical');
-              if (criticalResults.length > 0) {
+              const criticals = report.filter(r => r.summary?.overallRisk === 'critical');
+              if (criticals.length > 0) {
                 issueBody += '### 🚨 Critical Findings\n\n';
-                for (const result of criticalResults) {
-                  issueBody += `- **${result.target}** on ${result.chain}\n`;
+                for (const r of criticals.slice(0, 10)) {
+                  const addr = r.address || r.target || 'unknown';
+                  issueBody += `- **${addr}** (${r.chain || '${{ steps.chain.outputs.chain }}'})\n`;
+                  if (r.summary?.recommendations?.length) {
+                    issueBody += `  - ${r.summary.recommendations[0]}\n`;
+                  }
+                }
+                if (criticals.length > 10) {
+                  issueBody += `\n*...and ${criticals.length - 10} more*\n`;
                 }
                 issueBody += '\n';
               }
               
-              const highResults = report.filter(r => r.summary?.overallRisk === 'high');
-              if (highResults.length > 0) {
+              const highs = report.filter(r => r.summary?.overallRisk === 'high');
+              if (highs.length > 0) {
                 issueBody += '### ⚠️ High Risk Findings\n\n';
-                for (const result of highResults) {
-                  issueBody += `- **${result.target}** on ${result.chain}\n`;
+                for (const r of highs.slice(0, 10)) {
+                  const addr = r.address || r.target || 'unknown';
+                  issueBody += `- **${addr}** (${r.chain || '${{ steps.chain.outputs.chain }}'})\n`;
+                }
+                if (highs.length > 10) {
+                  issueBody += `\n*...and ${highs.length - 10} more*\n`;
                 }
                 issueBody += '\n';
               }
             }
             
-            issueBody += '\n---\n';
-            issueBody += `*Deep scan completed on ${new Date().toISOString()}*\n`;
-            issueBody += `[View full report](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`;
+            issueBody += '---\n';
+            issueBody += `📎 [View Full Report](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})\n`;
+            issueBody += `\n*Deep scan completed ${new Date().toISOString()}*`;
             
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `📊 Deep Scan Results - ${new Date().toISOString().split('T')[0]}`,
+              title: `📊 Deep Scan Results — ${new Date().toISOString().split('T')[0]}`,
               body: issueBody,
               labels: ['deep-scan', 'report']
             });
       
       - name: Send notification
-        if: always()
+        if: always() && steps.report.outputs.critical > 0
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         run: |
-          if [ -f "reports/latest.json" ]; then
-            node script/notify.js --report reports/latest.json
+          if [ -f "reports/latest.json" ] && [ -n "$SLACK_WEBHOOK" ]; then
+            node script/notify.js --report reports/latest.json --severity critical || true
           fi
+      
+      - name: Job Summary
+        if: always()
+        run: |
+          {
+            echo "# 📊 Deep Scan — ${{ steps.chain.outputs.chain }}"
+            echo ""
+            echo "| Metric | Value |"
+            echo "|--------|-------|"
+            echo "| Chain | ${{ steps.chain.outputs.chain }} |"
+            echo "| Targets | ${{ steps.targets.outputs.count }} |"
+            echo "| Critical | ${{ steps.report.outputs.critical || 0 }} |"
+            echo "| High | ${{ steps.report.outputs.high || 0 }} |"
+            echo ""
+            echo "[View Artifacts](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          } >> $GITHUB_STEP_SUMMARY

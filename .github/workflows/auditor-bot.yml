@@ -7,24 +7,39 @@ on:
   workflow_dispatch:
     inputs:
       addresses:
-        description: 'Contract addresses to scan (comma-separated)'
+        description: 'Contract addresses to scan (comma-separated, 0x-prefixed hex only)'
         required: false
         default: ''
       chain:
         description: 'Blockchain network'
         required: false
         default: 'ethereum'
+        type: choice
+        options:
+          - ethereum
+          - bsc
+          - polygon
+          - avalanche
+          - arbitrum
+          - optimism
+          - solana
+
+permissions:
+  contents: read
+  issues: write
+  actions: read
 
 jobs:
   audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
@@ -32,119 +47,231 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Load monitored addresses
+      # ─── Validate Inputs ──────────────────
+      - name: Validate chain input
+        id: validate
+        run: |
+          CHAIN_INPUT="${{ github.event.inputs.chain || 'ethereum' }}"
+          
+          # Whitelist validation
+          VALID_CHAINS="ethereum bsc polygon avalanche arbitrum optimism solana"
+          if ! echo "$VALID_CHAINS" | grep -qw "$CHAIN_INPUT"; then
+            echo "ERROR: Invalid chain '$CHAIN_INPUT'. Must be one of: $VALID_CHAINS"
+            exit 1
+          fi
+          
+          echo "chain=$CHAIN_INPUT" >> $GITHUB_OUTPUT
+      
+      - name: Validate and sanitize addresses
         id: addresses
         run: |
-          if [ -n "${{ github.event.inputs.addresses }}" ]; then
-            echo "addresses=${{ github.event.inputs.addresses }}" >> $GITHUB_OUTPUT
-          elif [ -f "config/monitored-addresses.txt" ]; then
-            ADDRESSES=$(cat config/monitored-addresses.txt | tr '\n' ',')
-            echo "addresses=$ADDRESSES" >> $GITHUB_OUTPUT
-          else
-            echo "addresses=" >> $GITHUB_OUTPUT
-          fi
-      
-      - name: Run Auditor Bot
-        env:
-          ETHEREUM_RPC_URL: ${{ secrets.ETHEREUM_RPC_URL }}
-          BSC_RPC_URL: ${{ secrets.BSC_RPC_URL }}
-          POLYGON_RPC_URL: ${{ secrets.POLYGON_RPC_URL }}
-          SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
-        run: |
-          if [ -n "${{ steps.addresses.outputs.addresses }}" ]; then
-            IFS=',' read -ra ADDR_ARRAY <<< "${{ steps.addresses.outputs.addresses }}"
+          ADDRESSES_INPUT="${{ github.event.inputs.addresses }}"
+          VALIDATED=""
+          
+          if [ -n "$ADDRESSES_INPUT" ]; then
+            # Validate each address format
+            IFS=',' read -ra ADDR_ARRAY <<< "$ADDRESSES_INPUT"
             for addr in "${ADDR_ARRAY[@]}"; do
-              addr=$(echo "$addr" | xargs) # trim whitespace
-              if [ -n "$addr" ]; then
-                echo "Scanning $addr..."
-                node script/scan.js --address "$addr" --chain "${{ github.event.inputs.chain || 'ethereum' }}" || true
+              addr=$(echo "$addr" | xargs)
+              
+              # Only allow valid address characters (0x + hex, or base58 for Solana)
+              if echo "$addr" | grep -qE '^(0x[a-fA-F0-9]{40}|[1-9A-HJ-NP-Za-km-z]{32,44})$'; then
+                if [ -z "$VALIDATED" ]; then
+                  VALIDATED="$addr"
+                else
+                  VALIDATED="$VALIDATED,$addr"
+                fi
+              else
+                echo "WARNING: Skipping invalid address: $addr"
               fi
             done
-          else
-            echo "No addresses to scan"
+          elif [ -f "config/monitored-addresses.txt" ]; then
+            # Read from file with same validation
+            while IFS= read -r line; do
+              line=$(echo "$line" | xargs)
+              if echo "$line" | grep -qE '^(0x[a-fA-F0-9]{40}|[1-9A-HJ-NP-Za-km-z]{32,44})$'; then
+                if [ -z "$VALIDATED" ]; then
+                  VALIDATED="$line"
+                else
+                  VALIDATED="$VALIDATED,$line"
+                fi
+              fi
+            done < config/monitored-addresses.txt
           fi
+          
+          echo "addresses=$VALIDATED" >> $GITHUB_OUTPUT
+          echo "count=$(echo "$VALIDATED" | tr ',' '\n' | grep -c '.')" >> $GITHUB_OUTPUT
       
+      # ─── Run Scans ─────────────────────────
+      - name: Run Auditor Bot
+        id: scan
+        env:
+          RPC_URL: ${{ secrets[format('{0}_RPC_URL', steps.validate.outputs.chain)] || '' }}
+        run: |
+          if [ -z "${{ steps.addresses.outputs.addresses }}" ]; then
+            echo "No valid addresses to scan"
+            exit 0
+          fi
+          
+          echo "Scanning ${{ steps.addresses.outputs.count }} address(es) on ${{ steps.validate.outputs.chain }}"
+          
+          # Shellcheck: Disable SC2086 for controlled word splitting
+          IFS=',' read -ra ADDR_ARRAY <<< "${{ steps.addresses.outputs.addresses }}"
+          for addr in "${ADDR_ARRAY[@]}"; do
+            addr=$(echo "$addr" | xargs)
+            if [ -n "$addr" ]; then
+              echo "::group::Scanning $addr"
+              node script/scan.js --address "$addr" --chain "${{ steps.validate.outputs.chain }}" || echo "::warning::Scan failed for $addr"
+              echo "::endgroup::"
+            fi
+          done
+      
+      # ─── Analyze Results ───────────────────
       - name: Check for critical findings
         id: check
         run: |
-          if [ -f "reports/latest.json" ]; then
-            CRITICAL=$(jq '[.[] | select(.summary.overallRisk == "critical")] | length' reports/latest.json)
-            HIGH=$(jq '[.[] | select(.summary.overallRisk == "high")] | length' reports/latest.json)
-            echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
-            echo "high=$HIGH" >> $GITHUB_OUTPUT
-            
-            if [ "$CRITICAL" -gt 0 ] || [ "$HIGH" -gt 0 ]; then
-              echo "ALERT=true" >> $GITHUB_OUTPUT
-            else
-              echo "ALERT=false" >> $GITHUB_OUTPUT
-            fi
+          if [ ! -f "reports/latest.json" ]; then
+            echo "No report generated"
+            echo "ALERT=false" >> $GITHUB_OUTPUT
+            echo "CRITICAL=0" >> $GITHUB_OUTPUT
+            echo "HIGH=0" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          # Validate JSON before parsing
+          if ! jq empty reports/latest.json 2>/dev/null; then
+            echo "::warning::Invalid JSON in reports/latest.json"
+            echo "ALERT=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          CRITICAL=$(jq '[.[] | select(.summary.overallRisk == "critical")] | length // 0' reports/latest.json)
+          HIGH=$(jq '[.[] | select(.summary.overallRisk == "high")] | length // 0' reports/latest.json)
+          
+          echo "CRITICAL=$CRITICAL" >> $GITHUB_OUTPUT
+          echo "HIGH=$HIGH" >> $GITHUB_OUTPUT
+          
+          if [ "$CRITICAL" -gt 0 ] || [ "$HIGH" -gt 0 ]; then
+            echo "ALERT=true" >> $GITHUB_OUTPUT
+            echo "::warning::Found $CRITICAL critical and $HIGH high severity issues"
           else
             echo "ALERT=false" >> $GITHUB_OUTPUT
+            echo "::notice::No critical or high severity issues found"
           fi
       
+      # ─── Upload Reports ────────────────────
       - name: Upload scan reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: audit-reports-${{ github.run_number }}
+          name: audit-reports-${{ github.run_number }}-${{ steps.validate.outputs.chain }}
           path: reports/
           retention-days: 30
       
+      # ─── Notifications ─────────────────────
       - name: Send notification on critical findings
         if: steps.check.outputs.ALERT == 'true'
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          NOTIFICATION_WEBHOOK: ${{ secrets.NOTIFICATION_WEBHOOK }}
         run: |
-          node script/notify.js --report reports/latest.json --severity critical
+          if [ -n "$SLACK_WEBHOOK" ]; then
+            node script/notify.js --report reports/latest.json --severity critical || true
+          fi
+      
+      # ─── Issue Creation ────────────────────
+      - name: Check for existing open issue
+        id: existing
+        if: steps.check.outputs.ALERT == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'security,critical,auditor-bot',
+              per_page: 10
+            });
+            
+            const existingIssue = issues.find(i => 
+              i.title.includes('Critical Security Alert') &&
+              new Date(i.created_at) > new Date(Date.now() - 24 * 60 * 60 * 1000)
+            );
+            
+            return existingIssue ? existingIssue.number : null;
       
       - name: Create issue for critical vulnerabilities
-        if: steps.check.outputs.ALERT == 'true'
-        uses: actions/github-script@v6
+        if: steps.check.outputs.ALERT == 'true' && steps.existing.outputs.result == 'null'
+        uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            if (fs.existsSync('reports/latest.json')) {
-              const report = JSON.parse(fs.readFileSync('reports/latest.json', 'utf8'));
-              
-              const criticalResults = report.filter(r => r.summary?.overallRisk === 'critical');
-              
-              if (criticalResults.length > 0) {
-                let issueBody = '## 🚨 Critical Security Alert\n\n';
-                issueBody += `Detected ${criticalResults.length} critical security issue(s):\n\n`;
-                
-                for (const result of criticalResults) {
-                  issueBody += `### ${result.target} (${result.chain})\n\n`;
-                  
-                  if (result.results?.antivirus?.vulnerabilities) {
-                    issueBody += '**Vulnerabilities:**\n';
-                    for (const vuln of result.results.antivirus.vulnerabilities) {
-                      issueBody += `- **${vuln.type}** (${vuln.severity}): ${vuln.description}\n`;
-                    }
-                  }
-                  
-                  if (result.results?.honeypot?.isHoneypot) {
-                    issueBody += '\n⚠️ **HONEYPOT DETECTED**\n';
-                  }
-                  
-                  issueBody += '\n';
-                }
-                
-                issueBody += '\n---\n';
-                issueBody += `*Detected by Auditor Bot on ${new Date().toISOString()}*`;
-                
-                await github.rest.issues.create({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  title: '🚨 Critical Security Alert - Auditor Bot',
-                  body: issueBody,
-                  labels: ['security', 'critical', 'auditor-bot']
-                });
-              }
+            
+            if (!fs.existsSync('reports/latest.json')) {
+              console.log('No report file found');
+              return;
             }
+            
+            const report = JSON.parse(fs.readFileSync('reports/latest.json', 'utf8'));
+            const criticalResults = report.filter(r => 
+              r.summary?.overallRisk === 'critical' || r.summary?.overallRisk === 'high'
+            );
+            
+            if (criticalResults.length === 0) {
+              console.log('No critical/high results to report');
+              return;
+            }
+            
+            let issueBody = '## 🚨 Security Alert — Auditor Bot\n\n';
+            issueBody += `**Scan Time:** ${new Date().toISOString()}\n`;
+            issueBody += `**Chain:** ${{ steps.validate.outputs.chain }}\n`;
+            issueBody += `**Critical:** ${{ steps.check.outputs.CRITICAL }} | **High:** ${{ steps.check.outputs.HIGH }}\n\n`;
+            issueBody += '---\n\n';
+            
+            for (const result of criticalResults.slice(0, 5)) {
+              issueBody += `### ${result.address || result.target}\n`;
+              issueBody += `- **Chain:** ${result.chain || '${{ steps.validate.outputs.chain }}'}\n`;
+              issueBody += `- **Risk:** ${result.summary?.overallRisk || 'unknown'}\n\n`;
+              
+              if (result.results?.honeypot?.isHoneypot) {
+                issueBody += '⚠️ **HONEYPOT DETECTED — DO NOT INTERACT**\n\n';
+              }
+              
+              if (result.summary?.recommendations?.length > 0) {
+                issueBody += '**Recommendations:**\n';
+                for (const rec of result.summary.recommendations.slice(0, 5)) {
+                  issueBody += `- ${rec}\n`;
+                }
+                issueBody += '\n';
+              }
+              
+              issueBody += '---\n\n';
+            }
+            
+            if (criticalResults.length > 5) {
+              issueBody += `\n*...and ${criticalResults.length - 5} more findings. See full report in artifacts.*\n`;
+            }
+            
+            issueBody += `\n📎 [View Scan Artifacts](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})\n`;
+            issueBody += `\n*Detected by Auditor Bot — ${new Date().toISOString()}*`;
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 Critical Security Alert — Auditor Bot (${new Date().toISOString().split('T')[0]})`,
+              body: issueBody,
+              labels: ['security', 'critical', 'auditor-bot']
+            });
       
+      # ─── Summary ───────────────────────────
       - name: Update monitoring dashboard
         if: always()
         run: |
-          echo "Audit completed at $(date)"
-          echo "Critical: ${{ steps.check.outputs.critical || 0 }}"
-          echo "High: ${{ steps.check.outputs.high || 0 }}"
+          echo "## 📊 Audit Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Time | $(date -u +'%Y-%m-%d %H:%M:%S UTC') |" >> $GITHUB_STEP_SUMMARY
+          echo "| Chain | ${{ steps.validate.outputs.chain }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Addresses Scanned | ${{ steps.addresses.outputs.count || 0 }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Critical | ${{ steps.check.outputs.CRITICAL || 0 }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| High | ${{ steps.check.outputs.HIGH || 0 }} |" >> $GITHUB_STEP_SUMMARY

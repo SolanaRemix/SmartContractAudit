@@ -1,7 +1,35 @@
 {
+  "_comment": "SmartContractAudit Auto-Repair Configuration v1.0.0",
+  "_security": "auto_apply must remain false. dry_run_default must remain true.",
+
   "auto_apply": false,
   "dry_run_default": true,
   "allowlist_orgs": [],
   "max_prs_per_run": 3,
-  "pings_enabled": false
+  "pings_enabled": false,
+
+  "repairPatterns": {
+    "reentrancy": { "enabled": true, "confidence": 85 },
+    "overflow": { "enabled": true, "confidence": 95 },
+    "uncheckedSend": { "enabled": true, "confidence": 90 },
+    "txOrigin": { "enabled": true, "confidence": 100 },
+    "publicMint": { "enabled": true, "confidence": 95 },
+    "delegatecall": { "enabled": true, "confidence": 50, "requiresManualReview": true }
+  },
+
+  "confidenceThresholds": {
+    "autoPR": 80,
+    "suggestion": 50
+  },
+
+  "prDefaults": {
+    "draft": true,
+    "labels": ["security", "automated-fix", "needs-review"],
+    "requireTestPassing": true
+  },
+
+  "rateLimiting": {
+    "maxPRsPerDay": 5,
+    "cooldownMinutes": 60
+  }
 }

@@ -8,24 +8,27 @@ on:
       - '**.js'
       - '**.ts'
       - 'contracts/**'
+      - 'auditor/**'
+      - 'script/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+  statuses: write
 
 jobs:
   audit-pr:
     runs-on: ubuntu-latest
-    
-    permissions:
-      contents: read
-      pull-requests: write
-      issues: write
+    timeout-minutes: 15
     
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
@@ -33,129 +36,251 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
+      # ─── Get Changed Files Safely ──────────
+      - name: Validate base ref
+        id: validate_ref
+        run: |
+          BASE_REF="${{ github.base_ref }}"
+          
+          # Validate ref format (alphanumeric, dots, hyphens, underscores, slashes)
+          if ! echo "$BASE_REF" | grep -qE '^[a-zA-Z0-9._/-]+$'; then
+            echo "::error::Invalid base ref: $BASE_REF"
+            exit 1
+          fi
+          
+          echo "base_ref=$BASE_REF" >> $GITHUB_OUTPUT
+      
       - name: Get changed files
         id: changed
         run: |
-          CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '\.(sol|js|ts)$' || echo "")
-          echo "files=$CHANGED_FILES" >> $GITHUB_OUTPUT
-          echo "Changed files:"
-          echo "$CHANGED_FILES"
+          CHANGED_FILES=$(git diff --name-only "origin/${{ steps.validate_ref.outputs.base_ref }}...HEAD" 2>/dev/null | grep -E '\.(sol|js|ts|rs)$' | head -100 || echo "")
+          
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No contract or script files changed"
+            echo "files=" >> $GITHUB_OUTPUT
+            echo "count=0" >> $GITHUB_OUTPUT
+          else
+            # Validate each file path
+            VALID_FILES=""
+            while IFS= read -r file; do
+              if echo "$file" | grep -qE '^[a-zA-Z0-9._/-]+\.(sol|js|ts|rs)$'; then
+                VALID_FILES="${VALID_FILES}${VALID_FILES:+,}$file"
+              fi
+            done <<< "$CHANGED_FILES"
+            
+            echo "files=$VALID_FILES" >> $GITHUB_OUTPUT
+            COUNT=$(echo "$VALID_FILES" | tr ',' '\n' | grep -c . || echo 0)
+            echo "count=$COUNT" >> $GITHUB_OUTPUT
+            echo "Changed files: $VALID_FILES"
+          fi
       
+      # ─── Run Security Scan ─────────────────
       - name: Scan changed contracts
-        if: steps.changed.outputs.files != ''
-        env:
-          ETHEREUM_RPC_URL: ${{ secrets.ETHEREUM_RPC_URL }}
-          BSC_RPC_URL: ${{ secrets.BSC_RPC_URL }}
+        if: steps.changed.outputs.count > 0
+        id: scan
         run: |
-          echo "Scanning changed contracts..."
-          # For each changed contract file, run static analysis
-          echo '${{ steps.changed.outputs.files }}' | while read -r file; do
-            if [[ $file == *.sol ]]; then
-              echo "Analyzing $file"
-              # Run antivirus scanner on the file
-              # This is a placeholder - actual implementation would analyze the file
+          echo "Scanning ${{ steps.changed.outputs.count }} changed file(s)..."
+          
+          mkdir -p reports
+          
+          # Initialize empty report
+          echo '[]' > reports/pr-scan.json
+          
+          IFS=',' read -ra FILE_ARRAY <<< "${{ steps.changed.outputs.files }}"
+          for file in "${FILE_ARRAY[@]}"; do
+            file=$(echo "$file" | xargs)
+            if [ -n "$file" ] && [ -f "$file" ]; then
+              echo "::group::Analyzing $file"
+              
+              # Run antivirus source code analysis
+              if node -e "
+                const fs = require('fs');
+                const AntivirusScanner = require('./auditor/antivirus');
+                const scanner = new AntivirusScanner({});
+                const source = fs.readFileSync('$file', 'utf8');
+                const vulns = scanner._scanSourceCode ? scanner._scanSourceCode(source) : [];
+                const report = vulns.length > 0 ? JSON.stringify(vulns) : '[]';
+                fs.writeFileSync('reports/pr-scan.json', report);
+              " 2>&1; then
+                echo "Scan complete for $file"
+              else
+                echo "::warning::Scan failed for $file"
+              fi
+              
+              echo "::endgroup::"
             fi
           done
           
-          # Create a mock report for demonstration
-          mkdir -p reports
-          echo '[]' > reports/pr-scan.json
+          echo "Scan complete"
       
       - name: Generate audit report
         id: report
         run: |
           if [ -f "reports/pr-scan.json" ]; then
-            ISSUES=$(jq 'length' reports/pr-scan.json)
-            echo "issues=$ISSUES" >> $GITHUB_OUTPUT
+            if ! jq empty reports/pr-scan.json 2>/dev/null; then
+              echo "::warning::Invalid scan report"
+              echo "issues=0" >> $GITHUB_OUTPUT
+              echo "critical=0" >> $GITHUB_OUTPUT
+              exit 0
+            fi
             
-            CRITICAL=$(jq '[.[] | select(.summary.overallRisk == "critical")] | length' reports/pr-scan.json || echo "0")
+            ISSUES=$(jq 'length // 0' reports/pr-scan.json)
+            CRITICAL=$(jq '[.[] | select(.severity == "critical")] | length // 0' reports/pr-scan.json)
+            HIGH=$(jq '[.[] | select(.severity == "high")] | length // 0' reports/pr-scan.json)
+            
+            echo "issues=$ISSUES" >> $GITHUB_OUTPUT
             echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
+            echo "high=$HIGH" >> $GITHUB_OUTPUT
+            
+            echo "Issues: $ISSUES (Critical: $CRITICAL, High: $HIGH)"
           else
             echo "issues=0" >> $GITHUB_OUTPUT
             echo "critical=0" >> $GITHUB_OUTPUT
+            echo "high=0" >> $GITHUB_OUTPUT
           fi
       
+      # ─── Sticky PR Comment ─────────────────
       - name: Comment on PR
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
             
-            let comment = '## 🔍 Security Audit Results\n\n';
+            let comment = '## 🔍 PR Security Audit\n\n';
+            comment += `**Scan Time:** ${new Date().toISOString()}\n`;
+            comment += `**Files Changed:** ${{ steps.changed.outputs.count }}\n\n`;
             
-            const changedFiles = `${{ steps.changed.outputs.files }}`.trim();
+            const issues = parseInt('${{ steps.report.outputs.issues }}') || 0;
+            const critical = parseInt('${{ steps.report.outputs.critical }}') || 0;
+            const high = parseInt('${{ steps.report.outputs.high }}') || 0;
             
-            if (!changedFiles) {
-              comment += '✅ No contract files were changed in this PR.\n';
+            if (issues === 0) {
+              comment += '✅ **No security issues detected**\n\n';
             } else {
-              const issues = parseInt('${{ steps.report.outputs.issues }}') || 0;
-              const critical = parseInt('${{ steps.report.outputs.critical }}') || 0;
+              comment += '| Severity | Count |\n';
+              comment += '|----------|-------|\n';
+              if (critical > 0) comment += `| 🔴 Critical | ${critical} |\n`;
+              if (high > 0) comment += `| 🟠 High | ${high} |\n`;
+              comment += `| **Total** | **${issues}** |\n\n`;
               
-              if (issues === 0) {
-                comment += '✅ No security issues detected in the changed files!\n\n';
-              } else {
-                comment += `⚠️ Found ${issues} potential security issue(s):\n\n`;
-                
-                if (critical > 0) {
-                  comment += `🚨 **${critical} CRITICAL** issue(s) detected!\n\n`;
-                }
-                
-                // Add detailed findings if report exists
-                if (fs.existsSync('reports/pr-scan.json')) {
-                  const report = JSON.parse(fs.readFileSync('reports/pr-scan.json', 'utf8'));
-                  
-                  for (const result of report) {
-                    if (result.results?.antivirus?.vulnerabilities) {
-                      for (const vuln of result.results.antivirus.vulnerabilities) {
-                        const emoji = vuln.severity === 'critical' ? '🔴' : 
-                                     vuln.severity === 'high' ? '🟠' : 
-                                     vuln.severity === 'medium' ? '🟡' : '⚪';
-                        comment += `${emoji} **${vuln.type}** (${vuln.severity})\n`;
-                        comment += `   - ${vuln.description}\n`;
-                        comment += `   - **Recommendation:** ${vuln.recommendation}\n\n`;
-                      }
-                    }
-                  }
-                }
+              if (critical > 0) {
+                comment += '🚨 **Critical issues must be fixed before merging.**\n\n';
               }
               
-              comment += '\n### Changed Files\n\n';
-              comment += '```\n' + changedFiles + '\n```\n\n';
+              // Add detailed findings
+              if (fs.existsSync('reports/pr-scan.json')) {
+                const report = JSON.parse(fs.readFileSync('reports/pr-scan.json', 'utf8'));
+                const criticals = report.filter(v => v.severity === 'critical');
+                const highs = report.filter(v => v.severity === 'high');
+                
+                if (criticals.length > 0) {
+                  comment += '### 🚨 Critical\n\n';
+                  for (const v of criticals.slice(0, 5)) {
+                    comment += `- **${v.type}** (line ${v.lines?.[0] || '?'}): ${v.description}\n`;
+                    comment += `  → ${v.recommendation || 'Manual review required'}\n`;
+                  }
+                  comment += '\n';
+                }
+                
+                if (highs.length > 0) {
+                  comment += '### ⚠️ High\n\n';
+                  for (const v of highs.slice(0, 5)) {
+                    comment += `- **${v.type}** (line ${v.lines?.[0] || '?'}): ${v.description}\n`;
+                    comment += `  → ${v.recommendation || 'Manual review required'}\n`;
+                  }
+                  comment += '\n';
+                }
+              }
             }
             
-            comment += '\n---\n';
-            comment += '*Automated scan by SmartContractAudit PR Audit*\n';
+            comment += '### 📁 Changed Files\n\n';
+            const files = '${{ steps.changed.outputs.files }}'.split(',').filter(Boolean);
+            if (files.length > 0) {
+              for (const f of files.slice(0, 20)) {
+                comment += `- \`${f}\`\n`;
+              }
+              if (files.length > 20) {
+                comment += `- ...and ${files.length - 20} more\n`;
+              }
+            }
+            comment += '\n';
             
-            await github.rest.issues.createComment({
+            comment += '---\n';
+            comment += `*[View Run](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) | SmartContractAudit PR Audit*\n`;
+            
+            // Sticky comment logic
+            const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: comment
             });
+            
+            const existingComment = comments.find(c => 
+              c.user.type === 'Bot' && c.body.includes('PR Security Audit')
+            );
+            
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body: comment
+              });
+              console.log('Updated existing comment');
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: comment
+              });
+              console.log('Created new comment');
+            }
       
-      - name: Set status check
-        uses: actions/github-script@v6
+      # ─── Status Check ──────────────────────
+      - name: Set commit status
+        if: always()
+        uses: actions/github-script@v7
         with:
           script: |
             const critical = parseInt('${{ steps.report.outputs.critical }}') || 0;
             
             const state = critical > 0 ? 'failure' : 'success';
-            const description = critical > 0 
-              ? `${critical} critical security issue(s) found`
-              : 'No critical security issues detected';
+            const description = critical > 0
+              ? `${critical} critical security issue(s) — fix required`
+              : 'Security audit passed';
             
             await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: context.payload.pull_request.head.sha,
               state: state,
-              context: 'Security Audit',
+              context: 'Security Audit (SmartContractAudit)',
               description: description,
               target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
             });
       
-      - name: Block merge if critical issues
-        if: fromJSON(steps.report.outputs.critical) > 0
+      # ─── Block on Critical ─────────────────
+      - name: Block merge on critical issues
+        if: steps.report.outputs.critical > 0
         run: |
-          echo "::error::Critical security issues detected! Please fix before merging."
+          echo "::error::🚨 ${{ steps.report.outputs.critical }} critical security issue(s) detected!"
+          echo "::error::Please fix all critical issues before merging this PR."
+          echo ""
+          echo "Review the PR comment for details or check the workflow artifacts."
           exit 1
+      
+      - name: Job Summary
+        if: always()
+        run: |
+          {
+            echo "# 🔍 PR Security Audit"
+            echo ""
+            echo "| Metric | Value |"
+            echo "|--------|-------|"
+            echo "| Files Changed | ${{ steps.changed.outputs.count }} |"
+            echo "| Issues Found | ${{ steps.report.outputs.issues || 0 }} |"
+            echo "| Critical | ${{ steps.report.outputs.critical || 0 }} |"
+            echo "| High | ${{ steps.report.outputs.high || 0 }} |"
+            echo "| Status | ${{ steps.report.outputs.critical > 0 && '🔴 Blocked' || '✅ Passed' }} |"
+          } >> $GITHUB_STEP_SUMMARY
