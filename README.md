@@ -92,6 +92,12 @@ Modify configurations at `config/chains.json`:
 npm run enterprise
 ```
 
+### CLI Self-Verification
+Run a built-in health check for chain/address validation logic:
+```bash
+node script/scan.js --verify
+```
+
 ### Step 5: Access Reports
 All security reports will be stored in the `reports/` directory. Reports include vulnerability breakdowns, action items, and insights.
 
@@ -165,6 +171,46 @@ jobs:
 - Regularly rotate API keys for dependency scanning.
 - Integrate with centralized logging for audit traceability.
 - Strictly define access roles in CI/CD pipelines.
+
+### Supported Chains (Address Validation)
+
+The scanner validates addresses based on `config/chains.json` and currently supports:
+
+- Ethereum (chainId: 1)
+- BSC (chainId: 56)
+- Polygon (chainId: 137)
+- Avalanche C-Chain (chainId: 43114)
+- Arbitrum One (chainId: 42161)
+- Optimism (chainId: 10)
+- Solana (mainnet-beta)
+
+#### Adding a New Chain
+
+1. Add the chain metadata in `config/chains.json`.
+2. Provide `chainId`, `type` (`evm` or `solana`), and RPC endpoints.
+3. For EVM chains, addresses are validated with EIP-55 checksum support.
+4. Re-run `node script/scan.js --verify` to confirm validation coverage.
+
+### Rate-Limit Configuration Environment Variables
+
+Configure network endpoints and request pacing using environment variables referenced in chain and scanner configs, including:
+
+- `ETHEREUM_RPC_URL`
+- `BSC_RPC_URL`
+- `POLYGON_RPC_URL`
+- `AVALANCHE_RPC_URL`
+- `ARBITRUM_RPC_URL`
+- `OPTIMISM_RPC_URL`
+- `SOLANA_RPC_URL`
+
+Rate-limiting values are in `config/scanner.json` under `rateLimiting` (`delayMs`, `maxConcurrent`, `maxRetries`, `rpcTimeoutMs`).
+
+### Security Assumptions and Threat Model
+
+- User-provided file paths for scan/repair inputs are treated as untrusted and constrained to an allowlisted base directory using canonical path checks.
+- Chain/address arguments are validated before scanner execution.
+- CLI logs are structured JSON and include severity levels for auditability.
+- This tool focuses on deterministic static/heuristic analysis and does not assume trusted external RPC data without explicit configuration.
 
 ---
 
