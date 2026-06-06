@@ -1,76 +1,66 @@
 #!/usr/bin/env node
 
-/**
- * Scan Script
- * Main script for running contract and wallet scans
- */
-
-const Auditor = require('../auditor');
 const fs = require('fs');
 const path = require('path');
+const Auditor = require('../auditor');
+const { JsonLogger } = require('./utils/logger');
+const { ensureAllowedPath } = require('./utils/pathSecurity');
+const {
+  getSupportedChains,
+  normalizeChain,
+  validateAddressForChain
+} = require('./utils/chainValidation');
 
-// Parse command line arguments
-function parseArgs() {
-  const args = process.argv.slice(2);
+const logger = new JsonLogger('scan');
+const supportedChains = getSupportedChains();
+let shutdownRequested = false;
+
+function parseArgs(argv = process.argv.slice(2)) {
   const options = {
     address: null,
     chain: 'ethereum',
     modules: ['antivirus', 'spam', 'honeypot'],
     output: 'json',
     depth: 5,
-    file: null
+    file: null,
+    verify: false
   };
 
-  for (let i = 0; i < args.length; i++) {
-    switch (args[i]) {
+  for (let i = 0; i < argv.length; i++) {
+    switch (argv[i]) {
       case '--address':
-        if (i + 1 >= args.length) {
-          console.error('Error: --address requires a value');
-          process.exit(1);
-        }
-        options.address = args[++i];
+        if (i + 1 >= argv.length) throw new Error('--address requires a value');
+        options.address = argv[++i];
         break;
       case '--chain':
-        if (i + 1 >= args.length) {
-          console.error('Error: --chain requires a value');
-          process.exit(1);
-        }
-        options.chain = args[++i];
+        if (i + 1 >= argv.length) throw new Error('--chain requires a value');
+        options.chain = argv[++i];
         break;
       case '--modules':
-        if (i + 1 >= args.length) {
-          console.error('Error: --modules requires a value');
-          process.exit(1);
-        }
-        options.modules = args[++i].split(',');
+        if (i + 1 >= argv.length) throw new Error('--modules requires a value');
+        options.modules = argv[++i].split(',').map((m) => m.trim()).filter(Boolean);
         break;
       case '--output':
-        if (i + 1 >= args.length) {
-          console.error('Error: --output requires a value');
-          process.exit(1);
-        }
-        options.output = args[++i];
+        if (i + 1 >= argv.length) throw new Error('--output requires a value');
+        options.output = argv[++i];
         break;
       case '--depth':
-        if (i + 1 >= args.length) {
-          console.error('Error: --depth requires a value');
-          process.exit(1);
-        }
-        options.depth = parseInt(args[++i]);
+        if (i + 1 >= argv.length) throw new Error('--depth requires a value');
+        options.depth = Number.parseInt(argv[++i], 10);
         break;
       case '--file':
-        if (i + 1 >= args.length) {
-          console.error('Error: --file requires a value');
-          process.exit(1);
-        }
-        options.file = args[++i];
+        if (i + 1 >= argv.length) throw new Error('--file requires a value');
+        options.file = argv[++i];
+        break;
+      case '--verify':
+        options.verify = true;
         break;
       case '--help':
         printHelp();
         process.exit(0);
+        break;
       default:
-        console.error(`Unknown option: ${args[i]}`);
-        process.exit(1);
+        throw new Error(`Unknown option: ${argv[i]}`);
     }
   }
 
@@ -78,7 +68,11 @@ function parseArgs() {
 }
 
 function printHelp() {
-  console.log(`
+  const chains = Object.entries(supportedChains)
+    .map(([key, value]) => `${key}(${value.chainId})`)
+    .join(', ');
+
+  process.stdout.write(`
 SmartContractAudit Scanner
 
 Usage: node scan.js [options]
@@ -86,84 +80,48 @@ Usage: node scan.js [options]
 Options:
   --address <address>     Contract or wallet address to scan
   --chain <chain>         Blockchain network (default: ethereum)
-  --modules <modules>     Comma-separated list of modules (default: antivirus,spam,honeypot)
-  --output <format>       Output format: json, html, pdf (default: json)
+  --modules <modules>     Comma-separated modules (default: antivirus,spam,honeypot)
+  --output <format>       Output format: json (default: json)
   --depth <number>        Trace depth for wallet scanning (default: 5)
   --file <path>           File containing addresses to scan (one per line)
+  --verify                Run internal validation self-checks and exit
   --help                  Show this help message
 
-Examples:
-  node scan.js --address 0x123... --chain ethereum
-  node scan.js --address 0x456... --chain bsc --modules honeypot
-  node scan.js --file addresses.txt --chain polygon
-
-Supported chains: ethereum, bsc, polygon, avalanche, arbitrum, optimism, solana
-Supported modules: antivirus, spam, honeypot, tracer
-  `);
+Supported chains: ${chains}
+`);
 }
 
-async function scanAddress(auditor, address, chain, modules) {
-  console.log(`\n${'='.repeat(60)}`);
-  console.log(`Scanning: ${address}`);
-  console.log(`Chain: ${chain}`);
-  console.log(`Modules: ${modules.join(', ')}`);
-  console.log('='.repeat(60));
+function registerGracefulShutdown() {
+  const requestShutdown = (signal) => {
+    shutdownRequested = true;
+    logger.warn('Shutdown requested', { signal });
+  };
 
-  try {
-    const result = await auditor.deepScanner.scan(address, chain, modules);
-    return result;
-  } catch (error) {
-    console.error(`Error scanning ${address}: ${error.message}`);
-    return {
-      address,
-      chain,
-      error: error.message,
-      timestamp: Date.now()
-    };
-  }
+  process.once('SIGTERM', () => requestShutdown('SIGTERM'));
+  process.once('SIGINT', () => requestShutdown('SIGINT'));
 }
 
-async function main() {
-  const options = parseArgs();
-
-  if (!options.address && !options.file) {
-    console.error('Error: Either --address or --file must be specified');
-    printHelp();
-    process.exit(1);
-  }
-
-  // Initialize auditor
-  const config = loadConfig();
-  const auditor = new Auditor(config);
-
-  let results = [];
-
-  // Scan single address or batch
-  if (options.address) {
-    const result = await scanAddress(auditor, options.address, options.chain, options.modules);
-    results.push(result);
-  } else if (options.file) {
-    const addresses = fs.readFileSync(options.file, 'utf8')
-      .split('\n')
-      .map(line => line.trim())
-      .filter(line => line && !line.startsWith('#'));
-
-    console.log(`Loaded ${addresses.length} addresses from ${options.file}`);
-
-    for (const address of addresses) {
-      const result = await scanAddress(auditor, address, options.chain, options.modules);
-      results.push(result);
-      
-      // Small delay to avoid rate limiting
-      await new Promise(resolve => setTimeout(resolve, 1000));
+function runSelfVerify() {
+  const requiredChains = ['avalanche', 'arbitrum', 'optimism'];
+  for (const chain of requiredChains) {
+    if (!supportedChains[chain]) {
+      throw new Error(`Missing required chain support: ${chain}`);
     }
   }
 
-  // Save results
-  saveResults(results, options.output);
+  validateAddressForChain('0x742d35Cc6634C0532925a3b844Bc454e4438f44e', 'avalanche', supportedChains);
 
-  // Print summary
-  printSummary(results);
+  let failed = false;
+  try {
+    validateAddressForChain('0x123', 'arbitrum', supportedChains);
+  } catch {
+    failed = true;
+  }
+  if (!failed) {
+    throw new Error('Self-check failed: invalid address unexpectedly passed');
+  }
+
+  logger.info('Self-check completed', { status: 'ok' });
 }
 
 function loadConfig() {
@@ -177,7 +135,7 @@ function loadConfig() {
 function saveResults(results, format) {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   const reportsDir = path.join(__dirname, '../reports');
-  
+
   if (!fs.existsSync(reportsDir)) {
     fs.mkdirSync(reportsDir, { recursive: true });
   }
@@ -187,70 +145,125 @@ function saveResults(results, format) {
     if (!fs.existsSync(jsonDir)) {
       fs.mkdirSync(jsonDir, { recursive: true });
     }
-    
+
     const filename = path.join(jsonDir, `scan-${timestamp}.json`);
     fs.writeFileSync(filename, JSON.stringify(results, null, 2));
-    console.log(`\nResults saved to: ${filename}`);
-    
-    // Also save as latest.json
     fs.writeFileSync(path.join(reportsDir, 'latest.json'), JSON.stringify(results, null, 2));
+    logger.info('Results saved', { filename, count: results.length });
   }
 }
 
-function printSummary(results) {
-  console.log(`\n${'='.repeat(60)}`);
-  console.log('SCAN SUMMARY');
-  console.log('='.repeat(60));
-
-  let criticalCount = 0;
-  let highCount = 0;
-  let mediumCount = 0;
-  let honeypotCount = 0;
-  let spamCount = 0;
+function summarizeResults(results) {
+  const summary = {
+    totalScanned: results.length,
+    critical: 0,
+    high: 0,
+    medium: 0,
+    honeypots: 0,
+    spam: 0,
+    errors: 0
+  };
 
   for (const result of results) {
     if (result.error) {
-      console.log(`❌ ${result.address}: ERROR`);
+      summary.errors += 1;
       continue;
     }
 
-    const risk = result.summary?.overallRisk || 'unknown';
-    const icon = {
-      safe: '✅',
-      low: '⚠️ ',
-      medium: '⚠️ ',
-      high: '🔴',
-      critical: '🔴'
-    }[risk] || '❓';
+    const risk = result.summary?.overallRisk;
+    if (risk === 'critical') summary.critical += 1;
+    if (risk === 'high') summary.high += 1;
+    if (risk === 'medium') summary.medium += 1;
+    if (result.results?.honeypot?.isHoneypot) summary.honeypots += 1;
+    if (result.results?.spam?.isSpam) summary.spam += 1;
+  }
 
-    console.log(`${icon} ${result.address}: ${risk.toUpperCase()}`);
+  logger.info('Scan summary', summary);
+  return summary;
+}
 
-    if (risk === 'critical') criticalCount++;
-    else if (risk === 'high') highCount++;
-    else if (risk === 'medium') mediumCount++;
+async function scanAddress(auditor, address, chain, modules) {
+  try {
+    const result = await auditor._deepScanner.scan(address, chain, modules);
+    logger.info('Address scanned', {
+      address,
+      chain,
+      risk: result.summary?.overallRisk || 'unknown'
+    });
+    return result;
+  } catch (error) {
+    logger.error('Address scan failed', { address, chain, error: error.message });
+    return { address, chain, error: error.message, timestamp: Date.now() };
+  }
+}
 
-    if (result.results?.honeypot?.isHoneypot) honeypotCount++;
-    if (result.results?.spam?.isSpam) spamCount++;
+async function main(argv = process.argv.slice(2)) {
+  registerGracefulShutdown();
 
-    if (result.summary?.recommendations?.length > 0) {
-      result.summary.recommendations.forEach(rec => {
-        console.log(`  → ${rec}`);
-      });
+  const options = parseArgs(argv);
+  if (options.verify) {
+    runSelfVerify();
+    return;
+  }
+
+  if (!options.address && !options.file) {
+    throw new Error('Either --address or --file must be specified');
+  }
+
+  const normalizedChain = normalizeChain(options.chain, supportedChains);
+  const config = loadConfig();
+  const auditor = new Auditor(config);
+  const results = [];
+
+  if (options.address) {
+    const validatedAddress = validateAddressForChain(options.address, normalizedChain, supportedChains);
+    const result = await scanAddress(auditor, validatedAddress, normalizedChain, options.modules);
+    results.push(result);
+  }
+
+  if (options.file) {
+    const safeFile = ensureAllowedPath(options.file, process.cwd());
+    const addresses = fs
+      .readFileSync(safeFile, 'utf8')
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line && !line.startsWith('#'));
+
+    logger.info('Loaded addresses', { file: safeFile, count: addresses.length });
+
+    for (const address of addresses) {
+      if (shutdownRequested) {
+        logger.warn('Stopping batch scan due to shutdown request');
+        break;
+      }
+
+      try {
+        const validatedAddress = validateAddressForChain(address, normalizedChain, supportedChains);
+        const result = await scanAddress(auditor, validatedAddress, normalizedChain, options.modules);
+        results.push(result);
+      } catch (error) {
+        results.push({ address, chain: normalizedChain, error: error.message, timestamp: Date.now() });
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
 
-  console.log(`\n${'='.repeat(60)}`);
-  console.log(`Total scanned: ${results.length}`);
-  console.log(`Critical risk: ${criticalCount}`);
-  console.log(`High risk: ${highCount}`);
-  console.log(`Medium risk: ${mediumCount}`);
-  console.log(`Honeypots detected: ${honeypotCount}`);
-  console.log(`Spam detected: ${spamCount}`);
-  console.log('='.repeat(60));
+  saveResults(results, options.output);
+  summarizeResults(results);
 }
 
-// Run the script
-main().catch(error => {
-  console.error('Fatal error:', error);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((error) => {
+    logger.error('Fatal scan error', { error: error.message });
+    process.exit(1);
+  });
+}
+
+module.exports = {
+  main,
+  parseArgs,
+  runSelfVerify,
+  summarizeResults,
+  loadConfig
+};

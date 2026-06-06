@@ -10,11 +10,11 @@
     "notify": "node script/notify.js",
     "repair": "node script/repair.js",
     "audit": "node script/scan.js --modules antivirus,spam,honeypot",
-    "audit:deps": "pnpm audit --audit-level=high",
+    "audit:deps": "npm audit --audit-level=low",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "echo \"⚠️  Tests not implemented. CI uses static analysis instead. See scripts/audit.sh\" && exit 0",
-    "pretest": "node -e \"if(process.env.CI) console.log('CI: Static analysis replaces tests')\""
+    "test": "node --test test/*.test.js",
+    "pretest": "node -e \"if(process.env.CI) console.log('CI: Running security-focused test suite')\""
   },
   "keywords": [
     "smart-contract",
@@ -30,11 +30,11 @@
   "author": "SmartContractAudit Team",
   "license": "MIT",
   "dependencies": {
-    "ethers": "^5.7.2"
+    "ethers": "6.16.0"
   },
   "devDependencies": {
-    "eslint": "^8.56.0",
-    "prettier": "^3.2.0"
+    "eslint": "8.57.1",
+    "prettier": "3.6.2"
   },
   "engines": {
     "node": ">=18.0.0",
