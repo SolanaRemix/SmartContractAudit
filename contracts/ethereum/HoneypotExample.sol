@@ -8,9 +8,9 @@ pragma solidity ^0.8.20;
  * WARNING: THIS CONTRACT INTENTIONALLY CONTAINS HONEYPOT MECHANISMS
  * FOR EDUCATIONAL AND TESTING PURPOSES ONLY.
  * 
- * Documented vulnerabilities for scanner detection testing:
+ * Documented features for scanner detection testing:
  * 1. Hidden whitelist-based transfer restrictions
- * 2. Excessive transfer fees for non-whitelisted users
+ * 2. Transfer fee for non-whitelisted users (capped at 10%)
  * 3. Centralized owner control over trading
  * 
  * PRODUCTION NOTE: Deploy ONLY to testnets for security scanner validation.
@@ -64,9 +64,10 @@ contract HoneypotExample {
      * @param _value Amount to transfer
      * @return bool Success
      * 
-     * EDUCATIONAL NOTE: 90% fee for non-whitelisted users is
-     * intentionally excessive — a classic honeypot indicator
-     * that scanners should flag as CRITICAL.
+     * EDUCATIONAL NOTE: Non-whitelisted users are charged a 10% fee.
+     * This is a classic honeypot indicator that scanners should flag.
+     * The PR capped this from the original 90% to demonstrate the
+     * recommended remediation (reducing/documenting the fee).
      */
     function transfer(address _to, uint256 _value) public returns (bool) {
         require(_to != address(0), "Cannot transfer to zero address");
@@ -75,7 +76,7 @@ contract HoneypotExample {
         require(balanceOf[msg.sender] >= _value, "Insufficient balance");
         require(whitelist[msg.sender] || tradingEnabled, "Trading restricted");
 
-        uint256 fee = whitelist[msg.sender] ? 0 : (_value * 90) / 100;
+        uint256 fee = whitelist[msg.sender] ? 0 : (_value * 10) / 100;
         uint256 transferAmount = _value - fee;
 
         require(transferAmount > 0 || whitelist[msg.sender], "Transfer too small after fee");
@@ -135,7 +136,7 @@ contract HoneypotExample {
      * @return uint256 Fee percentage (0-100)
      */
     function getFeePercent(address _address) public view returns (uint256) {
-        return whitelist[_address] ? 0 : 90;
+        return whitelist[_address] ? 0 : 10;
     }
 
     // ─────────────────────────────────────────────

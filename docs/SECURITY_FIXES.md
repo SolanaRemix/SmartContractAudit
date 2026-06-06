@@ -89,7 +89,7 @@ Retry-After: 45  (only when rate limited)
 ### Rate Limit Manager
 
 ```javascript
-const RateLimitManager = require('./script/utils/rateLimit');
+const RateLimitManager = require('../script/utils/rateLimit');
 
 const rateLimiter = new RateLimitManager({
   requestsPerDay: 1000,
@@ -200,7 +200,7 @@ Currently, the project uses a placeholder test command. Tests should be added fo
 Add to existing API handlers:
 
 ```javascript
-const RateLimitManager = require('./script/utils/rateLimit');
+const RateLimitManager = require('../script/utils/rateLimit');
 const rateLimiter = new RateLimitManager();
 
 // In your request handler

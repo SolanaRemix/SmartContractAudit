@@ -5,6 +5,24 @@ const path = require('path');
 const { JsonLogger } = require('./utils/logger');
 const { ensureAllowedPath } = require('./utils/pathSecurity');
 
+// Security: Maximum source-code size (50 MB) to prevent DoS
+const MAX_FILE_SIZE = 50 * 1024 * 1024;
+
+// Security: Validate vulnerability data structure.
+// Accepts any non-empty string type so that scanner-reported types not in
+// the built-in repair list (e.g. 'selfdestruct') are not misclassified as
+// invalid data.  Unknown types will simply reach the "auto-repair not
+// available" path in the repair engine.
+function validateVulnerabilityData(data) {
+  if (!data || typeof data !== 'object') {
+    throw new Error('Invalid vulnerability data: must be an object');
+  }
+  if (!data.type || typeof data.type !== 'string' || data.type.trim().length === 0) {
+    throw new Error('Invalid vulnerability data: type must be a non-empty string');
+  }
+  return true;
+}
+
 const logger = new JsonLogger('repair');
 
 class RepairEngine {
@@ -82,7 +100,7 @@ class RepairEngine {
     }
     
     // Security: Validate source code
-    if (!sourceCode || typeof sourceCode !== 'string') {
+    if (!sourceCode || typeof sourceCode !== 'string' || sourceCode.trim().length === 0) {
       return {
         vulnerabilityId: vulnerability.type,
         fixAvailable: false,
